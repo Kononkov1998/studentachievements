@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_alignParentBottom="true"
+            android:background="@android:color/darker_gray"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imageProfile"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="openProfile"
+                app:srcCompat="@drawable/home" />
+
+            <ImageView
+                android:id="@+id/imageSearch"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/search" />
+
+            <ImageView
+                android:id="@+id/imageFavorites"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="openFavorites"
+                app:srcCompat="@drawable/favorites" />
+
+            <ImageView
+                android:id="@+id/imageSettings"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="openSettings"
+                app:srcCompat="@drawable/settings" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="30dp"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/textViewName"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15dp"
+                android:background="@android:color/darker_gray"
+                android:hint="Имя"
+                android:singleLine="true"
+                android:textSize="24sp" />
+
+            <EditText
+                android:id="@+id/textViewSurname"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:background="@android:color/darker_gray"
+                android:layout_marginTop="15dp"
+                android:textSize="24sp"
+                android:singleLine="true"
+                android:layout_gravity="center_horizontal"
+                android:hint="Фамилия" />
+
+            <EditText
+                android:id="@+id/textViewPatronymic"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:background="@android:color/darker_gray"
+                android:layout_marginTop="15dp"
+                android:textSize="24sp"
+                android:singleLine="true"
+                android:layout_gravity="center_horizontal"
+                android:hint="Отчество" />
+            <EditText
+                android:id="@+id/textViewGroup"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:background="@android:color/darker_gray"
+                android:layout_marginTop="15dp"
+                android:textSize="24sp"
+                android:singleLine="true"
+                android:layout_gravity="center_horizontal"
+                android:hint="Номер группы" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:onClick="search"
+                android:layout_marginTop="100dp"
+                android:text="ПОИСК"
+                android:textSize="24sp" />
+        </LinearLayout>
+    </RelativeLayout>
+</android.support.constraint.ConstraintLayout>
