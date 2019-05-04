@@ -23,7 +23,7 @@ public class AuthActivity extends AppCompatActivity {
         pass = findViewById(R.id.passText);
         DataBase.fill();
     }
-//DANIL PRIVET
+
     public void enter(View view) {
         boolean auth = false;
         for (Student student : DataBase.students) {
