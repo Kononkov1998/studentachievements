@@ -15,7 +15,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class ProfileActivity extends AppCompatActivity {
-
+    @Override
+    public void onBackPressed() {
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
