@@ -20,7 +20,7 @@ public class Requests
     private Retrofit retrofit; // retrofit
     private UserApi userApi; // методы сервера
     private static Requests requests; // экземпляр класса
-    private final String URL = "http://localhost:8080/";
+    private final String URL = "localhost:8080";
 
     private Requests()
     {
@@ -38,7 +38,7 @@ public class Requests
         return  requests;
     }
 
-    // post-запрос
+    // /student/signin
     public void getUserToken(User user)
     {
         GsonBuilder builder = new GsonBuilder();
@@ -51,52 +51,68 @@ public class Requests
             {
                 if(response.isSuccessful())
                 {
-                    AuthActivity.saveToken(response.body());
-                    Intent intent = new Intent(AuthActivity.getAppContext(), ProfileActivity.class);
-                    AuthActivity.getAppContext().startActivity(intent);
+                    // сохраняем токен
+                    String token = response.body().getUserToken();
+                    AuthActivity.saveToken(token);
+                    // вызываем метод /student/info, если его ответ не 200 то /student/initialize
+                    getUserInfo(token);
                 }
             }
 
             @Override
             public void onFailure(Call<UserToken> call, Throwable t)
             {
-                AlertDialog.Builder builder = new AlertDialog.Builder(AuthActivity.getAppContext());
-                builder.setTitle("Ошибка!")
-                        .setMessage("Неверный логин или пароль!")
-                        .setCancelable(false)
-                        .setNegativeButton("Ок",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        dialog.cancel();
-                                    }
-                                });
-                AlertDialog alert = builder.create();
-                alert.show();
+                Toast.makeText(AuthActivity.getAppContext(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
 
-    /* ПОКА ЧТО ЗАКОММЕНТИЛ ПОТОМУ ЧТО НЕ ИСПОЛЬЗУЕТСЯ
-    // get-запрос
-    public void getUserByToken(String token)
+    // /student/info
+    public void getUserInfo(final String token)
     {
-        userApi.getUserByToken(token).enqueue(new Callback<UserGetRequest>()
-        {
+        userApi.info(token).enqueue(new Callback<UserInfo>() {
             @Override
-            public void onResponse(Call<UserGetRequest> call, Response<UserGetRequest> response)
+            public void onResponse(Call<UserInfo> call, Response<UserInfo> response)
             {
                 if(response.isSuccessful())
                 {
-                    MainActivity.startNewActivity(response.body());
+                    Intent intent = new Intent(AuthActivity.getAppContext(), ProfileActivity.class);
+                    AuthActivity.getAppContext().startActivity(intent);
+                }
+                else
+                {
+                    initializeStudent(token);
                 }
             }
 
             @Override
-            public void onFailure(Call<UserGetRequest> call, Throwable t)
+            public void onFailure(Call<UserInfo> call, Throwable t)
             {
 
             }
         });
     }
-    */
+
+    // /student/initialize
+    public void initializeStudent(String token)
+    {
+        userApi.initialize(token).enqueue(new Callback<UserInfo>()
+        {
+            @Override
+            public void onResponse(Call<UserInfo> call, Response<UserInfo> response)
+            {
+                if(response.isSuccessful())
+                {
+                    Intent intent = new Intent(AuthActivity.getAppContext(), ProfileActivity.class);
+                    AuthActivity.getAppContext().startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserInfo> call, Throwable t)
+            {
+
+            }
+        });
+    }
 }

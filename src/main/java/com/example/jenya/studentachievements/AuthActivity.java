@@ -36,19 +36,21 @@ public class AuthActivity extends AppCompatActivity {
     }
 
     //обработка кнопки "вход"
-    public void enter(View view) {
-        try {
+    public void enter(View view)
+    {
+        try
+        {
             requests.getUserToken(new User(login.getText().toString(), pass.getText().toString()));
         }
-        catch (Exception e){
+        catch (Exception e)
+        {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 
     // сохраняем токен
-    public static void saveToken(UserToken userToken)
+    public static void saveToken(String token)
     {
-        String token = userToken.getUserToken();
         SharedPreferences.Editor prefEditor = settings.edit();
         prefEditor.putString("token", token);
         prefEditor.apply();

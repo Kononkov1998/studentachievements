@@ -13,11 +13,9 @@ public interface UserApi
     @POST("/student/signin")
     Call<UserToken> signin(@Body String user);
 
-    @Headers({"Content-Type: application/json; charset=utf-8"})
-    @POST("/student/signin")
-    Call<UserToken> initialize(@Header("Authorization") String token);
+    @POST("/student/initialize")
+    Call<UserInfo> initialize(@Header("Authorization") String token);
 
-    @Headers({"Content-Type: application/json; charset=utf-8"})
     @GET("/student/info")
-    Call<UserGetRequest> info(@Header("Authorization") String token);
+    Call<UserInfo> info(@Header("Authorization") String token);
 }

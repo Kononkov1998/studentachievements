@@ -3,8 +3,9 @@ package com.example.jenya.studentachievements;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class UserToken {
-    @SerializedName("userToken")
+public class UserToken
+{
+    @SerializedName("usertoken")
     @Expose
     private String userToken;
     @SerializedName("status")
