@@ -9,6 +9,9 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -20,7 +23,7 @@ public class Requests
     private Retrofit retrofit; // retrofit
     private UserApi userApi; // методы сервера
     private static Requests requests; // экземпляр класса
-    private final String URL = "http://46cf3e68.ngrok.io/";
+    private final String URL = "http://6bdf4240.ngrok.io/";
 
     private Requests()
     {
@@ -39,12 +42,9 @@ public class Requests
     }
 
     // /student/signin
-    public void getUserToken(User user)
+    public void getUserToken(User user) throws JSONException
     {
-        GsonBuilder builder = new GsonBuilder();
-        Gson gson = builder.create();
-
-        userApi.signin(gson.toJson(user)).enqueue(new Callback<UserToken>()
+        userApi.signin(user).enqueue(new Callback<UserToken>()
         {
             @Override
             public void onResponse(Call<UserToken> call, Response<UserToken> response)
@@ -111,7 +111,7 @@ public class Requests
             @Override
             public void onFailure(Call<UserInfo> call, Throwable t)
             {
-
+                Toast.makeText(AuthActivity.getAppContext(), "Ошибка! Попробуйте зайти позже.", Toast.LENGTH_LONG).show();
             }
         });
     }

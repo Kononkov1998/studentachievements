@@ -1,5 +1,7 @@
 package com.example.jenya.studentachievements;
 
+import org.json.JSONObject;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -11,7 +13,7 @@ public interface UserApi
 {
     @Headers({"Content-Type: application/json; charset=utf-8"})
     @POST("/student/signin")
-    Call<UserToken> signin(@Body String user);
+    Call<UserToken> signin(@Body User user);
 
     @POST("/student/initialize")
     Call<UserInfo> initialize(@Header("Authorization") String token);

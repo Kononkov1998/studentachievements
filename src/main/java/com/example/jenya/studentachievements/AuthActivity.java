@@ -12,7 +12,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class AuthActivity extends AppCompatActivity {
+public class AuthActivity extends AppCompatActivity
+{
 
     private EditText login, pass;
     private static SharedPreferences settings; // настройки
@@ -21,7 +22,8 @@ public class AuthActivity extends AppCompatActivity {
     private static Context mContext; // контекст
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_auth);
@@ -38,6 +40,10 @@ public class AuthActivity extends AppCompatActivity {
     //обработка кнопки "вход"
     public void enter(View view)
     {
+        if(login.getText().toString().trim() == "" || pass.getText().toString().trim() == "")
+        {
+            return;
+        }
         try
         {
             requests.getUserToken(new User(login.getText().toString(), pass.getText().toString()));
