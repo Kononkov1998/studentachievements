@@ -1,26 +1,24 @@
 package com.example.jenya.studentachievements;
 
-public class User {
-    private String email; // логин
-    private String password; // пароль
+public class User
+{
+    public String username; // логин
+    public String password; // пароль
 
-    public User(String email, String password)
+    public User(String username, String password)
     {
-        if(email.isEmpty() || password.isEmpty())
-            throw new IllegalArgumentException("Пустые параметры");
-
-        this.email = email;
+        this.username = username;
         this.password = password;
     }
 
-    public String getEmail()
+    public String getusername()
     {
-        return email;
+        return username;
     }
 
-    public void setEmail(String email)
+    public void setusername(String username)
     {
-        this.email = email;
+        this.username = username;
     }
 
     public String getPassword()
