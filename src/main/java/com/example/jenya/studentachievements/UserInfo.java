@@ -1,9 +1,13 @@
 package com.example.jenya.studentachievements;
 
+import android.content.pm.InstrumentationInfo;
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class UserInfo
+public class UserInfo implements Parcelable
 {
     @SerializedName("_id")
     @Expose
@@ -31,13 +35,13 @@ public class UserInfo
 
     @SerializedName("achievements")
     @Expose
-    public _Achievement[] achievements;
+    public Achievement[] achievements;
 
     @SerializedName("__v")
     @Expose
     public int __v;
 
-    public _Achievement[] getAchievements() {
+    public Achievement[] getAchievements() {
         return achievements;
     }
 
@@ -77,7 +81,7 @@ public class UserInfo
         this._id = _id;
     }
 
-    public void setAchievements(_Achievement[] achievements) {
+    public void setAchievements(Achievement[] achievements) {
         this.achievements = achievements;
     }
 
@@ -100,4 +104,45 @@ public class UserInfo
     public void setInstitute(String institute) {
         this.institute = institute;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(_id);
+        dest.writeString(idHumanFace);
+        dest.writeString(institute);
+        dest.writeString(email);
+        dest.writeValue(group);
+        dest.writeValue(fullName);
+        dest.writeTypedArray(achievements, 0);
+        dest.writeInt(__v);
+    }
+
+    protected UserInfo(Parcel in) {
+        _id = in.readString();
+        idHumanFace = in.readString();
+        institute = in.readString();
+        email = in.readString();
+        group = (Group) in.readValue(getClass().getClassLoader());
+        fullName = (FullName) in.readValue(FullName.class.getClassLoader());
+        achievements = in.createTypedArray(Achievement.CREATOR);
+        __v = in.readInt();
+    }
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<UserInfo> CREATOR = new Parcelable.Creator<UserInfo>() {
+        @Override
+        public UserInfo createFromParcel(Parcel in) {
+            return new UserInfo(in);
+        }
+
+        @Override
+        public UserInfo[] newArray(int size) {
+            return new UserInfo[size];
+        }
+    };
 }

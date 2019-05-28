@@ -3,12 +3,9 @@ package com.example.jenya.studentachievements;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -30,10 +27,10 @@ public class SearchResultsActivity extends AppCompatActivity {
         String surname = intent.getStringExtra("surname");
         String patronymic = intent.getStringExtra("patronymic");
         String group = intent.getStringExtra("group");
+/*
+        ArrayList<UserInfo> students = DataBase.search(name, surname, patronymic, group);
 
-        ArrayList<Student> students = DataBase.search(name, surname, patronymic, group);
-
-        final StudentsAdapter adapter = new StudentsAdapter(this, students);
+        final UsersAdapter adapter = new UsersAdapter(this, students);
         final ListView listView = findViewById(R.id.list);
         if (students.isEmpty())
             listView.addHeaderView(getLayoutInflater().inflate(R.layout.header_searchresults, listView, false));
@@ -43,7 +40,7 @@ public class SearchResultsActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
             }
-        });
+        });*/
     }
 
     public void openProfile(View view) {

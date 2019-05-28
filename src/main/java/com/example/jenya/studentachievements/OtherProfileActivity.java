@@ -1,12 +1,10 @@
 package com.example.jenya.studentachievements;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -28,6 +26,7 @@ public class OtherProfileActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        /*
         ListView listView = findViewById(R.id.list);
         Intent intent = getIntent();
         String name = intent.getStringExtra("name");
@@ -46,8 +45,8 @@ public class OtherProfileActivity extends AppCompatActivity {
             if (achievement.getProgress() == 100)
                 completedAchievements.add(achievement);
         }
-        Collections.sort(student.getAchievements(), new StudentAchievementsComparator());
-        final StudentAchievementsAdapter adapter = new StudentAchievementsAdapter(this, student.getAchievements());
+        Collections.sort(student.getAchievements(), new AchievementsComparator());
+        final AchievementsAdapter adapter = new AchievementsAdapter(this, student.getAchievements());
         listView.setAdapter(adapter);
 
         CheckBox hideBox = findViewById(R.id.checkboxHide);
@@ -60,7 +59,7 @@ public class OtherProfileActivity extends AppCompatActivity {
                     adapter.notifyDataSetChanged();
                 } else {
                     student.getAchievements().addAll(completedAchievements);
-                    Collections.sort(student.getAchievements(), new StudentAchievementsComparator());
+                    Collections.sort(student.getAchievements(), new AchievementsComparator());
                     adapter.notifyDataSetChanged();
                 }
             }
@@ -81,7 +80,7 @@ public class OtherProfileActivity extends AppCompatActivity {
                     DataBase.currentUser.getFavorites().remove(student);
                 }
             }
-        });
+        });*/
     }
 
     public void openProfile(View view) {

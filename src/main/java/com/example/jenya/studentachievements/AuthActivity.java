@@ -17,7 +17,6 @@ public class AuthActivity extends AppCompatActivity
 
     private EditText login, pass;
     private static SharedPreferences settings; // настройки
-    static boolean auth = false;
     private Requests requests; // запросы
     private static Context mContext; // контекст
 
@@ -34,7 +33,6 @@ public class AuthActivity extends AppCompatActivity
         requests = Requests.getInstance();
         mContext = this;
         settings = getSharedPreferences("User", MODE_PRIVATE);
-        DataBase.fill();
     }
 
     //обработка кнопки "вход"
@@ -67,30 +65,4 @@ public class AuthActivity extends AppCompatActivity
     {
         return mContext;
     }
-
-    /*public void enter(View view) {
-        boolean auth = false;
-        for (Student student : DataBase.students) {
-            if (login.getText().toString().equals(student.getName()) && pass.getText().toString().equals("")) {
-                Intent intent = new Intent(this, ProfileActivity.class);
-                DataBase.currentUser = student;
-                startActivity(intent);
-                auth = true;
-            }
-        }
-        if (!auth) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Ошибка!")
-                    .setMessage("Неверный логин или пароль!")
-                    .setCancelable(false)
-                    .setNegativeButton("Ок",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    dialog.cancel();
-                                }
-                            });
-            AlertDialog alert = builder.create();
-            alert.show();
-        }
-    }*/
 }

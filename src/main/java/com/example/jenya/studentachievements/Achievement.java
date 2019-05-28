@@ -1,33 +1,76 @@
 package com.example.jenya.studentachievements;
 
-import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class Achievement {
-    private String name;
-    private String description;
-    private int studentsProgress;
-    private int image;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
-    public Achievement(String name, String description, int studentsProgress, int image) {
-        this.name = name;
-        this.description = description;
-        this.studentsProgress = studentsProgress;
-        this.image = image;
+public class Achievement implements Parcelable
+{
+    @SerializedName("code")
+    @Expose
+    public String code;
+
+    @SerializedName("stars")
+    @Expose
+    public int stars;
+
+    @SerializedName("achievement")
+    @Expose
+    public AchievementInfo achievementInfo;
+
+    public AchievementInfo getAchievementInfo() {
+        return achievementInfo;
     }
 
-    public String getName() {
-        return name;
+    public int getStars() {
+        return stars;
     }
 
-    public String getDescription() {
-        return description;
+    public String getCode() {
+        return code;
     }
 
-    public int getStudentsProgress() {
-        return studentsProgress;
+    public void setAchievementInfo(AchievementInfo achievementInfo) {
+        this.achievementInfo = achievementInfo;
     }
 
-    public int getImage() {
-        return image;
+    public void setCode(String code) {
+        this.code = code;
     }
+
+    public void setStars(int stars) {
+        this.stars = stars;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(code);
+        dest.writeInt(stars);
+        dest.writeValue(achievementInfo);
+    }
+
+    protected Achievement(Parcel in) {
+        code = in.readString();
+        stars = in.readInt();
+        achievementInfo = (AchievementInfo) in.readValue(AchievementInfo.class.getClassLoader());
+    }
+
+    public static final Creator<Achievement> CREATOR = new Creator<Achievement>() {
+        @Override
+        public Achievement createFromParcel(Parcel in) {
+            return new Achievement(in);
+        }
+
+        @Override
+        public Achievement[] newArray(int size) {
+            return new Achievement[size];
+        }
+    };
 }

@@ -1,30 +1,23 @@
 package com.example.jenya.studentachievements;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
-
-import java.util.Collections;
 
 public class FavoritesActivity extends AppCompatActivity {
 
-    private StudentsAdapter adapter;
+    private UsersAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_favorites);
-        adapter = new StudentsAdapter(this, DataBase.currentUser.getFavorites());
+        //adapter = new UsersAdapter(this, DataBase.currentUser.getFavorites());
         final ListView listView = findViewById(R.id.list);
         listView.setAdapter(adapter);
     }

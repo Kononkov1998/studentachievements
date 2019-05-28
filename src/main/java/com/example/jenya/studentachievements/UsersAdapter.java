@@ -20,12 +20,12 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class StudentsAdapter extends BaseAdapter {
+public class UsersAdapter extends BaseAdapter {
     Context ctx;
     LayoutInflater lInflater;
-    ArrayList<Student> objects;
+    ArrayList<User> objects;
 
-    StudentsAdapter(Context context, ArrayList<Student> students) {
+    UsersAdapter(Context context, ArrayList<User> students) {
         ctx = context;
         objects = students;
         lInflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -52,7 +52,7 @@ public class StudentsAdapter extends BaseAdapter {
     // пункт списка
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final Student s = getStudent(position);
+        final UserInfo s = getUserInfo(position);
         // используем созданные, но не используемые view
         View view = convertView;
         if (view == null) {
@@ -60,10 +60,10 @@ public class StudentsAdapter extends BaseAdapter {
         }
 
         // заполняем View в пункте списка данными из студентов
-        ((ImageView) view.findViewById(R.id.imageUser)).setImageResource(s.getImage());
-        ((TextView) view.findViewById(R.id.textProfile)).setText(s.getSurname() + "\n" + s.getName() + "\n" + s.getPatronymic() + "\n" + s.getGroup());
+       // ((ImageView) view.findViewById(R.id.imageUser)).setImageResource(s.getImage());
+        ((TextView) view.findViewById(R.id.textProfile)).setText(s.getFullName().getLastName() + "\n" + s.getFullName().getFirstName() + "\n" + s.getFullName().getPatronymic() + "\n" + s.getGroup().getName());
         final CheckBox checkBox = view.findViewById(R.id.checkboxFavorite);
-        if (DataBase.currentUser.getFavorites().contains(s)) {
+       /* if (DataBase.currentUser.getFavorites().contains(s)) {
             checkBox.setChecked(true);
         } else {
             checkBox.setChecked(false);
@@ -79,7 +79,7 @@ public class StudentsAdapter extends BaseAdapter {
                     notifyDataSetChanged();
                 }
             }
-        });
+        });*/
 
         LinearLayout layout = view.findViewById(R.id.layout);
         layout.setOnClickListener(new View.OnClickListener() {
@@ -104,7 +104,7 @@ public class StudentsAdapter extends BaseAdapter {
     }
 
     // студент по позиции
-    Student getStudent(int position) {
-        return ((Student) getItem(position));
+    UserInfo getUserInfo(int position) {
+        return ((UserInfo) getItem(position));
     }
 }

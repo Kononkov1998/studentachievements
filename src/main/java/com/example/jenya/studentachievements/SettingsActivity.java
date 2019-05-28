@@ -19,7 +19,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         RadioGroup radioGroup = findViewById(R.id.radioGroup);
 
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+       /* radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
@@ -42,7 +42,7 @@ public class SettingsActivity extends AppCompatActivity {
                         break;
                 }
             }
-        });
+        });*/
     }
 
     public void openProfile(View view) {

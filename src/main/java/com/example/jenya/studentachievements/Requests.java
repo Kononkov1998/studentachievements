@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.provider.ContactsContract;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -23,7 +24,7 @@ public class Requests
     private Retrofit retrofit; // retrofit
     private UserApi userApi; // методы сервера
     private static Requests requests; // экземпляр класса
-    private final String URL = "http://6bdf4240.ngrok.io/";
+    private final String URL = "http://c54ff9c0.ngrok.io/";
 
     private Requests()
     {
@@ -77,6 +78,7 @@ public class Requests
                 if(response.isSuccessful())
                 {
                     Intent intent = new Intent(AuthActivity.getAppContext(), ProfileActivity.class);
+                    intent.putExtra("userInfo", response.body());
                     AuthActivity.getAppContext().startActivity(intent);
                 }
                 else
@@ -88,7 +90,7 @@ public class Requests
             @Override
             public void onFailure(Call<UserInfo> call, Throwable t)
             {
-
+                Toast.makeText(AuthActivity.getAppContext(), "Ошибка! Попробуйте зайти позже.", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -104,6 +106,7 @@ public class Requests
                 if(response.isSuccessful())
                 {
                     Intent intent = new Intent(AuthActivity.getAppContext(), ProfileActivity.class);
+                    intent.putExtra("userInfo", response.body());
                     AuthActivity.getAppContext().startActivity(intent);
                 }
             }

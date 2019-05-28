@@ -11,12 +11,12 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class StudentAchievementsAdapter extends BaseAdapter {
+public class AchievementsAdapter extends BaseAdapter {
     Context ctx;
     LayoutInflater lInflater;
-    ArrayList<StudentAchievement> objects;
+    ArrayList<Achievement> objects;
 
-    StudentAchievementsAdapter(Context context, ArrayList<StudentAchievement> achievements) {
+    AchievementsAdapter(Context context, ArrayList<Achievement> achievements) {
         ctx = context;
         objects = achievements;
         lInflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -43,7 +43,7 @@ public class StudentAchievementsAdapter extends BaseAdapter {
     // пункт списка
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        StudentAchievement a = getStudentAchievement(position);
+        Achievement a = getAchievement(position);
         // используем созданные, но не используемые view
         View view = convertView;
         if (view == null) {
@@ -51,18 +51,18 @@ public class StudentAchievementsAdapter extends BaseAdapter {
         }
 
         // заполняем View в пункте списка данными из ачивок
-        ((TextView) view.findViewById(R.id.name)).setText(a.getAchievement().getName());
-        ((TextView) view.findViewById(R.id.description)).setText(a.getAchievement().getDescription());
-        ((TextView) view.findViewById(R.id.date)).setText(a.getDate());
-        ((TextView) view.findViewById(R.id.progress)).setText(a.getProgress() + "%");
-        ((ProgressBar) view.findViewById(R.id.progressBar)).setProgress(a.getProgress());
-        ((TextView) view.findViewById(R.id.studentsProgress)).setText(a.getAchievement().getStudentsProgress() + "% студентов получили");
-        ((ImageView) view.findViewById(R.id.image)).setImageResource(a.getAchievement().getImage());
+        ((TextView) view.findViewById(R.id.name)).setText(a.getAchievementInfo().name);
+        ((TextView) view.findViewById(R.id.description)).setText(a.getAchievementInfo().getDescription());
+        //((TextView) view.findViewById(R.id.date)).setText(a.getDate());
+        ((TextView) view.findViewById(R.id.progress)).setText(a.getAchievementInfo().getGeneralProgress() + "%");
+        ((ProgressBar) view.findViewById(R.id.progressBar)).setProgress(a.getAchievementInfo().getGeneralProgress());
+        //((TextView) view.findViewById(R.id.studentsProgress)).setText(a.getAchievement().getStudentsProgress() + "% студентов получили");
+        //((ImageView) view.findViewById(R.id.image)).setImageResource(a.getAchievement().getImage());
         return view;
     }
 
     // ачивка по позиции
-    StudentAchievement getStudentAchievement(int position) {
-        return ((StudentAchievement) getItem(position));
+    Achievement getAchievement(int position) {
+        return ((Achievement) getItem(position));
     }
 }
