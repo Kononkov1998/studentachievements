@@ -54,8 +54,8 @@ public class AchievementsAdapter extends BaseAdapter {
         ((TextView) view.findViewById(R.id.name)).setText(a.getAchievementInfo().name);
         ((TextView) view.findViewById(R.id.description)).setText(a.getAchievementInfo().getDescription());
         //((TextView) view.findViewById(R.id.date)).setText(a.getDate());
-        ((TextView) view.findViewById(R.id.progress)).setText(a.getAchievementInfo().getGeneralProgress() + "%");
-        ((ProgressBar) view.findViewById(R.id.progressBar)).setProgress(a.getAchievementInfo().getGeneralProgress());
+        //((TextView) view.findViewById(R.id.progress)).setText(a.getAchievementInfo().getGeneralProgress() + "%");
+       // ((ProgressBar) view.findViewById(R.id.progressBar)).setProgress(a.getAchievementInfo().getGeneralProgress());
         //((TextView) view.findViewById(R.id.studentsProgress)).setText(a.getAchievement().getStudentsProgress() + "% студентов получили");
         //((ImageView) view.findViewById(R.id.image)).setImageResource(a.getAchievement().getImage());
         return view;

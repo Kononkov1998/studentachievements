@@ -2,16 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/achievement1"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:gravity="center_horizontal"
     android:layout_marginTop="10dp"
-    android:orientation="horizontal"
-    android:weightSum="5">
+    android:orientation="horizontal">
 
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <ImageView
@@ -32,10 +32,9 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:layout_weight="4"
         android:orientation="vertical">
 
         <TextView
@@ -47,28 +46,16 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/progress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="50%" />
-
-        <ProgressBar
-            android:id="@+id/progressBar"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="290dp"
-            android:layout_height="wrap_content"
-            android:progress="50" />
-
-        <TextView
             android:id="@+id/description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Сдать сессию на отлично" />
 
-        <TextView
-            android:id="@+id/studentsProgress"
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="20% студентов получили" />
+            app:srcCompat="@drawable/stars0" />
+
     </LinearLayout>
 </LinearLayout>
