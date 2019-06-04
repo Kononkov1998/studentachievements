@@ -1,9 +1,17 @@
 package com.example.jenya.studentachievements;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.provider.ContactsContract;
+import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -17,6 +25,11 @@ public class Requests
     private UserApi userApi; // методы сервера
     private static Requests requests; // экземпляр класса
     private final String URL = "http://f1c50a3d.ngrok.io";
+
+    public String getURL()
+    {
+        return this.URL;
+    }
 
     private Requests()
     {
@@ -32,6 +45,25 @@ public class Requests
             return new Requests();
         }
         return  requests;
+    }
+
+    // /student/groupmates
+    public void getGroupmates(String token)
+    {
+        userApi.groupmates(token).enqueue(new Callback<UserInfo[]>()
+        {
+            @Override
+            public void onResponse(Call<UserInfo[]> call, Response<UserInfo[]> response)
+            {
+                UserInfo[] groupmates = response.body();
+            }
+
+            @Override
+            public void onFailure(Call<UserInfo[]> call, Throwable t)
+            {
+
+            }
+        });
     }
 
     // /student/signin

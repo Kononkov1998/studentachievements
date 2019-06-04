@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 public class AchievementsAdapter extends BaseAdapter {
@@ -16,7 +18,8 @@ public class AchievementsAdapter extends BaseAdapter {
     LayoutInflater lInflater;
     ArrayList<Achievement> objects;
 
-    AchievementsAdapter(Context context, ArrayList<Achievement> achievements) {
+    AchievementsAdapter(Context context, ArrayList<Achievement> achievements)
+    {
         ctx = context;
         objects = achievements;
         lInflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -42,11 +45,13 @@ public class AchievementsAdapter extends BaseAdapter {
 
     // пункт списка
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, ViewGroup parent)
+    {
         Achievement a = getAchievement(position);
         // используем созданные, но не используемые view
         View view = convertView;
-        if (view == null) {
+        if (view == null)
+        {
             view = lInflater.inflate(R.layout.item_profile, parent, false);
         }
 
@@ -57,7 +62,7 @@ public class AchievementsAdapter extends BaseAdapter {
         //((TextView) view.findViewById(R.id.progress)).setText(a.getAchievementInfo().getGeneralProgress() + "%");
        // ((ProgressBar) view.findViewById(R.id.progressBar)).setProgress(a.getAchievementInfo().getGeneralProgress());
         //((TextView) view.findViewById(R.id.studentsProgress)).setText(a.getAchievement().getStudentsProgress() + "% студентов получили");
-        //((ImageView) view.findViewById(R.id.image)).setImageResource(a.getAchievement().getImage());
+        Picasso.with(AuthActivity.getAppContext()).load(Requests.getInstance().getURL() + "/icons/" + a.code + ".png").into((ImageView) view.findViewById(R.id.image));
         return view;
     }
 
