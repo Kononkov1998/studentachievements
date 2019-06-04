@@ -21,9 +21,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class UsersAdapter extends BaseAdapter {
-    Context ctx;
-    LayoutInflater lInflater;
-    ArrayList<User> objects;
+    private Context ctx;
+    private LayoutInflater lInflater;
+    private ArrayList<User> objects;
 
     UsersAdapter(Context context, ArrayList<User> students) {
         ctx = context;

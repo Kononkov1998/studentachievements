@@ -10,27 +10,27 @@ public class AchievementInfo
 {
     @SerializedName("_id")
     @Expose
-    public String _id;
+    private String _id;
 
     @SerializedName("description")
     @Expose
-    public String description;
+    private String description;
 
     @SerializedName("generalProgress")
     @Expose
-    public int generalProgress;
+    private int generalProgress;
 
     @SerializedName("name")
     @Expose
-    public String name;
+    private String name;
 
     @SerializedName("code")
     @Expose
-    public String code;
+    private String code;
 
     @SerializedName("__v")
     @Expose
-    public int __v;
+    private int __v;
 
     public String getCode() {
         return code;

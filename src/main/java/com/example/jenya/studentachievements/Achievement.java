@@ -10,15 +10,15 @@ public class Achievement
 {
     @SerializedName("code")
     @Expose
-    public String code;
+    private String code;
 
     @SerializedName("stars")
     @Expose
-    public int stars;
+    private int stars;
 
     @SerializedName("achievement")
     @Expose
-    public AchievementInfo achievementInfo;
+    private AchievementInfo achievementInfo;
 
     public AchievementInfo getAchievementInfo() {
         return achievementInfo;

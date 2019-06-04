@@ -38,7 +38,7 @@ public class AuthActivity extends AppCompatActivity
     //обработка кнопки "вход"
     public void enter(View view)
     {
-        if(login.getText().toString().trim() == "" || pass.getText().toString().trim() == "")
+        if(login.getText().toString().trim().equals("") || pass.getText().toString().trim().equals(""))
         {
             return;
         }

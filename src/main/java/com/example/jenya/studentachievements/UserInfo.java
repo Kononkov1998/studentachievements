@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 public class UserInfo {
     private static UserInfo currentUser;
 
-    public static UserInfo getCurrentUser() {
+    static UserInfo getCurrentUser() {
             return currentUser;
     }
 
@@ -16,35 +16,35 @@ public class UserInfo {
 
     @SerializedName("_id")
     @Expose
-    String _id;
+    private String _id;
 
     @SerializedName("idHumanFace")
     @Expose
-    String idHumanFace;
+    private String idHumanFace;
 
     @SerializedName("institute")
     @Expose
-    String institute;
+    private String institute;
 
     @SerializedName("email")
     @Expose
-    String email;
+    private String email;
 
     @SerializedName("group")
     @Expose
-    Group group;
+    private Group group;
 
     @SerializedName("fullName")
     @Expose
-    FullName fullName;
+    private FullName fullName;
 
     @SerializedName("achievements")
     @Expose
-    Achievement[] achievements;
+    private Achievement[] achievements;
 
     @SerializedName("__v")
     @Expose
-    int __v;
+    private int __v;
 
     public Achievement[] getAchievements() {
         return achievements;
