@@ -23,7 +23,6 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
     }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +30,7 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         final ArrayList<Achievement> completedAchievements = new ArrayList<>();
-        UserInfo userInfo = getIntent().getExtras().getParcelable("userInfo");
+        UserInfo userInfo = UserInfo.getCurrentUser();
         final ArrayList<Achievement> userAchievements = new ArrayList<>(Arrays.asList(userInfo.getAchievements()));
 
         for (Achievement achievement : userAchievements) {

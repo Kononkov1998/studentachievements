@@ -6,7 +6,7 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class AchievementInfo implements Parcelable
+public class AchievementInfo
 {
     @SerializedName("_id")
     @Expose
@@ -79,40 +79,4 @@ public class AchievementInfo implements Parcelable
     public void setGeneralProgress(int generalProgress) {
         this.generalProgress = generalProgress;
     }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(_id);
-        dest.writeString(description);
-        dest.writeInt(generalProgress);
-        dest.writeString(name);
-        dest.writeString(code);
-        dest.writeInt(__v);
-    }
-
-    protected AchievementInfo(Parcel in) {
-        _id = in.readString();
-        description = in.readString();
-        generalProgress = in.readInt();
-        name = in.readString();
-        code = in.readString();
-        __v = in.readInt();
-    }
-
-    public static final Creator<AchievementInfo> CREATOR = new Creator<AchievementInfo>() {
-        @Override
-        public AchievementInfo createFromParcel(Parcel in) {
-            return new AchievementInfo(in);
-        }
-
-        @Override
-        public AchievementInfo[] newArray(int size) {
-            return new AchievementInfo[size];
-        }
-    };
 }

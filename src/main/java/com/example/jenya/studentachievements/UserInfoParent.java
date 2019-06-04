@@ -3,20 +3,7 @@ package com.example.jenya.studentachievements;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class UserInfo {
-    private static UserInfo currentUser;
-
-    public static UserInfo getCurrentUser() {
-        if (currentUser != null)
-            return currentUser;
-        else
-            return null;
-    }
-
-    static void loadUserInfo(UserInfo user) {
-            currentUser = user;
-    }
-
+public class UserInfoParent {
     @SerializedName("_id")
     @Expose
     String _id;
