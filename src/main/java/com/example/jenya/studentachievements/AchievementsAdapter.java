@@ -62,7 +62,7 @@ public class AchievementsAdapter extends BaseAdapter {
         //((TextView) view.findViewById(R.id.progress)).setText(a.getAchievementInfo().getGeneralProgress() + "%");
        // ((ProgressBar) view.findViewById(R.id.progressBar)).setProgress(a.getAchievementInfo().getGeneralProgress());
         //((TextView) view.findViewById(R.id.studentsProgress)).setText(a.getAchievement().getStudentsProgress() + "% студентов получили");
-        Picasso.with(AuthActivity.getAppContext()).load(Requests.getInstance().getURL() + "/icons/" + a.code + ".png").into((ImageView) view.findViewById(R.id.image));
+        Picasso.with(AuthActivity.getAppContext()).load(Requests.getInstance().getURL() + "/icons/" + a.code + ".png").placeholder(R.drawable.f).into((ImageView) view.findViewById(R.id.image));
         return view;
     }
 
