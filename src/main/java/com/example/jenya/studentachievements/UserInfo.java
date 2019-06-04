@@ -7,10 +7,7 @@ public class UserInfo {
     private static UserInfo currentUser;
 
     public static UserInfo getCurrentUser() {
-        if (currentUser != null)
             return currentUser;
-        else
-            return null;
     }
 
     static void loadUserInfo(UserInfo user) {
