@@ -20,8 +20,8 @@ public interface UserApi
     Call<UserInfo> initialize(@Header("Authorization") String token);
 
     @GET("/student/info")
-    Call<UserInfo[]> info(@Header("Authorization") String token);
+    Call<UserInfo> info(@Header("Authorization") String token);
 
     @GET("/student/groupmates")
-    Call<Groupmates> groupmates(@Header("Authorization") String token);
+    Call<UserInfo[]> groupmates(@Header("Authorization") String token);
 }

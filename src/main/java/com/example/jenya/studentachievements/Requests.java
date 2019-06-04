@@ -50,16 +50,16 @@ public class Requests
     // /student/groupmates
     public void getGroupmates(String token)
     {
-        userApi.groupmates(token).enqueue(new Callback<Groupmates>()
+        userApi.groupmates(token).enqueue(new Callback<UserInfo[]>()
         {
             @Override
-            public void onResponse(Call<Groupmates> call, Response<Groupmates> response)
+            public void onResponse(Call<UserInfo[]> call, Response<UserInfo[]> response)
             {
-                Groupmates groupmates = response.body();
+                UserInfo[] groupmates = response.body();
             }
 
             @Override
-            public void onFailure(Call<Groupmates> call, Throwable t)
+            public void onFailure(Call<UserInfo[]> call, Throwable t)
             {
 
             }
