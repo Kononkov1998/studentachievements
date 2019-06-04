@@ -24,7 +24,12 @@ public class Requests
     private Retrofit retrofit; // retrofit
     private UserApi userApi; // методы сервера
     private static Requests requests; // экземпляр класса
-    private final String URL = "http://16cbdcfd.ngrok.io";
+    private final String URL = "http://f1c50a3d.ngrok.io";
+
+    public String getURL()
+    {
+        return this.URL;
+    }
 
     private Requests()
     {
@@ -40,6 +45,25 @@ public class Requests
             return new Requests();
         }
         return  requests;
+    }
+
+    // /student/groupmates
+    public void getGroupmates(String token)
+    {
+        userApi.groupmates(token).enqueue(new Callback<Groupmates>()
+        {
+            @Override
+            public void onResponse(Call<Groupmates> call, Response<Groupmates> response)
+            {
+                Groupmates groupmates = response.body();
+            }
+
+            @Override
+            public void onFailure(Call<Groupmates> call, Throwable t)
+            {
+
+            }
+        });
     }
 
     // /student/signin

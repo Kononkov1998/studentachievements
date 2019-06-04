@@ -8,6 +8,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface UserApi
 {
@@ -19,5 +20,8 @@ public interface UserApi
     Call<UserInfo> initialize(@Header("Authorization") String token);
 
     @GET("/student/info")
-    Call<UserInfo> info(@Header("Authorization") String token);
+    Call<UserInfo[]> info(@Header("Authorization") String token);
+
+    @GET("/student/groupmates")
+    Call<Groupmates> groupmates(@Header("Authorization") String token);
 }
