@@ -35,7 +35,7 @@ public class ProfileActivity extends AppCompatActivity {
         final ArrayList<Achievement> userAchievements = new ArrayList<>(Arrays.asList(userInfo.getAchievements()));
 
         for (Achievement achievement : userAchievements) {
-            if (achievement.getAchievementInfo().getGeneralProgress() == 100)
+            if (achievement.getStars() != 0)
                 completedAchievements.add(achievement);
         }
 

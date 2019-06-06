@@ -1,6 +1,7 @@
 package com.example.jenya.studentachievements;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,9 +60,9 @@ public class AchievementsAdapter extends BaseAdapter {
         //((TextView) view.findViewById(R.id.progress)).setText(a.getAchievementInfo().getGeneralProgress() + "%");
         // ((ProgressBar) view.findViewById(R.id.progressBar)).setProgress(a.getAchievementInfo().getGeneralProgress());
         //((TextView) view.findViewById(R.id.studentsProgress)).setText(a.getAchievement().getStudentsProgress() + "% студентов получили");
-        String path = "R.drawable.stars" + a.getStars();
-        int resId = ctx.getResources().getIdentifier(path, null, null);
-        ((ImageView) view.findViewById(R.id.image)).setImageResource(resId);
+        String path = "stars" + a.getStars();
+        int resId = ctx.getResources().getIdentifier(path, "drawable", ctx.getPackageName());
+        ((ImageView) view.findViewById(R.id.stars)).setImageResource(resId);
         Picasso.with(AuthActivity.getAppContext()).load(Requests.getInstance().getURL() + "/icons/" + a.getCode() + ".png").placeholder(R.drawable.sfu).into((ImageView) view.findViewById(R.id.image));
         return view;
     }
