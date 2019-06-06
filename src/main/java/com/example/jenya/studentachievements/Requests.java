@@ -24,7 +24,7 @@ public class Requests
     private Retrofit retrofit; // retrofit
     private UserApi userApi; // методы сервера
     private static Requests requests; // экземпляр класса
-    private final String URL = "http://b39d7e60.ngrok.io/";
+    private final String URL = "http://39c3792b.ngrok.io";
 
     public String getURL()
     {

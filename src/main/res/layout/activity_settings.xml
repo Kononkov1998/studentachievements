@@ -116,13 +116,15 @@
 
         <Button
             android:id="@+id/button"
-            android:layout_width="165dp"
-            android:layout_height="81dp"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="70dp"
-            android:textSize="24dp"
-            android:text="Выход" />
+            android:layout_marginBottom="100dp"
+            android:background="@color/colorPrimary"
+            android:onClick="exit"
+            android:text="@string/exit"
+            android:textColor="#FFFFFF" />
 
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

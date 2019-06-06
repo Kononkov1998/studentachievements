@@ -45,6 +45,12 @@ public class SettingsActivity extends AppCompatActivity {
         });*/
     }
 
+    public void exit(View view){
+        AuthActivity.deleteToken();
+        Intent intent = new Intent(this, AuthActivity.class);
+        startActivity(intent);
+    }
+
     public void openProfile(View view) {
         Intent intent = new Intent(this, ProfileActivity.class);
         startActivity(intent);

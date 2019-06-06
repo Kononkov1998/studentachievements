@@ -4,5 +4,7 @@
     <string name="login">Login</string>
     <string name="enter">Войти</string>
     <string name="icon">Иконка</string>
+    <string name="search">Поиск</string>
+    <string name="exit">Выход</string>
     <string name="auth_text">Галерея\nваших\nдостижений</string>
 </resources>

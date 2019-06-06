@@ -96,15 +96,18 @@
                 android:singleLine="true"
                 android:layout_gravity="center_horizontal"
                 android:hint="Номер группы" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:onClick="search"
-                android:layout_marginTop="100dp"
-                android:text="ПОИСК"
-                android:textSize="24sp" />
         </LinearLayout>
+
+        <Button
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="100dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:background="@color/colorPrimary"
+            android:onClick="search"
+            android:text="@string/search"
+            android:textColor="#FFFFFF" />
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

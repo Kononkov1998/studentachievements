@@ -21,9 +21,9 @@ import java.util.Collections;
 
 public class ProfileActivity extends AppCompatActivity {
     @Override
-
     public void onBackPressed() {
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +54,7 @@ public class ProfileActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     for (Achievement achievement : completedAchievements) {
-                       userAchievements.remove(achievement);
+                        userAchievements.remove(achievement);
                     }
                     adapter.notifyDataSetChanged();
                 } else {

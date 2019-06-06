@@ -12,8 +12,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class AuthActivity extends AppCompatActivity
-{
+public class AuthActivity extends AppCompatActivity {
 
     private EditText login, pass;
     private static SharedPreferences settings; // настройки
@@ -21,8 +20,11 @@ public class AuthActivity extends AppCompatActivity
     private static Context mContext; // контекст
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    public void onBackPressed() {
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_auth);
@@ -33,36 +35,54 @@ public class AuthActivity extends AppCompatActivity
         requests = Requests.getInstance();
         mContext = this;
         settings = getSharedPreferences("User", MODE_PRIVATE);
+        checkToken();
     }
 
     //обработка кнопки "вход"
-    public void enter(View view)
-    {
-        if(login.getText().toString().trim().equals("") || pass.getText().toString().trim().equals(""))
-        {
+    public void enter(View view) {
+        if (login.getText().toString().trim().equals("") || pass.getText().toString().trim().equals("")) {
             return;
         }
-        try
-        {
+        try {
             requests.getUserToken(new User(login.getText().toString(), pass.getText().toString()));
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 
     // сохраняем токен
-    public static void saveToken(String token)
-    {
+    public static void saveToken(String token) {
         SharedPreferences.Editor prefEditor = settings.edit();
         prefEditor.putString("token", token);
         prefEditor.apply();
     }
 
+    // удаляем токен
+    public static void deleteToken() {
+        if (settings.contains("token")) {
+            SharedPreferences.Editor prefEditor = settings.edit();
+            prefEditor.remove("token");
+            prefEditor.apply();
+        }
+    }
+
+    // проверяем, есть ли сохраненный токен
+    private void checkToken() {
+        try {
+            if (settings.contains("token")) {
+                try {
+                    requests.getUserInfo(settings.getString("token", ""));
+                } catch (Exception e) {
+                    Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            }
+        } catch (Exception ex) {
+            Toast.makeText(this, ex.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+
     // получить контекст
-    public static Context getAppContext()
-    {
+    public static Context getAppContext() {
         return mContext;
     }
 }

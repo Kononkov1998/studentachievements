@@ -62,7 +62,7 @@ public class AchievementsAdapter extends BaseAdapter {
         String path = "R.drawable.stars" + a.getStars();
         int resId = ctx.getResources().getIdentifier(path, null, null);
         ((ImageView) view.findViewById(R.id.image)).setImageResource(resId);
-        Picasso.with(AuthActivity.getAppContext()).load(Requests.getInstance().getURL() + "/icons/" + a.getCode() + ".png").placeholder(R.drawable.f).into((ImageView) view.findViewById(R.id.image));
+        Picasso.with(AuthActivity.getAppContext()).load(Requests.getInstance().getURL() + "/icons/" + a.getCode() + ".png").placeholder(R.drawable.sfu).into((ImageView) view.findViewById(R.id.image));
         return view;
     }
 
