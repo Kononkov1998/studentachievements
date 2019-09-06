@@ -24,7 +24,7 @@ public class Requests
     private Retrofit retrofit; // retrofit
     private UserApi userApi; // методы сервера
     private static Requests requests; // экземпляр класса
-    private final String URL = "http://localhost:8080/";
+    private final String URL = "http://64917289.ngrok.io";
 
     public String getURL()
     {
@@ -86,7 +86,7 @@ public class Requests
             @Override
             public void onFailure(Call<UserToken> call, Throwable t)
             {
-                Toast.makeText(AuthActivity.getAppContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+
             }
         });
     }
@@ -126,6 +126,7 @@ public class Requests
             @Override
             public void onResponse(Call<UserInfo> call, Response<UserInfo> response)
             {
+                Toast.makeText(SplashScreenActivity.getAppContext(), "work!.", Toast.LENGTH_LONG).show();
                 if(response.isSuccessful())
                 {
                     Intent intent = new Intent(SplashScreenActivity.getAppContext(), ProfileActivity.class);
