@@ -1,18 +1,8 @@
 package com.example.jenya.studentachievements;
 
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.provider.ContactsContract;
-import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.widget.Toast;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import org.json.JSONException;
-import org.json.JSONObject;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
