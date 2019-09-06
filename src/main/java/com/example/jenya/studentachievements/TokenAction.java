@@ -55,10 +55,16 @@ public class TokenAction
     public void checkToken() {
         if (settings.contains("token")) {
             try {
+                Toast.makeText(SplashScreenActivity.getAppContext(), "Ошауцкуцкзже.", Toast.LENGTH_LONG).show();
                 requests.initializeStudent(settings.getString("token", ""));
             } catch (Exception e) {
                 Toast.makeText(AuthActivity.getAppContext(), e.getMessage(), Toast.LENGTH_LONG).show();
             }
+        }
+        else
+        {
+            Intent intent = new Intent(SplashScreenActivity.getAppContext(), AuthActivity.class);
+            SplashScreenActivity.getAppContext().startActivity(intent);
         }
     }
 }

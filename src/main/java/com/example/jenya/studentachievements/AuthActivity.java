@@ -44,7 +44,7 @@ public class AuthActivity extends AppCompatActivity {
         try {
             requests.getUserToken(new User(login.getText().toString(), pass.getText().toString()));
         } catch (Exception e) {
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+            
         }
     }
 
