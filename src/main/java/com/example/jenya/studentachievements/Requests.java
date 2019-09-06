@@ -24,7 +24,7 @@ public class Requests
     private Retrofit retrofit; // retrofit
     private UserApi userApi; // методы сервера
     private static Requests requests; // экземпляр класса
-    private final String URL = "http://0cf0638b.ngrok.io";
+    private final String URL = "http://localhost:8080/";
 
     public String getURL()
     {
@@ -48,7 +48,7 @@ public class Requests
     }
 
     // /student/groupmates
-    public void getGroupmates(String token)
+    /*public void getGroupmates(String token)
     {
         userApi.groupmates(token).enqueue(new Callback<UserInfo[]>()
         {
@@ -64,7 +64,7 @@ public class Requests
 
             }
         });
-    }
+    }*/
 
     // /student/signin
     public void getUserToken(User user) throws JSONException
@@ -78,9 +78,8 @@ public class Requests
                 {
                     // сохраняем токен
                     String token = response.body().getUserToken();
-                    AuthActivity.saveToken(token);
-                    // вызываем метод /student/info, если его ответ не 200 то /student/initialize
-                    getUserInfo(token);
+                    TokenAction.getInstance().saveToken(token);
+                    initializeStudent(token);
                 }
             }
 
@@ -93,7 +92,7 @@ public class Requests
     }
 
     // /student/info
-    public void getUserInfo(final String token)
+    /*public void getUserInfo(final String token)
     {
         userApi.info(token).enqueue(new Callback<UserInfo>() {
             @Override
@@ -117,7 +116,7 @@ public class Requests
                 Toast.makeText(AuthActivity.getAppContext(), "Ошибка! Попробуйте зайти позже.", Toast.LENGTH_LONG).show();
             }
         });
-    }
+    }*/
 
     // /student/initialize
     public void initializeStudent(String token)
@@ -129,16 +128,23 @@ public class Requests
             {
                 if(response.isSuccessful())
                 {
-                    Intent intent = new Intent(AuthActivity.getAppContext(), ProfileActivity.class);
+                    Intent intent = new Intent(SplashScreenActivity.getAppContext(), ProfileActivity.class);
                     UserInfo.loadUserInfo(response.body());
-                    AuthActivity.getAppContext().startActivity(intent);
+                    SplashScreenActivity.getAppContext().startActivity(intent);
+                }
+                else
+                {
+                    Intent intent = new Intent(SplashScreenActivity.getAppContext(), AuthActivity.class);
+                    SplashScreenActivity.getAppContext().startActivity(intent);
                 }
             }
 
             @Override
             public void onFailure(Call<UserInfo> call, Throwable t)
             {
-                Toast.makeText(AuthActivity.getAppContext(), "Ошибка! Попробуйте зайти позже.", Toast.LENGTH_LONG).show();
+                Toast.makeText(SplashScreenActivity.getAppContext(), "Ошибка! Попробуйте зайти позже.", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(SplashScreenActivity.getAppContext(), AuthActivity.class);
+                SplashScreenActivity.getAppContext().startActivity(intent);
             }
         });
     }

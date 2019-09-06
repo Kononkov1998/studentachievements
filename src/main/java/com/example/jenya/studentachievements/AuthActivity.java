@@ -15,7 +15,6 @@ import android.widget.Toast;
 public class AuthActivity extends AppCompatActivity {
 
     private EditText login, pass;
-    private static SharedPreferences settings; // настройки
     private Requests requests; // запросы
     private static Context mContext; // контекст
 
@@ -26,6 +25,7 @@ public class AuthActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        overridePendingTransition(0,0);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_auth);
 
@@ -34,8 +34,6 @@ public class AuthActivity extends AppCompatActivity {
 
         requests = Requests.getInstance();
         mContext = this;
-        settings = getSharedPreferences("User", MODE_PRIVATE);
-        checkToken();
     }
 
     //обработка кнопки "вход"
@@ -47,37 +45,6 @@ public class AuthActivity extends AppCompatActivity {
             requests.getUserToken(new User(login.getText().toString(), pass.getText().toString()));
         } catch (Exception e) {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
-        }
-    }
-
-    // сохраняем токен
-    public static void saveToken(String token) {
-        SharedPreferences.Editor prefEditor = settings.edit();
-        prefEditor.putString("token", token);
-        prefEditor.apply();
-    }
-
-    // удаляем токен
-    public static void deleteToken() {
-        if (settings.contains("token")) {
-            SharedPreferences.Editor prefEditor = settings.edit();
-            prefEditor.remove("token");
-            prefEditor.apply();
-        }
-    }
-
-    // проверяем, есть ли сохраненный токен
-    private void checkToken() {
-        try {
-            if (settings.contains("token")) {
-                try {
-                    requests.getUserInfo(settings.getString("token", ""));
-                } catch (Exception e) {
-                    Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
-                }
-            }
-        } catch (Exception ex) {
-            Toast.makeText(this, ex.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 
