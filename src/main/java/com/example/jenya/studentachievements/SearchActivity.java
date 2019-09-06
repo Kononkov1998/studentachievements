@@ -8,10 +8,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import java.util.zip.Inflater;
 
 public class SearchActivity extends AppCompatActivity {
 

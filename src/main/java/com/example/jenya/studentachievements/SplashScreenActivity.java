@@ -2,7 +2,6 @@ package com.example.jenya.studentachievements;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -23,7 +22,6 @@ public class SplashScreenActivity extends AppCompatActivity
 
         // вызываем checkToken()
         TokenAction.getInstance().checkToken();
-        //finish();
     }
 
     public static Context getAppContext() {
