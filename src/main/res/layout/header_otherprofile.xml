@@ -44,7 +44,8 @@
             android:button="@drawable/checkbox_selector"
             android:visibility="visible"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="5dp" />
+            android:layout_marginRight="5dp"
+            />
     </RelativeLayout>
 
     <RelativeLayout
@@ -59,7 +60,8 @@
             android:layout_alignParentRight="true"
             android:layout_marginEnd="5dp"
             android:layout_marginRight="5dp"
-            android:text="Скрыть полученные" />
+            android:text="Скрыть полученные"
+            android:buttonTint="@color/colorPrimary"/>
 
     </RelativeLayout>
 </LinearLayout>
