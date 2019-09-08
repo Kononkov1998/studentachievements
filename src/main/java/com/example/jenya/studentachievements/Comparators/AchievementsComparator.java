@@ -1,4 +1,6 @@
-package com.example.jenya.studentachievements;
+package com.example.jenya.studentachievements.Comparators;
+
+import com.example.jenya.studentachievements.Models.Achievement;
 
 import java.util.Comparator;
 

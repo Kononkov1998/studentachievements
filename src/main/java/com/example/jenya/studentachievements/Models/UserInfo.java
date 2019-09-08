@@ -1,4 +1,4 @@
-package com.example.jenya.studentachievements;
+package com.example.jenya.studentachievements.Models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -6,11 +6,11 @@ import com.google.gson.annotations.SerializedName;
 public class UserInfo {
     private static UserInfo currentUser;
 
-    static UserInfo getCurrentUser() {
+    public static UserInfo getCurrentUser() {
             return currentUser;
     }
 
-    static void loadUserInfo(UserInfo user) {
+    public static void loadUserInfo(UserInfo user) {
             currentUser = user;
     }
 

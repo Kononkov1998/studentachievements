@@ -1,11 +1,11 @@
-package com.example.jenya.studentachievements;
+package com.example.jenya.studentachievements.Models;
 
 public class User
 {
     private String username; // логин
     private String password; // пароль
 
-    User(String username, String password)
+    public User(String username, String password)
     {
         this.username = username;
         this.password = password;

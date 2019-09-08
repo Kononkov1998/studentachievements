@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">StudentAchievements</string>
-    <string name="pass">Password</string>
-    <string name="login">Login</string>
+    <string name="pass">Пароль</string>
+    <string name="login">Логин</string>
     <string name="enter">Войти</string>
     <string name="icon">Иконка</string>
     <string name="search">Поиск</string>

@@ -1,12 +1,14 @@
-package com.example.jenya.studentachievements;
+package com.example.jenya.studentachievements.Activities;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ListView;
+
+import com.example.jenya.studentachievements.Adapters.UsersAdapter;
+import com.example.jenya.studentachievements.R;
 
 public class FavoritesActivity extends AppCompatActivity {
 
@@ -15,6 +17,7 @@ public class FavoritesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        overridePendingTransition(0,0);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_favorites);
         //adapter = new UsersAdapter(this, DataBase.currentUser.getFavorites());

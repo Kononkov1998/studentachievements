@@ -57,7 +57,8 @@
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="13dp"
-            android:text="Получать уведомления" />
+            android:text="Получать уведомления"
+            android:buttonTint="@color/colorPrimary"/>
 
         <RadioGroup
             android:id="@+id/radioGroup"
@@ -83,35 +84,41 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:checked="true"
-                android:text="Все" />
+                android:text="Все"
+                android:buttonTint="@color/colorPrimary"
+                />
 
             <RadioButton
                 android:id="@+id/radioButton1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Одногруппники" />
+                android:text="Одногруппники"
+                android:buttonTint="@color/colorPrimary"/>
 
             <RadioButton
                 android:id="@+id/radioButton2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Избранные пользователи" />
+                android:text="Избранные пользователи"
+                android:buttonTint="@color/colorPrimary"/>
 
             <RadioButton
                 android:id="@+id/radioButton3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Одногруппники и избранные пользователи" />
+                android:text="Одногруппники и избранные пользователи"
+                android:buttonTint="@color/colorPrimary"/>
 
             <RadioButton
                 android:id="@+id/radioButton4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Только я" />
+                android:text="Только я"
+                android:buttonTint="@color/colorPrimary"/>
         </RadioGroup>
 
         <Button
@@ -121,7 +128,7 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="100dp"
-            android:background="@color/colorPrimary"
+            android:background="@drawable/button_shape"
             android:onClick="exit"
             android:text="@string/exit"
             android:textColor="#FFFFFF" />

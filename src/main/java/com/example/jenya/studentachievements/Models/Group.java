@@ -1,7 +1,4 @@
-package com.example.jenya.studentachievements;
-
-import android.os.Parcel;
-import android.os.Parcelable;
+package com.example.jenya.studentachievements.Models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

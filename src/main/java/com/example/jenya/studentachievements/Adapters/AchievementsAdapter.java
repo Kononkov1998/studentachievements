@@ -1,15 +1,17 @@
-package com.example.jenya.studentachievements;
+package com.example.jenya.studentachievements.Adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.jenya.studentachievements.Activities.SplashScreenActivity;
+import com.example.jenya.studentachievements.Models.Achievement;
+import com.example.jenya.studentachievements.R;
+import com.example.jenya.studentachievements.Requests;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -19,7 +21,7 @@ public class AchievementsAdapter extends BaseAdapter {
     private LayoutInflater lInflater;
     private ArrayList<Achievement> objects;
 
-    AchievementsAdapter(Context context, ArrayList<Achievement> achievements) {
+    public AchievementsAdapter(Context context, ArrayList<Achievement> achievements) {
         ctx = context;
         objects = achievements;
         lInflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -63,7 +65,7 @@ public class AchievementsAdapter extends BaseAdapter {
         String path = "stars" + a.getStars();
         int resId = ctx.getResources().getIdentifier(path, "drawable", ctx.getPackageName());
         ((ImageView) view.findViewById(R.id.stars)).setImageResource(resId);
-        Picasso.with(AuthActivity.getAppContext()).load(Requests.getInstance().getURL() + "/icons/" + a.getCode() + ".png").placeholder(R.drawable.sfu).into((ImageView) view.findViewById(R.id.image));
+        Picasso.with(SplashScreenActivity.getAppContext()).load(Requests.getInstance().getURL() + "/icons/" + a.getCode() + ".png").placeholder(R.drawable.sfu).into((ImageView) view.findViewById(R.id.image));
         return view;
     }
 

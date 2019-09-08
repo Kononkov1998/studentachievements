@@ -1,19 +1,20 @@
-package com.example.jenya.studentachievements;
+package com.example.jenya.studentachievements.Activities;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
-import android.icu.text.IDNA;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.example.jenya.studentachievements.Adapters.AchievementsAdapter;
+import com.example.jenya.studentachievements.Comparators.AchievementsComparator;
+import com.example.jenya.studentachievements.Models.Achievement;
+import com.example.jenya.studentachievements.Models.UserInfo;
+import com.example.jenya.studentachievements.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,6 +28,7 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        overridePendingTransition(0,0);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_profile);
 

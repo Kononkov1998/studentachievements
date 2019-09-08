@@ -1,17 +1,16 @@
 package com.example.jenya.studentachievements;
 
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.provider.ContactsContract;
-import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.example.jenya.studentachievements.Activities.AuthActivity;
+import com.example.jenya.studentachievements.Activities.ProfileActivity;
+import com.example.jenya.studentachievements.Activities.SplashScreenActivity;
+import com.example.jenya.studentachievements.Models.User;
+import com.example.jenya.studentachievements.Models.UserInfo;
+import com.example.jenya.studentachievements.Models.UserToken;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -24,7 +23,7 @@ public class Requests
     private Retrofit retrofit; // retrofit
     private UserApi userApi; // методы сервера
     private static Requests requests; // экземпляр класса
-    private final String URL = "http://0cf0638b.ngrok.io";
+    private final String URL = "http://76466c11.ngrok.io";
 
     public String getURL()
     {
@@ -44,11 +43,11 @@ public class Requests
         {
             return new Requests();
         }
-        return  requests;
+        return requests;
     }
 
     // /student/groupmates
-    public void getGroupmates(String token)
+    /*public void getGroupmates(String token)
     {
         userApi.groupmates(token).enqueue(new Callback<UserInfo[]>()
         {
@@ -64,7 +63,7 @@ public class Requests
 
             }
         });
-    }
+    }*/
 
     // /student/signin
     public void getUserToken(User user) throws JSONException
@@ -78,22 +77,21 @@ public class Requests
                 {
                     // сохраняем токен
                     String token = response.body().getUserToken();
-                    AuthActivity.saveToken(token);
-                    // вызываем метод /student/info, если его ответ не 200 то /student/initialize
-                    getUserInfo(token);
+                    TokenAction.getInstance().saveToken(token);
+                    initializeStudent(token);
                 }
             }
 
             @Override
             public void onFailure(Call<UserToken> call, Throwable t)
             {
-                Toast.makeText(AuthActivity.getAppContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+
             }
         });
     }
 
     // /student/info
-    public void getUserInfo(final String token)
+    /*public void getUserInfo(final String token)
     {
         userApi.info(token).enqueue(new Callback<UserInfo>() {
             @Override
@@ -117,7 +115,7 @@ public class Requests
                 Toast.makeText(AuthActivity.getAppContext(), "Ошибка! Попробуйте зайти позже.", Toast.LENGTH_LONG).show();
             }
         });
-    }
+    }*/
 
     // /student/initialize
     public void initializeStudent(String token)
@@ -127,18 +125,26 @@ public class Requests
             @Override
             public void onResponse(Call<UserInfo> call, Response<UserInfo> response)
             {
+                Toast.makeText(SplashScreenActivity.getAppContext(), "work!.", Toast.LENGTH_LONG).show();
                 if(response.isSuccessful())
                 {
-                    Intent intent = new Intent(AuthActivity.getAppContext(), ProfileActivity.class);
+                    Intent intent = new Intent(SplashScreenActivity.getAppContext(), ProfileActivity.class);
                     UserInfo.loadUserInfo(response.body());
-                    AuthActivity.getAppContext().startActivity(intent);
+                    SplashScreenActivity.getAppContext().startActivity(intent);
+                }
+                else
+                {
+                    Intent intent = new Intent(SplashScreenActivity.getAppContext(), AuthActivity.class);
+                    SplashScreenActivity.getAppContext().startActivity(intent);
                 }
             }
 
             @Override
             public void onFailure(Call<UserInfo> call, Throwable t)
             {
-                Toast.makeText(AuthActivity.getAppContext(), "Ошибка! Попробуйте зайти позже.", Toast.LENGTH_LONG).show();
+                Toast.makeText(SplashScreenActivity.getAppContext(), "Ошибка! Попробуйте зайти позже.", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(SplashScreenActivity.getAppContext(), AuthActivity.class);
+                SplashScreenActivity.getAppContext().startActivity(intent);
             }
         });
     }
