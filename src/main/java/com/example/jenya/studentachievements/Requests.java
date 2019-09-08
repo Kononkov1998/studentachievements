@@ -19,7 +19,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 final public class Requests {
-    private static String URL = "http://76466c11.ngrok.io";
+    private static String URL = "http://c77380de.ngrok.io";
     private static Retrofit retrofit = new Retrofit.Builder().baseUrl(URL).addConverterFactory(GsonConverterFactory.create()).build(); // retrofit
     private static UserApi userApi = retrofit.create(UserApi.class); // методы сервера
 

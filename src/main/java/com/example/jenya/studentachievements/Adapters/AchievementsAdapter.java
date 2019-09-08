@@ -66,7 +66,7 @@ public class AchievementsAdapter extends BaseAdapter {
         ((ImageView) view.findViewById(R.id.stars)).setImageResource(resId);
         Picasso.with(ctx)
                 .load(Requests.getURL() + "/icons/" + a.getCode() + ".png")
-                .placeholder(R.drawable.sfu)
+                .placeholder(R.drawable.no_photo)
                 .into((ImageView) view.findViewById(R.id.image));
         return view;
     }
