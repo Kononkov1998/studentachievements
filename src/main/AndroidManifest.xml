@@ -4,9 +4,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/star"
+        android:icon="@drawable/sfu"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/star"
+        android:roundIcon="@drawable/sfu"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true">
         <activity android:name=".Activities.SplashScreenActivity" android:theme="@style/SplashScreen">
