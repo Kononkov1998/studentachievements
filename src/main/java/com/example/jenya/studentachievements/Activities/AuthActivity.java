@@ -14,8 +14,7 @@ import com.example.jenya.studentachievements.Requests;
 public class AuthActivity extends AppCompatActivity {
 
     private EditText login, pass;
-    private Requests requests; // запросы
-    private Context mContext; // контекст
+    private static Context mContext;
 
     @Override
     public void onBackPressed() {
@@ -30,8 +29,6 @@ public class AuthActivity extends AppCompatActivity {
 
         login = findViewById(R.id.loginText);
         pass = findViewById(R.id.passText);
-
-        requests = Requests.getInstance();
         mContext = this;
     }
 
@@ -41,14 +38,14 @@ public class AuthActivity extends AppCompatActivity {
             return;
         }
         try {
-            requests.getUserToken(new User(login.getText().toString(), pass.getText().toString()));
+            Requests.getUserToken(new User(login.getText().toString(), pass.getText().toString()));
         } catch (Exception e) {
 
         }
     }
 
     // получить контекст
-    public Context getAppContext() {
+    public static Context getAppContext() {
         return mContext;
     }
 }

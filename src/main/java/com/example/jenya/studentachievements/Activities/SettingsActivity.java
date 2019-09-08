@@ -48,7 +48,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public void exit(View view){
-        TokenAction.getInstance().deleteToken();
+        TokenAction.deleteToken();
         Intent intent = new Intent(this, AuthActivity.class);
         startActivity(intent);
     }

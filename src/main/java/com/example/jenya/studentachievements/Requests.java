@@ -18,32 +18,18 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class Requests
-{
-    private Retrofit retrofit; // retrofit
-    private UserApi userApi; // методы сервера
-    private static Requests requests; // экземпляр класса
-    private final String URL = "http://76466c11.ngrok.io";
+final public class Requests {
+    private static Retrofit retrofit; // retrofit
+    private static UserApi userApi; // методы сервера
+    private static String URL = "http://76466c11.ngrok.io";
 
-    public String getURL()
-    {
-        return this.URL;
-    }
-
-    private Requests()
-    {
+    private Requests() {
         retrofit = new Retrofit.Builder().baseUrl(URL).addConverterFactory(GsonConverterFactory.create()).build();
         userApi = retrofit.create(UserApi.class);
     }
 
-    // метод, необходимый для шаблона 'синглтон'
-    public static Requests getInstance()
-    {
-        if(requests == null)
-        {
-            return new Requests();
-        }
-        return requests;
+    public static String getURL() {
+        return URL;
     }
 
     // /student/groupmates
@@ -66,25 +52,20 @@ public class Requests
     }*/
 
     // /student/signin
-    public void getUserToken(User user) throws JSONException
-    {
-        userApi.signin(user).enqueue(new Callback<UserToken>()
-        {
+    public static void getUserToken(User user) throws JSONException {
+        userApi.signin(user).enqueue(new Callback<UserToken>() {
             @Override
-            public void onResponse(Call<UserToken> call, Response<UserToken> response)
-            {
-                if(response.isSuccessful())
-                {
+            public void onResponse(Call<UserToken> call, Response<UserToken> response) {
+                if (response.isSuccessful()) {
                     // сохраняем токен
                     String token = response.body().getUserToken();
-                    TokenAction.getInstance().saveToken(token);
+                    TokenAction.saveToken(token);
                     initializeStudent(token);
                 }
             }
 
             @Override
-            public void onFailure(Call<UserToken> call, Throwable t)
-            {
+            public void onFailure(Call<UserToken> call, Throwable t) {
 
             }
         });
@@ -118,30 +99,23 @@ public class Requests
     }*/
 
     // /student/initialize
-    public void initializeStudent(String token)
-    {
-        userApi.initialize(token).enqueue(new Callback<UserInfo>()
-        {
+    public static void initializeStudent(String token) {
+        userApi.initialize(token).enqueue(new Callback<UserInfo>() {
             @Override
-            public void onResponse(Call<UserInfo> call, Response<UserInfo> response)
-            {
+            public void onResponse(Call<UserInfo> call, Response<UserInfo> response) {
                 Toast.makeText(SplashScreenActivity.getAppContext(), "work!.", Toast.LENGTH_LONG).show();
-                if(response.isSuccessful())
-                {
+                if (response.isSuccessful()) {
                     Intent intent = new Intent(SplashScreenActivity.getAppContext(), ProfileActivity.class);
                     UserInfo.setCurrentUser(response.body());
                     SplashScreenActivity.getAppContext().startActivity(intent);
-                }
-                else
-                {
+                } else {
                     Intent intent = new Intent(SplashScreenActivity.getAppContext(), AuthActivity.class);
                     SplashScreenActivity.getAppContext().startActivity(intent);
                 }
             }
 
             @Override
-            public void onFailure(Call<UserInfo> call, Throwable t)
-            {
+            public void onFailure(Call<UserInfo> call, Throwable t) {
                 Toast.makeText(SplashScreenActivity.getAppContext(), "Ошибка! Попробуйте зайти позже.", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(SplashScreenActivity.getAppContext(), AuthActivity.class);
                 SplashScreenActivity.getAppContext().startActivity(intent);

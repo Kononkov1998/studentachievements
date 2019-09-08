@@ -21,7 +21,7 @@ public class SplashScreenActivity extends AppCompatActivity
         mContext = this;
 
         // вызываем checkToken()
-        TokenAction.getInstance().checkToken();
+        TokenAction.checkToken();
     }
 
     public static Context getAppContext() {

@@ -8,32 +8,22 @@ import com.example.jenya.studentachievements.Activities.SplashScreenActivity;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class TokenAction {
-    private static TokenAction tokenAction; // экземпляр класса
-    private SharedPreferences settings; // настройки
-    private Requests requests; // запросы
+final public class TokenAction {
+    private static SharedPreferences settings; // настройки
 
     private TokenAction() {
         settings = SplashScreenActivity.getAppContext().getSharedPreferences("User", MODE_PRIVATE);
-        requests = Requests.getInstance();
-    }
-
-    public static TokenAction getInstance() {
-        if (tokenAction == null) {
-            tokenAction = new TokenAction();
-        }
-        return tokenAction;
     }
 
     // сохраняем токен
-    public void saveToken(String token) {
+    public static void saveToken(String token) {
         SharedPreferences.Editor prefEditor = settings.edit();
         prefEditor.putString("token", token);
         prefEditor.apply();
     }
 
     // удаляем токен
-    public void deleteToken() {
+    public static void deleteToken() {
         if (settings.contains("token")) {
             SharedPreferences.Editor prefEditor = settings.edit();
             prefEditor.remove("token");
@@ -42,10 +32,10 @@ public class TokenAction {
     }
 
     // проверяем, есть ли сохраненный токен
-    public void checkToken() {
+    public static void checkToken() {
         if (settings.contains("token")) {
             try {
-                requests.initializeStudent(settings.getString("token", ""));
+                Requests.initializeStudent(settings.getString("token", ""));
             } catch (Exception e) {
 
             }
