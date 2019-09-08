@@ -1,11 +1,11 @@
 package com.example.jenya.studentachievements;
 
+import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
 import com.example.jenya.studentachievements.Activities.AuthActivity;
 import com.example.jenya.studentachievements.Activities.ProfileActivity;
-import com.example.jenya.studentachievements.Activities.SplashScreenActivity;
 import com.example.jenya.studentachievements.Models.User;
 import com.example.jenya.studentachievements.Models.UserInfo;
 import com.example.jenya.studentachievements.Models.UserToken;
@@ -52,15 +52,15 @@ final public class Requests {
     }*/
 
     // /student/signin
-    public static void getUserToken(User user) throws JSONException {
+    public static void getUserToken(User user, Context ctx) throws JSONException {
         userApi.signin(user).enqueue(new Callback<UserToken>() {
             @Override
             public void onResponse(Call<UserToken> call, Response<UserToken> response) {
                 if (response.isSuccessful()) {
                     // сохраняем токен
                     String token = response.body().getUserToken();
-                    TokenAction.saveToken(token);
-                    initializeStudent(token);
+                    TokenAction.saveToken(token, ctx);
+                    initializeStudent(token, ctx);
                 }
             }
 
@@ -99,26 +99,26 @@ final public class Requests {
     }*/
 
     // /student/initialize
-    public static void initializeStudent(String token) {
+    public static void initializeStudent(String token, Context ctx) {
         userApi.initialize(token).enqueue(new Callback<UserInfo>() {
             @Override
             public void onResponse(Call<UserInfo> call, Response<UserInfo> response) {
-                Toast.makeText(SplashScreenActivity.getAppContext(), "work!.", Toast.LENGTH_LONG).show();
+                Toast.makeText(ctx, "work!.", Toast.LENGTH_LONG).show();
                 if (response.isSuccessful()) {
-                    Intent intent = new Intent(SplashScreenActivity.getAppContext(), ProfileActivity.class);
+                    Intent intent = new Intent(ctx, ProfileActivity.class);
                     UserInfo.setCurrentUser(response.body());
-                    SplashScreenActivity.getAppContext().startActivity(intent);
+                    ctx.startActivity(intent);
                 } else {
-                    Intent intent = new Intent(SplashScreenActivity.getAppContext(), AuthActivity.class);
-                    SplashScreenActivity.getAppContext().startActivity(intent);
+                    Intent intent = new Intent(ctx, AuthActivity.class);
+                    ctx.startActivity(intent);
                 }
             }
 
             @Override
             public void onFailure(Call<UserInfo> call, Throwable t) {
-                Toast.makeText(SplashScreenActivity.getAppContext(), "Ошибка! Попробуйте зайти позже.", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(SplashScreenActivity.getAppContext(), AuthActivity.class);
-                SplashScreenActivity.getAppContext().startActivity(intent);
+                Toast.makeText(ctx, "Ошибка! Попробуйте зайти позже.", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(ctx, AuthActivity.class);
+                ctx.startActivity(intent);
             }
         });
     }

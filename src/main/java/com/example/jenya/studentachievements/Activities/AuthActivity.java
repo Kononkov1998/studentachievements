@@ -1,6 +1,5 @@
 package com.example.jenya.studentachievements.Activities;
 
-import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -14,7 +13,6 @@ import com.example.jenya.studentachievements.Requests;
 public class AuthActivity extends AppCompatActivity {
 
     private EditText login, pass;
-    private static Context mContext;
 
     @Override
     public void onBackPressed() {
@@ -29,7 +27,6 @@ public class AuthActivity extends AppCompatActivity {
 
         login = findViewById(R.id.loginText);
         pass = findViewById(R.id.passText);
-        mContext = this;
     }
 
     //обработка кнопки "вход"
@@ -38,14 +35,9 @@ public class AuthActivity extends AppCompatActivity {
             return;
         }
         try {
-            Requests.getUserToken(new User(login.getText().toString(), pass.getText().toString()));
+            Requests.getUserToken(new User(login.getText().toString(), pass.getText().toString()), this);
         } catch (Exception e) {
 
         }
-    }
-
-    // получить контекст
-    public static Context getAppContext() {
-        return mContext;
     }
 }

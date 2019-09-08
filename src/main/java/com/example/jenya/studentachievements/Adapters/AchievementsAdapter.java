@@ -8,7 +8,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.jenya.studentachievements.Activities.SplashScreenActivity;
 import com.example.jenya.studentachievements.Models.Achievement;
 import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.Requests;
@@ -65,8 +64,7 @@ public class AchievementsAdapter extends BaseAdapter {
         String path = "stars" + a.getStars();
         int resId = ctx.getResources().getIdentifier(path, "drawable", ctx.getPackageName());
         ((ImageView) view.findViewById(R.id.stars)).setImageResource(resId);
-        Picasso.with(
-                SplashScreenActivity.getAppContext())
+        Picasso.with(ctx)
                 .load(Requests.getURL() + "/icons/" + a.getCode() + ".png")
                 .placeholder(R.drawable.sfu)
                 .into((ImageView) view.findViewById(R.id.image));

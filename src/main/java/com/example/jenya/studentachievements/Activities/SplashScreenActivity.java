@@ -1,6 +1,5 @@
 package com.example.jenya.studentachievements.Activities;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
@@ -8,7 +7,6 @@ import com.example.jenya.studentachievements.TokenAction;
 
 public class SplashScreenActivity extends AppCompatActivity
 {
-    private static Context mContext;
 
     @Override
     public void onBackPressed() {
@@ -18,13 +16,8 @@ public class SplashScreenActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        mContext = this;
 
         // вызываем checkToken()
-        TokenAction.checkToken();
-    }
-
-    public static Context getAppContext() {
-        return mContext;
+        TokenAction.checkToken(this);
     }
 }
