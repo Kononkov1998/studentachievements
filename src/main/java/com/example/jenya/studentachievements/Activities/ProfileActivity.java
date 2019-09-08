@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -28,7 +27,7 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        overridePendingTransition(0,0);
+        overridePendingTransition(0, 0);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_profile);
 
@@ -52,18 +51,16 @@ public class ProfileActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
 
         CheckBox hideBox = findViewById(R.id.checkboxHide);
-        hideBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    for (Achievement achievement : completedAchievements) {
-                        userAchievements.remove(achievement);
-                    }
-                    adapter.notifyDataSetChanged();
-                } else {
-                    userAchievements.addAll(completedAchievements);
-                    Collections.sort(userAchievements, new AchievementsComparator());
-                    adapter.notifyDataSetChanged();
+        hideBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                for (Achievement achievement : completedAchievements) {
+                    userAchievements.remove(achievement);
                 }
+                adapter.notifyDataSetChanged();
+            } else {
+                userAchievements.addAll(completedAchievements);
+                Collections.sort(userAchievements, new AchievementsComparator());
+                adapter.notifyDataSetChanged();
             }
         });
         /*

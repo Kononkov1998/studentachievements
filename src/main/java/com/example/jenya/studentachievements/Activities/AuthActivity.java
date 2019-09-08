@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.jenya.studentachievements.Models.User;
 import com.example.jenya.studentachievements.R;
@@ -21,7 +22,7 @@ public class AuthActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        overridePendingTransition(0,0);
+        overridePendingTransition(0, 0);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_auth);
 
@@ -32,6 +33,7 @@ public class AuthActivity extends AppCompatActivity {
     //обработка кнопки "вход"
     public void enter(View view) {
         if (login.getText().toString().trim().equals("") || pass.getText().toString().trim().equals("")) {
+            Toast.makeText(this, "Введите логин и пароль!", Toast.LENGTH_LONG).show();
             return;
         }
         try {

@@ -19,13 +19,11 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 final public class Requests {
-    private static Retrofit retrofit; // retrofit
-    private static UserApi userApi; // методы сервера
     private static String URL = "http://76466c11.ngrok.io";
+    private static Retrofit retrofit = new Retrofit.Builder().baseUrl(URL).addConverterFactory(GsonConverterFactory.create()).build(); // retrofit
+    private static UserApi userApi = retrofit.create(UserApi.class); // методы сервера
 
     private Requests() {
-        retrofit = new Retrofit.Builder().baseUrl(URL).addConverterFactory(GsonConverterFactory.create()).build();
-        userApi = retrofit.create(UserApi.class);
     }
 
     public static String getURL() {
@@ -66,7 +64,7 @@ final public class Requests {
 
             @Override
             public void onFailure(Call<UserToken> call, Throwable t) {
-
+                Toast.makeText(ctx, "Нет ответа от сервера", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -103,7 +101,6 @@ final public class Requests {
         userApi.initialize(token).enqueue(new Callback<UserInfo>() {
             @Override
             public void onResponse(Call<UserInfo> call, Response<UserInfo> response) {
-                Toast.makeText(ctx, "work!.", Toast.LENGTH_LONG).show();
                 if (response.isSuccessful()) {
                     Intent intent = new Intent(ctx, ProfileActivity.class);
                     UserInfo.setCurrentUser(response.body());
@@ -116,7 +113,6 @@ final public class Requests {
 
             @Override
             public void onFailure(Call<UserInfo> call, Throwable t) {
-                Toast.makeText(ctx, "Ошибка! Попробуйте зайти позже.", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(ctx, AuthActivity.class);
                 ctx.startActivity(intent);
             }
