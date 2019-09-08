@@ -8,23 +8,19 @@ import com.example.jenya.studentachievements.Activities.SplashScreenActivity;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class TokenAction
-{
+public class TokenAction {
     private static TokenAction tokenAction; // экземпляр класса
     private SharedPreferences settings; // настройки
     private Requests requests; // запросы
 
-    private TokenAction()
-    {
+    private TokenAction() {
         settings = SplashScreenActivity.getAppContext().getSharedPreferences("User", MODE_PRIVATE);
         requests = Requests.getInstance();
     }
 
-    public static TokenAction getInstance()
-    {
-        if(tokenAction == null)
-        {
-            return new TokenAction();
+    public static TokenAction getInstance() {
+        if (tokenAction == null) {
+            tokenAction = new TokenAction();
         }
         return tokenAction;
     }
@@ -53,9 +49,7 @@ public class TokenAction
             } catch (Exception e) {
 
             }
-        }
-        else
-        {
+        } else {
             Intent intent = new Intent(SplashScreenActivity.getAppContext(), AuthActivity.class);
             SplashScreenActivity.getAppContext().startActivity(intent);
         }

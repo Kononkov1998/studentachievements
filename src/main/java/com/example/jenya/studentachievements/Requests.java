@@ -129,7 +129,7 @@ public class Requests
                 if(response.isSuccessful())
                 {
                     Intent intent = new Intent(SplashScreenActivity.getAppContext(), ProfileActivity.class);
-                    UserInfo.loadUserInfo(response.body());
+                    UserInfo.setCurrentUser(response.body());
                     SplashScreenActivity.getAppContext().startActivity(intent);
                 }
                 else

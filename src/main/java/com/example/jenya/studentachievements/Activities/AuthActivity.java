@@ -15,7 +15,7 @@ public class AuthActivity extends AppCompatActivity {
 
     private EditText login, pass;
     private Requests requests; // запросы
-    private static Context mContext; // контекст
+    private Context mContext; // контекст
 
     @Override
     public void onBackPressed() {
@@ -48,7 +48,7 @@ public class AuthActivity extends AppCompatActivity {
     }
 
     // получить контекст
-    public static Context getAppContext() {
+    public Context getAppContext() {
         return mContext;
     }
 }

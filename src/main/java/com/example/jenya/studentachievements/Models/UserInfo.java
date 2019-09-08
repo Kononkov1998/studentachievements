@@ -10,7 +10,7 @@ public class UserInfo {
             return currentUser;
     }
 
-    public static void loadUserInfo(UserInfo user) {
+    public static void setCurrentUser(UserInfo user) {
             currentUser = user;
     }
 

@@ -1,7 +1,6 @@
 package com.example.jenya.studentachievements.Activities;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
@@ -20,7 +19,6 @@ public class SplashScreenActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         mContext = this;
-        Intent intent = new Intent(this, AuthActivity.class);
 
         // вызываем checkToken()
         TokenAction.getInstance().checkToken();
