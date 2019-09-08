@@ -7,7 +7,7 @@
     <item>
         <bitmap
             android:gravity="center"
-            android:src="@drawable/sfu150"/>
+            android:src="@drawable/sfu"/>
     </item>
 
 </layer-list>
