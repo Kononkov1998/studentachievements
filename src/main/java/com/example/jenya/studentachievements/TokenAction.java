@@ -3,6 +3,7 @@ package com.example.jenya.studentachievements;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.widget.Button;
 
 import com.example.jenya.studentachievements.Activities.AuthActivity;
 
