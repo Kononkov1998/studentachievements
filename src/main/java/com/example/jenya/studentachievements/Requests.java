@@ -2,6 +2,7 @@ package com.example.jenya.studentachievements;
 
 import android.content.Context;
 import android.content.Intent;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.jenya.studentachievements.Activities.AuthActivity;
@@ -19,7 +20,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 final public class Requests {
-    private static String URL = "http://c77380de.ngrok.io";
+    private static String URL = "http://9a2f6a9e.ngrok.io";
     private static Retrofit retrofit = new Retrofit.Builder().baseUrl(URL).addConverterFactory(GsonConverterFactory.create()).build(); // retrofit
     private static UserApi userApi = retrofit.create(UserApi.class); // методы сервера
 
@@ -50,11 +51,15 @@ final public class Requests {
     }*/
 
     // /student/signin
-    public static void getUserToken(User user, Context ctx) throws JSONException {
-        userApi.signin(user).enqueue(new Callback<UserToken>() {
+    public static void getUserToken(User user, Context ctx) throws JSONException
+    {
+        userApi.signin(user).enqueue(new Callback<UserToken>()
+        {
             @Override
-            public void onResponse(Call<UserToken> call, Response<UserToken> response) {
-                if (response.isSuccessful()) {
+            public void onResponse(Call<UserToken> call, Response<UserToken> response)
+            {
+                if (response.isSuccessful())
+                {
                     // сохраняем токен
                     String token = response.body().getUserToken();
                     TokenAction.saveToken(token, ctx);
@@ -63,7 +68,9 @@ final public class Requests {
             }
 
             @Override
-            public void onFailure(Call<UserToken> call, Throwable t) {
+            public void onFailure(Call<UserToken> call, Throwable t)
+            {
+                AuthActivity.toggleButton();
                 Toast.makeText(ctx, "Нет ответа от сервера", Toast.LENGTH_LONG).show();
             }
         });
@@ -97,22 +104,31 @@ final public class Requests {
     }*/
 
     // /student/initialize
-    public static void initializeStudent(String token, Context ctx) {
-        userApi.initialize(token).enqueue(new Callback<UserInfo>() {
+    public static void initializeStudent(String token, Context ctx)
+    {
+        userApi.initialize(token).enqueue(new Callback<UserInfo>()
+        {
             @Override
-            public void onResponse(Call<UserInfo> call, Response<UserInfo> response) {
-                if (response.isSuccessful()) {
+            public void onResponse(Call<UserInfo> call, Response<UserInfo> response)
+            {
+                if (response.isSuccessful())
+                {
                     Intent intent = new Intent(ctx, ProfileActivity.class);
                     UserInfo.setCurrentUser(response.body());
                     ctx.startActivity(intent);
-                } else {
+                }
+                else {
                     Intent intent = new Intent(ctx, AuthActivity.class);
                     ctx.startActivity(intent);
                 }
+                AuthActivity.toggleButton();
             }
 
             @Override
-            public void onFailure(Call<UserInfo> call, Throwable t) {
+            public void onFailure(Call<UserInfo> call, Throwable t)
+            {
+                AuthActivity.toggleButton();
+                Toast.makeText(ctx, "Нет ответа от сервера", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(ctx, AuthActivity.class);
                 ctx.startActivity(intent);
             }
