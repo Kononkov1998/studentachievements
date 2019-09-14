@@ -19,7 +19,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Requests {
-    private static final String URL = "http://fbb28998.ngrok.io";
+    private static final String URL = "http://f2e3387f.ngrok.io";
     private Retrofit retrofit;
     private UserApi userApi;
     private static Requests instance;
@@ -84,7 +84,6 @@ public class Requests {
             public void onFailure(@NonNull Call<UserToken> call, @NonNull Throwable t) {
                 btn.getBackground().setAlpha(255);
                 btn.setEnabled(true);
-                Toast.makeText(ctx, "getUserToken failure", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -126,7 +125,6 @@ public class Requests {
                     UserInfo.setCurrentUser(response.body());
                     ctx.startActivity(intent);
                 } else {
-                    Toast.makeText(ctx, "Неверный логин или пароль", Toast.LENGTH_LONG).show();
                     btn.getBackground().setAlpha(255);
                     btn.setEnabled(true);
                 }
@@ -137,7 +135,6 @@ public class Requests {
 
                 btn.getBackground().setAlpha(255);
                 btn.setEnabled(true);
-                Toast.makeText(ctx, "initializeStudent failure", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(ctx, AuthActivity.class);
                 ctx.startActivity(intent);
             }
