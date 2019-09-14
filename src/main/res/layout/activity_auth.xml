@@ -28,23 +28,33 @@
 
         <EditText
             android:id="@+id/loginText"
+            android:drawablePadding="4dp"
+            android:drawableLeft="@drawable/ic_person_grey_24dp"
+            android:drawableStart="@drawable/ic_person_grey_24dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
-            android:textColorHint="@android:color/black"
-            android:ems="10"
+            android:textColorHint="@color/colorGrey"
+            android:ems="15"
+            android:background="@drawable/edittext_shape"
             android:hint="@string/login"
-            android:inputType="text" />
+            android:inputType="text"
+            android:paddingLeft="10dp"/>
 
         <EditText
+            android:drawableLeft="@drawable/ic_lock_grey_24dp"
+            android:drawableStart="@drawable/ic_lock_grey_24dp"
+            android:drawablePadding="4dp"
             android:id="@+id/passText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
-            android:textColorHint="@android:color/black"
-            android:ems="10"
+            android:textColorHint="@color/colorGrey"
+            android:ems="15"
+            android:background="@drawable/edittext_shape"
             android:hint="@string/pass"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:paddingLeft="10dp" />
 
         <Button
             android:id="@+id/buttonEnter"
