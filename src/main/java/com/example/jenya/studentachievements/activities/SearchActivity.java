@@ -1,4 +1,4 @@
-package com.example.jenya.studentachievements.Activities;
+package com.example.jenya.studentachievements.activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,15 +10,30 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.example.jenya.studentachievements.R;
+import com.example.jenya.studentachievements.SharedPreferencesActions;
 
 public class SearchActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        overridePendingTransition(0,0);
+        overridePendingTransition(0, 0);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_search);
+
+        ((EditText) findViewById(R.id.textViewName)).setText(SharedPreferencesActions.read("name", this));
+        ((EditText) findViewById(R.id.textViewSurname)).setText(SharedPreferencesActions.read("surname", this));
+        ((EditText) findViewById(R.id.textViewPatronymic)).setText(SharedPreferencesActions.read("patronymic", this));
+        ((EditText) findViewById(R.id.textViewGroup)).setText(SharedPreferencesActions.read("group", this));
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        SharedPreferencesActions.save("name", ((EditText) findViewById(R.id.textViewName)).getText().toString(), this);
+        SharedPreferencesActions.save("surname", ((EditText) findViewById(R.id.textViewSurname)).getText().toString(), this);
+        SharedPreferencesActions.save("patronymic", ((EditText) findViewById(R.id.textViewPatronymic)).getText().toString(), this);
+        SharedPreferencesActions.save("group", ((EditText) findViewById(R.id.textViewGroup)).getText().toString(), this);
+        super.onSaveInstanceState(savedInstanceState);
     }
 
     public void openProfile(View view) {

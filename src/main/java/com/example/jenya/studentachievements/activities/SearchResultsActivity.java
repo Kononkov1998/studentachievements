@@ -1,4 +1,4 @@
-package com.example.jenya.studentachievements.Activities;
+package com.example.jenya.studentachievements.activities;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;

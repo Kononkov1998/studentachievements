@@ -1,4 +1,4 @@
-package com.example.jenya.studentachievements.Activities;
+package com.example.jenya.studentachievements.activities;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.RadioGroup;
 
 import com.example.jenya.studentachievements.R;
-import com.example.jenya.studentachievements.TokenAction;
+import com.example.jenya.studentachievements.SharedPreferencesActions;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -48,7 +48,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public void exit(View view){
-        TokenAction.deleteToken(this);
+        SharedPreferencesActions.delete("token", this);
         Intent intent = new Intent(this, AuthActivity.class);
         startActivity(intent);
     }

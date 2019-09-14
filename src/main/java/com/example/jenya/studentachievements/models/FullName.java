@@ -1,4 +1,4 @@
-package com.example.jenya.studentachievements.Models;
+package com.example.jenya.studentachievements.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;

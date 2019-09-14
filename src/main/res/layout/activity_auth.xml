@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@mipmap/bg"
-    tools:context="com.example.jenya.studentachievements.Activities.AuthActivity">
+    tools:context="com.example.jenya.studentachievements.activities.AuthActivity">
 
     <TextView
         android:id="@+id/textView3"

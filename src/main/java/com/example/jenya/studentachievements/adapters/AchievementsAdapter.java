@@ -1,4 +1,4 @@
-package com.example.jenya.studentachievements.Adapters;
+package com.example.jenya.studentachievements.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.jenya.studentachievements.Models.Achievement;
+import com.example.jenya.studentachievements.models.Achievement;
 import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.Requests;
 import com.squareup.picasso.Picasso;
@@ -65,7 +65,7 @@ public class AchievementsAdapter extends BaseAdapter {
         int resId = ctx.getResources().getIdentifier(path, "drawable", ctx.getPackageName());
         ((ImageView) view.findViewById(R.id.stars)).setImageResource(resId);
         Picasso.with(ctx)
-                .load(Requests.getURL() + "/icons/" + a.getCode() + ".png")
+                .load(Requests.getInstance().getURL() + "/icons/" + a.getCode() + ".png")
                 .placeholder(R.drawable.no_photo)
                 .into((ImageView) view.findViewById(R.id.image));
         return view;

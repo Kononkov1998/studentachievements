@@ -1,4 +1,4 @@
-package com.example.jenya.studentachievements.Models;
+package com.example.jenya.studentachievements.models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

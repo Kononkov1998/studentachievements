@@ -1,8 +1,8 @@
 package com.example.jenya.studentachievements;
 
-import com.example.jenya.studentachievements.Models.User;
-import com.example.jenya.studentachievements.Models.UserInfo;
-import com.example.jenya.studentachievements.Models.UserToken;
+import com.example.jenya.studentachievements.models.User;
+import com.example.jenya.studentachievements.models.UserInfo;
+import com.example.jenya.studentachievements.models.UserToken;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

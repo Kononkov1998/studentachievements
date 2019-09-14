@@ -10,7 +10,6 @@
 
     <style name="SplashScreen" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@drawable/background_splash</item>
-        <item name="colorPrimaryDark">@color/colorWhite</item>
     </style>
 
 </resources>

@@ -1,4 +1,4 @@
-package com.example.jenya.studentachievements.Activities;
+package com.example.jenya.studentachievements.activities;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ListView;
 
-import com.example.jenya.studentachievements.Adapters.UsersAdapter;
+import com.example.jenya.studentachievements.adapters.UsersAdapter;
 import com.example.jenya.studentachievements.R;
 
 public class FavoritesActivity extends AppCompatActivity {

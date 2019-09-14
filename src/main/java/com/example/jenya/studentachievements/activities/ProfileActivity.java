@@ -1,4 +1,4 @@
-package com.example.jenya.studentachievements.Activities;
+package com.example.jenya.studentachievements.activities;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -9,10 +9,10 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.jenya.studentachievements.Adapters.AchievementsAdapter;
-import com.example.jenya.studentachievements.Comparators.AchievementsComparator;
-import com.example.jenya.studentachievements.Models.Achievement;
-import com.example.jenya.studentachievements.Models.UserInfo;
+import com.example.jenya.studentachievements.adapters.AchievementsAdapter;
+import com.example.jenya.studentachievements.comparators.AchievementsComparator;
+import com.example.jenya.studentachievements.models.Achievement;
+import com.example.jenya.studentachievements.models.UserInfo;
 import com.example.jenya.studentachievements.R;
 
 import java.util.ArrayList;

@@ -1,29 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.jenya.studentachievements">
 
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
-        android:allowBackup="true"
         android:icon="@drawable/sfu"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/sfu"
+        android:roundIcon="@drawable/sfu150"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true">
-        <activity android:name=".Activities.SplashScreenActivity" android:theme="@style/SplashScreen">
+        android:usesCleartextTraffic="true"
+        tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".activities.SplashScreenActivity" android:theme="@style/SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.ProfileActivity" android:theme="@style/AppTheme" />
-        <activity android:name=".Activities.SearchActivity" android:theme="@style/AppTheme" />
-        <activity android:name=".Activities.FavoritesActivity" android:theme="@style/AppTheme" />
-        <activity android:name=".Activities.SettingsActivity" android:theme="@style/AppTheme" />
-        <activity android:name=".Activities.SearchResultsActivity" android:theme="@style/AppTheme" />
-        <activity android:name=".Activities.OtherProfileActivity" android:theme="@style/AppTheme" />
-        <activity android:name=".Activities.AuthActivity" android:theme="@style/AppTheme" />
+        <activity android:name=".activities.ProfileActivity" android:theme="@style/AppTheme" />
+        <activity android:name=".activities.SearchActivity" android:theme="@style/AppTheme" />
+        <activity android:name=".activities.FavoritesActivity" android:theme="@style/AppTheme" />
+        <activity android:name=".activities.SettingsActivity" android:theme="@style/AppTheme" />
+        <activity android:name=".activities.SearchResultsActivity" android:theme="@style/AppTheme" />
+        <activity android:name=".activities.OtherProfileActivity" android:theme="@style/AppTheme" />
+        <activity android:name=".activities.AuthActivity" android:theme="@style/AppTheme" />
+
     </application>
 
-    <uses-permission android:name="android.permission.INTERNET" />
+
 
 </manifest>
