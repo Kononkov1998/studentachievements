@@ -12,7 +12,7 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_alignParentBottom="true"
-            android:background="@android:color/darker_gray"
+            android:background="@color/colorGreen"
             android:orientation="horizontal">
 
             <ImageView
@@ -56,46 +56,58 @@
 
             <EditText
                 android:id="@+id/textViewName"
-                android:layout_width="300dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="15dp"
-                android:background="@android:color/darker_gray"
-                android:hint="Имя"
+                android:background="@drawable/edittext_shape"
+                android:hint="@string/name"
                 android:singleLine="true"
-                android:textSize="24sp" />
+                android:textColor="@android:color/black"
+                android:textColorHint="@color/colorGrey"
+                android:ems="15"
+                android:gravity="center"/>
 
             <EditText
                 android:id="@+id/textViewSurname"
-                android:layout_width="300dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@android:color/darker_gray"
-                android:layout_marginTop="15dp"
-                android:textSize="24sp"
-                android:singleLine="true"
                 android:layout_gravity="center_horizontal"
-                android:hint="Фамилия" />
+                android:layout_marginTop="15dp"
+                android:background="@drawable/edittext_shape"
+                android:hint="@string/surname"
+                android:singleLine="true"
+                android:textColor="@android:color/black"
+                android:textColorHint="@color/colorGrey"
+                android:ems="15"
+                android:gravity="center"/>
 
             <EditText
                 android:id="@+id/textViewPatronymic"
-                android:layout_width="300dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@android:color/darker_gray"
-                android:layout_marginTop="15dp"
-                android:textSize="24sp"
-                android:singleLine="true"
                 android:layout_gravity="center_horizontal"
-                android:hint="Отчество" />
+                android:layout_marginTop="15dp"
+                android:background="@drawable/edittext_shape"
+                android:hint="@string/patronymic"
+                android:singleLine="true"
+                android:textColor="@android:color/black"
+                android:textColorHint="@color/colorGrey"
+                android:ems="15"
+                android:gravity="center"/>
             <EditText
                 android:id="@+id/textViewGroup"
-                android:layout_width="300dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@android:color/darker_gray"
-                android:layout_marginTop="15dp"
-                android:textSize="24sp"
-                android:singleLine="true"
                 android:layout_gravity="center_horizontal"
-                android:hint="Номер группы" />
+                android:layout_marginTop="15dp"
+                android:background="@drawable/edittext_shape"
+                android:hint="@string/group_number"
+                android:singleLine="true"
+                android:textColor="@android:color/black"
+                android:textColorHint="@color/colorGrey"
+                android:ems="15"
+                android:gravity="center"/>
         </LinearLayout>
 
         <Button
