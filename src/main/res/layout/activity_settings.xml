@@ -10,41 +10,29 @@
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:layout_alignParentBottom="true"
-            android:background="@color/colorDarkGrey"
-            android:orientation="horizontal">
+            style="@style/LinearLayout">
 
             <ImageView
                 android:id="@+id/imageProfile"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                style="@style/ImageView"
                 android:onClick="openProfile"
                 android:src="@drawable/ic_home_grey_24dp" />
 
             <ImageView
                 android:id="@+id/imageSearch"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                style="@style/ImageView"
                 android:onClick="openSearch"
                 android:src="@drawable/ic_search_grey_24dp" />
 
             <ImageView
                 android:id="@+id/imageFavorites"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                style="@style/ImageView"
                 android:onClick="openFavorites"
                 android:src="@drawable/ic_star_border_grey_24dp" />
 
             <ImageView
                 android:id="@+id/imageSettings"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                style="@style/ImageView"
                 android:src="@drawable/ic_settings_orange_24dp" />
         </LinearLayout>
 
@@ -59,7 +47,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginTop="13dp"
             android:textColor="@color/colorGrey"
-            android:text="Получать уведомления"
+            android:text="@string/get_notifications"
             android:theme="@style/SCBSwitch"/>
 
         <RadioGroup
@@ -78,7 +66,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Видимость профиля"
+                android:text="@string/profile_vis"
                 android:textColor="@color/colorGrey"/>
 
             <RadioButton
@@ -87,7 +75,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:checked="true"
-                android:text="Все"
+                android:text="@string/all"
                 android:buttonTint="@color/colorPrimary"
                 android:textColor="@color/colorGrey"
                 />
@@ -97,7 +85,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Одногруппники"
+                android:text="@string/groupmates"
                 android:buttonTint="@color/colorPrimary"
                 android:textColor="@color/colorGrey"/>
 
@@ -106,7 +94,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Избранные пользователи"
+                android:text="@string/favourite_users"
                 android:buttonTint="@color/colorPrimary"
                 android:textColor="@color/colorGrey"/>
 
@@ -115,7 +103,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Одногруппники и избранные пользователи"
+                android:text="@string/groupmates_and_favourite"
                 android:buttonTint="@color/colorPrimary"
                 android:textColor="@color/colorGrey"/>
 
@@ -124,7 +112,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Только я"
+                android:text="@string/only_me"
                 android:buttonTint="@color/colorPrimary"
                 android:textColor="@color/colorGrey"/>
         </RadioGroup>

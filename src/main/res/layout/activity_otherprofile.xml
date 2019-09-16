@@ -18,41 +18,29 @@
 
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:layout_alignParentBottom="true"
-            android:background="@color/colorDarkGrey"
-            android:orientation="horizontal">
+            style="@style/LinearLayout">
 
             <ImageView
                 android:id="@+id/imageProfile"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                style="@style/ImageView"
                 android:onClick="openProfile"
                 android:src="@drawable/ic_home_grey_24dp" />
 
             <ImageView
                 android:id="@+id/imageSearch"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                style="@style/ImageView"
                 android:onClick="openSearch"
                 android:src="@drawable/ic_search_grey_24dp" />
 
             <ImageView
                 android:id="@+id/imageFavorites"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                style="@style/ImageView"
                 android:onClick="openFavorites"
                 android:src="@drawable/ic_star_border_grey_24dp" />
 
             <ImageView
                 android:id="@+id/imageSettings"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                style="@style/ImageView"
                 android:onClick="openSettings"
                 android:src="@drawable/ic_settings_grey_24dp" />
         </LinearLayout>

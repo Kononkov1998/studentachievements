@@ -39,4 +39,18 @@
         <item name="android:textSize">18sp</item>
     </style>
 
+    <style name="LinearLayout" parent="Theme.AppCompat.Light">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">35dp</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:background">@color/colorDarkGrey</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="ImageView" parent="Theme.AppCompat.Light">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
 </resources>
