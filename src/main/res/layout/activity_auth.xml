@@ -8,6 +8,14 @@
     android:background="@color/colorGreen"
     tools:context="com.example.jenya.studentachievements.activities.AuthActivity">
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        app:srcCompat="@drawable/sfu" />
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -64,4 +72,5 @@
             android:textSize="20sp"
             android:textAllCaps="false"/>
     </LinearLayout>
+
 </RelativeLayout>
