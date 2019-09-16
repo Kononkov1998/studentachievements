@@ -26,7 +26,8 @@
             android:editable="false"
             android:inputType="none"
             android:text="Кононков Евгений Вячеславович КИ16-16Б"
-            android:textSize="25sp" />
+            android:textSize="25sp"
+            android:textColor="@color/colorGrey"/>
     </LinearLayout>
     <CheckBox
         android:id="@+id/checkboxFavorite"

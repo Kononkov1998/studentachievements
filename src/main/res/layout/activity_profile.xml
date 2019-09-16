@@ -2,7 +2,8 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorDarkGrey">
 
 <RelativeLayout
     android:layout_width="match_parent"
@@ -18,9 +19,9 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="35dp"
             android:layout_alignParentBottom="true"
-            android:background="@color/colorGreen"
+            android:background="@color/colorDarkGrey"
             android:orientation="horizontal">
 
             <ImageView
@@ -28,7 +29,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/home" />
+                android:src="@drawable/ic_home_orange_24dp" />
 
             <ImageView
                 android:id="@+id/imageSearch"
@@ -36,7 +37,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="openSearch"
-                app:srcCompat="@drawable/search" />
+                android:src="@drawable/ic_search_grey_24dp" />
 
             <ImageView
                 android:id="@+id/imageFavorites"
@@ -44,7 +45,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="openFavorites"
-                app:srcCompat="@drawable/favorites" />
+                android:src="@drawable/ic_star_border_grey_24dp" />
 
             <ImageView
                 android:id="@+id/imageSettings"
@@ -52,7 +53,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="openSettings"
-                app:srcCompat="@drawable/settings" />
+                android:src="@drawable/ic_settings_grey_24dp" />
         </LinearLayout>
 </RelativeLayout>
 

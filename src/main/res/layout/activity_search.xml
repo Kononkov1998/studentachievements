@@ -2,7 +2,8 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorDarkGrey">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -10,9 +11,9 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="35dp"
             android:layout_alignParentBottom="true"
-            android:background="@color/colorGreen"
+            android:background="@color/colorDarkGrey"
             android:orientation="horizontal">
 
             <ImageView
@@ -21,14 +22,14 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="openProfile"
-                app:srcCompat="@drawable/home" />
+                android:src="@drawable/ic_home_grey_24dp" />
 
             <ImageView
                 android:id="@+id/imageSearch"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/search" />
+                android:src="@drawable/ic_search_orange_24dp" />
 
             <ImageView
                 android:id="@+id/imageFavorites"
@@ -36,7 +37,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="openFavorites"
-                app:srcCompat="@drawable/favorites" />
+                android:src="@drawable/ic_star_border_grey_24dp" />
 
             <ImageView
                 android:id="@+id/imageSettings"
@@ -44,7 +45,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="openSettings"
-                app:srcCompat="@drawable/settings" />
+                android:src="@drawable/ic_settings_grey_24dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -56,70 +57,47 @@
 
             <EditText
                 android:id="@+id/textViewName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="15dp"
-                android:background="@drawable/edittext_shape"
                 android:hint="@string/name"
                 android:singleLine="true"
-                android:textColor="@android:color/black"
-                android:textColorHint="@color/colorGrey"
-                android:ems="15"
-                android:gravity="center"/>
+                android:gravity="center"
+                style="@style/EditText"/>
 
             <EditText
                 android:id="@+id/textViewSurname"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="15dp"
-                android:background="@drawable/edittext_shape"
                 android:hint="@string/surname"
                 android:singleLine="true"
-                android:textColor="@android:color/black"
-                android:textColorHint="@color/colorGrey"
-                android:ems="15"
-                android:gravity="center"/>
+                android:gravity="center"
+                style="@style/EditText"/>
 
             <EditText
                 android:id="@+id/textViewPatronymic"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="15dp"
-                android:background="@drawable/edittext_shape"
                 android:hint="@string/patronymic"
                 android:singleLine="true"
-                android:textColor="@android:color/black"
-                android:textColorHint="@color/colorGrey"
-                android:ems="15"
-                android:gravity="center"/>
+                android:gravity="center"
+                style="@style/EditText"/>
             <EditText
                 android:id="@+id/textViewGroup"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="15dp"
-                android:background="@drawable/edittext_shape"
                 android:hint="@string/group_number"
                 android:singleLine="true"
-                android:textColor="@android:color/black"
-                android:textColorHint="@color/colorGrey"
-                android:ems="15"
-                android:gravity="center"/>
+                android:gravity="center"
+                style="@style/EditText"/>
         </LinearLayout>
 
         <Button
-            android:layout_width="130dp"
-            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="100dp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:background="@drawable/button_shape"
             android:onClick="search"
             android:text="@string/search"
-            android:textColor="#FFFFFF" />
+            style="@style/Btn"/>
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

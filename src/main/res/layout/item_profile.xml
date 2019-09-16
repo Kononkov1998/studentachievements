@@ -27,7 +27,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:text="08.12.18" />
+            android:text="08.12.18"
+            android:textColor="@color/colorGrey"/>
 
     </LinearLayout>
 
@@ -43,13 +44,15 @@
             android:layout_height="wrap_content"
             android:text="Покоряя вершины"
             android:textSize="17sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="@color/colorGrey"/>
 
         <TextView
             android:id="@+id/description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Сдать сессию на отлично" />
+            android:text="Сдать сессию на отлично"
+            android:textColor="@color/colorGrey"/>
 
         <ImageView
             android:id="@+id/stars"
