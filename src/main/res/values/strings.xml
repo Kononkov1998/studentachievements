@@ -12,10 +12,11 @@
     <string name="patronymic">Отчество</string>
     <string name="group_number">Номер группы</string>
     <string name="get_notifications">Получать уведомления</string>
-    <string name="profile_vis">Видимость профиля</string>
+    <string name="profile_vis">Видимость профиля:</string>
     <string name="all">Все</string>
     <string name="groupmates">Одногруппники</string>
     <string name="favourite_users">Избранные пользователи</string>
     <string name="groupmates_and_favourite">Одногруппники и избранные пользователи</string>
     <string name="only_me">Только я</string>
+    <string name="apply">Применить</string>
 </resources>

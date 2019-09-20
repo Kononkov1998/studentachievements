@@ -42,7 +42,7 @@
                 android:src="@drawable/ic_settings_orange_24dp" />
         </LinearLayout>
 
-        <android.support.v7.widget.SwitchCompat
+        <!--<android.support.v7.widget.SwitchCompat
             android:id="@+id/switch1"
             android:layout_width="203dp"
             android:layout_height="wrap_content"
@@ -54,18 +54,14 @@
             android:layout_marginTop="13dp"
             android:textColor="@color/colorGrey"
             android:text="@string/get_notifications"
-            android:theme="@style/SCBSwitch"/>
+            android:theme="@style/SCBSwitch"/>-->
 
         <RadioGroup
             android:id="@+id/radioGroup"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="51dp">
+            android:layout_centerHorizontal="true"
+            android:layout_margin="15dp">
 
             <TextView
                 android:id="@+id/textView"
@@ -73,7 +69,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/profile_vis"
-                android:textColor="@color/colorGrey"/>
+                android:textColor="@color/colorGrey" />
 
             <RadioButton
                 android:id="@+id/radioButton0"
@@ -122,6 +118,14 @@
                 android:buttonTint="@color/colorPrimary"
                 android:textColor="@color/colorGrey"/>
         </RadioGroup>
+
+        <Button
+            style="@style/Btn"
+            android:id="@+id/applyButton"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="200dp"
+            android:text="@string/apply"
+            android:onClick="apply"/>
 
         <Button
             android:id="@+id/button"

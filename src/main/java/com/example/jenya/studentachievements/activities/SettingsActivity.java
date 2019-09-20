@@ -53,6 +53,11 @@ public class SettingsActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void apply(View view)
+    {
+
+    }
+
     public void openProfile(View view) {
         Intent intent = new Intent(this, ProfileActivity.class);
         startActivity(intent);
