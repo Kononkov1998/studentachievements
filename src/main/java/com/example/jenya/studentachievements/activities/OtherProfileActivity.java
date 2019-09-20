@@ -96,4 +96,10 @@ public class OtherProfileActivity extends AppCompatActivity {
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
     }
+
+    public void openGrade(View view)
+    {
+        Intent intent = new Intent(this, GradeActivity.class);
+        startActivity(intent);
+    }
 }

@@ -8,14 +8,12 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <ListView
-            android:id="@+id/list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="30dp"
-            android:layout_alignParentTop="true">
-        </ListView>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Дружочек, ты видимо не понял с кем общаешься. Вот эта твоя манера речи 'клоунская' меня не впечатляет, давай встретимся, объясню на понятном тебе языке, языке боли."
+            android:textColor="@color/colorGrey"/>
 
         <LinearLayout
             style="@style/LinearLayout">
@@ -29,8 +27,7 @@
             <ImageView
                 android:id="@+id/imageGrade"
                 style="@style/ImageView"
-                android:onClick="openGrade"
-                android:src="@drawable/ic_school_grey_24dp" />
+                android:src="@drawable/ic_school_orange_24dp" />
 
             <ImageView
                 android:id="@+id/imageSearch"
@@ -50,6 +47,6 @@
                 android:onClick="openSettings"
                 android:src="@drawable/ic_settings_grey_24dp" />
         </LinearLayout>
-    </RelativeLayout>
 
+    </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

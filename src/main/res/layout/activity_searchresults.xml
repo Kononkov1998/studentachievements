@@ -27,9 +27,14 @@
                 android:src="@drawable/ic_home_grey_24dp" />
 
             <ImageView
+                android:id="@+id/imageGrade"
+                style="@style/ImageView"
+                android:onClick="openGrade"
+                android:src="@drawable/ic_school_grey_24dp" />
+
+            <ImageView
                 android:id="@+id/imageSearch"
                 style="@style/ImageView"
-                android:onClick="openSearch"
                 android:src="@drawable/ic_search_orange_24dp" />
 
             <ImageView

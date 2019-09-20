@@ -67,4 +67,10 @@ public class SettingsActivity extends AppCompatActivity {
         Intent intent = new Intent(this, FavoritesActivity.class);
         startActivity(intent);
     }
+
+    public void openGrade(View view)
+    {
+        Intent intent = new Intent(this, GradeActivity.class);
+        startActivity(intent);
+    }
 }

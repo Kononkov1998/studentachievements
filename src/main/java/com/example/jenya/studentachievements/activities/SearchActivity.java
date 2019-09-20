@@ -51,6 +51,12 @@ public class SearchActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void openGrade(View view)
+    {
+        Intent intent = new Intent(this, GradeActivity.class);
+        startActivity(intent);
+    }
+
     public void search(View view) {
         String name = ((EditText) findViewById(R.id.textViewName)).getText().toString();
         String surname = ((EditText) findViewById(R.id.textViewSurname)).getText().toString();
