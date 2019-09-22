@@ -58,7 +58,8 @@ public class UsersAdapter extends BaseAdapter {
 
         // заполняем View в пункте списка данными из студентов
        // ((ImageView) view.findViewById(R.id.imageUser)).setImageResource(s.getImage());
-        ((TextView) view.findViewById(R.id.textProfile)).setText(s.getFullName().getLastName() + "\n" + s.getFullName().getFirstName() + "\n" + s.getFullName().getPatronymic() + "\n" + s.getGroup().getName());
+        String textProfile = s.getFullName().getLastName() + "\n" + s.getFullName().getFirstName() + "\n" + s.getFullName().getPatronymic() + "\n" + s.getGroup().getName();
+        ((TextView) view.findViewById(R.id.textProfile)).setText(textProfile);
         final CheckBox checkBox = view.findViewById(R.id.checkboxFavorite);
        /* if (DataBase.currentUser.getFavorites().contains(s)) {
             checkBox.setChecked(true);

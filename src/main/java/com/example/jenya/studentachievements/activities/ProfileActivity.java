@@ -9,11 +9,12 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.jenya.studentachievements.R;
+import com.example.jenya.studentachievements.SharedPreferencesActions;
 import com.example.jenya.studentachievements.adapters.AchievementsAdapter;
 import com.example.jenya.studentachievements.comparators.AchievementsComparator;
 import com.example.jenya.studentachievements.models.Achievement;
 import com.example.jenya.studentachievements.models.UserInfo;
-import com.example.jenya.studentachievements.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -46,7 +47,8 @@ public class ProfileActivity extends AppCompatActivity {
         final ListView listView = findViewById(R.id.list);
         View header = getLayoutInflater().inflate(R.layout.header_profile, listView, false);
         //((ImageView) header.findViewById(R.id.imageUser)).setImageResource(DataBase.currentUser.getImage());
-        ((TextView) header.findViewById(R.id.textProfile)).setText(userInfo.getFullName().getLastName() + "\n" + userInfo.getFullName().getFirstName() + "\n" + userInfo.getFullName().getPatronymic() + "\n" + userInfo.getGroup().getName());
+        String headerText = userInfo.getFullName().getLastName() + "\n" + userInfo.getFullName().getFirstName() + "\n" + userInfo.getFullName().getPatronymic() + "\n" + userInfo.getGroup().getName();
+        ((TextView) header.findViewById(R.id.textProfile)).setText(headerText);
         listView.addHeaderView(header);
         listView.setAdapter(adapter);
 
@@ -63,6 +65,9 @@ public class ProfileActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
             }
         });
+        if (SharedPreferencesActions.check("showCompleted", this)) {
+            hideBox.setChecked(true);
+        }
         /*
         final ArrayList<StudentAchievement> completedAchievements = new ArrayList<>();
         for (StudentAchievement achievement : DataBase.currentUser.getAchievements()) {
@@ -94,6 +99,17 @@ public class ProfileActivity extends AppCompatActivity {
                 }
             }
         });*/
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        if (((CheckBox) findViewById(R.id.checkboxHide)).isChecked()) {
+            SharedPreferencesActions.save("showCompleted", "false", this);
+        }
+        else{
+            SharedPreferencesActions.delete("showCompleted", this);
+        }
+        super.onSaveInstanceState(savedInstanceState);
     }
 
     public void openSearch(View view) {
