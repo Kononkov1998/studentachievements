@@ -19,12 +19,13 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Requests {
-    private static final String URL = "http://a01dd5e4.ngrok.io";
+    private static final String URL = "http://81cd23b7.ngrok.io";
+    private Retrofit retrofit;
     private UserApi userApi;
     private static Requests instance;
 
     private Requests() {
-        Retrofit retrofit = new Retrofit.Builder()
+        retrofit = new Retrofit.Builder()
                 .baseUrl(URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -81,7 +82,6 @@ public class Requests {
 
             @Override
             public void onFailure(@NonNull Call<UserToken> call, @NonNull Throwable t) {
-                Toast.makeText(ctx, "Запрос getUserToken не прошёл", Toast.LENGTH_LONG).show();
                 btn.getBackground().setAlpha(255);
                 btn.setEnabled(true);
             }
@@ -132,9 +132,11 @@ public class Requests {
 
             @Override
             public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t) {
-                Toast.makeText(ctx, "Запрос initializeStudent не прошёл", Toast.LENGTH_LONG).show();
+
                 btn.getBackground().setAlpha(255);
                 btn.setEnabled(true);
+                Intent intent = new Intent(ctx, AuthActivity.class);
+                ctx.startActivity(intent);
             }
         });
     }
@@ -157,7 +159,6 @@ public class Requests {
 
             @Override
             public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t) {
-                Toast.makeText(ctx, "Запрос initializeStudentFromSplashScreen не прошёл", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(ctx, AuthActivity.class);
                 ctx.startActivity(intent);
             }
