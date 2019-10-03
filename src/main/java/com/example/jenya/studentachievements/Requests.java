@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.example.jenya.studentachievements.activities.AuthActivity;
 import com.example.jenya.studentachievements.activities.ProfileActivity;
+import com.example.jenya.studentachievements.activities.SearchResultsActivity;
 import com.example.jenya.studentachievements.models.User;
 import com.example.jenya.studentachievements.models.UserInfo;
 import com.example.jenya.studentachievements.models.UserToken;
@@ -19,7 +20,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Requests {
-    private static final String URL = "http://b6a91d1d.ngrok.io";
+    private static final String URL = "http://4eae5a39.ngrok.io";
     private Retrofit retrofit;
     private UserApi userApi;
     private static Requests instance;
@@ -125,6 +126,7 @@ public class Requests {
                     UserInfo.setCurrentUser(response.body());
                     ctx.startActivity(intent);
                 } else {
+                    Toast.makeText(ctx, "Неверный логин и/или пароль!", Toast.LENGTH_LONG).show();
                     btn.getBackground().setAlpha(255);
                     btn.setEnabled(true);
                 }
@@ -133,6 +135,7 @@ public class Requests {
             @Override
             public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t) {
 
+                Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
                 btn.getBackground().setAlpha(255);
                 btn.setEnabled(true);
                 Intent intent = new Intent(ctx, AuthActivity.class);
@@ -163,6 +166,40 @@ public class Requests {
             public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t) {
                 Intent intent = new Intent(ctx, AuthActivity.class);
                 ctx.startActivity(intent);
+            }
+        });
+    }
+
+    public void studentSearch(String token, String group, String search, Context ctx, Button btn)
+    {
+        userApi.search(token, group, search).enqueue(new Callback<UserInfo[]>()
+        {
+            @Override
+            public void onResponse(@NonNull Call<UserInfo[]> call, @NonNull Response<UserInfo[]> response)
+            {
+                if (response.isSuccessful())
+                {
+                    // рез-ты поиска
+                    UserInfo[] students = response.body();
+                    btn.getBackground().setAlpha(255);
+                    btn.setEnabled(true);
+                    Intent intent = new Intent(ctx, SearchResultsActivity.class);
+                    ctx.startActivity(intent);
+                }
+                else
+                {
+                    Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
+                    btn.getBackground().setAlpha(255);
+                    btn.setEnabled(true);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<UserInfo[]> call, @NonNull Throwable t)
+            {
+                Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
+                btn.getBackground().setAlpha(255);
+                btn.setEnabled(true);
             }
         });
     }
