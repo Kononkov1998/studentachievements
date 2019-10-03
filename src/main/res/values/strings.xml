@@ -17,6 +17,6 @@
     <string name="groupmates">Одногруппники</string>
     <string name="favourite_users">Избранные пользователи</string>
     <string name="groupmates_and_favourite">Одногруппники и избранные пользователи</string>
-    <string name="only_me">Только я</string>
+    <string name="me">Только я</string>
     <string name="apply">Применить</string>
 </resources>

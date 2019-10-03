@@ -3,6 +3,7 @@ package com.example.jenya.studentachievements;
 import com.example.jenya.studentachievements.models.User;
 import com.example.jenya.studentachievements.models.UserInfo;
 import com.example.jenya.studentachievements.models.UserToken;
+import com.example.jenya.studentachievements.models.Visibility;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -10,6 +11,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Query;
 
 public interface UserApi
@@ -29,4 +31,7 @@ public interface UserApi
 
     @GET("/student/anotherStudent")
     Call<UserInfo[]> search(@Header("Authorization") String token, @Query("group") String group, @Query("search") String search);
+
+    @PUT("/student/visibility")
+    Call<UserInfo> visibility(@Header("Authorization") String token, @Body Visibility visibility);
 }

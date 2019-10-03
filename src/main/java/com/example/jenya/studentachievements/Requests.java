@@ -12,6 +12,7 @@ import com.example.jenya.studentachievements.activities.SearchResultsActivity;
 import com.example.jenya.studentachievements.models.User;
 import com.example.jenya.studentachievements.models.UserInfo;
 import com.example.jenya.studentachievements.models.UserToken;
+import com.example.jenya.studentachievements.models.Visibility;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -184,6 +185,9 @@ public class Requests {
                     btn.getBackground().setAlpha(255);
                     btn.setEnabled(true);
                     Intent intent = new Intent(ctx, SearchResultsActivity.class);
+
+                    /*** Передать в активити рез-ты поиска ***/
+
                     ctx.startActivity(intent);
                 }
                 else
@@ -196,6 +200,38 @@ public class Requests {
 
             @Override
             public void onFailure(@NonNull Call<UserInfo[]> call, @NonNull Throwable t)
+            {
+                Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
+                btn.getBackground().setAlpha(255);
+                btn.setEnabled(true);
+            }
+        });
+    }
+
+    public void setVisibility(String token, Visibility visibility, Context ctx, Button btn)
+    {
+        userApi.visibility(token, visibility).enqueue(new Callback<UserInfo>()
+        {
+            @Override
+            public void onResponse(Call<UserInfo> call, Response<UserInfo> response)
+            {
+                if (response.isSuccessful())
+                {
+                    /*** Добавить сохранение настроек локально ***/
+                    Toast.makeText(ctx, "Ваши настройки сохранены", Toast.LENGTH_LONG).show();
+                    btn.getBackground().setAlpha(255);
+                    btn.setEnabled(true);
+                }
+                else
+                {
+                    Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
+                    btn.getBackground().setAlpha(255);
+                    btn.setEnabled(true);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserInfo> call, Throwable t)
             {
                 Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
                 btn.getBackground().setAlpha(255);

@@ -91,7 +91,7 @@
                 android:buttonTint="@color/colorPrimary"
                 android:textColor="@color/colorGrey"/>
 
-            <RadioButton
+            <!--<RadioButton
                 android:id="@+id/radioButton2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -107,14 +107,14 @@
                 android:layout_weight="1"
                 android:text="@string/groupmates_and_favourite"
                 android:buttonTint="@color/colorPrimary"
-                android:textColor="@color/colorGrey"/>
+                android:textColor="@color/colorGrey"/>-->
 
             <RadioButton
                 android:id="@+id/radioButton4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/only_me"
+                android:text="@string/me"
                 android:buttonTint="@color/colorPrimary"
                 android:textColor="@color/colorGrey"/>
         </RadioGroup>
@@ -123,7 +123,7 @@
             style="@style/Btn"
             android:id="@+id/applyButton"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="200dp"
+            android:layout_marginTop="150dp"
             android:text="@string/apply"
             android:onClick="apply"/>
 

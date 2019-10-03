@@ -5,12 +5,21 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Switch;
+import android.widget.Toast;
 
 import com.example.jenya.studentachievements.R;
+import com.example.jenya.studentachievements.Requests;
 import com.example.jenya.studentachievements.SharedPreferencesActions;
+import com.example.jenya.studentachievements.models.Visibility;
 
 public class SettingsActivity extends AppCompatActivity {
+
+    private Button btn;
+    private RadioGroup rg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,7 +28,8 @@ public class SettingsActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_settings);
 
-        RadioGroup radioGroup = findViewById(R.id.radioGroup);
+        btn = findViewById(R.id.applyButton);
+        rg = findViewById(R.id.radioGroup);
 
        /* radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -60,7 +70,26 @@ public class SettingsActivity extends AppCompatActivity {
 
     public void apply(View view)
     {
+        int selectedParam = rg.getCheckedRadioButtonId();
+        RadioButton selectedRadioButton = (RadioButton) findViewById(selectedParam);
+        String selectedRadioButtonText = selectedRadioButton.getText().toString();
+        Visibility visibility = new Visibility();
+        switch (selectedRadioButtonText)
+        {
+            case "Все":
+                visibility.setAll();
+                break;
+            case "Одногруппники":
+                visibility.setGroupmates();
+                break;
+            case "Только я":
+                visibility.setMe();
+                break;
+        }
 
+        btn.getBackground().setAlpha(100);
+        btn.setEnabled(false);
+        Requests.getInstance().setVisibility(SharedPreferencesActions.read("token", this), visibility, this, btn);
     }
 
     public void openProfile(View view) {
