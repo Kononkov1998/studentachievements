@@ -19,7 +19,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Requests {
-    private static final String URL = "http://81cd23b7.ngrok.io";
+    private static final String URL = "http://b6a91d1d.ngrok.io";
     private Retrofit retrofit;
     private UserApi userApi;
     private static Requests instance;
@@ -71,7 +71,7 @@ public class Requests {
                     // сохраняем токен
                     String token = response.body().getUserToken();
                     SharedPreferencesActions.save("token", token, ctx);
-                    initializeStudent(token, ctx, btn);
+                    initializeStudent(token, ctx, btn, user);
                 }
                 else {
                     Toast.makeText(ctx, "Неверный логин или пароль", Toast.LENGTH_LONG).show();
@@ -116,7 +116,7 @@ public class Requests {
     }*/
 
     // /student/initialize
-    public void initializeStudent(String token, Context ctx, Button btn) {
+    public void initializeStudent(String token, Context ctx, Button btn, User user) {
         userApi.initialize(token).enqueue(new Callback<UserInfo>() {
             @Override
             public void onResponse(@NonNull Call<UserInfo> call, @NonNull Response<UserInfo> response) {
@@ -136,6 +136,8 @@ public class Requests {
                 btn.getBackground().setAlpha(255);
                 btn.setEnabled(true);
                 Intent intent = new Intent(ctx, AuthActivity.class);
+                intent.putExtra("login", user.getusername());
+                intent.putExtra("password", user.getPassword());
                 ctx.startActivity(intent);
             }
         });

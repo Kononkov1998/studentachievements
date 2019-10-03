@@ -30,6 +30,13 @@ public class AuthActivity extends AppCompatActivity {
         login = findViewById(R.id.loginText);
         pass = findViewById(R.id.passText);
         btn = findViewById(R.id.buttonEnter);
+
+        Bundle arguments = getIntent().getExtras();
+        if(arguments != null)
+        {
+            login.setText(arguments.getString("login"));
+            pass.setText(arguments.getString("password"));
+        }
     }
 
     //обработка кнопки "вход"
