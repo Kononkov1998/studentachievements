@@ -14,12 +14,15 @@ import android.widget.Toast;
 import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.Requests;
 import com.example.jenya.studentachievements.SharedPreferencesActions;
+import com.example.jenya.studentachievements.models.UserInfo;
 import com.example.jenya.studentachievements.models.Visibility;
 
 public class SettingsActivity extends AppCompatActivity {
 
     private Button btn;
     private RadioGroup rg;
+    private RadioButton rb;
+    private UserInfo userInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +33,25 @@ public class SettingsActivity extends AppCompatActivity {
 
         btn = findViewById(R.id.applyButton);
         rg = findViewById(R.id.radioGroup);
+
+        userInfo = UserInfo.getCurrentUser();
+        String visibility = userInfo.getVisibility();
+
+        switch (visibility)
+        {
+            case "all":
+                rb = findViewById(R.id.radioButton0);
+                rb.setChecked(true);
+                break;
+            case "me":
+                rb = findViewById(R.id.radioButton4);
+                rb.setChecked(true);
+                break;
+            case "groupmates":
+                rb = findViewById(R.id.radioButton1);
+                rb.setChecked(true);
+                break;
+        }
 
        /* radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override

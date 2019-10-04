@@ -21,7 +21,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Requests {
-    private static final String URL = "http://4eae5a39.ngrok.io";
+    private static final String URL = "http://44b9a42d.ngrok.io";
     private Retrofit retrofit;
     private UserApi userApi;
     private static Requests instance;
@@ -73,10 +73,10 @@ public class Requests {
                     // сохраняем токен
                     String token = response.body().getUserToken();
                     SharedPreferencesActions.save("token", token, ctx);
-                    initializeStudent(token, ctx, btn, user);
+                    getUserInfo(token, ctx, btn, user);
                 }
                 else {
-                    Toast.makeText(ctx, "Неверный логин или пароль", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
                     btn.getBackground().setAlpha(255);
                     btn.setEnabled(true);
                 }
@@ -91,38 +91,42 @@ public class Requests {
     }
 
     // /student/info
-    /*public void getUserInfo(final String token)
+    public void getUserInfo(String token, Context ctx, Button btn, User user)
     {
-        userApi.info(token).enqueue(new Callback<UserInfo>() {
+        userApi.info(token).enqueue(new Callback<UserInfo>()
+        {
             @Override
-            public void onResponse(Call<UserInfo> call, Response<UserInfo> response)
+            public void onResponse(@NonNull Call<UserInfo> call, @NonNull Response<UserInfo> response)
             {
                 if(response.isSuccessful())
                 {
-                    Intent intent = new Intent(AuthActivity.getAppContext(), ProfileActivity.class);
-                    UserInfo.loadUserInfo(response.body());
-                    AuthActivity.getAppContext().startActivity(intent);
+                    Intent intent = new Intent(ctx, ProfileActivity.class);
+                    UserInfo.setCurrentUser(response.body());
+                    ctx.startActivity(intent);
                 }
                 else
                 {
-                    initializeStudent(token);
+                    initializeStudent(token, ctx, btn, user);
                 }
             }
 
             @Override
-            public void onFailure(Call<UserInfo> call, Throwable t)
+            public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t)
             {
-                Toast.makeText(AuthActivity.getAppContext(), "Ошибка! Попробуйте зайти позже.", Toast.LENGTH_LONG).show();
+                Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
+                btn.getBackground().setAlpha(255);
+                btn.setEnabled(true);
             }
         });
-    }*/
+    }
 
     // /student/initialize
     public void initializeStudent(String token, Context ctx, Button btn, User user) {
         userApi.initialize(token).enqueue(new Callback<UserInfo>() {
             @Override
             public void onResponse(@NonNull Call<UserInfo> call, @NonNull Response<UserInfo> response) {
-                if (response.isSuccessful()) {
+                if (response.isSuccessful())
+                {
                     Intent intent = new Intent(ctx, ProfileActivity.class);
                     UserInfo.setCurrentUser(response.body());
                     ctx.startActivity(intent);
@@ -147,9 +151,9 @@ public class Requests {
         });
     }
 
-    // /student/initialize
+    // /student/info
     public void initializeStudentFromSplashScreen(String token, Context ctx) {
-        userApi.initialize(token).enqueue(new Callback<UserInfo>() {
+        userApi.info(token).enqueue(new Callback<UserInfo>() {
             @Override
             public void onResponse(@NonNull Call<UserInfo> call, @NonNull Response<UserInfo> response) {
                 if (response.isSuccessful()) {
@@ -171,6 +175,7 @@ public class Requests {
         });
     }
 
+    // /student/anotherStudent
     public void studentSearch(String token, String group, String search, Context ctx, Button btn)
     {
         userApi.search(token, group, search).enqueue(new Callback<UserInfo[]>()
@@ -208,16 +213,17 @@ public class Requests {
         });
     }
 
+    // /student/visibility
     public void setVisibility(String token, Visibility visibility, Context ctx, Button btn)
     {
         userApi.visibility(token, visibility).enqueue(new Callback<UserInfo>()
         {
             @Override
-            public void onResponse(Call<UserInfo> call, Response<UserInfo> response)
+            public void onResponse(@NonNull Call<UserInfo> call, @NonNull Response<UserInfo> response)
             {
                 if (response.isSuccessful())
                 {
-                    /*** Добавить сохранение настроек локально ***/
+                    UserInfo.getCurrentUser().setVisibility(response.body().getVisibility());
                     Toast.makeText(ctx, "Ваши настройки сохранены", Toast.LENGTH_LONG).show();
                     btn.getBackground().setAlpha(255);
                     btn.setEnabled(true);
@@ -231,7 +237,7 @@ public class Requests {
             }
 
             @Override
-            public void onFailure(Call<UserInfo> call, Throwable t)
+            public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t)
             {
                 Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
                 btn.getBackground().setAlpha(255);

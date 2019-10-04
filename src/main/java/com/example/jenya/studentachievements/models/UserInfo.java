@@ -18,6 +18,10 @@ public class UserInfo {
     @Expose
     private String _id;
 
+    @SerializedName("visibility")
+    @Expose
+    private String visibility;
+
     @SerializedName("idHumanFace")
     @Expose
     private String idHumanFace;
@@ -108,5 +112,15 @@ public class UserInfo {
 
     public void setInstitute(String institute) {
         this.institute = institute;
+    }
+
+    public String getVisibility()
+    {
+        return this.visibility;
+    }
+
+    public void setVisibility(String visibility)
+    {
+        this.visibility = visibility;
     }
 }

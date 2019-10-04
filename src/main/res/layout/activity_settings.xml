@@ -76,7 +76,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:checked="true"
                 android:text="@string/all"
                 android:buttonTint="@color/colorPrimary"
                 android:textColor="@color/colorGrey"
