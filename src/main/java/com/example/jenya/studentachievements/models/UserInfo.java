@@ -1,17 +1,20 @@
 package com.example.jenya.studentachievements.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class UserInfo {
+public class UserInfo implements Parcelable {
     private static UserInfo currentUser;
 
     public static UserInfo getCurrentUser() {
-            return currentUser;
+        return currentUser;
     }
 
     public static void setCurrentUser(UserInfo user) {
-            currentUser = user;
+        currentUser = user;
     }
 
     @SerializedName("_id")
@@ -123,4 +126,47 @@ public class UserInfo {
     {
         this.visibility = visibility;
     }
+
+    protected UserInfo(Parcel in) {
+        _id = in.readString();
+        visibility = in.readString();
+        idHumanFace = in.readString();
+        institute = in.readString();
+        email = in.readString();
+        group = (Group) in.readValue(Group.class.getClassLoader());
+        fullName = (FullName) in.readValue(FullName.class.getClassLoader());
+        achievements = (Achievement[]) in.readArray(Achievement.class.getClassLoader());
+        __v = in.readInt();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(_id);
+        dest.writeString(visibility);
+        dest.writeString(idHumanFace);
+        dest.writeString(institute);
+        dest.writeString(email);
+        dest.writeValue(group);
+        dest.writeValue(fullName);
+        dest.writeArray(achievements);
+        dest.writeInt(__v);
+    }
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<UserInfo> CREATOR = new Parcelable.Creator<UserInfo>() {
+        @Override
+        public UserInfo createFromParcel(Parcel in) {
+            return new UserInfo(in);
+        }
+
+        @Override
+        public UserInfo[] newArray(int size) {
+            return new UserInfo[size];
+        }
+    };
 }

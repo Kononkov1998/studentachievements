@@ -1,10 +1,8 @@
 package com.example.jenya.studentachievements.activities;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -77,7 +75,7 @@ public class SearchActivity extends AppCompatActivity {
             String fio = String.format("%s %s %s", surname, name, patronymic);
             btn.getBackground().setAlpha(100);
             btn.setEnabled(false);
-            Requests.getInstance().studentSearch(SharedPreferencesActions.read("token", this), group, fio, this, btn);
+            Requests.getInstance().studentSearch(SharedPreferencesActions.read("token", this), group, fio.trim(), this, btn);
         }
     }
 }

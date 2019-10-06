@@ -5,6 +5,8 @@ import com.example.jenya.studentachievements.models.UserInfo;
 import com.example.jenya.studentachievements.models.UserToken;
 import com.example.jenya.studentachievements.models.Visibility;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -30,7 +32,7 @@ public interface UserApi
     Call<UserInfo[]> groupmates(@Header("Authorization") String token);*/
 
     @GET("/student/anotherStudent")
-    Call<UserInfo[]> search(@Header("Authorization") String token, @Query("group") String group, @Query("search") String search);
+    Call<List<UserInfo>> search(@Header("Authorization") String token, @Query("group") String group, @Query("search") String search);
 
     @PUT("/student/visibility")
     Call<UserInfo> visibility(@Header("Authorization") String token, @Body Visibility visibility);

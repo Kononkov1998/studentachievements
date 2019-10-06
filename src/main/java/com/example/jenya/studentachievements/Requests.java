@@ -3,6 +3,7 @@ package com.example.jenya.studentachievements;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -14,6 +15,10 @@ import com.example.jenya.studentachievements.models.UserInfo;
 import com.example.jenya.studentachievements.models.UserToken;
 import com.example.jenya.studentachievements.models.Visibility;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -21,7 +26,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Requests {
-    private static final String URL = "http://44b9a42d.ngrok.io";
+    private static final String URL = "http://549ebcaa.ngrok.io";
     private Retrofit retrofit;
     private UserApi userApi;
     private static Requests instance;
@@ -74,9 +79,9 @@ public class Requests {
                     String token = response.body().getUserToken();
                     SharedPreferencesActions.save("token", token, ctx);
                     getUserInfo(token, ctx, btn, user);
-                }
-                else {
-                    Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(ctx, "Неверный логин и/или пароль!", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
                     btn.getBackground().setAlpha(255);
                     btn.setEnabled(true);
                 }
@@ -84,35 +89,6 @@ public class Requests {
 
             @Override
             public void onFailure(@NonNull Call<UserToken> call, @NonNull Throwable t) {
-                btn.getBackground().setAlpha(255);
-                btn.setEnabled(true);
-            }
-        });
-    }
-
-    // /student/info
-    public void getUserInfo(String token, Context ctx, Button btn, User user)
-    {
-        userApi.info(token).enqueue(new Callback<UserInfo>()
-        {
-            @Override
-            public void onResponse(@NonNull Call<UserInfo> call, @NonNull Response<UserInfo> response)
-            {
-                if(response.isSuccessful())
-                {
-                    Intent intent = new Intent(ctx, ProfileActivity.class);
-                    UserInfo.setCurrentUser(response.body());
-                    ctx.startActivity(intent);
-                }
-                else
-                {
-                    initializeStudent(token, ctx, btn, user);
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t)
-            {
                 Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
                 btn.getBackground().setAlpha(255);
                 btn.setEnabled(true);
@@ -120,39 +96,8 @@ public class Requests {
         });
     }
 
-    // /student/initialize
-    public void initializeStudent(String token, Context ctx, Button btn, User user) {
-        userApi.initialize(token).enqueue(new Callback<UserInfo>() {
-            @Override
-            public void onResponse(@NonNull Call<UserInfo> call, @NonNull Response<UserInfo> response) {
-                if (response.isSuccessful())
-                {
-                    Intent intent = new Intent(ctx, ProfileActivity.class);
-                    UserInfo.setCurrentUser(response.body());
-                    ctx.startActivity(intent);
-                } else {
-                    Toast.makeText(ctx, "Неверный логин и/или пароль!", Toast.LENGTH_LONG).show();
-                    btn.getBackground().setAlpha(255);
-                    btn.setEnabled(true);
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t) {
-
-                Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
-                btn.getBackground().setAlpha(255);
-                btn.setEnabled(true);
-                Intent intent = new Intent(ctx, AuthActivity.class);
-                intent.putExtra("login", user.getusername());
-                intent.putExtra("password", user.getPassword());
-                ctx.startActivity(intent);
-            }
-        });
-    }
-
     // /student/info
-    public void initializeStudentFromSplashScreen(String token, Context ctx) {
+    public void getUserInfo(String token, Context ctx, Button btn, User user) {
         userApi.info(token).enqueue(new Callback<UserInfo>() {
             @Override
             public void onResponse(@NonNull Call<UserInfo> call, @NonNull Response<UserInfo> response) {
@@ -160,8 +105,30 @@ public class Requests {
                     Intent intent = new Intent(ctx, ProfileActivity.class);
                     UserInfo.setCurrentUser(response.body());
                     ctx.startActivity(intent);
+                } else {
+                    initializeStudent(token, ctx, btn, user);
                 }
-                else {
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t) {
+                Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
+                btn.getBackground().setAlpha(255);
+                btn.setEnabled(true);
+            }
+        });
+    }
+
+    // /student/info
+    public void getUserInfoFromSplashScreen(String token, Context ctx) {
+        userApi.info(token).enqueue(new Callback<UserInfo>() {
+            @Override
+            public void onResponse(@NonNull Call<UserInfo> call, @NonNull Response<UserInfo> response) {
+                if (response.isSuccessful()) {
+                    Intent intent = new Intent(ctx, ProfileActivity.class);
+                    UserInfo.setCurrentUser(response.body());
+                    ctx.startActivity(intent);
+                } else {
                     Intent intent = new Intent(ctx, AuthActivity.class);
                     ctx.startActivity(intent);
                 }
@@ -175,37 +142,63 @@ public class Requests {
         });
     }
 
-    // /student/anotherStudent
-    public void studentSearch(String token, String group, String search, Context ctx, Button btn)
-    {
-        userApi.search(token, group, search).enqueue(new Callback<UserInfo[]>()
-        {
+    // /student/initialize
+    public void initializeStudent(String token, Context ctx, Button btn, User user) {
+        userApi.initialize(token).enqueue(new Callback<UserInfo>() {
             @Override
-            public void onResponse(@NonNull Call<UserInfo[]> call, @NonNull Response<UserInfo[]> response)
-            {
-                if (response.isSuccessful())
-                {
-                    // рез-ты поиска
-                    UserInfo[] students = response.body();
-                    btn.getBackground().setAlpha(255);
-                    btn.setEnabled(true);
-                    Intent intent = new Intent(ctx, SearchResultsActivity.class);
-
-                    /*** Передать в активити рез-ты поиска ***/
-
+            public void onResponse(@NonNull Call<UserInfo> call, @NonNull Response<UserInfo> response) {
+                if (response.isSuccessful()) {
+                    Intent intent = new Intent(ctx, ProfileActivity.class);
+                    UserInfo.setCurrentUser(response.body());
                     ctx.startActivity(intent);
-                }
-                else
-                {
-                    Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
+                } else {
+                    //Toast.makeText(ctx, "Неверный логин и/или пароль!", Toast.LENGTH_LONG).show();
                     btn.getBackground().setAlpha(255);
                     btn.setEnabled(true);
                 }
             }
 
             @Override
-            public void onFailure(@NonNull Call<UserInfo[]> call, @NonNull Throwable t)
-            {
+            public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t) {
+
+                Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
+                btn.getBackground().setAlpha(255);
+                btn.setEnabled(true);
+                //Intent intent = new Intent(ctx, AuthActivity.class);
+                //intent.putExtra("login", user.getusername());
+                //intent.putExtra("password", user.getPassword());
+                //ctx.startActivity(intent);
+            }
+        });
+    }
+
+    // /student/anotherStudent
+    public void studentSearch(String token, String group, String search, Context ctx, Button btn) {
+        userApi.search(token, group, search).enqueue(new Callback<List<UserInfo>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<UserInfo>> call, @NonNull Response<List<UserInfo>> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Опачки3", Arrays.toString(response.body().toArray()));
+                    // рез-ты поиска
+                    ArrayList<UserInfo> students = new ArrayList<>(response.body());
+                    btn.getBackground().setAlpha(255);
+                    btn.setEnabled(true);
+                    Intent intent = new Intent(ctx, SearchResultsActivity.class);
+
+                    intent.putParcelableArrayListExtra("students", students);
+                    Log.i("Опачки1", Arrays.toString(students.toArray()));
+
+
+                    ctx.startActivity(intent);
+                } else {
+                    //Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
+                    btn.getBackground().setAlpha(255);
+                    btn.setEnabled(true);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<List<UserInfo>> call, @NonNull Throwable t) {
                 Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
                 btn.getBackground().setAlpha(255);
                 btn.setEnabled(true);
@@ -214,31 +207,25 @@ public class Requests {
     }
 
     // /student/visibility
-    public void setVisibility(String token, Visibility visibility, Context ctx, Button btn)
-    {
-        userApi.visibility(token, visibility).enqueue(new Callback<UserInfo>()
-        {
+    public void setVisibility(String token, Visibility visibility, Context ctx, Button btn) {
+        userApi.visibility(token, visibility).enqueue(new Callback<UserInfo>() {
             @Override
-            public void onResponse(@NonNull Call<UserInfo> call, @NonNull Response<UserInfo> response)
-            {
-                if (response.isSuccessful())
-                {
+            public void onResponse(@NonNull Call<UserInfo> call, @NonNull Response<UserInfo> response) {
+                if (response.isSuccessful()) {
                     UserInfo.getCurrentUser().setVisibility(response.body().getVisibility());
-                    Toast.makeText(ctx, "Ваши настройки сохранены", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(ctx, "Ваши настройки сохранены", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ctx, "Настройки успешно сохранены", Toast.LENGTH_LONG).show();
                     btn.getBackground().setAlpha(255);
                     btn.setEnabled(true);
-                }
-                else
-                {
-                    Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
+                } else {
+                    //Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
                     btn.getBackground().setAlpha(255);
                     btn.setEnabled(true);
                 }
             }
 
             @Override
-            public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t)
-            {
+            public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t) {
                 Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
                 btn.getBackground().setAlpha(255);
                 btn.setEnabled(true);

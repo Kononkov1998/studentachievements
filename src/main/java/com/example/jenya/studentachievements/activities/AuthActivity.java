@@ -31,12 +31,12 @@ public class AuthActivity extends AppCompatActivity {
         pass = findViewById(R.id.passText);
         btn = findViewById(R.id.buttonEnter);
 
-        Bundle arguments = getIntent().getExtras();
-        if(arguments != null)
-        {
-            login.setText(arguments.getString("login"));
-            pass.setText(arguments.getString("password"));
-        }
+//        Bundle arguments = getIntent().getExtras();
+//        if(arguments != null)
+//        {
+//            login.setText(arguments.getString("login"));
+//            pass.setText(arguments.getString("password"));
+//        }
     }
 
     //обработка кнопки "вход"
