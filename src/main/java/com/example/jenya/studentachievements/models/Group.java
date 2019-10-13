@@ -9,15 +9,15 @@ import com.google.gson.annotations.SerializedName;
 public class Group implements Parcelable {
     @SerializedName("_id")
     @Expose
-    public String _id;
+    private String _id;
 
     @SerializedName("name")
     @Expose
-    public String name;
+    private String name;
 
     @SerializedName("id")
     @Expose
-    public String id;
+    private String id;
 
     public String get_id() {
         return _id;

@@ -5,8 +5,19 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.jenya.studentachievements.R;
+import com.example.jenya.studentachievements.adapters.AchievementsAdapter;
+import com.example.jenya.studentachievements.comparators.AchievementsComparator;
+import com.example.jenya.studentachievements.models.Achievement;
+import com.example.jenya.studentachievements.models.UserInfo;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 public class OtherProfileActivity extends AppCompatActivity {
     @Override
@@ -15,52 +26,43 @@ public class OtherProfileActivity extends AppCompatActivity {
         overridePendingTransition(0,0);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_otherprofile);
-    }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        /*
-        ListView listView = findViewById(R.id.list);
-        Intent intent = getIntent();
-        String name = intent.getStringExtra("name");
-        String surname = intent.getStringExtra("surname");
-        String patronymic = intent.getStringExtra("patronymic");
-        String group = intent.getStringExtra("group");
-        final Student student = DataBase.searchStudent(name, surname, patronymic, group);
+        UserInfo userInfo = getIntent().getParcelableExtra("otherStudent");
+        final ArrayList<Achievement> completedAchievements = new ArrayList<>();
+        final ArrayList<Achievement> userAchievements = new ArrayList<>(Arrays.asList(userInfo.getAchievements()));
 
-        View header = getLayoutInflater().inflate(R.layout.header_otherprofile, listView, false);
-        ((ImageView) header.findViewById(R.id.imageUser)).setImageResource(student.getImage());
-        ((TextView) header.findViewById(R.id.textProfile)).setText(student.getSurname() + "\n" + student.getName() + "\n" + student.getPatronymic() + "\n" + student.getGroup());
-        listView.addHeaderView(header);
-
-        final ArrayList<StudentAchievement> completedAchievements = new ArrayList<>();
-        for (StudentAchievement achievement : student.getAchievements()) {
-            if (achievement.getProgress() == 100)
+        for (Achievement achievement : userAchievements) {
+            if (achievement.getStars() != 0)
                 completedAchievements.add(achievement);
         }
-        Collections.sort(student.getAchievements(), new AchievementsComparator());
-        final AchievementsAdapter adapter = new AchievementsAdapter(this, student.getAchievements());
+
+        Collections.sort(userAchievements, new AchievementsComparator());
+
+        final AchievementsAdapter adapter = new AchievementsAdapter(this, userAchievements);
+        final ListView listView = findViewById(R.id.list);
+        View header = getLayoutInflater().inflate(R.layout.header_otherprofile, listView, false);
+        //((ImageView) header.findViewById(R.id.imageUser)).setImageResource(DataBase.currentUser.getImage());
+        String headerText = userInfo.getFullName().getLastName() + "\n" + userInfo.getFullName().getFirstName() + "\n" + userInfo.getFullName().getPatronymic() + "\n" + userInfo.getGroup().getName();
+        ((TextView) header.findViewById(R.id.textProfile)).setText(headerText);
+        listView.addHeaderView(header);
         listView.setAdapter(adapter);
 
         CheckBox hideBox = findViewById(R.id.checkboxHide);
-        hideBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    for (StudentAchievement achievement : completedAchievements) {
-                        student.getAchievements().remove(achievement);
-                    }
-                    adapter.notifyDataSetChanged();
-                } else {
-                    student.getAchievements().addAll(completedAchievements);
-                    Collections.sort(student.getAchievements(), new AchievementsComparator());
-                    adapter.notifyDataSetChanged();
+        hideBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                for (Achievement achievement : completedAchievements) {
+                    userAchievements.remove(achievement);
                 }
+                adapter.notifyDataSetChanged();
+            } else {
+                userAchievements.addAll(completedAchievements);
+                Collections.sort(userAchievements, new AchievementsComparator());
+                adapter.notifyDataSetChanged();
             }
         });
 
-        final CheckBox checkBox = header.findViewById(R.id.checkboxFavorite);
-        if (DataBase.currentUser.getFavorites().contains(student)) {
+       /* final CheckBox checkBox = header.findViewById(R.id.checkboxFavorite);
+        if (userInfo.getFavorites().contains(student)) {
             checkBox.setChecked(true);
         } else {
             checkBox.setChecked(false);

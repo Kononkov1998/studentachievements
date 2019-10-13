@@ -3,7 +3,6 @@ package com.example.jenya.studentachievements;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -17,7 +16,6 @@ import com.example.jenya.studentachievements.models.Visibility;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -26,7 +24,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Requests {
-    private static final String URL = "http://549ebcaa.ngrok.io";
+    private static final String URL = "https://ee37eb5e.ngrok.io";
     private Retrofit retrofit;
     private UserApi userApi;
     private static Requests instance;
@@ -174,19 +172,17 @@ public class Requests {
 
     // /student/anotherStudent
     public void studentSearch(String token, String group, String search, Context ctx, Button btn) {
-        userApi.search(token, group, search).enqueue(new Callback<List<UserInfo>>() {
+        userApi.search(token, group, search).enqueue(new Callback<UserInfo[]>() {
             @Override
-            public void onResponse(@NonNull Call<List<UserInfo>> call, @NonNull Response<List<UserInfo>> response) {
+            public void onResponse(@NonNull Call<UserInfo[]> call, @NonNull Response<UserInfo[]> response) {
                 if (response.isSuccessful()) {
-                    Log.i("Опачки3", Arrays.toString(response.body().toArray()));
                     // рез-ты поиска
-                    ArrayList<UserInfo> students = new ArrayList<>(response.body());
+                    ArrayList<UserInfo> students = new ArrayList<>(Arrays.asList(response.body()));
                     btn.getBackground().setAlpha(255);
                     btn.setEnabled(true);
                     Intent intent = new Intent(ctx, SearchResultsActivity.class);
 
                     intent.putParcelableArrayListExtra("students", students);
-                    Log.i("Опачки1", Arrays.toString(students.toArray()));
 
 
                     ctx.startActivity(intent);
@@ -198,7 +194,7 @@ public class Requests {
             }
 
             @Override
-            public void onFailure(@NonNull Call<List<UserInfo>> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<UserInfo[]> call, @NonNull Throwable t) {
                 Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
                 btn.getBackground().setAlpha(255);
                 btn.setEnabled(true);

@@ -42,8 +42,9 @@ public class ProfileActivity extends AppCompatActivity {
         final ArrayList<Achievement> userAchievements = new ArrayList<>(Arrays.asList(userInfo.getAchievements()));
 
         for (Achievement achievement : userAchievements) {
-            if (achievement.getStars() != 0)
+            if (achievement.getStars() != 0) {
                 completedAchievements.add(achievement);
+            }
         }
 
         Collections.sort(userAchievements, new AchievementsComparator());
@@ -73,8 +74,7 @@ public class ProfileActivity extends AppCompatActivity {
         if (SharedPreferencesActions.check("showCompleted", this)) {
             hideBox.setChecked(true);
         }
-        if(firstShow)
-        {
+        if (firstShow) {
             YoYo.with(Techniques.FadeIn).duration(1200).playOn(findViewById(R.id.textProfile));
             firstShow = false;
         }
@@ -115,8 +115,7 @@ public class ProfileActivity extends AppCompatActivity {
     public void onSaveInstanceState(Bundle savedInstanceState) {
         if (((CheckBox) findViewById(R.id.checkboxHide)).isChecked()) {
             SharedPreferencesActions.save("showCompleted", "false", this);
-        }
-        else{
+        } else {
             SharedPreferencesActions.delete("showCompleted", this);
         }
         super.onSaveInstanceState(savedInstanceState);
@@ -137,8 +136,7 @@ public class ProfileActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void openGrade(View view)
-    {
+    public void openGrade(View view) {
         Intent intent = new Intent(this, GradeActivity.class);
         startActivity(intent);
     }

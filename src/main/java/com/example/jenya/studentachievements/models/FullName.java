@@ -9,19 +9,19 @@ public class FullName implements Parcelable
 {
     @SerializedName("_id")
     @Expose
-    public String _id;
+    private String _id;
 
     @SerializedName("firstName")
     @Expose
-    public String firstName;
+    private String firstName;
 
     @SerializedName("lastName")
     @Expose
-    public String lastName;
+    private String lastName;
 
     @SerializedName("patronymic")
     @Expose
-    public String patronymic;
+    private String patronymic;
 
     public String get_id() {
         return _id;

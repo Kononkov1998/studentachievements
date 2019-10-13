@@ -10,19 +10,18 @@ import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.jenya.studentachievements.activities.OtherProfileActivity;
-import com.example.jenya.studentachievements.models.User;
-import com.example.jenya.studentachievements.models.UserInfo;
 import com.example.jenya.studentachievements.R;
+import com.example.jenya.studentachievements.activities.OtherProfileActivity;
+import com.example.jenya.studentachievements.models.UserInfo;
 
 import java.util.ArrayList;
 
 public class UsersAdapter extends BaseAdapter {
     private Context ctx;
     private LayoutInflater lInflater;
-    private ArrayList<User> objects;
+    private ArrayList<UserInfo> objects;
 
-    UsersAdapter(Context context, ArrayList<User> students) {
+    public UsersAdapter(Context context, ArrayList<UserInfo> students) {
         ctx = context;
         objects = students;
         lInflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -80,22 +79,10 @@ public class UsersAdapter extends BaseAdapter {
         });*/
 
         LinearLayout layout = view.findViewById(R.id.layout);
-        layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TextView textView = v.findViewById(R.id.textProfile);
-                String name = textView.getText().toString().split("\n")[1];
-                String surname = textView.getText().toString().split("\n")[0];
-                String patronymic = textView.getText().toString().split("\n")[2];
-                String group = textView.getText().toString().split("\n")[3];
-
-                Intent intent = new Intent(ctx, OtherProfileActivity.class);
-                intent.putExtra("name", name);
-                intent.putExtra("surname", surname);
-                intent.putExtra("patronymic", patronymic);
-                intent.putExtra("group", group);
-                ctx.startActivity(intent);
-            }
+        layout.setOnClickListener(v -> {
+            Intent intent = new Intent(ctx, OtherProfileActivity.class);
+            intent.putExtra("otherStudent", s);
+            ctx.startActivity(intent);
         });
 
         return view;
