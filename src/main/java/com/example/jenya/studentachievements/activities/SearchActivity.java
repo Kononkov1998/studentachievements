@@ -28,7 +28,17 @@ public class SearchActivity extends AppCompatActivity {
         ((EditText) findViewById(R.id.textViewSurname)).setText(SharedPreferencesActions.read("surname", this));
         ((EditText) findViewById(R.id.textViewPatronymic)).setText(SharedPreferencesActions.read("patronymic", this));
         ((EditText) findViewById(R.id.textViewGroup)).setText(SharedPreferencesActions.read("group", this));
+
         btn = findViewById(R.id.searchBtn);
+    }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        if (!btn.isEnabled()){
+            btn.getBackground().setAlpha(255);
+            btn.setEnabled(true);
+        }
     }
 
     @Override

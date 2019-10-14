@@ -24,7 +24,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Requests {
-    private static final String URL = "https://ee37eb5e.ngrok.io";
+    private static final String URL = "https://9a964176.ngrok.io";
     private Retrofit retrofit;
     private UserApi userApi;
     private static Requests instance;
@@ -76,7 +76,7 @@ public class Requests {
                     // сохраняем токен
                     String token = response.body().getUserToken();
                     SharedPreferencesActions.save("token", token, ctx);
-                    getUserInfo(token, ctx, btn, user);
+                    getUserInfo(token, ctx, btn);
                 } else {
                     Toast.makeText(ctx, "Неверный логин и/или пароль!", Toast.LENGTH_LONG).show();
                     //Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
@@ -95,7 +95,7 @@ public class Requests {
     }
 
     // /student/info
-    public void getUserInfo(String token, Context ctx, Button btn, User user) {
+    public void getUserInfo(String token, Context ctx, Button btn) {
         userApi.info(token).enqueue(new Callback<UserInfo>() {
             @Override
             public void onResponse(@NonNull Call<UserInfo> call, @NonNull Response<UserInfo> response) {
@@ -104,7 +104,7 @@ public class Requests {
                     UserInfo.setCurrentUser(response.body());
                     ctx.startActivity(intent);
                 } else {
-                    initializeStudent(token, ctx, btn, user);
+                    initializeStudent(token, ctx, btn);
                 }
             }
 
@@ -141,7 +141,7 @@ public class Requests {
     }
 
     // /student/initialize
-    public void initializeStudent(String token, Context ctx, Button btn, User user) {
+    public void initializeStudent(String token, Context ctx, Button btn) {
         userApi.initialize(token).enqueue(new Callback<UserInfo>() {
             @Override
             public void onResponse(@NonNull Call<UserInfo> call, @NonNull Response<UserInfo> response) {
@@ -178,13 +178,9 @@ public class Requests {
                 if (response.isSuccessful()) {
                     // рез-ты поиска
                     ArrayList<UserInfo> students = new ArrayList<>(Arrays.asList(response.body()));
-                    btn.getBackground().setAlpha(255);
-                    btn.setEnabled(true);
+
                     Intent intent = new Intent(ctx, SearchResultsActivity.class);
-
                     intent.putParcelableArrayListExtra("students", students);
-
-
                     ctx.startActivity(intent);
                 } else {
                     //Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();

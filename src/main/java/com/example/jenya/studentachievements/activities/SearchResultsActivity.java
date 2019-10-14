@@ -27,7 +27,7 @@ public class SearchResultsActivity extends AppCompatActivity {
         final UsersAdapter adapter = new UsersAdapter(this, students);
         final ListView listView = findViewById(R.id.list);
         if (students.isEmpty()) {
-            listView.addHeaderView(getLayoutInflater().inflate(R.layout.header_searchresults, listView, false));
+            listView.addHeaderView(getLayoutInflater().inflate(R.layout.item_nothingfound, listView, false));
         }
         listView.setAdapter(adapter);
 

@@ -9,8 +9,6 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.daimajia.androidanimations.library.Techniques;
-import com.daimajia.androidanimations.library.YoYo;
 import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.SharedPreferencesActions;
 import com.example.jenya.studentachievements.adapters.AchievementsAdapter;
@@ -23,12 +21,6 @@ import java.util.Arrays;
 import java.util.Collections;
 
 public class ProfileActivity extends AppCompatActivity {
-
-    private static boolean firstShow = true;
-
-    @Override
-    public void onBackPressed() {
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,10 +65,6 @@ public class ProfileActivity extends AppCompatActivity {
         });
         if (SharedPreferencesActions.check("showCompleted", this)) {
             hideBox.setChecked(true);
-        }
-        if (firstShow) {
-            YoYo.with(Techniques.FadeIn).duration(1200).playOn(findViewById(R.id.textProfile));
-            firstShow = false;
         }
         /*
         final ArrayList<StudentAchievement> completedAchievements = new ArrayList<>();

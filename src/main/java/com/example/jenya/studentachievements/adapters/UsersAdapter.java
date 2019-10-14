@@ -52,7 +52,7 @@ public class UsersAdapter extends BaseAdapter {
         // используем созданные, но не используемые view
         View view = convertView;
         if (view == null) {
-            view = lInflater.inflate(R.layout.item_favorites, parent, false);
+            view = lInflater.inflate(R.layout.item_student, parent, false);
         }
 
         // заполняем View в пункте списка данными из студентов

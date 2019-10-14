@@ -8,10 +8,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.jenya.studentachievements.models.Achievement;
+import com.bumptech.glide.Glide;
 import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.Requests;
-import com.squareup.picasso.Picasso;
+import com.example.jenya.studentachievements.models.Achievement;
 
 import java.util.ArrayList;
 
@@ -51,7 +51,7 @@ public class AchievementsAdapter extends BaseAdapter {
         // используем созданные, но не используемые view
         View view = convertView;
         if (view == null) {
-            view = lInflater.inflate(R.layout.item_profile, parent, false);
+            view = lInflater.inflate(R.layout.item_achievement, parent, false);
         }
 
         // заполняем View в пункте списка данными из ачивок
@@ -64,7 +64,7 @@ public class AchievementsAdapter extends BaseAdapter {
         String path = "stars" + a.getStars();
         int resId = ctx.getResources().getIdentifier(path, "drawable", ctx.getPackageName());
         ((ImageView) view.findViewById(R.id.stars)).setImageResource(resId);
-        Picasso.with(ctx)
+        Glide.with(ctx)
                 .load(Requests.getInstance().getURL() + "/icons/" + a.getCode() + ".png")
                 .placeholder(R.drawable.no_photo)
                 .into((ImageView) view.findViewById(R.id.image));

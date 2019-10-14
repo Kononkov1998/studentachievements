@@ -15,10 +15,10 @@
             android:theme="@style/AppTheme"/>
         <activity
             android:name=".activities.SplashScreenActivity"
-            android:theme="@style/SplashScreen">
+            android:theme="@style/SplashScreen"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -42,9 +42,12 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".activities.AuthActivity"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme"
+            android:noHistory="true"/>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
 
 </manifest>
