@@ -17,12 +17,17 @@ public class FavoritesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        overridePendingTransition(0,0);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_favorites);
         //adapter = new UsersAdapter(this, DataBase.currentUser.getFavorites());
         final ListView listView = findViewById(R.id.list);
         listView.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        overridePendingTransition(0, 0);
     }
 
     public void openProfile(View view) {

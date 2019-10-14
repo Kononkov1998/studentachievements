@@ -20,7 +20,6 @@ public class SearchActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        overridePendingTransition(0, 0);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_search);
 
@@ -33,9 +32,10 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStart(){
+    protected void onStart() {
         super.onStart();
-        if (!btn.isEnabled()){
+        overridePendingTransition(0, 0);
+        if (!btn.isEnabled()) {
             btn.getBackground().setAlpha(255);
             btn.setEnabled(true);
         }
@@ -65,8 +65,7 @@ public class SearchActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void openGrade(View view)
-    {
+    public void openGrade(View view) {
         Intent intent = new Intent(this, GradeActivity.class);
         startActivity(intent);
     }
@@ -77,11 +76,9 @@ public class SearchActivity extends AppCompatActivity {
         String patronymic = ((EditText) findViewById(R.id.textViewPatronymic)).getText().toString().trim();
         String group = ((EditText) findViewById(R.id.textViewGroup)).getText().toString().trim();
 
-        if (name.isEmpty() && surname.isEmpty() && patronymic.isEmpty() && group.isEmpty())
-        {
+        if (name.isEmpty() && surname.isEmpty() && patronymic.isEmpty() && group.isEmpty()) {
             Toast.makeText(this, "Заполните хотя бы одно поле!", Toast.LENGTH_LONG).show();
-        }
-        else {
+        } else {
             String fio = String.format("%s %s %s", surname, name, patronymic);
             btn.getBackground().setAlpha(100);
             btn.setEnabled(false);
