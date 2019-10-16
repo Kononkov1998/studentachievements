@@ -70,19 +70,22 @@ public class SearchActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void search(View view) {
+    public void search(View view)
+    {
         String name = ((EditText) findViewById(R.id.textViewName)).getText().toString().trim();
         String surname = ((EditText) findViewById(R.id.textViewSurname)).getText().toString().trim();
         String patronymic = ((EditText) findViewById(R.id.textViewPatronymic)).getText().toString().trim();
         String group = ((EditText) findViewById(R.id.textViewGroup)).getText().toString().trim();
 
-        if (name.isEmpty() && surname.isEmpty() && patronymic.isEmpty() && group.isEmpty()) {
+        if (name.isEmpty() && surname.isEmpty() && patronymic.isEmpty() && group.isEmpty())
+        {
             Toast.makeText(this, "Заполните хотя бы одно поле!", Toast.LENGTH_LONG).show();
-        } else {
-            String fio = String.format("%s %s %s", surname, name, patronymic);
-            btn.getBackground().setAlpha(100);
-            btn.setEnabled(false);
-            Requests.getInstance().studentSearch(SharedPreferencesActions.read("token", this), group, fio.trim(), this, btn);
+            return;
         }
+
+        String fio = String.format("%s %s %s", surname, name, patronymic);
+        btn.getBackground().setAlpha(100);
+        btn.setEnabled(false);
+        Requests.getInstance().studentSearch(SharedPreferencesActions.read("token", this), group, fio.trim(), this, btn);
     }
 }

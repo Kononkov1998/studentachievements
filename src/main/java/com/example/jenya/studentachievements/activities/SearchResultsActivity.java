@@ -5,9 +5,11 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import com.example.jenya.studentachievements.R;
+import com.example.jenya.studentachievements.SharedPreferencesActions;
 import com.example.jenya.studentachievements.adapters.UsersAdapter;
 import com.example.jenya.studentachievements.models.UserInfo;
 
@@ -30,8 +32,11 @@ public class SearchResultsActivity extends AppCompatActivity {
         }
         listView.setAdapter(adapter);
 
-        listView.setOnItemClickListener((parent, view, position, id) -> {
-        });
+        listView.setOnItemClickListener((parent, view, position, id) -> { });
+        SharedPreferencesActions.delete("name", this);
+        SharedPreferencesActions.delete("surname", this);
+        SharedPreferencesActions.delete("patronymic", this);
+        SharedPreferencesActions.delete("group", this);
     }
 
     @Override
