@@ -23,6 +23,7 @@ public class OtherProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        supportPostponeEnterTransition();
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_otherprofile);
 
@@ -46,6 +47,7 @@ public class OtherProfileActivity extends AppCompatActivity {
         listView.addHeaderView(header);
         listView.setAdapter(adapter);
 
+        supportStartPostponedEnterTransition();
         CheckBox hideBox = findViewById(R.id.checkboxHide);
         hideBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {

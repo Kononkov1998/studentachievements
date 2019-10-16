@@ -1,13 +1,17 @@
 package com.example.jenya.studentachievements.adapters;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.jenya.studentachievements.R;
@@ -78,11 +82,24 @@ public class UsersAdapter extends BaseAdapter {
             }
         });*/
 
-        LinearLayout layout = view.findViewById(R.id.layout);
+        RelativeLayout layout = view.findViewById(R.id.layout);
         layout.setOnClickListener(v -> {
+            Bundle bundle = null;
+
+            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+                Activity activity = (Activity) ctx;
+                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(activity, layout, "student_transition");
+                    bundle = options.toBundle();
+            }
+
             Intent intent = new Intent(ctx, OtherProfileActivity.class);
             intent.putExtra("otherStudent", s);
-            ctx.startActivity(intent);
+
+            if (bundle == null) {
+                ctx.startActivity(intent);
+            } else {
+                ctx.startActivity(intent, bundle);
+            }
         });
 
         return view;

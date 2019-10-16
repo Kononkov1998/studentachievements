@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/colorWhite</item>
         <item name="colorPrimaryDark">@color/colorDarkGrey</item>
         <item name="colorAccent">@color/colorDarkGrey</item>
+
     </style>
 
     <style name="SplashScreen" parent="Theme.AppCompat.Light.NoActionBar">

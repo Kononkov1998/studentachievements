@@ -36,10 +36,10 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".activities.SearchResultsActivity"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme.Animation" />
         <activity
             android:name=".activities.OtherProfileActivity"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme.Animation" />
         <activity
             android:name=".activities.AuthActivity"
             android:theme="@style/AppTheme"

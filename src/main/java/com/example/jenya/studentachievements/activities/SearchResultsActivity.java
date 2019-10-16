@@ -31,7 +31,6 @@ public class SearchResultsActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener((parent, view, position, id) -> {
-
         });
     }
 
