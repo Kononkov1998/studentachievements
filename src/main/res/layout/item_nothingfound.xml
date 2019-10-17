@@ -9,5 +9,6 @@
         android:layout_height="match_parent"
         android:textSize="30sp"
         android:text="Ничего не найдено"
-        android:gravity="center_vertical|center_horizontal"/>
+        android:gravity="center_vertical|center_horizontal"
+        android:textColor="@color/colorGrey"/>
 </android.support.constraint.ConstraintLayout>
