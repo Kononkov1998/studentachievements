@@ -5,7 +5,6 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ListView;
 
 import com.example.jenya.studentachievements.R;
@@ -47,6 +46,11 @@ public class SearchResultsActivity extends AppCompatActivity {
 
     public void openProfile(View view) {
         Intent intent = new Intent(this, ProfileActivity.class);
+        startActivity(intent);
+    }
+
+    public void openSearch(View view) {
+        Intent intent = new Intent(this, SearchActivity.class);
         startActivity(intent);
     }
 

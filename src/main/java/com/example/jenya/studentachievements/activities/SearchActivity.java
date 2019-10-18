@@ -16,6 +16,7 @@ import com.example.jenya.studentachievements.SharedPreferencesActions;
 public class SearchActivity extends AppCompatActivity {
 
     private Button btn;
+    private static boolean isSearchSuccessful;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +24,7 @@ public class SearchActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_search);
 
+        isSearchSuccessful = false;
         ((EditText) findViewById(R.id.textViewName)).setText(SharedPreferencesActions.read("name", this));
         ((EditText) findViewById(R.id.textViewSurname)).setText(SharedPreferencesActions.read("surname", this));
         ((EditText) findViewById(R.id.textViewPatronymic)).setText(SharedPreferencesActions.read("patronymic", this));
@@ -43,11 +45,40 @@ public class SearchActivity extends AppCompatActivity {
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
-        SharedPreferencesActions.save("name", ((EditText) findViewById(R.id.textViewName)).getText().toString(), this);
-        SharedPreferencesActions.save("surname", ((EditText) findViewById(R.id.textViewSurname)).getText().toString(), this);
-        SharedPreferencesActions.save("patronymic", ((EditText) findViewById(R.id.textViewPatronymic)).getText().toString(), this);
-        SharedPreferencesActions.save("group", ((EditText) findViewById(R.id.textViewGroup)).getText().toString(), this);
+        if (isSearchSuccessful) {
+            SharedPreferencesActions.delete("name", this);
+            SharedPreferencesActions.delete("surname", this);
+            SharedPreferencesActions.delete("patronymic", this);
+            SharedPreferencesActions.delete("group", this);
+
+        } else {
+            SharedPreferencesActions.save("name", ((EditText) findViewById(R.id.textViewName)).getText().toString(), this);
+            SharedPreferencesActions.save("surname", ((EditText) findViewById(R.id.textViewSurname)).getText().toString(), this);
+            SharedPreferencesActions.save("patronymic", ((EditText) findViewById(R.id.textViewPatronymic)).getText().toString(), this);
+            SharedPreferencesActions.save("group", ((EditText) findViewById(R.id.textViewGroup)).getText().toString(), this);
+        }
         super.onSaveInstanceState(savedInstanceState);
+    }
+
+    public void search(View view) {
+        String name = ((EditText) findViewById(R.id.textViewName)).getText().toString().trim();
+        String surname = ((EditText) findViewById(R.id.textViewSurname)).getText().toString().trim();
+        String patronymic = ((EditText) findViewById(R.id.textViewPatronymic)).getText().toString().trim();
+        String group = ((EditText) findViewById(R.id.textViewGroup)).getText().toString().trim();
+
+        if (name.isEmpty() && surname.isEmpty() && patronymic.isEmpty() && group.isEmpty()) {
+            Toast.makeText(this, "Заполните хотя бы одно поле!", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        String fio = String.format("%s %s %s", surname, name, patronymic);
+        btn.getBackground().setAlpha(100);
+        btn.setEnabled(false);
+        Requests.getInstance().studentSearch(SharedPreferencesActions.read("token", this), group, fio.trim(), this, btn);
+    }
+
+    public static void searchSuccessful(){
+        isSearchSuccessful = true;
     }
 
     public void openProfile(View view) {
@@ -68,24 +99,5 @@ public class SearchActivity extends AppCompatActivity {
     public void openGrade(View view) {
         Intent intent = new Intent(this, GradeActivity.class);
         startActivity(intent);
-    }
-
-    public void search(View view)
-    {
-        String name = ((EditText) findViewById(R.id.textViewName)).getText().toString().trim();
-        String surname = ((EditText) findViewById(R.id.textViewSurname)).getText().toString().trim();
-        String patronymic = ((EditText) findViewById(R.id.textViewPatronymic)).getText().toString().trim();
-        String group = ((EditText) findViewById(R.id.textViewGroup)).getText().toString().trim();
-
-        if (name.isEmpty() && surname.isEmpty() && patronymic.isEmpty() && group.isEmpty())
-        {
-            Toast.makeText(this, "Заполните хотя бы одно поле!", Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        String fio = String.format("%s %s %s", surname, name, patronymic);
-        btn.getBackground().setAlpha(100);
-        btn.setEnabled(false);
-        Requests.getInstance().studentSearch(SharedPreferencesActions.read("token", this), group, fio.trim(), this, btn);
     }
 }

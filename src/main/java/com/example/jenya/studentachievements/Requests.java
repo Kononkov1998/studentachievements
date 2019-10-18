@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.example.jenya.studentachievements.activities.AuthActivity;
 import com.example.jenya.studentachievements.activities.ProfileActivity;
+import com.example.jenya.studentachievements.activities.SearchActivity;
 import com.example.jenya.studentachievements.activities.SearchResultsActivity;
 import com.example.jenya.studentachievements.models.User;
 import com.example.jenya.studentachievements.models.UserInfo;
@@ -24,7 +25,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Requests {
-    private static final String URL = "http://900f9566.ngrok.io";
+    private static final String URL = "https://f7399887.ngrok.io";
     private Retrofit retrofit;
     private UserApi userApi;
     private static Requests instance;
@@ -176,7 +177,7 @@ public class Requests {
             @Override
             public void onResponse(@NonNull Call<UserInfo[]> call, @NonNull Response<UserInfo[]> response) {
                 if (response.isSuccessful()) {
-                    // рез-ты поиска
+                    SearchActivity.searchSuccessful();
                     ArrayList<UserInfo> students = new ArrayList<>(Arrays.asList(response.body()));
 
                     Intent intent = new Intent(ctx, SearchResultsActivity.class);
