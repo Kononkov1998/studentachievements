@@ -15,12 +15,6 @@
         <item name="android:windowBackground">@drawable/background_splash</item>
     </style>
 
-    <style name="SCBSwitch" parent="Theme.AppCompat.Light">
-        <item name="colorControlActivated">@color/colorPrimary</item>
-        <item name="colorSwitchThumbNormal">@color/colorGrey</item>
-        <item name="android:colorForeground">@color/colorGrey</item>
-    </style>
-
     <style name="Btn" parent="Theme.AppCompat.Light">
         <item name="android:textSize">20sp</item>
         <item name="android:layout_width">wrap_content</item>

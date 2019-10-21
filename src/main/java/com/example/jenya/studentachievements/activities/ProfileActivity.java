@@ -7,7 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.SharedPreferencesActions;
@@ -20,8 +22,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
-public class ProfileActivity extends AppCompatActivity {
-
+public class ProfileActivity extends AppCompatActivity
+{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,9 +33,14 @@ public class ProfileActivity extends AppCompatActivity {
         final ArrayList<Achievement> completedAchievements = new ArrayList<>();
         UserInfo userInfo = UserInfo.getCurrentUser();
         final ArrayList<Achievement> userAchievements = new ArrayList<>(Arrays.asList(userInfo.getAchievements()));
+        int starsSum = 0;
 
-        for (Achievement achievement : userAchievements) {
-            if (achievement.getStars() != 0) {
+        for (Achievement achievement : userAchievements)
+        {
+            int stars = achievement.getStars();
+            if (stars != 0)
+            {
+                starsSum += stars;
                 completedAchievements.add(achievement);
             }
         }
@@ -46,6 +53,18 @@ public class ProfileActivity extends AppCompatActivity {
         //((ImageView) header.findViewById(R.id.imageUser)).setImageResource(DataBase.currentUser.getImage());
         String headerText = userInfo.getFullName().getLastName() + "\n" + userInfo.getFullName().getFirstName() + "\n" + userInfo.getFullName().getPatronymic() + "\n" + userInfo.getGroup().getName();
         ((TextView) header.findViewById(R.id.textProfile)).setText(headerText);
+
+        int completed = completedAchievements.size();
+        int all = userAchievements.size();
+        ((TextView) header.findViewById(R.id.achievementsTextView)).setText(String.format("Получено достижений: %d из %d (%d%%)", completed, all, Math.round((double)completed / (double)all * 100.0)));
+        ((ProgressBar) header.findViewById(R.id.achievementsProgressBar)).setProgress(completed);
+        ((ProgressBar) header.findViewById(R.id.achievementsProgressBar)).setMax(all);
+
+        int allStars = all * 3;
+        ((TextView) header.findViewById(R.id.starsTextView)).setText(String.format("Получено звезд: %d из %d (%d%%)", starsSum, allStars, Math.round((double) starsSum / (double) allStars * 100.0)));
+        ((ProgressBar) header.findViewById(R.id.starsProgressBar)).setProgress(starsSum);
+        ((ProgressBar) header.findViewById(R.id.starsProgressBar)).setMax(allStars);
+
         listView.addHeaderView(header);
         listView.setAdapter(adapter);
 

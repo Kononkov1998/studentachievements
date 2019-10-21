@@ -32,7 +32,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:inputType="none"
-                android:text="Кононков Евгений Вячеславович КИ16-16Б"
                 android:textSize="25sp"
                 android:textColor="@color/colorGrey"
                 android:layout_marginStart="15dp"
@@ -53,21 +52,45 @@
             />
     </RelativeLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="20dp">
-
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginEnd="5dp">
         <CheckBox
             android:id="@+id/checkboxHide"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginEnd="5dp"
-            android:layout_marginRight="5dp"
-            android:text="Скрыть полученные"
+            android:text="@string/hide"
             android:buttonTint="@color/colorPrimary"
             android:textColor="@color/colorGrey"/>
+        <TextView
+            android:id="@+id/achievementsTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textColor="@color/colorGrey"/>
+        <ProgressBar
+            android:id="@+id/achievementsProgressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:indeterminate="false"
+            android:progressDrawable="@drawable/progressbar"/>
+        <TextView
+            android:id="@+id/starsTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textColor="@color/colorGrey"/>
+        <ProgressBar
+            android:id="@+id/starsProgressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:indeterminate="false"
+            android:progressDrawable="@drawable/progressbar"/>
 
-    </RelativeLayout>
+    </LinearLayout>
 </LinearLayout>

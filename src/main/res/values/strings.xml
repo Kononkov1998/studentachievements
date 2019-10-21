@@ -20,4 +20,5 @@
     <string name="me">Только я</string>
     <string name="apply">Применить</string>
     <string name="search_results">Результаты поиска</string>
+    <string name="hide">Скрыть полученные</string>
 </resources>
