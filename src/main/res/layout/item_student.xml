@@ -6,10 +6,10 @@
     android:orientation="vertical">
 
     <RelativeLayout
+        android:id="@+id/layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:transitionName="student_transition"
-        android:id="@+id/layout">
+        android:transitionName="student_transition">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -19,37 +19,37 @@
 
             <ImageView
                 android:id="@+id/imageUser"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
                 android:layout_gravity="center_horizontal"
-                app:srcCompat="@drawable/profile"
                 android:layout_marginStart="15dp"
-                android:layout_marginLeft="15dp"/>
+                android:layout_marginLeft="15dp"
+                app:srcCompat="@drawable/profile" />
 
             <TextView
                 android:id="@+id/textProfile"
                 android:layout_width="190dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="15dp"
                 android:inputType="none"
                 android:text="Кононков Евгений Вячеславович КИ16-16Б"
-                android:textSize="25sp"
                 android:textColor="@color/colorGrey"
-                android:layout_marginStart="15dp"
-                android:layout_marginLeft="15dp"/>
+                android:textSize="25sp" />
         </LinearLayout>
+
         <CheckBox
             android:id="@+id/checkboxFavorite"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="5dp"
-            android:button="@drawable/checkbox_selector"
-            android:visibility="visible"
-            android:layout_alignParentRight="true"
             android:layout_marginRight="5dp"
-            />
+            android:button="@drawable/checkbox_selector"
+            android:visibility="visible" />
     </RelativeLayout>
 </LinearLayout>

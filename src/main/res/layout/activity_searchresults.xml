@@ -2,7 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorDarkGrey">
+    android:background="@color/colorDarkestGrey">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -23,7 +23,7 @@
             android:layout_height="match_parent"
             android:layout_alignParentTop="true"
             android:layout_marginTop="30dp"
-            android:layout_marginBottom="35dp"></ListView>
+            android:layout_marginBottom="35dp" />
 
         <LinearLayout style="@style/LinearLayout">
 

@@ -4,9 +4,8 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorWhite</item>
-        <item name="colorPrimaryDark">@color/colorDarkGrey</item>
-        <item name="colorAccent">@color/colorDarkGrey</item>
-
+        <item name="colorPrimaryDark">@color/colorDarkestGrey</item>
+        <item name="colorAccent">@color/colorDarkestGrey</item>
     </style>
 
     <style name="SplashScreen" parent="Theme.AppCompat.Light.NoActionBar">

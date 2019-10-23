@@ -3,5 +3,8 @@
     <color name="colorPrimary">#FF4500</color>
     <color name="colorWhite">#fff</color>
     <color name="colorGrey">#D5DAE4</color>
-    <color name="colorDarkGrey">#34373c</color>
+    <color name="colorDarkGrey">#2a2c30</color>
+    <color name="colorDarkestGrey">#1e1f23</color>
+    <color name="colorBlack">#000</color>
+
 </resources>

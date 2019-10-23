@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
 
     <LinearLayout
@@ -15,64 +15,69 @@
 
         <ImageView
             android:id="@+id/imageUser"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
             android:layout_gravity="center_horizontal"
-            app:srcCompat="@drawable/profile"
             android:layout_marginStart="15dp"
-            android:layout_marginLeft="15dp"/>
+            android:layout_marginLeft="15dp"
+            app:srcCompat="@drawable/profile" />
 
         <TextView
             android:id="@+id/textProfile"
             android:layout_width="190dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:inputType="none"
-            android:textSize="25sp"
-            android:textColor="@color/colorGrey"
             android:layout_marginStart="15dp"
-            android:layout_marginLeft="15dp"/>
+            android:layout_marginLeft="15dp"
+            android:inputType="none"
+            android:textColor="@color/colorGrey"
+            android:textSize="25sp" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginLeft="5dp"
         android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
-        android:layout_marginEnd="5dp">
+        android:orientation="vertical">
+
         <CheckBox
             android:id="@+id/checkboxHide"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/hide"
             android:buttonTint="@color/colorPrimary"
-            android:textColor="@color/colorGrey"/>
+            android:text="@string/hide"
+            android:textColor="@color/colorGrey" />
+
         <TextView
             android:id="@+id/achievementsTextView"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:textColor="@color/colorGrey"/>
+            android:textColor="@color/colorGrey" />
+
         <ProgressBar
             android:id="@+id/achievementsProgressBar"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:indeterminate="false"
-            android:progressDrawable="@drawable/progressbar"/>
+            android:progressDrawable="@drawable/progressbar" />
+
         <TextView
             android:id="@+id/starsTextView"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:textColor="@color/colorGrey"/>
+            android:textColor="@color/colorGrey" />
+
         <ProgressBar
             android:id="@+id/starsProgressBar"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:indeterminate="false"
-            android:progressDrawable="@drawable/progressbar"/>
+            android:progressDrawable="@drawable/progressbar" />
 
     </LinearLayout>
 </LinearLayout>

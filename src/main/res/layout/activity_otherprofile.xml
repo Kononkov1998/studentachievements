@@ -3,22 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorDarkGrey">
+    android:background="@color/colorDarkestGrey">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <ListView
             android:id="@+id/list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="35dp"
-            android:layout_alignParentTop="true">
-        </ListView>
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="35dp" />
 
 
-        <LinearLayout
-            style="@style/LinearLayout">
+        <LinearLayout style="@style/LinearLayout">
 
             <ImageView
                 android:id="@+id/imageProfile"
