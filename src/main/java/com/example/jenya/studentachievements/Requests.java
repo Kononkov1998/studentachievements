@@ -25,7 +25,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Requests {
-    private static final String URL = "https://fd3fc24d.ngrok.io";
+    private static final String URL = "https://dab42f86.ngrok.io";
     private Retrofit retrofit;
     private UserApi userApi;
     private static Requests instance;
@@ -80,7 +80,6 @@ public class Requests {
                     getUserInfo(token, ctx, btn);
                 } else {
                     Toast.makeText(ctx, "Неверный логин и/или пароль!", Toast.LENGTH_LONG).show();
-                    //Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
                     btn.getBackground().setAlpha(255);
                     btn.setEnabled(true);
                 }
@@ -151,7 +150,6 @@ public class Requests {
                     UserInfo.setCurrentUser(response.body());
                     ctx.startActivity(intent);
                 } else {
-                    //Toast.makeText(ctx, "Неверный логин и/или пароль!", Toast.LENGTH_LONG).show();
                     btn.getBackground().setAlpha(255);
                     btn.setEnabled(true);
                 }
@@ -163,10 +161,6 @@ public class Requests {
                 Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
                 btn.getBackground().setAlpha(255);
                 btn.setEnabled(true);
-                //Intent intent = new Intent(ctx, AuthActivity.class);
-                //intent.putExtra("login", user.getusername());
-                //intent.putExtra("password", user.getPassword());
-                //ctx.startActivity(intent);
             }
         });
     }
@@ -184,7 +178,6 @@ public class Requests {
                     intent.putParcelableArrayListExtra("students", students);
                     ctx.startActivity(intent);
                 } else {
-                    //Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
                     btn.getBackground().setAlpha(255);
                     btn.setEnabled(true);
                 }
@@ -200,28 +193,18 @@ public class Requests {
     }
 
     // /student/visibility
-    public void setVisibility(String token, Visibility visibility, Context ctx, Button btn) {
+    public void setVisibility(String token, Visibility visibility, Context ctx) {
         userApi.visibility(token, visibility).enqueue(new Callback<UserInfo>() {
             @Override
             public void onResponse(@NonNull Call<UserInfo> call, @NonNull Response<UserInfo> response) {
                 if (response.isSuccessful()) {
                     UserInfo.getCurrentUser().setVisibility(response.body().getVisibility());
-                    //Toast.makeText(ctx, "Ваши настройки сохранены", Toast.LENGTH_LONG).show();
-                    Toast.makeText(ctx, "Настройки успешно сохранены", Toast.LENGTH_LONG).show();
-                    btn.getBackground().setAlpha(255);
-                    btn.setEnabled(true);
-                } else {
-                    //Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
-                    btn.getBackground().setAlpha(255);
-                    btn.setEnabled(true);
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t) {
                 Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
-                btn.getBackground().setAlpha(255);
-                btn.setEnabled(true);
             }
         });
     }

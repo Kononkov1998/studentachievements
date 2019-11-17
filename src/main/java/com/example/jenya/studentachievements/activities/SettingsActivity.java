@@ -5,7 +5,6 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -17,7 +16,6 @@ import com.example.jenya.studentachievements.models.Visibility;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    private Button btn;
     private RadioGroup rg;
     private RadioButton rb;
     private UserInfo userInfo;
@@ -28,14 +26,12 @@ public class SettingsActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_settings);
 
-        btn = findViewById(R.id.applyButton);
         rg = findViewById(R.id.radioGroup);
 
         userInfo = UserInfo.getCurrentUser();
-        String visibility = userInfo.getVisibility();
+        String visibilityStr = userInfo.getVisibility();
 
-        switch (visibility)
-        {
+        switch (visibilityStr) {
             case "all":
                 rb = findViewById(R.id.radioButton0);
                 rb.setChecked(true);
@@ -50,39 +46,33 @@ public class SettingsActivity extends AppCompatActivity {
                 break;
         }
 
-       /* radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId) {
-                    case R.id.radioButton0:
-                        DataBase.currentUser.setVisibility(0);
-                        break;
-                    case R.id.radioButton1:
-                        DataBase.currentUser.setVisibility(1);
-                        break;
-                    case R.id.radioButton2:
-                        DataBase.currentUser.setVisibility(2);
-                        break;
-                    case R.id.radioButton3:
-                        DataBase.currentUser.setVisibility(3);
-                        break;
-                    case R.id.radioButton4:
-                        DataBase.currentUser.setVisibility(4);
-                        break;
-                    default:
-                        break;
-                }
+        rg.setOnCheckedChangeListener((group, checkedId) -> {
+            int selectedParam = rg.getCheckedRadioButtonId();
+            RadioButton selectedRadioButton = findViewById(selectedParam);
+            String selectedRadioButtonText = selectedRadioButton.getText().toString();
+            Visibility visibility = new Visibility();
+            switch (selectedRadioButtonText) {
+                case "Все":
+                    visibility.setAll();
+                    break;
+                case "Одногруппники":
+                    visibility.setGroupmates();
+                    break;
+                case "Только я":
+                    visibility.setMe();
+                    break;
             }
-        });*/
+            Requests.getInstance().setVisibility(SharedPreferencesActions.read("token", this), visibility, this);
+        });
     }
 
     @Override
-    protected void onStart(){
+    protected void onStart() {
         super.onStart();
         overridePendingTransition(0, 0);
     }
 
-    public void exit(View view){
+    public void exit(View view) {
         SharedPreferencesActions.delete("token", this);
         SharedPreferencesActions.delete("name", this);
         SharedPreferencesActions.delete("surname", this);
@@ -91,30 +81,6 @@ public class SettingsActivity extends AppCompatActivity {
         SharedPreferencesActions.delete("showCompleted", this);
         Intent intent = new Intent(this, AuthActivity.class);
         startActivity(intent);
-    }
-
-    public void apply(View view)
-    {
-        int selectedParam = rg.getCheckedRadioButtonId();
-        RadioButton selectedRadioButton = (RadioButton) findViewById(selectedParam);
-        String selectedRadioButtonText = selectedRadioButton.getText().toString();
-        Visibility visibility = new Visibility();
-        switch (selectedRadioButtonText)
-        {
-            case "Все":
-                visibility.setAll();
-                break;
-            case "Одногруппники":
-                visibility.setGroupmates();
-                break;
-            case "Только я":
-                visibility.setMe();
-                break;
-        }
-
-        btn.getBackground().setAlpha(100);
-        btn.setEnabled(false);
-        Requests.getInstance().setVisibility(SharedPreferencesActions.read("token", this), visibility, this, btn);
     }
 
     public void openProfile(View view) {
@@ -132,8 +98,7 @@ public class SettingsActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void openGrade(View view)
-    {
+    public void openGrade(View view) {
         Intent intent = new Intent(this, GradeActivity.class);
         startActivity(intent);
     }
