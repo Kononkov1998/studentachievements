@@ -62,7 +62,7 @@ public class SettingsActivity extends AppCompatActivity {
                     visibility.setMe();
                     break;
             }
-            Requests.getInstance().setVisibility(SharedPreferencesActions.read("token", this), visibility, this);
+            Requests.getInstance().setVisibility(visibility, this);
         });
     }
 

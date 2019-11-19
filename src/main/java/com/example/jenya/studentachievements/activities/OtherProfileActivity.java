@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.Requests;
-import com.example.jenya.studentachievements.SharedPreferencesActions;
 import com.example.jenya.studentachievements.adapters.AchievementsAdapter;
 import com.example.jenya.studentachievements.comparators.AchievementsComparator;
 import com.example.jenya.studentachievements.models.Achievement;
@@ -94,9 +93,9 @@ public class OtherProfileActivity extends AppCompatActivity {
 
         checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
-                Requests.getInstance().addFavourite(SharedPreferencesActions.read("token", this), otherStudent, this);
+                Requests.getInstance().addFavourite(otherStudent, this);
             } else {
-                Requests.getInstance().removeFavourite(SharedPreferencesActions.read("token", this), otherStudent, this);
+                Requests.getInstance().removeFavourite(otherStudent, this);
             }
         });
     }

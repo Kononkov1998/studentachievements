@@ -22,7 +22,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         SharedPreferencesActions.delete("group", this);
 
         if (SharedPreferencesActions.check("token", this)) {
-            Requests.getInstance().getUserInfoFromSplashScreen(SharedPreferencesActions.read("token", this), this);
+            Requests.getInstance().getUserInfoFromSplashScreen(this);
         } else {
             Intent intent = new Intent(this, AuthActivity.class);
             this.startActivity(intent);

@@ -3,7 +3,6 @@ package com.example.jenya.studentachievements;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -26,12 +25,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Requests {
     private static final String URL = "https://b0fbdc0b.ngrok.io";
-    private Retrofit retrofit;
     private UserApi userApi;
     private static Requests instance;
 
     private Requests() {
-        retrofit = new Retrofit.Builder()
+        Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -75,9 +73,10 @@ public class Requests {
             public void onResponse(@NonNull Call<UserToken> call, @NonNull Response<UserToken> response) {
                 if (response.isSuccessful()) {
                     // сохраняем токен
+                    assert response.body() != null;
                     String token = response.body().getUserToken();
                     SharedPreferencesActions.save("token", token, ctx);
-                    getUserInfo(token, ctx, btn);
+                    getUserInfo(ctx, btn);
                 } else {
                     Toast.makeText(ctx, "Неверный логин и/или пароль!", Toast.LENGTH_LONG).show();
                     btn.getBackground().setAlpha(255);
@@ -95,17 +94,17 @@ public class Requests {
     }
 
     // /student/info
-    public void getUserInfo(String token, Context ctx, Button btn) {
-        userApi.info(token).enqueue(new Callback<UserInfo>() {
+    private void getUserInfo(Context ctx, Button btn) {
+        userApi.info(SharedPreferencesActions.read("token", ctx)).enqueue(new Callback<UserInfo>() {
             @Override
             public void onResponse(@NonNull Call<UserInfo> call, @NonNull Response<UserInfo> response) {
                 if (response.isSuccessful()) {
                     Intent intent = new Intent(ctx, ProfileActivity.class);
                     UserInfo.setCurrentUser(response.body());
-                    getFavourites(token, ctx);
+                    getFavourites(ctx);
                     ctx.startActivity(intent);
                 } else {
-                    initializeStudent(token, ctx, btn);
+                    initializeStudent(ctx, btn);
                 }
             }
 
@@ -119,14 +118,14 @@ public class Requests {
     }
 
     // /student/info
-    public void getUserInfoFromSplashScreen(String token, Context ctx) {
-        userApi.info(token).enqueue(new Callback<UserInfo>() {
+    public void getUserInfoFromSplashScreen(Context ctx) {
+        userApi.info(SharedPreferencesActions.read("token", ctx)).enqueue(new Callback<UserInfo>() {
             @Override
             public void onResponse(@NonNull Call<UserInfo> call, @NonNull Response<UserInfo> response) {
                 if (response.isSuccessful()) {
                     Intent intent = new Intent(ctx, ProfileActivity.class);
                     UserInfo.setCurrentUser(response.body());
-                    getFavourites(token, ctx);
+                    getFavourites(ctx);
                     ctx.startActivity(intent);
                 } else {
                     Intent intent = new Intent(ctx, AuthActivity.class);
@@ -143,14 +142,14 @@ public class Requests {
     }
 
     // /student/initialize
-    public void initializeStudent(String token, Context ctx, Button btn) {
-        userApi.initialize(token).enqueue(new Callback<UserInfo>() {
+    private void initializeStudent(Context ctx, Button btn) {
+        userApi.initialize(SharedPreferencesActions.read("token", ctx)).enqueue(new Callback<UserInfo>() {
             @Override
             public void onResponse(@NonNull Call<UserInfo> call, @NonNull Response<UserInfo> response) {
                 if (response.isSuccessful()) {
                     Intent intent = new Intent(ctx, ProfileActivity.class);
                     UserInfo.setCurrentUser(response.body());
-                    getFavourites(token, ctx);
+                    getFavourites(ctx);
                     ctx.startActivity(intent);
                 } else {
                     btn.getBackground().setAlpha(255);
@@ -169,8 +168,8 @@ public class Requests {
     }
 
     // /student/anotherStudent
-    public void studentSearch(String token, String group, String search, Context ctx, Button btn) {
-        userApi.search(token, group, search).enqueue(new Callback<ArrayList<UserInfo>>() {
+    public void studentSearch(String group, String search, Context ctx, Button btn) {
+        userApi.search(SharedPreferencesActions.read("token", ctx), group, search).enqueue(new Callback<ArrayList<UserInfo>>() {
             @Override
             public void onResponse(@NonNull Call<ArrayList<UserInfo>> call, @NonNull Response<ArrayList<UserInfo>> response) {
                 if (response.isSuccessful()) {
@@ -195,11 +194,12 @@ public class Requests {
     }
 
     // /student/visibility
-    public void setVisibility(String token, Visibility visibility, Context ctx) {
-        userApi.visibility(token, visibility).enqueue(new Callback<UserInfo>() {
+    public void setVisibility(Visibility visibility, Context ctx) {
+        userApi.visibility(SharedPreferencesActions.read("token", ctx), visibility).enqueue(new Callback<UserInfo>() {
             @Override
             public void onResponse(@NonNull Call<UserInfo> call, @NonNull Response<UserInfo> response) {
                 if (response.isSuccessful()) {
+                    assert response.body() != null;
                     UserInfo.getCurrentUser().setVisibility(response.body().getVisibility());
                 }
             }
@@ -212,8 +212,8 @@ public class Requests {
     }
 
     // /student/favourite/list
-    public void getFavourites(String token, Context ctx) {
-        userApi.favourites(token).enqueue(new Callback<ArrayList<UserInfo>>() {
+    private void getFavourites(Context ctx) {
+        userApi.favourites(SharedPreferencesActions.read("token", ctx)).enqueue(new Callback<ArrayList<UserInfo>>() {
             @Override
             public void onResponse(@NonNull Call<ArrayList<UserInfo>> call, @NonNull Response<ArrayList<UserInfo>> response) {
                 if (response.isSuccessful()) {
@@ -229,13 +229,12 @@ public class Requests {
     }
 
     // /student/favourite?student=<idStudent>
-    public void addFavourite(String token, UserInfo otherStudent, Context ctx) {
-        userApi.addFavourite(token, otherStudent.get_id()).enqueue(new Callback<UserInfo>() {
+    public void addFavourite(UserInfo otherStudent, Context ctx) {
+        userApi.addFavourite(SharedPreferencesActions.read("token", ctx), otherStudent.get_id()).enqueue(new Callback<UserInfo>() {
             @Override
             public void onResponse(@NonNull Call<UserInfo> call, @NonNull Response<UserInfo> response) {
                 if (response.isSuccessful()) {
                     UserInfo.getCurrentUser().getFavouriteStudents().add(otherStudent);
-                    Log.e("CHECK", "added " + otherStudent.get_id() + ", size now: " + UserInfo.getCurrentUser().getFavouriteStudents().size());
                 }
             }
 
@@ -247,8 +246,8 @@ public class Requests {
     }
 
     // /student/favourite?student=<idStudent>
-    public void removeFavourite(String token, UserInfo otherStudent, Context ctx) {
-        userApi.removeFavourite(token, otherStudent.get_id()).enqueue(new Callback<UserInfo>() {
+    public void removeFavourite(UserInfo otherStudent, Context ctx) {
+        userApi.removeFavourite(SharedPreferencesActions.read("token", ctx), otherStudent.get_id()).enqueue(new Callback<UserInfo>() {
             @Override
             public void onResponse(@NonNull Call<UserInfo> call, @NonNull Response<UserInfo> response) {
                 if (response.isSuccessful()) {
@@ -258,7 +257,6 @@ public class Requests {
                             break;
                         }
                     }
-                    Log.e("CHECK", "deleted " + otherStudent.get_id() + ", size now: " + UserInfo.getCurrentUser().getFavouriteStudents().size());
                 }
             }
 

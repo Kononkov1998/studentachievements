@@ -74,7 +74,7 @@ public class SearchActivity extends AppCompatActivity {
         String fio = String.format("%s %s %s", surname, name, patronymic);
         btn.getBackground().setAlpha(100);
         btn.setEnabled(false);
-        Requests.getInstance().studentSearch(SharedPreferencesActions.read("token", this), group, fio.trim(), this, btn);
+        Requests.getInstance().studentSearch(group, fio.trim(), this, btn);
     }
 
     public static void searchSuccessful(){

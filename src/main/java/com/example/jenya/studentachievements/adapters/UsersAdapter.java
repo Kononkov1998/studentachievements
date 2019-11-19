@@ -16,7 +16,6 @@ import android.widget.TextView;
 
 import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.Requests;
-import com.example.jenya.studentachievements.SharedPreferencesActions;
 import com.example.jenya.studentachievements.activities.OtherProfileActivity;
 import com.example.jenya.studentachievements.models.UserInfo;
 
@@ -79,9 +78,9 @@ public class UsersAdapter extends BaseAdapter {
 
         checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
-                Requests.getInstance().addFavourite(SharedPreferencesActions.read("token", ctx), s, ctx);
+                Requests.getInstance().addFavourite(s, ctx);
             } else {
-                Requests.getInstance().removeFavourite(SharedPreferencesActions.read("token", ctx), s, ctx);
+                Requests.getInstance().removeFavourite(s, ctx);
             }
         });
 
@@ -109,7 +108,7 @@ public class UsersAdapter extends BaseAdapter {
     }
 
     // студент по позиции
-    UserInfo getUserInfo(int position) {
+    private UserInfo getUserInfo(int position) {
         return ((UserInfo) getItem(position));
     }
 }

@@ -72,7 +72,7 @@ public class AchievementsAdapter extends BaseAdapter {
     }
 
     // ачивка по позиции
-    Achievement getAchievement(int position) {
+    private Achievement getAchievement(int position) {
         return ((Achievement) getItem(position));
     }
 }
