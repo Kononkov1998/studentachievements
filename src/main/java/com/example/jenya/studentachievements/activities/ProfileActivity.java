@@ -30,6 +30,7 @@ public class ProfileActivity extends AppCompatActivity
 
         final ArrayList<Achievement> completedAchievements = new ArrayList<>();
         UserInfo userInfo = UserInfo.getCurrentUser();
+        //noinspection unchecked
         final ArrayList<Achievement> userAchievements = (ArrayList<Achievement>) userInfo.getAchievements().clone();
         int starsSum = 0;
 
@@ -82,37 +83,6 @@ public class ProfileActivity extends AppCompatActivity
         if (SharedPreferencesActions.check("showCompleted", this)) {
             hideBox.setChecked(true);
         }
-        /*
-        final ArrayList<StudentAchievement> completedAchievements = new ArrayList<>();
-        for (StudentAchievement achievement : DataBase.currentUser.getAchievements()) {
-            if (achievement.getProgress() == 100)
-                completedAchievements.add(achievement);
-        }
-        Collections.sort(DataBase.currentUser.getAchievements(), new AchievementsComparator());
-
-        final AchievementsAdapter adapter = new AchievementsAdapter(this, DataBase.currentUser.getAchievements());
-        final ListView listView = findViewById(R.id.list);
-        View header = getLayoutInflater().inflate(R.layout.header_profile, listView, false);
-        ((ImageView) header.findViewById(R.id.imageUser)).setImageResource(DataBase.currentUser.getImage());
-        ((TextView) header.findViewById(R.id.textProfile)).setText(DataBase.currentUser.getSurname() + "\n" + DataBase.currentUser.getName() + "\n" + DataBase.currentUser.getPatronymic() + "\n" + DataBase.currentUser.getGroup());
-        listView.addHeaderView(header);
-        listView.setAdapter(adapter);
-
-        CheckBox hideBox = findViewById(R.id.checkboxHide);
-        hideBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    for (StudentAchievement achievement : completedAchievements) {
-                        DataBase.currentUser.getAchievements().remove(achievement);
-                    }
-                    adapter.notifyDataSetChanged();
-                } else {
-                    DataBase.currentUser.getAchievements().addAll(completedAchievements);
-                    Collections.sort(DataBase.currentUser.getAchievements(), new AchievementsComparator());
-                    adapter.notifyDataSetChanged();
-                }
-            }
-        });*/
     }
 
     @Override

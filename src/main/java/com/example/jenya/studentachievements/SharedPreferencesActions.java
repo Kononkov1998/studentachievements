@@ -2,7 +2,6 @@ package com.example.jenya.studentachievements;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.widget.Toast;
 
 import static android.content.Context.MODE_PRIVATE;
 

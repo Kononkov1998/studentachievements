@@ -17,7 +17,7 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Query;
 
-public interface UserApi
+interface UserApi
 {
     @Headers({"Content-Type: application/json; charset=utf-8"})
     @POST("/student/signin")

@@ -80,7 +80,7 @@ public class AchievementInfo implements Parcelable
         this.generalProgress = generalProgress;
     }
 
-    protected AchievementInfo(Parcel in) {
+    private AchievementInfo(Parcel in) {
         _id = in.readString();
         description = in.readString();
         generalProgress = in.readInt();
@@ -104,7 +104,6 @@ public class AchievementInfo implements Parcelable
         dest.writeInt(__v);
     }
 
-    @SuppressWarnings("unused")
     public static final Parcelable.Creator<AchievementInfo> CREATOR = new Parcelable.Creator<AchievementInfo>() {
         @Override
         public AchievementInfo createFromParcel(Parcel in) {

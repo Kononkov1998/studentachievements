@@ -16,9 +16,9 @@ import com.example.jenya.studentachievements.models.Achievement;
 import java.util.ArrayList;
 
 public class AchievementsAdapter extends BaseAdapter {
-    private Context ctx;
-    private LayoutInflater lInflater;
-    private ArrayList<Achievement> objects;
+    private final Context ctx;
+    private final LayoutInflater lInflater;
+    private final ArrayList<Achievement> objects;
 
     public AchievementsAdapter(Context context, ArrayList<Achievement> achievements) {
         ctx = context;

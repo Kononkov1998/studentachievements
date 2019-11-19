@@ -55,7 +55,7 @@ public class FullName implements Parcelable
         this.patronymic = patronymic;
     }
 
-    protected FullName(Parcel in) {
+    private FullName(Parcel in) {
         _id = in.readString();
         firstName = in.readString();
         lastName = in.readString();
@@ -75,7 +75,6 @@ public class FullName implements Parcelable
         dest.writeString(patronymic);
     }
 
-    @SuppressWarnings("unused")
     public static final Parcelable.Creator<FullName> CREATOR = new Parcelable.Creator<FullName>() {
         @Override
         public FullName createFromParcel(Parcel in) {

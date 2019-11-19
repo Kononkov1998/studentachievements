@@ -22,9 +22,9 @@ import com.example.jenya.studentachievements.models.UserInfo;
 import java.util.ArrayList;
 
 public class UsersAdapter extends BaseAdapter {
-    private Context ctx;
-    private LayoutInflater lInflater;
-    private ArrayList<UserInfo> objects;
+    private final Context ctx;
+    private final LayoutInflater lInflater;
+    private final ArrayList<UserInfo> objects;
 
     public UsersAdapter(Context context, ArrayList<UserInfo> students) {
         ctx = context;

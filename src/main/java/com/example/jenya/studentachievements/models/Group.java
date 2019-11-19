@@ -43,7 +43,7 @@ public class Group implements Parcelable {
         this.name = name;
     }
 
-    protected Group(Parcel in) {
+    private Group(Parcel in) {
         _id = in.readString();
         name = in.readString();
         id = in.readString();
@@ -61,7 +61,6 @@ public class Group implements Parcelable {
         dest.writeString(id);
     }
 
-    @SuppressWarnings("unused")
     public static final Parcelable.Creator<Group> CREATOR = new Parcelable.Creator<Group>() {
         @Override
         public Group createFromParcel(Parcel in) {

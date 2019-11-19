@@ -16,24 +16,20 @@ import com.example.jenya.studentachievements.models.Visibility;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    private RadioGroup rg;
-    private RadioButton rb;
-    private UserInfo userInfo;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_settings);
 
-        rg = findViewById(R.id.radioGroup);
+        RadioGroup rg = findViewById(R.id.radioGroup);
 
-        userInfo = UserInfo.getCurrentUser();
+        UserInfo userInfo = UserInfo.getCurrentUser();
         String visibilityStr = userInfo.getVisibility();
 
         switch (visibilityStr) {
             case "all":
-                rb = findViewById(R.id.radioButton0);
+                RadioButton rb = findViewById(R.id.radioButton0);
                 rb.setChecked(true);
                 break;
             case "me":

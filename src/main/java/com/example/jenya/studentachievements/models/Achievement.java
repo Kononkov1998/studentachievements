@@ -44,7 +44,7 @@ public class Achievement implements Parcelable
         this.stars = stars;
     }
 
-    protected Achievement(Parcel in) {
+    private Achievement(Parcel in) {
         code = in.readString();
         stars = in.readInt();
         achievementInfo = (AchievementInfo) in.readValue(AchievementInfo.class.getClassLoader());
@@ -62,7 +62,6 @@ public class Achievement implements Parcelable
         dest.writeValue(achievementInfo);
     }
 
-    @SuppressWarnings("unused")
     public static final Parcelable.Creator<Achievement> CREATOR = new Parcelable.Creator<Achievement>() {
         @Override
         public Achievement createFromParcel(Parcel in) {

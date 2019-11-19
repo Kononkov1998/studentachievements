@@ -13,14 +13,12 @@ import com.example.jenya.studentachievements.models.UserInfo;
 
 public class FavoritesActivity extends AppCompatActivity {
 
-    private UsersAdapter adapter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_favorites);
-        adapter = new UsersAdapter(this, UserInfo.getCurrentUser().getFavouriteStudents());
+        UsersAdapter adapter = new UsersAdapter(this, UserInfo.getCurrentUser().getFavouriteStudents());
         final ListView listView = findViewById(R.id.list);
         listView.setAdapter(adapter);
     }

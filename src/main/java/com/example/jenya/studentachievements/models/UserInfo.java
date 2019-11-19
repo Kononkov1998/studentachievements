@@ -139,7 +139,7 @@ public class UserInfo implements Parcelable {
         UserInfo.getCurrentUser().favouriteStudents = favouriteStudents;
     }
 
-    protected UserInfo(Parcel in) {
+    private UserInfo(Parcel in) {
         _id = in.readString();
         visibility = in.readString();
         idHumanFace = in.readString();
@@ -171,7 +171,6 @@ public class UserInfo implements Parcelable {
         dest.writeInt(__v);
     }
 
-    @SuppressWarnings("unused")
     public static final Parcelable.Creator<UserInfo> CREATOR = new Parcelable.Creator<UserInfo>() {
         @Override
         public UserInfo createFromParcel(Parcel in) {
