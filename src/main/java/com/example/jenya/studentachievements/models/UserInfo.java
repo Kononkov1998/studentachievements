@@ -148,6 +148,7 @@ public class UserInfo implements Parcelable {
         group = (Group) in.readValue(Group.class.getClassLoader());
         fullName = (FullName) in.readValue(FullName.class.getClassLoader());
         achievements = in.createTypedArrayList(Achievement.CREATOR);
+        favouriteStudents = in.createTypedArrayList(UserInfo.CREATOR);
         __v = in.readInt();
     }
 
@@ -165,7 +166,8 @@ public class UserInfo implements Parcelable {
         dest.writeString(email);
         dest.writeValue(group);
         dest.writeValue(fullName);
-        dest.writeList(achievements);
+        dest.writeTypedList(achievements);
+        dest.writeTypedList(favouriteStudents);
         dest.writeInt(__v);
     }
 
