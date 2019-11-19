@@ -9,7 +9,6 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.SharedPreferencesActions;
@@ -19,7 +18,6 @@ import com.example.jenya.studentachievements.models.Achievement;
 import com.example.jenya.studentachievements.models.UserInfo;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 
 public class ProfileActivity extends AppCompatActivity
@@ -32,7 +30,7 @@ public class ProfileActivity extends AppCompatActivity
 
         final ArrayList<Achievement> completedAchievements = new ArrayList<>();
         UserInfo userInfo = UserInfo.getCurrentUser();
-        final ArrayList<Achievement> userAchievements = new ArrayList<>(Arrays.asList(userInfo.getAchievements()));
+        final ArrayList<Achievement> userAchievements = userInfo.getAchievements();
         int starsSum = 0;
 
         for (Achievement achievement : userAchievements)

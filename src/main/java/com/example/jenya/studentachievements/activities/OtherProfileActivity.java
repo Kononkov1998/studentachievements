@@ -11,13 +11,14 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.jenya.studentachievements.R;
+import com.example.jenya.studentachievements.Requests;
+import com.example.jenya.studentachievements.SharedPreferencesActions;
 import com.example.jenya.studentachievements.adapters.AchievementsAdapter;
 import com.example.jenya.studentachievements.comparators.AchievementsComparator;
 import com.example.jenya.studentachievements.models.Achievement;
 import com.example.jenya.studentachievements.models.UserInfo;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 
 public class OtherProfileActivity extends AppCompatActivity {
@@ -28,16 +29,14 @@ public class OtherProfileActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_otherprofile);
 
-        UserInfo userInfo = getIntent().getParcelableExtra("otherStudent");
+        UserInfo otherStudent = getIntent().getParcelableExtra("otherStudent");
         final ArrayList<Achievement> completedAchievements = new ArrayList<>();
-        final ArrayList<Achievement> userAchievements = new ArrayList<>(Arrays.asList(userInfo.getAchievements()));
+        final ArrayList<Achievement> userAchievements = otherStudent.getAchievements();
         int starsSum = 0;
 
-        for (Achievement achievement : userAchievements)
-        {
+        for (Achievement achievement : userAchievements) {
             int stars = achievement.getStars();
-            if (stars != 0)
-            {
+            if (stars != 0) {
                 starsSum += stars;
                 completedAchievements.add(achievement);
             }
@@ -49,12 +48,12 @@ public class OtherProfileActivity extends AppCompatActivity {
         final ListView listView = findViewById(R.id.list);
         View header = getLayoutInflater().inflate(R.layout.header_otherprofile, listView, false);
         //((ImageView) header.findViewById(R.id.imageUser)).setImageResource(DataBase.currentUser.getImage());
-        String headerText = userInfo.getFullName().getLastName() + "\n" + userInfo.getFullName().getFirstName() + "\n" + userInfo.getFullName().getPatronymic() + "\n" + userInfo.getGroup().getName();
+        String headerText = otherStudent.getFullName().getLastName() + "\n" + otherStudent.getFullName().getFirstName() + "\n" + otherStudent.getFullName().getPatronymic() + "\n" + otherStudent.getGroup().getName();
         ((TextView) header.findViewById(R.id.textProfile)).setText(headerText);
 
         int completed = completedAchievements.size();
         int all = userAchievements.size();
-        ((TextView) header.findViewById(R.id.achievementsTextView)).setText(String.format("Получено достижений: %d из %d (%d%%)", completed, all, Math.round((double)completed / (double)all * 100.0)));
+        ((TextView) header.findViewById(R.id.achievementsTextView)).setText(String.format("Получено достижений: %d из %d (%d%%)", completed, all, Math.round((double) completed / (double) all * 100.0)));
         ((ProgressBar) header.findViewById(R.id.achievementsProgressBar)).setProgress(completed);
         ((ProgressBar) header.findViewById(R.id.achievementsProgressBar)).setMax(all);
 
@@ -81,26 +80,29 @@ public class OtherProfileActivity extends AppCompatActivity {
             }
         });
 
-       /* final CheckBox checkBox = header.findViewById(R.id.checkboxFavorite);
-        if (userInfo.getFavorites().contains(student)) {
-            checkBox.setChecked(true);
-        } else {
-            checkBox.setChecked(false);
+        final CheckBox checkBox = header.findViewById(R.id.checkboxFavorite);
+
+        for (UserInfo user : UserInfo.getCurrentUser().getFavouriteStudents()) {
+            if (user.get_id().equals(otherStudent.get_id())){
+                checkBox.setChecked(true);
+                break;
+            }
+            else {
+                checkBox.setChecked(false);
+            }
         }
 
-        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    DataBase.currentUser.getFavorites().add(student);
-                } else {
-                    DataBase.currentUser.getFavorites().remove(student);
-                }
+        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                Requests.getInstance().addFavourite(SharedPreferencesActions.read("token", this), otherStudent, this);
+            } else {
+                Requests.getInstance().removeFavourite(SharedPreferencesActions.read("token", this), otherStudent, this);
             }
-        });*/
+        });
     }
 
     @Override
-    protected void onStart(){
+    protected void onStart() {
         super.onStart();
         overridePendingTransition(0, 0);
     }
@@ -125,8 +127,7 @@ public class OtherProfileActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void openGrade(View view)
-    {
+    public void openGrade(View view) {
         Intent intent = new Intent(this, GradeActivity.class);
         startActivity(intent);
     }

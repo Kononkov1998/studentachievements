@@ -15,6 +15,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.jenya.studentachievements.R;
+import com.example.jenya.studentachievements.Requests;
+import com.example.jenya.studentachievements.SharedPreferencesActions;
 import com.example.jenya.studentachievements.activities.OtherProfileActivity;
 import com.example.jenya.studentachievements.models.UserInfo;
 
@@ -64,23 +66,24 @@ public class UsersAdapter extends BaseAdapter {
         String textProfile = s.getFullName().getLastName() + "\n" + s.getFullName().getFirstName() + "\n" + s.getFullName().getPatronymic() + "\n" + s.getGroup().getName();
         ((TextView) view.findViewById(R.id.textProfile)).setText(textProfile);
         final CheckBox checkBox = view.findViewById(R.id.checkboxFavorite);
-       /* if (DataBase.currentUser.getFavorites().contains(s)) {
-            checkBox.setChecked(true);
-        } else {
-            checkBox.setChecked(false);
+
+        for (UserInfo user : UserInfo.getCurrentUser().getFavouriteStudents()) {
+            if (user.get_id().equals(s.get_id())){
+                checkBox.setChecked(true);
+                break;
+            }
+            else {
+                checkBox.setChecked(false);
+            }
         }
 
-        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    DataBase.currentUser.getFavorites().add(s);
-                    notifyDataSetChanged();
-                } else {
-                    DataBase.currentUser.getFavorites().remove(s);
-                    notifyDataSetChanged();
-                }
+        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                Requests.getInstance().addFavourite(SharedPreferencesActions.read("token", ctx), s, ctx);
+            } else {
+                Requests.getInstance().removeFavourite(SharedPreferencesActions.read("token", ctx), s, ctx);
             }
-        });*/
+        });
 
         RelativeLayout layout = view.findViewById(R.id.layout);
         layout.setOnClickListener(v -> {

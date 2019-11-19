@@ -5,8 +5,11 @@ import com.example.jenya.studentachievements.models.UserInfo;
 import com.example.jenya.studentachievements.models.UserToken;
 import com.example.jenya.studentachievements.models.Visibility;
 
+import java.util.ArrayList;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
@@ -30,8 +33,17 @@ public interface UserApi
     Call<UserInfo[]> groupmates(@Header("Authorization") String token);*/
 
     @GET("/student/anotherStudent")
-    Call<UserInfo[]> search(@Header("Authorization") String token, @Query("group") String group, @Query("search") String search);
+    Call<ArrayList<UserInfo>> search(@Header("Authorization") String token, @Query("group") String group, @Query("search") String search);
 
     @PUT("/student/visibility")
     Call<UserInfo> visibility(@Header("Authorization") String token, @Body Visibility visibility);
+
+    @GET("/student/favourite/list")
+    Call<ArrayList<UserInfo>> favourites(@Header("Authorization") String token);
+
+    @POST("/student/favourite")
+    Call<UserInfo> addFavourite(@Header("Authorization") String token, @Query("student") String studentID);
+
+    @DELETE("/student/favourite")
+    Call<UserInfo> removeFavourite(@Header("Authorization") String token, @Query("student") String studentID);
 }

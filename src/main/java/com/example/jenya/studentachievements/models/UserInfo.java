@@ -6,6 +6,8 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+
 public class UserInfo implements Parcelable {
     private static UserInfo currentUser;
 
@@ -47,13 +49,17 @@ public class UserInfo implements Parcelable {
 
     @SerializedName("achievements")
     @Expose
-    private Achievement[] achievements;
+    private ArrayList<Achievement> achievements;
 
     @SerializedName("__v")
     @Expose
     private int __v;
 
-    public Achievement[] getAchievements() {
+    @SerializedName("favouriteStudents")
+    @Expose
+    private ArrayList<UserInfo> favouriteStudents;
+
+    public  ArrayList<Achievement> getAchievements() {
         return achievements;
     }
 
@@ -93,7 +99,7 @@ public class UserInfo implements Parcelable {
         this._id = _id;
     }
 
-    public void setAchievements(Achievement[] achievements) {
+    public void setAchievements(ArrayList<Achievement> achievements) {
         this.achievements = achievements;
     }
 
@@ -117,14 +123,20 @@ public class UserInfo implements Parcelable {
         this.institute = institute;
     }
 
-    public String getVisibility()
-    {
+    public String getVisibility() {
         return this.visibility;
     }
 
-    public void setVisibility(String visibility)
-    {
+    public void setVisibility(String visibility) {
         this.visibility = visibility;
+    }
+
+    public ArrayList<UserInfo> getFavouriteStudents() {
+        return favouriteStudents;
+    }
+
+    public void setFavouriteStudents(ArrayList<UserInfo> favouriteStudents) {
+        UserInfo.getCurrentUser().favouriteStudents = favouriteStudents;
     }
 
     protected UserInfo(Parcel in) {
@@ -135,7 +147,7 @@ public class UserInfo implements Parcelable {
         email = in.readString();
         group = (Group) in.readValue(Group.class.getClassLoader());
         fullName = (FullName) in.readValue(FullName.class.getClassLoader());
-        achievements = in.createTypedArray(Achievement.CREATOR);
+        achievements = in.createTypedArrayList(Achievement.CREATOR);
         __v = in.readInt();
     }
 
@@ -153,7 +165,7 @@ public class UserInfo implements Parcelable {
         dest.writeString(email);
         dest.writeValue(group);
         dest.writeValue(fullName);
-        dest.writeTypedArray(achievements, flags);
+        dest.writeList(achievements);
         dest.writeInt(__v);
     }
 

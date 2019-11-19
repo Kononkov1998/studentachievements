@@ -3,6 +3,7 @@ package com.example.jenya.studentachievements;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -16,7 +17,6 @@ import com.example.jenya.studentachievements.models.UserToken;
 import com.example.jenya.studentachievements.models.Visibility;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -25,7 +25,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Requests {
-    private static final String URL = "https://dab42f86.ngrok.io";
+    private static final String URL = "https://b0fbdc0b.ngrok.io";
     private Retrofit retrofit;
     private UserApi userApi;
     private static Requests instance;
@@ -102,6 +102,7 @@ public class Requests {
                 if (response.isSuccessful()) {
                     Intent intent = new Intent(ctx, ProfileActivity.class);
                     UserInfo.setCurrentUser(response.body());
+                    getFavourites(token, ctx);
                     ctx.startActivity(intent);
                 } else {
                     initializeStudent(token, ctx, btn);
@@ -125,6 +126,7 @@ public class Requests {
                 if (response.isSuccessful()) {
                     Intent intent = new Intent(ctx, ProfileActivity.class);
                     UserInfo.setCurrentUser(response.body());
+                    getFavourites(token, ctx);
                     ctx.startActivity(intent);
                 } else {
                     Intent intent = new Intent(ctx, AuthActivity.class);
@@ -148,6 +150,7 @@ public class Requests {
                 if (response.isSuccessful()) {
                     Intent intent = new Intent(ctx, ProfileActivity.class);
                     UserInfo.setCurrentUser(response.body());
+                    getFavourites(token, ctx);
                     ctx.startActivity(intent);
                 } else {
                     btn.getBackground().setAlpha(255);
@@ -167,15 +170,14 @@ public class Requests {
 
     // /student/anotherStudent
     public void studentSearch(String token, String group, String search, Context ctx, Button btn) {
-        userApi.search(token, group, search).enqueue(new Callback<UserInfo[]>() {
+        userApi.search(token, group, search).enqueue(new Callback<ArrayList<UserInfo>>() {
             @Override
-            public void onResponse(@NonNull Call<UserInfo[]> call, @NonNull Response<UserInfo[]> response) {
+            public void onResponse(@NonNull Call<ArrayList<UserInfo>> call, @NonNull Response<ArrayList<UserInfo>> response) {
                 if (response.isSuccessful()) {
                     SearchActivity.searchSuccessful();
-                    ArrayList<UserInfo> students = new ArrayList<>(Arrays.asList(response.body()));
 
                     Intent intent = new Intent(ctx, SearchResultsActivity.class);
-                    intent.putParcelableArrayListExtra("students", students);
+                    intent.putParcelableArrayListExtra("students", response.body());
                     ctx.startActivity(intent);
                 } else {
                     btn.getBackground().setAlpha(255);
@@ -184,7 +186,7 @@ public class Requests {
             }
 
             @Override
-            public void onFailure(@NonNull Call<UserInfo[]> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<ArrayList<UserInfo>> call, @NonNull Throwable t) {
                 Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
                 btn.getBackground().setAlpha(255);
                 btn.setEnabled(true);
@@ -199,6 +201,64 @@ public class Requests {
             public void onResponse(@NonNull Call<UserInfo> call, @NonNull Response<UserInfo> response) {
                 if (response.isSuccessful()) {
                     UserInfo.getCurrentUser().setVisibility(response.body().getVisibility());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t) {
+                Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    // /student/favourite/list
+    public void getFavourites(String token, Context ctx) {
+        userApi.favourites(token).enqueue(new Callback<ArrayList<UserInfo>>() {
+            @Override
+            public void onResponse(@NonNull Call<ArrayList<UserInfo>> call, @NonNull Response<ArrayList<UserInfo>> response) {
+                if (response.isSuccessful()) {
+                    UserInfo.getCurrentUser().setFavouriteStudents(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ArrayList<UserInfo>> call, @NonNull Throwable t) {
+                Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    // /student/favourite?student=<idStudent>
+    public void addFavourite(String token, UserInfo otherStudent, Context ctx) {
+        userApi.addFavourite(token, otherStudent.get_id()).enqueue(new Callback<UserInfo>() {
+            @Override
+            public void onResponse(@NonNull Call<UserInfo> call, @NonNull Response<UserInfo> response) {
+                if (response.isSuccessful()) {
+                    UserInfo.getCurrentUser().getFavouriteStudents().add(otherStudent);
+                    Log.e("CHECK", "added " + otherStudent.get_id() + ", size now: " + UserInfo.getCurrentUser().getFavouriteStudents().size());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t) {
+                Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    // /student/favourite?student=<idStudent>
+    public void removeFavourite(String token, UserInfo otherStudent, Context ctx) {
+        userApi.removeFavourite(token, otherStudent.get_id()).enqueue(new Callback<UserInfo>() {
+            @Override
+            public void onResponse(@NonNull Call<UserInfo> call, @NonNull Response<UserInfo> response) {
+                if (response.isSuccessful()) {
+                    for (UserInfo user : UserInfo.getCurrentUser().getFavouriteStudents()) {
+                        if (user.get_id().equals(otherStudent.get_id())){
+                            UserInfo.getCurrentUser().getFavouriteStudents().remove(user);
+                            break;
+                        }
+                    }
+                    Log.e("CHECK", "deleted " + otherStudent.get_id() + ", size now: " + UserInfo.getCurrentUser().getFavouriteStudents().size());
                 }
             }
 

@@ -7,8 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ListView;
 
-import com.example.jenya.studentachievements.adapters.UsersAdapter;
 import com.example.jenya.studentachievements.R;
+import com.example.jenya.studentachievements.adapters.UsersAdapter;
+import com.example.jenya.studentachievements.models.UserInfo;
 
 public class FavoritesActivity extends AppCompatActivity {
 
@@ -19,7 +20,7 @@ public class FavoritesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_favorites);
-        //adapter = new UsersAdapter(this, DataBase.currentUser.getFavorites());
+        adapter = new UsersAdapter(this, UserInfo.getCurrentUser().getFavouriteStudents());
         final ListView listView = findViewById(R.id.list);
         listView.setAdapter(adapter);
     }
