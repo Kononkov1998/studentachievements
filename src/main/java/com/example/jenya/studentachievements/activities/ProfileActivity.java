@@ -30,7 +30,7 @@ public class ProfileActivity extends AppCompatActivity
 
         final ArrayList<Achievement> completedAchievements = new ArrayList<>();
         UserInfo userInfo = UserInfo.getCurrentUser();
-        final ArrayList<Achievement> userAchievements = userInfo.getAchievements();
+        final ArrayList<Achievement> userAchievements = (ArrayList<Achievement>) userInfo.getAchievements().clone();
         int starsSum = 0;
 
         for (Achievement achievement : userAchievements)
