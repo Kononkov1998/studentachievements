@@ -24,7 +24,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Requests {
-    private static final String URL = "https://b0fbdc0b.ngrok.io";
+    private static final String URL = "https://ff23e3d1.ngrok.io";
     private final UserApi userApi;
     private static Requests instance;
 
@@ -230,39 +230,44 @@ public class Requests {
 
     // /student/favourite?student=<idStudent>
     public void addFavourite(UserInfo otherStudent, Context ctx) {
+        UserInfo.getCurrentUser().getFavouriteStudents().add(otherStudent);
+
         userApi.addFavourite(SharedPreferencesActions.read("token", ctx), otherStudent.get_id()).enqueue(new Callback<UserInfo>() {
             @Override
             public void onResponse(@NonNull Call<UserInfo> call, @NonNull Response<UserInfo> response) {
-                if (response.isSuccessful()) {
-                    UserInfo.getCurrentUser().getFavouriteStudents().add(otherStudent);
-                }
             }
 
             @Override
             public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t) {
                 Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
+                UserInfo.getCurrentUser().getFavouriteStudents().remove(otherStudent);
             }
         });
     }
 
     // /student/favourite?student=<idStudent>
     public void removeFavourite(UserInfo otherStudent, Context ctx) {
+        UserInfo userForRemove = null;
+        for (UserInfo user : UserInfo.getCurrentUser().getFavouriteStudents()) {
+            if (user.get_id().equals(otherStudent.get_id())) {
+                userForRemove = user;
+                break;
+            }
+        }
+        UserInfo.getCurrentUser().getFavouriteStudents().remove(userForRemove);
+        UserInfo finalUserForRemove = userForRemove;
+
         userApi.removeFavourite(SharedPreferencesActions.read("token", ctx), otherStudent.get_id()).enqueue(new Callback<UserInfo>() {
             @Override
             public void onResponse(@NonNull Call<UserInfo> call, @NonNull Response<UserInfo> response) {
-                if (response.isSuccessful()) {
-                    for (UserInfo user : UserInfo.getCurrentUser().getFavouriteStudents()) {
-                        if (user.get_id().equals(otherStudent.get_id())){
-                            UserInfo.getCurrentUser().getFavouriteStudents().remove(user);
-                            break;
-                        }
-                    }
-                }
             }
 
             @Override
             public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t) {
                 Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
+                if (finalUserForRemove != null) {
+                    UserInfo.getCurrentUser().getFavouriteStudents().add(finalUserForRemove);
+                }
             }
         });
     }

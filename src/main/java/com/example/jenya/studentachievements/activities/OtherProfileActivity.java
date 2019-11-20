@@ -21,6 +21,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class OtherProfileActivity extends AppCompatActivity {
+
+    private CheckBox checkBox;
+    private UserInfo otherStudent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,7 +32,7 @@ public class OtherProfileActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_otherprofile);
 
-        UserInfo otherStudent = getIntent().getParcelableExtra("otherStudent");
+        otherStudent = getIntent().getParcelableExtra("otherStudent");
         final ArrayList<Achievement> completedAchievements = new ArrayList<>();
         final ArrayList<Achievement> userAchievements = otherStudent.getAchievements();
         int starsSum = 0;
@@ -79,7 +83,7 @@ public class OtherProfileActivity extends AppCompatActivity {
             }
         });
 
-        final CheckBox checkBox = header.findViewById(R.id.checkboxFavorite);
+        checkBox = header.findViewById(R.id.checkboxFavorite);
 
         for (UserInfo user : UserInfo.getCurrentUser().getFavouriteStudents()) {
             if (user.get_id().equals(otherStudent.get_id())){
@@ -104,6 +108,20 @@ public class OtherProfileActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         overridePendingTransition(0, 0);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        for (UserInfo user : UserInfo.getCurrentUser().getFavouriteStudents()) {
+            if (user.get_id().equals(otherStudent.get_id())){
+                checkBox.setChecked(true);
+                break;
+            }
+            else {
+                checkBox.setChecked(false);
+            }
+        }
     }
 
     public void openProfile(View view) {

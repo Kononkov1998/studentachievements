@@ -16,6 +16,8 @@ import java.util.ArrayList;
 
 public class SearchResultsActivity extends AppCompatActivity {
 
+    private UsersAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,14 +26,15 @@ public class SearchResultsActivity extends AppCompatActivity {
 
         ArrayList<UserInfo> students = getIntent().getParcelableArrayListExtra("students");
 
-        final UsersAdapter adapter = new UsersAdapter(this, students);
+        adapter = new UsersAdapter(this, students);
         final ListView listView = findViewById(R.id.list);
         if (students.isEmpty()) {
             listView.addHeaderView(getLayoutInflater().inflate(R.layout.item_nothingfound, listView, false));
         }
         listView.setAdapter(adapter);
 
-        listView.setOnItemClickListener((parent, view, position, id) -> { });
+        listView.setOnItemClickListener((parent, view, position, id) -> {
+        });
         SharedPreferencesActions.delete("name", this);
         SharedPreferencesActions.delete("surname", this);
         SharedPreferencesActions.delete("patronymic", this);
@@ -39,9 +42,15 @@ public class SearchResultsActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStart(){
+    protected void onStart() {
         super.onStart();
         overridePendingTransition(0, 0);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        adapter.notifyDataSetChanged();
     }
 
     public void openProfile(View view) {

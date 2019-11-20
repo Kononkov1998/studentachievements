@@ -76,8 +76,8 @@ public class UsersAdapter extends BaseAdapter {
             }
         }
 
-        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
+        checkBox.setOnClickListener((buttonView) -> {
+            if (checkBox.isChecked()) {
                 Requests.getInstance().addFavourite(s, ctx);
             } else {
                 Requests.getInstance().removeFavourite(s, ctx);
