@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.jenya.studentachievements.R;
+import com.example.jenya.studentachievements.ThemeController;
 
 public class GradeActivity extends AppCompatActivity
 {
@@ -15,6 +16,7 @@ public class GradeActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        ThemeController.onActivityCreateSetTheme(this);
         setContentView(R.layout.activity_grade);
     }
 

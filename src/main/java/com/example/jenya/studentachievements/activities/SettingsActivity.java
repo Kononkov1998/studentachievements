@@ -7,10 +7,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Switch;
 
 import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.Requests;
 import com.example.jenya.studentachievements.SharedPreferencesActions;
+import com.example.jenya.studentachievements.ThemeController;
 import com.example.jenya.studentachievements.models.UserInfo;
 import com.example.jenya.studentachievements.models.Visibility;
 
@@ -20,6 +22,7 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        ThemeController.onActivityCreateSetTheme(this);
         setContentView(R.layout.activity_settings);
 
         RadioGroup rg = findViewById(R.id.radioGroup);
@@ -60,6 +63,26 @@ public class SettingsActivity extends AppCompatActivity {
             }
             Requests.getInstance().setVisibility(visibility, this);
         });
+
+        Switch themeSwitcher = findViewById(R.id.themeSwitcher);
+        if (ThemeController.getCurrentTheme() == 0){
+            themeSwitcher.setChecked(true);
+        }
+
+        themeSwitcher.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if(isChecked){
+                changeToTheme(0);
+            }
+            else {
+                changeToTheme(1);
+            }
+        });
+    }
+
+    private void changeToTheme(int theme) {
+        ThemeController.setCurrentTheme(theme);
+        finish();
+        startActivity(new Intent(this, getClass()));
     }
 
     @Override
@@ -75,6 +98,7 @@ public class SettingsActivity extends AppCompatActivity {
         SharedPreferencesActions.delete("patronymic", this);
         SharedPreferencesActions.delete("group", this);
         SharedPreferencesActions.delete("showCompleted", this);
+        SharedPreferencesActions.delete("theme", this);
         Intent intent = new Intent(this, AuthActivity.class);
         startActivity(intent);
     }

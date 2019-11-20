@@ -1,19 +1,4 @@
-<resources>
-
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorWhite</item>
-        <item name="colorPrimaryDark">@color/colorDarkestGrey</item>
-        <item name="colorAccent">@color/colorDarkestGrey</item>
-    </style>
-
-    <style name="SplashScreen" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/colorDarkGrey</item>
-        <item name="colorPrimaryDark">@color/colorWhite</item>
-        <item name="android:windowBackground">@drawable/background_splash</item>
-    </style>
-
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
     <style name="Btn" parent="Theme.AppCompat.Light">
         <item name="android:textSize">20sp</item>
         <item name="android:layout_width">wrap_content</item>
@@ -33,11 +18,19 @@
         <item name="android:textSize">18sp</item>
     </style>
 
-    <style name="LinearLayout" parent="Theme.AppCompat.Light">
+    <style name="BottomMenuDark" parent="Theme.AppCompat.Light">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">35dp</item>
         <item name="android:layout_alignParentBottom">true</item>
         <item name="android:background">@color/colorDarkGrey</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="BottomMenuLight" parent="Theme.AppCompat.Light">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">35dp</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:background">@color/colorWhite</item>
         <item name="android:orientation">horizontal</item>
     </style>
 

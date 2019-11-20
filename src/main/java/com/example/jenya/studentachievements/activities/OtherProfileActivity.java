@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.Requests;
+import com.example.jenya.studentachievements.ThemeController;
 import com.example.jenya.studentachievements.adapters.AchievementsAdapter;
 import com.example.jenya.studentachievements.comparators.AchievementsComparator;
 import com.example.jenya.studentachievements.models.Achievement;
@@ -30,6 +31,7 @@ public class OtherProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         supportPostponeEnterTransition();
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        ThemeController.onActivityCreateSetTheme(this);
         setContentView(R.layout.activity_otherprofile);
 
         otherStudent = getIntent().getParcelableExtra("otherStudent");

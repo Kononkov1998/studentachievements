@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppThemeDark" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@color/colorDarkestGrey</item>
+        <item name="android:navigationBarColor">@color/colorBlack</item>
+        <item name="android:statusBarColor">@color/colorDarkestGrey</item>
+        <item name="android:windowActivityTransitions">true</item>
+        <item name="android:windowSharedElementEnterTransition">
+            @transition/student_transition
+        </item>
+
+        <item name="android:windowSharedElementExitTransition">
+            @transition/student_transition
+        </item>
+        <item name="bottomMenu">@style/BottomMenuDark</item>
+    </style>
+
+    <style name="AppThemeLight" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@color/colorWhite</item>
+        <item name="android:navigationBarColor">@color/colorWhite</item>
+        <item name="android:statusBarColor">@color/colorWhite</item>
+        <item name="android:windowActivityTransitions">true</item>
+        <item name="android:windowSharedElementEnterTransition">
+            @transition/student_transition
+        </item>
+        <item name="android:windowSharedElementExitTransition">
+            @transition/student_transition
+        </item>
+        <item name="bottomMenu">@style/BottomMenuLight</item>
+    </style>
+</resources>

@@ -9,45 +9,33 @@
         android:roundIcon="@drawable/sfu"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
+        android:theme="@style/AppThemeDark"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity
-            android:name=".activities.GradeActivity"
-            android:theme="@style/AppTheme"/>
+        <activity android:name=".activities.GradeActivity" />
         <activity
             android:name=".activities.SplashScreenActivity"
-            android:theme="@style/SplashScreen"
-            android:noHistory="true">
+            android:noHistory="true"
+            android:theme="@style/SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activities.ProfileActivity" />
+        <activity android:name=".activities.SearchActivity" />
+        <activity android:name=".activities.FavoritesActivity" />
+        <activity android:name=".activities.SettingsActivity" />
         <activity
-            android:name=".activities.ProfileActivity"
-            android:theme="@style/AppTheme" />
+            android:name=".activities.SearchResultsActivity"/>
         <activity
-            android:name=".activities.SearchActivity"
-            android:theme="@style/AppTheme" />
-        <activity
-            android:name=".activities.FavoritesActivity"
-            android:theme="@style/AppTheme" />
-        <activity
-            android:name=".activities.SettingsActivity"
-            android:theme="@style/AppTheme" />
-        <activity
-            android:name=".activities.SearchResultsActivity"
-            android:theme="@style/AppTheme.Animation" />
-        <activity
-            android:name=".activities.OtherProfileActivity"
-            android:theme="@style/AppTheme.Animation" />
+            android:name=".activities.OtherProfileActivity" />
         <activity
             android:name=".activities.AuthActivity"
-            android:theme="@style/AppTheme"
-            android:noHistory="true"/>
+            android:noHistory="true" />
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
 
 </manifest>

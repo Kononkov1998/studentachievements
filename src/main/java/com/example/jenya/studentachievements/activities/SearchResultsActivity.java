@@ -9,6 +9,7 @@ import android.widget.ListView;
 
 import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.SharedPreferencesActions;
+import com.example.jenya.studentachievements.ThemeController;
 import com.example.jenya.studentachievements.adapters.UsersAdapter;
 import com.example.jenya.studentachievements.models.UserInfo;
 
@@ -22,6 +23,7 @@ public class SearchResultsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        ThemeController.onActivityCreateSetTheme(this);
         setContentView(R.layout.activity_searchresults);
 
         ArrayList<UserInfo> students = getIntent().getParcelableArrayListExtra("students");

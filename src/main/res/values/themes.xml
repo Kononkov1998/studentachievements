@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppThemeDark" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@color/colorDarkestGrey</item>
+        <item name="bottomMenu">@style/BottomMenuDark</item>
+    </style>
+
+    <style name="AppThemeLight" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@color/colorWhite</item>
+        <item name="bottomMenu">@style/BottomMenuLight</item>
+    </style>
+
+    <style name="SplashScreen" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorDarkGrey</item>
+        <item name="colorPrimaryDark">@color/colorWhite</item>
+        <item name="android:windowBackground">@drawable/background_splash</item>
+    </style>
+</resources>

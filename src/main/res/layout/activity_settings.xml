@@ -1,16 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorDarkestGrey">
+    android:layout_height="match_parent">
+
+    <Switch
+        android:id="@+id/themeSwitcher"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:text="Switch"
+        android:textSize="72sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/relativeLayout"
+        app:layout_constraintStart_toStartOf="@+id/relativeLayout"
+        app:layout_constraintTop_toTopOf="@+id/relativeLayout" />
 
     <RelativeLayout
+        android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
-            style="@style/LinearLayout">
+        <LinearLayout style="?bottomMenu">
 
             <ImageView
                 android:id="@+id/imageProfile"
@@ -62,38 +73,37 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/all"
                 android:buttonTint="@color/colorPrimary"
-                android:textColor="@color/colorGrey"
-                />
+                android:text="@string/all"
+                android:textColor="@color/colorGrey" />
 
             <RadioButton
                 android:id="@+id/radioButton1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/groupmates"
                 android:buttonTint="@color/colorPrimary"
-                android:textColor="@color/colorGrey"/>
+                android:text="@string/groupmates"
+                android:textColor="@color/colorGrey" />
 
             <RadioButton
                 android:id="@+id/radioButton4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/me"
                 android:buttonTint="@color/colorPrimary"
-                android:textColor="@color/colorGrey"/>
+                android:text="@string/me"
+                android:textColor="@color/colorGrey" />
         </RadioGroup>
 
         <Button
             android:id="@+id/button"
+            style="@style/Btn"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="100dp"
             android:onClick="exit"
-            android:text="@string/exit"
-            style="@style/Btn"/>
+            android:text="@string/exit" />
 
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

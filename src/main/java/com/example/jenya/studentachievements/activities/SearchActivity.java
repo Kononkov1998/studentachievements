@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.Requests;
 import com.example.jenya.studentachievements.SharedPreferencesActions;
+import com.example.jenya.studentachievements.ThemeController;
 
 public class SearchActivity extends AppCompatActivity {
 
@@ -22,6 +23,7 @@ public class SearchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        ThemeController.onActivityCreateSetTheme(this);
         setContentView(R.layout.activity_search);
 
         isSearchSuccessful = false;

@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.SharedPreferencesActions;
+import com.example.jenya.studentachievements.ThemeController;
 import com.example.jenya.studentachievements.adapters.AchievementsAdapter;
 import com.example.jenya.studentachievements.comparators.AchievementsComparator;
 import com.example.jenya.studentachievements.models.Achievement;
@@ -26,6 +27,7 @@ public class ProfileActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        ThemeController.onActivityCreateSetTheme(this);
         setContentView(R.layout.activity_profile);
 
         final ArrayList<Achievement> completedAchievements = new ArrayList<>();

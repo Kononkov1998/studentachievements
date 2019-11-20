@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorDarkestGrey">
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
-            style="@style/LinearLayout">
+        <LinearLayout style="?bottomMenu">
 
             <ImageView
                 android:id="@+id/imageProfile"
@@ -51,48 +48,49 @@
 
             <EditText
                 android:id="@+id/textViewName"
+                style="@style/EditText"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="15dp"
-                android:hint="@string/name"
-                android:singleLine="true"
                 android:gravity="center"
-                style="@style/EditText"/>
+                android:hint="@string/name"
+                android:singleLine="true" />
 
             <EditText
                 android:id="@+id/textViewSurname"
+                style="@style/EditText"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="15dp"
-                android:hint="@string/surname"
-                android:singleLine="true"
                 android:gravity="center"
-                style="@style/EditText"/>
+                android:hint="@string/surname"
+                android:singleLine="true" />
 
             <EditText
                 android:id="@+id/textViewPatronymic"
+                style="@style/EditText"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="15dp"
-                android:hint="@string/patronymic"
-                android:singleLine="true"
                 android:gravity="center"
-                style="@style/EditText"/>
+                android:hint="@string/patronymic"
+                android:singleLine="true" />
+
             <EditText
                 android:id="@+id/textViewGroup"
+                style="@style/EditText"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="15dp"
-                android:hint="@string/group_number"
-                android:singleLine="true"
                 android:gravity="center"
-                style="@style/EditText"/>
+                android:hint="@string/group_number"
+                android:singleLine="true" />
         </LinearLayout>
 
         <Button
             android:id="@+id/searchBtn"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="100dp"
+            style="@style/Btn"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="100dp"
             android:onClick="search"
-            android:text="@string/search"
-            style="@style/Btn"/>
+            android:text="@string/search" />
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

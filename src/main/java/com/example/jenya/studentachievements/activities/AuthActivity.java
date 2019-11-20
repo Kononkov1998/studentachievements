@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.jenya.studentachievements.ThemeController;
 import com.example.jenya.studentachievements.models.User;
 import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.Requests;
@@ -24,6 +25,7 @@ public class AuthActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        ThemeController.onActivityCreateSetTheme(this);
         setContentView(R.layout.activity_auth);
 
         login = findViewById(R.id.loginText);
