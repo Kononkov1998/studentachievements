@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -33,8 +34,22 @@ public class OtherProfileActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         ThemeController.onActivityCreateSetTheme(this);
         setContentView(R.layout.activity_otherprofile);
+        Intent intent = getIntent();
+        ImageView selectedElement;
 
-        otherStudent = getIntent().getParcelableExtra("otherStudent");
+        switch (intent.getStringExtra("activity"))
+        {
+            case "SearchResultsActivity":
+                selectedElement = findViewById(R.id.imageSearch);
+                selectedElement.setImageResource(R.drawable.ic_search_orange_24dp);
+                break;
+            case "FavoritesActivity":
+                selectedElement = findViewById(R.id.imageFavorites);
+                selectedElement.setImageResource(R.drawable.ic_star_border_orange_24dp);
+                break;
+        }
+
+        otherStudent = intent.getParcelableExtra("otherStudent");
         final ArrayList<Achievement> completedAchievements = new ArrayList<>();
         final ArrayList<Achievement> userAchievements = otherStudent.getAchievements();
         int starsSum = 0;

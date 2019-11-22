@@ -24,7 +24,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Requests {
-    private static final String URL = "https://7ce181a5.ngrok.io";
+    private static final String URL = "http://041d33a5.ngrok.io";
     private final UserApi userApi;
     private static Requests instance;
 
@@ -198,7 +198,8 @@ public class Requests {
         userApi.visibility(SharedPreferencesActions.read("token", ctx), visibility).enqueue(new Callback<UserInfo>() {
             @Override
             public void onResponse(@NonNull Call<UserInfo> call, @NonNull Response<UserInfo> response) {
-                if (response.isSuccessful()) {
+                if (response.isSuccessful())
+                {
                     assert response.body() != null;
                     UserInfo.getCurrentUser().setVisibility(response.body().getVisibility());
                 }

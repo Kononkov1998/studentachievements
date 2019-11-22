@@ -41,6 +41,7 @@
             <ImageView
                 android:id="@+id/imageSearch"
                 style="@style/ImageView"
+                android:onClick="openSearch"
                 android:src="@drawable/ic_search_orange_24dp" />
 
             <ImageView
