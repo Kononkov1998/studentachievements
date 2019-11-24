@@ -1,1 +1,8 @@
 /build
+/.idea
+/gradle
+local.properties
+gradlew
+gradlew.bat
+proguard-rules.pro
+studentachievements.iml
