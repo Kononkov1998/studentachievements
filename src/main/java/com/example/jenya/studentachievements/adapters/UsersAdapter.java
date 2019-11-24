@@ -89,8 +89,7 @@ public class UsersAdapter extends BaseAdapter {
             Bundle bundle = null;
 
             if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
-                Activity activity = (Activity) ctx;
-                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(activity, layout, "student_transition");
+                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) ctx, layout, "student_transition");
                     bundle = options.toBundle();
             }
 

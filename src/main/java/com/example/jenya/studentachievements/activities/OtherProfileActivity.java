@@ -1,5 +1,6 @@
 package com.example.jenya.studentachievements.activities;
 
+import android.app.SharedElementCallback;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -20,6 +21,8 @@ import com.example.jenya.studentachievements.models.UserInfo;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 public class OtherProfileActivity extends AppCompatActivity {
 
@@ -29,7 +32,6 @@ public class OtherProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        supportPostponeEnterTransition();
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         ThemeController.onActivityCreateSetTheme(this);
         setContentView(R.layout.activity_otherprofile);
@@ -70,7 +72,6 @@ public class OtherProfileActivity extends AppCompatActivity {
         listView.addHeaderView(header);
         listView.setAdapter(adapter);
 
-        supportStartPostponedEnterTransition();
         CheckBox hideBox = findViewById(R.id.checkboxHide);
         hideBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
@@ -88,11 +89,10 @@ public class OtherProfileActivity extends AppCompatActivity {
         checkBox = header.findViewById(R.id.checkboxFavorite);
 
         for (UserInfo user : UserInfo.getCurrentUser().getFavouriteStudents()) {
-            if (user.get_id().equals(otherStudent.get_id())){
+            if (user.get_id().equals(otherStudent.get_id())) {
                 checkBox.setChecked(true);
                 break;
-            }
-            else {
+            } else {
                 checkBox.setChecked(false);
             }
         }
@@ -104,6 +104,23 @@ public class OtherProfileActivity extends AppCompatActivity {
                 Requests.getInstance().removeFavourite(otherStudent, this);
             }
         });
+
+        setSharedElementCallback(header.findViewById(R.id.layout));
+    }
+
+    private void setSharedElementCallback(final View view) {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            SharedElementCallback callback = new SharedElementCallback() {
+                @Override
+                public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
+                    names.clear();
+                    sharedElements.clear();
+                    names.add(view.getTransitionName());
+                    sharedElements.put(view.getTransitionName(), view);
+                }
+            };
+            setEnterSharedElementCallback(callback);
+        }
     }
 
     @Override
@@ -116,11 +133,10 @@ public class OtherProfileActivity extends AppCompatActivity {
     protected void onRestart() {
         super.onRestart();
         for (UserInfo user : UserInfo.getCurrentUser().getFavouriteStudents()) {
-            if (user.get_id().equals(otherStudent.get_id())){
+            if (user.get_id().equals(otherStudent.get_id())) {
                 checkBox.setChecked(true);
                 break;
-            }
-            else {
+            } else {
                 checkBox.setChecked(false);
             }
         }
