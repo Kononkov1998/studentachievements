@@ -112,8 +112,8 @@ public class OtherProfileActivity extends AppCompatActivity {
             }
         }
 
-        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
+        checkBox.setOnClickListener((buttonView) -> {
+            if (checkBox.isChecked()) {
                 Requests.getInstance().addFavourite(otherStudent, this);
             } else {
                 Requests.getInstance().removeFavourite(otherStudent, this);
