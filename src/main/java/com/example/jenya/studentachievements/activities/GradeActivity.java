@@ -22,7 +22,7 @@ public class GradeActivity extends AppCompatActivity
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         ThemeController.onActivityCreateSetTheme(this);
         setContentView(R.layout.activity_grade);
-        initButtons(29); // число семестров из запросов
+        initButtons(29); // число семестров из запроса
     }
 
     private void initButtons(int semesters)
@@ -37,7 +37,7 @@ public class GradeActivity extends AppCompatActivity
         for(int i = 0; i < semesters; i++)
         {
             // если итерация четная, то создаем горизонтальный список
-            if(i % 2 == 0)
+            if(i % 4 == 0)
             {
                 row = new LinearLayout(this);
                 row.setOrientation(LinearLayout.HORIZONTAL);
@@ -45,7 +45,7 @@ public class GradeActivity extends AppCompatActivity
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT
                 ));
-                row.setWeightSum((float)2);
+                row.setWeightSum((float)4);
                 LinearLayout list = findViewById(R.id.semesters_list);
                 list.addView(row);
             }
