@@ -47,4 +47,6 @@ dependencies {
     //анимации?
     implementation 'com.daimajia.easing:library:2.0@aar'
     implementation 'com.daimajia.androidanimations:library:2.3@aar'
+
+    implementation 'de.hdodenhof:circleimageview:3.0.0'
 }

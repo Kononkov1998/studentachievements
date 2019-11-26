@@ -2,13 +2,18 @@ package com.example.jenya.studentachievements.activities;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.SharedPreferencesActions;
@@ -18,11 +23,17 @@ import com.example.jenya.studentachievements.comparators.AchievementsComparator;
 import com.example.jenya.studentachievements.models.Achievement;
 import com.example.jenya.studentachievements.models.UserInfo;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class ProfileActivity extends AppCompatActivity
 {
+    static final int GALLERY_REQUEST = 1;
+    private CircleImageView avatar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +62,7 @@ public class ProfileActivity extends AppCompatActivity
         final AchievementsAdapter adapter = new AchievementsAdapter(this, userAchievements);
         final ListView listView = findViewById(R.id.list);
         View header = getLayoutInflater().inflate(R.layout.header_profile, listView, false);
-        //((ImageView) header.findViewById(R.id.imageUser)).setImageResource(DataBase.currentUser.getImage());
+        avatar = (CircleImageView) header.findViewById(R.id.imageUser);
         String headerText = userInfo.getFullName().getLastName() + "\n" + userInfo.getFullName().getFirstName() + "\n" + userInfo.getFullName().getPatronymic() + "\n" + userInfo.getGroup().getName();
         ((TextView) header.findViewById(R.id.textProfile)).setText(headerText);
 
@@ -84,6 +95,44 @@ public class ProfileActivity extends AppCompatActivity
         });
         if (SharedPreferencesActions.check("showCompleted", this)) {
             hideBox.setChecked(true);
+        }
+
+        // загрузка изображения по нажатию
+        avatar.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+                photoPickerIntent.setType("image/*");
+                startActivityForResult(photoPickerIntent, GALLERY_REQUEST);
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent)
+    {
+        super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
+
+        Bitmap bitmap = null;
+
+        switch(requestCode)
+        {
+            case GALLERY_REQUEST:
+                if(resultCode == RESULT_OK)
+                {
+                    Uri selectedImage = imageReturnedIntent.getData();
+                    try
+                    {
+                        bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImage);
+                    }
+                    catch (IOException e)
+                    {
+                        e.printStackTrace();
+                    }
+                    avatar.setImageBitmap(bitmap);
+                }
         }
     }
 
