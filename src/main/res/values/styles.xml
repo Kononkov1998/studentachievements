@@ -40,4 +40,13 @@
         <item name="android:layout_weight">1</item>
     </style>
 
+    <style name="SCBSwitch" parent="Theme.AppCompat.Light">
+        <!-- active thumb & track color (30% transparency) -->
+        <item name="colorControlActivated">@color/colorPrimary</item>
+        <!-- inactive thumb color -->
+        <item name="colorSwitchThumbNormal">#FFC50E</item>
+        <!-- inactive track color (30% transparency) -->
+        <item name="android:colorForeground">@color/colorWhite</item>
+    </style>
+
 </resources>

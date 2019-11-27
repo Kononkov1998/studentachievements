@@ -5,17 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Switch
-        android:id="@+id/themeSwitcher"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:text="Switch"
-        android:textSize="72sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/relativeLayout"
-        app:layout_constraintStart_toStartOf="@+id/relativeLayout"
-        app:layout_constraintTop_toTopOf="@+id/relativeLayout" />
-
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
@@ -53,48 +42,100 @@
                 android:src="@drawable/ic_settings_orange_24dp" />
         </LinearLayout>
 
-        <RadioGroup
-            android:id="@+id/radioGroup"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_margin="15dp">
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/profile_vis"
-                android:textColor="@color/colorGrey" />
+                android:id="@+id/cv"
+                app:cardBackgroundColor="@color/colorDarkGrey"
+                app:cardCornerRadius="10dp"
+                android:layout_marginTop="20sp"
+                android:layout_marginLeft="20sp"
+                android:layout_marginRight="20sp">
 
-            <RadioButton
-                android:id="@+id/radioButton0"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:buttonTint="@color/colorPrimary"
-                android:text="@string/all"
-                android:textColor="@color/colorGrey" />
+                <RadioGroup
+                    android:id="@+id/radioGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="15dp">
 
-            <RadioButton
-                android:id="@+id/radioButton1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:buttonTint="@color/colorPrimary"
-                android:text="@string/groupmates"
-                android:textColor="@color/colorGrey" />
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/profile_vis"
+                        android:textColor="@color/colorGrey" />
 
-            <RadioButton
-                android:id="@+id/radioButton4"
-                android:layout_width="wrap_content"
+                    <RadioButton
+                        android:id="@+id/radioButton0"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:buttonTint="@color/colorPrimary"
+                        android:text="@string/all"
+                        android:textColor="@color/colorGrey" />
+
+                    <RadioButton
+                        android:id="@+id/radioButton1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:buttonTint="@color/colorPrimary"
+                        android:text="@string/groupmates"
+                        android:textColor="@color/colorGrey" />
+
+                    <RadioButton
+                        android:id="@+id/radioButton4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:buttonTint="@color/colorPrimary"
+                        android:text="@string/me"
+                        android:textColor="@color/colorGrey" />
+                </RadioGroup>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:buttonTint="@color/colorPrimary"
-                android:text="@string/me"
-                android:textColor="@color/colorGrey" />
-        </RadioGroup>
+                android:id="@+id/cv2"
+                app:cardBackgroundColor="@color/colorDarkGrey"
+                app:cardCornerRadius="10dp"
+                android:layout_marginTop="20sp"
+                android:layout_marginLeft="20sp"
+                android:layout_marginRight="20sp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="15dp"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorGrey"
+                        android:text="Внешний вид:"
+                        />
+                    <Switch
+                        android:id="@+id/themeSwitcher"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Темная тема"
+                        android:textSize="15sp"
+                        android:textColor="@color/colorGrey"
+                        android:theme="@style/SCBSwitch"
+                        />
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
 
         <Button
             android:id="@+id/button"
