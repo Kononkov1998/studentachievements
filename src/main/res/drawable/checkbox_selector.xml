@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:drawable="@drawable/star_full" android:state_checked="true"/>
-    <item android:drawable="@drawable/star" android:state_checked="false"/>
+    <item android:drawable="@drawable/ic_star_yellow_32dp" android:state_checked="true"/>
+    <item android:drawable="@drawable/ic_star_border_grey_32dp" android:state_checked="false"/>
 
 </selector>
