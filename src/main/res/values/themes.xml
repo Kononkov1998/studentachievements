@@ -3,11 +3,13 @@
 
     <style name="AppThemeDark" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">@color/colorDarkestGrey</item>
+        <item name="radioButton">@style/RadioButtonDark</item>
         <item name="bottomMenu">@style/BottomMenuDark</item>
     </style>
 
     <style name="AppThemeLight" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">@color/colorWhite</item>
+        <item name="radioButton">@style/RadioButtonLight</item>
         <item name="bottomMenu">@style/BottomMenuLight</item>
     </style>
 

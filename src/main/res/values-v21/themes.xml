@@ -13,6 +13,7 @@
         <item name="android:windowSharedElementExitTransition">
             @transition/student_transition
         </item>
+        <item name="radioButton">@style/RadioButtonDark</item>
         <item name="bottomMenu">@style/BottomMenuDark</item>
     </style>
 
@@ -27,6 +28,7 @@
         <item name="android:windowSharedElementExitTransition">
             @transition/student_transition
         </item>
+        <item name="radioButton">@style/RadioButtonLight</item>
         <item name="bottomMenu">@style/BottomMenuLight</item>
     </style>
 </resources>

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <attr name="radioButton" format="reference" />
     <attr name="bottomMenu" format="reference" />
 </resources>

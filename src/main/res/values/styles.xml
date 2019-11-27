@@ -1,4 +1,4 @@
-<resources xmlns:android="http://schemas.android.com/apk/res/android">
+<resources>
     <style name="Btn" parent="Theme.AppCompat.Light">
         <item name="android:textSize">20sp</item>
         <item name="android:layout_width">wrap_content</item>
@@ -32,6 +32,14 @@
         <item name="android:layout_alignParentBottom">true</item>
         <item name="android:background">@color/colorWhite</item>
         <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="RadioButtonDark" parent="Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="android:textColor">@color/colorGrey</item>
+    </style>
+
+    <style name="RadioButtonLight" parent="Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="android:textColor">@color/colorBlack</item>
     </style>
 
     <style name="ImageView" parent="Theme.AppCompat.Light">
