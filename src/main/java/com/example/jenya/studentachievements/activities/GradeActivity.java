@@ -36,7 +36,7 @@ public class GradeActivity extends AppCompatActivity
 
         for(int i = 0; i < semesters; i++)
         {
-            // если итерация четная, то создаем горизонтальный список
+            // если итерация делится на 4, то создаем горизонтальный список
             if(i % 4 == 0)
             {
                 row = new LinearLayout(this);
