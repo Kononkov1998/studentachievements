@@ -5,91 +5,96 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-
-    <LinearLayout
-
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:orientation="horizontal">
+        android:id="@+id/cv"
+        app:cardBackgroundColor="@color/colorDarkGrey"
+        app:cardCornerRadius="10dp"
+        android:layout_marginTop="20sp"
+        android:layout_marginLeft="20sp"
+        android:layout_marginRight="20sp">
+        <LinearLayout
 
-        <!--<ImageView
-            android:id="@+id/imageUser"
-            android:layout_width="130dp"
-            android:layout_height="130dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginStart="15dp"
-            android:layout_marginLeft="15dp"
-            android:clickable="true"
-            app:srcCompat="@drawable/profile"
-            />-->
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/imageUser"
-            android:layout_width="130dp"
-            android:layout_height="130dp"
-            android:src="@drawable/profile"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginStart="15dp"
-            android:layout_marginLeft="15dp"
-            app:civ_border_width="0dp"/>
-
-        <TextView
-            android:id="@+id/textProfile"
-            android:layout_width="190dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="15dp"
-            android:layout_marginLeft="15dp"
-            android:inputType="none"
-            android:textColor="@color/colorGrey"
-            android:textSize="25sp" />
-    </LinearLayout>
+            android:layout_margin="15dp"
+            android:orientation="horizontal">
 
-    <LinearLayout
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imageUser"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:src="@drawable/profile"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="15dp"
+                app:civ_border_width="0dp"/>
+
+            <TextView
+                android:id="@+id/textProfile"
+                android:layout_width="190dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="15dp"
+                android:inputType="none"
+                android:textColor="@color/colorGrey"
+                android:textSize="25sp" />
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp"
-        android:orientation="vertical">
-
-        <CheckBox
-            android:id="@+id/checkboxHide"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:buttonTint="@color/colorPrimary"
-            android:text="@string/hide"
-            android:textColor="@color/colorGrey" />
-
-        <TextView
-            android:id="@+id/achievementsTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:textColor="@color/colorGrey" />
-
-        <ProgressBar
-            android:id="@+id/achievementsProgressBar"
-            style="?android:attr/progressBarStyleHorizontal"
+        android:id="@+id/cv2"
+        app:cardBackgroundColor="@color/colorDarkGrey"
+        app:cardCornerRadius="10dp"
+        android:layout_marginTop="20sp"
+        android:layout_marginLeft="20sp"
+        android:layout_marginRight="20sp">
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:indeterminate="false"
-            android:progressDrawable="@drawable/progressbar" />
+            android:layout_margin="15dp"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/starsTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:textColor="@color/colorGrey" />
+            <CheckBox
+                android:id="@+id/checkboxHide"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/colorPrimary"
+                android:text="@string/hide"
+                android:textColor="@color/colorGrey" />
 
-        <ProgressBar
-            android:id="@+id/starsProgressBar"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:indeterminate="false"
-            android:progressDrawable="@drawable/progressbar" />
+            <TextView
+                android:id="@+id/achievementsTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="@color/colorGrey" />
 
-    </LinearLayout>
+            <ProgressBar
+                android:id="@+id/achievementsProgressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:indeterminate="false"
+                android:progressDrawable="@drawable/progressbar" />
+
+            <TextView
+                android:id="@+id/starsTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="@color/colorGrey" />
+
+            <ProgressBar
+                android:id="@+id/starsProgressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:indeterminate="false"
+                android:progressDrawable="@drawable/progressbar" />
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
 </LinearLayout>
