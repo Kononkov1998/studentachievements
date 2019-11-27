@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -51,12 +52,17 @@ public class GradeActivity extends AppCompatActivity
             }
 
             Button button = new Button(this);
-            button.setLayoutParams(new LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                     0, // width
-                    convertPixelsToDp(500), // height
-                    1
-            ));
-            button.setText(String.format("Семестр %d", (i + 1)));
+                    convertPixelsToDp(550), // height
+                    1 // weight
+            );
+            params.setMargins(25, 25, 25, 25);
+            button.setLayoutParams(params);
+            button.setText(String.format("%d", (i + 1)));
+            button.setTextColor(getResources().getColor(R.color.colorWhite));
+            button.setBackground(this.getResources().getDrawable(R.drawable.button_semester_shape));
+
             button.setId(i + 1); // id кнопки === номер семестра
 
             row.addView(button);
