@@ -61,9 +61,12 @@ public class AchievementsAdapter extends BaseAdapter {
         //((TextView) view.findViewById(R.id.progress)).setText(a.getAchievementInfo().getGeneralProgress() + "%");
         // ((ProgressBar) view.findViewById(R.id.progressBar)).setProgress(a.getAchievementInfo().getGeneralProgress());
         //((TextView) view.findViewById(R.id.studentsProgress)).setText(a.getAchievement().getStudentsProgress() + "% студентов получили");
-        String path = "stars" + a.getStars();
-        int resId = ctx.getResources().getIdentifier(path, "drawable", ctx.getPackageName());
-        ((ImageView) view.findViewById(R.id.stars)).setImageResource(resId);
+        for (int i = 1; i <= a.getStars(); i++) {
+            String resPath = "star" + i;
+            int resId = ctx.getResources().getIdentifier(resPath, "id", ctx.getPackageName());
+            ((ImageView) view.findViewById(resId)).setImageResource(R.drawable.ic_star_yellow_24dp);
+        }
+
         Glide.with(ctx)
                 .load(Requests.getInstance().getURL() + "/icons/" + a.getCode() + ".png")
                 .placeholder(R.drawable.no_photo)

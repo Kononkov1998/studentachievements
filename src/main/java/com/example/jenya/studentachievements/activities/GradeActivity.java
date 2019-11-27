@@ -2,23 +2,21 @@ package com.example.jenya.studentachievements.activities;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.ThemeController;
 
-public class GradeActivity extends AppCompatActivity
-{
+import java.util.Locale;
+
+public class GradeActivity extends AppCompatActivity {
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         ThemeController.onActivityCreateSetTheme(this);
@@ -26,27 +24,23 @@ public class GradeActivity extends AppCompatActivity
         initButtons(29); // число семестров из запроса
     }
 
-    private void initButtons(int semesters)
-    {
-        if(semesters < 1)
-        {
+    private void initButtons(int semesters) {
+        if (semesters < 1) {
             return;
         }
 
         LinearLayout row = null;
 
-        for(int i = 0; i < semesters; i++)
-        {
+        for (int i = 0; i < semesters; i++) {
             // если итерация делится на 4, то создаем горизонтальный список
-            if(i % 4 == 0)
-            {
+            if (i % 4 == 0) {
                 row = new LinearLayout(this);
                 row.setOrientation(LinearLayout.HORIZONTAL);
                 row.setLayoutParams(new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT
                 ));
-                row.setWeightSum((float)4);
+                row.setWeightSum((float) 4);
                 LinearLayout list = findViewById(R.id.semesters_list);
                 list.addView(row);
             }
@@ -59,7 +53,7 @@ public class GradeActivity extends AppCompatActivity
             );
             params.setMargins(25, 25, 25, 25);
             button.setLayoutParams(params);
-            button.setText(String.format("%d", (i + 1)));
+            button.setText(String.format(Locale.getDefault(), "%d", (i + 1)));
             button.setTextColor(getResources().getColor(R.color.colorWhite));
             button.setBackground(this.getResources().getDrawable(R.drawable.button_semester_shape));
 
@@ -69,12 +63,12 @@ public class GradeActivity extends AppCompatActivity
         }
     }
 
-    public int convertPixelsToDp(float px){
+    public int convertPixelsToDp(float px) {
         return Math.round(px / ((float) this.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT));
     }
 
     @Override
-    protected void onStart(){
+    protected void onStart() {
         super.onStart();
         overridePendingTransition(0, 0);
     }
