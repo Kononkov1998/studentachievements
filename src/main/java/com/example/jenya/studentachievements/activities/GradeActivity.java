@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.ThemeController;
@@ -21,7 +23,7 @@ public class GradeActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         ThemeController.onActivityCreateSetTheme(this);
         setContentView(R.layout.activity_grade);
-        initButtons(29); // число семестров из запроса
+        initButtons(5); // число семестров из запроса
     }
 
     private void initButtons(int semesters) {
@@ -60,6 +62,20 @@ public class GradeActivity extends AppCompatActivity {
             button.setId(i + 1); // id кнопки === номер семестра
 
             row.addView(button);
+
+            // проверяем на последней итерации цикла количество оставшегося места под кнопки
+            if((i == (semesters - 1)) && (semesters % 4 != 0))
+            {
+                int freeButtons = 4 - (semesters % 4);
+                for(int j = 0; j < freeButtons; j++)
+                {
+                    Button buttonInvisible = new Button(this);
+                    buttonInvisible.setLayoutParams(params);
+                    buttonInvisible.setVisibility(View.INVISIBLE);
+
+                    row.addView(buttonInvisible);
+                }
+            }
         }
     }
 
