@@ -72,6 +72,7 @@ public class GradeActivity extends AppCompatActivity {
                     Button buttonInvisible = new Button(this);
                     buttonInvisible.setLayoutParams(params);
                     buttonInvisible.setVisibility(View.INVISIBLE);
+                    button.setEnabled(false);
 
                     row.addView(buttonInvisible);
                 }
