@@ -3,6 +3,8 @@ package com.example.jenya.studentachievements.activities;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
+import android.support.annotation.IntegerRes;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -50,7 +52,7 @@ public class GradeActivity extends AppCompatActivity {
             Button button = new Button(this);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                     0, // width
-                    convertPixelsToDp(550), // height
+                    dpToPx(85), // height
                     1 // weight
             );
             params.setMargins(25, 25, 25, 25);
@@ -80,8 +82,10 @@ public class GradeActivity extends AppCompatActivity {
         }
     }
 
-    public int convertPixelsToDp(float px) {
-        return Math.round(px / ((float) this.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT));
+    public int dpToPx(int dp)
+    {
+        float density = this.getResources().getDisplayMetrics().density;
+        return Math.round((float) dp * density);
     }
 
     @Override
