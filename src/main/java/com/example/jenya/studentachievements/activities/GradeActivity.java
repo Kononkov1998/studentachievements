@@ -60,6 +60,7 @@ public class GradeActivity extends AppCompatActivity {
             button.setLayoutParams(params);
             button.setText(String.format(Locale.getDefault(), "%d", (i + 1)));
             button.setTextColor(getResources().getColor(R.color.colorWhite));
+            button.setTextSize(20);
             button.setBackground(this.getResources().getDrawable(R.drawable.button_semester_shape));
 
             button.setId(i + 1); // id кнопки === номер семестра

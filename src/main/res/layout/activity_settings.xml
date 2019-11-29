@@ -70,7 +70,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/profile_vis"
-                        android:textColor="@color/colorGrey" />
+                        android:textColor="@color/colorGrey"
+                        android:textAllCaps="true"/>
 
                     <RadioButton
                         android:id="@+id/radioButton0"
@@ -122,13 +123,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/colorGrey"
-                        android:text="Внешний вид:"
+                        android:text="@string/appearance"
+                        android:textAllCaps="true"
                         />
                     <Switch
                         android:id="@+id/themeSwitcher"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Темная тема"
+                        android:text="@string/dark_theme"
                         android:textSize="15sp"
                         android:textColor="@color/colorGrey"
                         android:theme="@style/SCBSwitch"

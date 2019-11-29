@@ -12,13 +12,15 @@
     <string name="patronymic">Отчество</string>
     <string name="group_number">Номер группы</string>
     <string name="get_notifications">Получать уведомления</string>
-    <string name="profile_vis">Видимость профиля:</string>
-    <string name="all">Все</string>
+    <string name="profile_vis">Кто видит мой профиль</string>
+    <string name="all">Все пользователи</string>
     <string name="groupmates">Одногруппники</string>
     <string name="favourite_users">Избранные пользователи</string>
     <string name="groupmates_and_favourite">Одногруппники и избранные пользователи</string>
     <string name="me">Только я</string>
     <string name="apply">Применить</string>
     <string name="search_results">Результаты поиска</string>
-    <string name="hide">Скрыть полученные</string>
+    <string name="hide">Скрыть полученные достижения</string>
+    <string name="appearance">Внешний вид</string>
+    <string name="dark_theme">Темная тема</string>
 </resources>
