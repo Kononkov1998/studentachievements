@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -25,7 +26,7 @@ public class GradeActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         ThemeController.onActivityCreateSetTheme(this);
         setContentView(R.layout.activity_grade);
-        initButtons(5); // число семестров из запроса
+        initButtons(10); // число семестров из запроса
     }
 
     private void initButtons(int semesters) {
@@ -52,7 +53,7 @@ public class GradeActivity extends AppCompatActivity {
             Button button = new Button(this);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                     0, // width
-                    dpToPx(85), // height
+                    0, // height
                     1 // weight
             );
             params.setMargins(25, 25, 25, 25);
@@ -64,6 +65,19 @@ public class GradeActivity extends AppCompatActivity {
             button.setId(i + 1); // id кнопки === номер семестра
 
             row.addView(button);
+
+            ViewTreeObserver vto = button.getViewTreeObserver();
+            vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener()
+            {
+                @Override
+                public boolean onPreDraw()
+                {
+                    button.getViewTreeObserver().removeOnPreDrawListener(this); // удаляем листенер, иначе уйдём в бесконечный цикл
+                    params.height = button.getWidth();
+                    button.setLayoutParams(params);
+                    return true;
+                }
+            });
 
             // проверяем на последней итерации цикла количество оставшегося места под кнопки
             if((i == (semesters - 1)) && (semesters % 4 != 0))
@@ -80,12 +94,6 @@ public class GradeActivity extends AppCompatActivity {
                 }
             }
         }
-    }
-
-    public int dpToPx(int dp)
-    {
-        float density = this.getResources().getDisplayMetrics().density;
-        return Math.round((float) dp * density);
     }
 
     @Override
