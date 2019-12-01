@@ -6,16 +6,16 @@
     android:orientation="vertical">
 
     <android.support.v7.widget.CardView
+        android:id="@+id/cv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/cv"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="15dp"
         app:cardBackgroundColor="@color/colorDarkGrey"
-        app:cardCornerRadius="10dp"
-        android:layout_marginTop="15sp"
-        android:layout_marginLeft="15sp"
-        android:layout_marginRight="15sp">
-        <LinearLayout
+        app:cardCornerRadius="10dp">
 
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
@@ -25,13 +25,13 @@
                 android:id="@+id/imageUser"
                 android:layout_width="130dp"
                 android:layout_height="130dp"
-                android:src="@drawable/profile"
                 android:layout_gravity="center_horizontal"
-                app:civ_border_width="0dp"/>
+                android:src="@drawable/profile"
+                app:civ_border_width="0dp" />
 
             <TextView
                 android:id="@+id/textProfile"
-                android:layout_width="190dp"
+                android:layout_width="180dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="10dp"
@@ -43,14 +43,15 @@
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
+        android:id="@+id/cv2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/cv2"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="15dp"
         app:cardBackgroundColor="@color/colorDarkGrey"
-        app:cardCornerRadius="10dp"
-        android:layout_marginTop="15sp"
-        android:layout_marginLeft="15sp"
-        android:layout_marginRight="15sp">
+        app:cardCornerRadius="10dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -75,8 +76,8 @@
                 android:id="@+id/starsTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:textColor="@color/colorGrey"
-                android:layout_marginTop="5dp"/>
+                android:layout_marginTop="5dp"
+                android:textColor="@color/colorGrey" />
 
             <ProgressBar
                 android:id="@+id/starsProgressBar"
@@ -90,9 +91,9 @@
                 android:id="@+id/checkboxHide"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:buttonTint="@color/colorPrimary"
                 android:text="@string/hide"
-                android:layout_marginTop="5dp"
                 android:textColor="@color/colorGrey" />
 
         </LinearLayout>
