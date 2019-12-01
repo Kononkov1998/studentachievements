@@ -59,10 +59,27 @@ public class AchievementsAdapter extends BaseAdapter {
         ((TextView) view.findViewById(R.id.description)).setText(a.getAchievementInfo().getDescription());
         //((TextView) view.findViewById(R.id.date)).setText(a.getDate());
         //((TextView) view.findViewById(R.id.studentsProgress)).setText(a.getAchievement().getStudentsProgress() + "% студентов получили");
-        for (int i = 1; i <= a.getStars(); i++) {
-            String resPath = "star" + i;
-            int resId = ctx.getResources().getIdentifier(resPath, "id", ctx.getPackageName());
-            ((ImageView) view.findViewById(resId)).setImageResource(R.drawable.ic_star_yellow_24dp);
+        switch (a.getStars()){ // меняем иконки звёзд в зависимости от их количества
+            default:
+                ((ImageView) view.findViewById(R.id.star1)).setImageResource(R.drawable.ic_star_border_grey_24dp);
+                ((ImageView) view.findViewById(R.id.star2)).setImageResource(R.drawable.ic_star_border_grey_24dp);
+                ((ImageView) view.findViewById(R.id.star3)).setImageResource(R.drawable.ic_star_border_grey_24dp);
+                break;
+            case 1:
+                ((ImageView) view.findViewById(R.id.star1)).setImageResource(R.drawable.ic_star_yellow_24dp);
+                ((ImageView) view.findViewById(R.id.star2)).setImageResource(R.drawable.ic_star_border_grey_24dp);
+                ((ImageView) view.findViewById(R.id.star3)).setImageResource(R.drawable.ic_star_border_grey_24dp);
+                break;
+            case 2:
+                ((ImageView) view.findViewById(R.id.star1)).setImageResource(R.drawable.ic_star_yellow_24dp);
+                ((ImageView) view.findViewById(R.id.star2)).setImageResource(R.drawable.ic_star_yellow_24dp);
+                ((ImageView) view.findViewById(R.id.star3)).setImageResource(R.drawable.ic_star_border_grey_24dp);
+                break;
+            case 3:
+                ((ImageView) view.findViewById(R.id.star1)).setImageResource(R.drawable.ic_star_yellow_24dp);
+                ((ImageView) view.findViewById(R.id.star2)).setImageResource(R.drawable.ic_star_yellow_24dp);
+                ((ImageView) view.findViewById(R.id.star3)).setImageResource(R.drawable.ic_star_yellow_24dp);
+                break;
         }
 
         Glide.with(ctx)
