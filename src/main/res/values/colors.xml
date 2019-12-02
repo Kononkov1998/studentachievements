@@ -6,5 +6,6 @@
     <color name="colorDarkGrey">#2a2c30</color>
     <color name="colorDarkestGrey">#1e1f23</color>
     <color name="colorBlack">#000</color>
-
+    <color name="colorOrange">#FFC50E</color>
+    <color name="colorBurgundy">#C81B4D</color>
 </resources>

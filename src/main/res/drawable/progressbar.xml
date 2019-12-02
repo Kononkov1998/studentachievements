@@ -19,9 +19,9 @@
                 <gradient
                     android:angle="45"
                     android:centerX="50%"
-                    android:centerColor="#FF4500"
-                    android:startColor="#FFC50E"
-                    android:endColor="#C81B4D"
+                    android:centerColor="@color/colorPrimary"
+                    android:startColor="@color/colorOrange"
+                    android:endColor="@color/colorBurgundy"
                     android:type="linear"
                     />
                 <corners
