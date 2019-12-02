@@ -50,7 +50,7 @@
 
     <style name="SCBSwitch" parent="Theme.AppCompat.Light">
         <item name="colorControlActivated">@color/colorPrimary</item>
-        <item name="colorSwitchThumbNormal">#FFC50E</item>
+        <item name="colorSwitchThumbNormal">@color/colorOrange</item>
         <item name="android:colorForeground">@color/colorWhite</item>
     </style>
 
