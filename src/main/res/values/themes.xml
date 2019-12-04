@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="AppThemeDark" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme.Dark" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">@color/colorDarkestGrey</item>
-        <item name="radioButton">@style/RadioButtonDark</item>
-        <item name="bottomMenu">@style/BottomMenuDark</item>
+        <item name="radioButton">@style/RadioButton.Dark</item>
+        <item name="bottomMenu">@style/BottomMenu.Dark</item>
+        <item name="cardView">@style/CardView.Dark</item>
     </style>
 
-    <style name="AppThemeLight" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme.Light" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">@color/colorWhite</item>
-        <item name="radioButton">@style/RadioButtonLight</item>
-        <item name="bottomMenu">@style/BottomMenuLight</item>
+        <item name="radioButton">@style/RadioButton.Light</item>
+        <item name="bottomMenu">@style/BottomMenu.Light</item>
+        <item name="cardView">@style/CardView.Light</item>
     </style>
 
     <style name="SplashScreen" parent="Theme.AppCompat.Light.NoActionBar">

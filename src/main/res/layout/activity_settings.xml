@@ -16,30 +16,35 @@
                 android:id="@+id/imageProfile"
                 style="@style/ImageView"
                 android:onClick="openProfile"
-                android:src="@drawable/ic_home_grey_24dp" />
+                android:src="@drawable/ic_home_24dp"
+                android:tint="?ic_inactive_color"/>
 
             <ImageView
                 android:id="@+id/imageGrade"
                 style="@style/ImageView"
                 android:onClick="openGrade"
-                android:src="@drawable/ic_school_grey_24dp" />
+                android:src="@drawable/ic_school_24dp"
+                android:tint="?ic_inactive_color"/>
 
             <ImageView
                 android:id="@+id/imageSearch"
                 style="@style/ImageView"
                 android:onClick="openSearch"
-                android:src="@drawable/ic_search_grey_24dp" />
+                android:src="@drawable/ic_search_24dp"
+                android:tint="?ic_inactive_color"/>
 
             <ImageView
                 android:id="@+id/imageFavorites"
                 style="@style/ImageView"
                 android:onClick="openFavorites"
-                android:src="@drawable/ic_star_border_grey_24dp" />
+                android:src="@drawable/ic_star_border_24dp"
+                android:tint="?ic_inactive_color"/>
 
             <ImageView
                 android:id="@+id/imageSettings"
                 style="@style/ImageView"
-                android:src="@drawable/ic_settings_orange_24dp" />
+                android:src="@drawable/ic_settings_24dp"
+                android:tint="?ic_active_color"/>
         </LinearLayout>
 
         <LinearLayout
@@ -47,15 +52,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/cv"
-                app:cardBackgroundColor="@color/colorDarkGrey"
-                app:cardCornerRadius="10dp"
-                android:layout_marginTop="20sp"
-                android:layout_marginLeft="20sp"
-                android:layout_marginRight="20sp">
+            <android.support.v7.widget.CardView style="?cardView">
 
                 <RadioGroup
                     android:id="@+id/radioGroup"
@@ -66,82 +63,73 @@
 
                     <TextView
                         android:id="@+id/textView"
+                        style="?textView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/profile_vis"
-                        android:textColor="@color/colorGrey"
-                        android:textAllCaps="true"/>
+                        android:textAllCaps="true" />
 
                     <RadioButton
                         android:id="@+id/radioButton0"
+                        style="?radioButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:buttonTint="@color/colorPrimary"
-                        android:text="@string/all"
-                        android:textColor="@color/colorGrey" />
+                        android:text="@string/all" />
 
                     <RadioButton
                         android:id="@+id/radioButton1"
+                        style="?radioButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:buttonTint="@color/colorPrimary"
-                        android:text="@string/groupmates"
-                        android:textColor="@color/colorGrey" />
+                        android:text="@string/groupmates" />
 
                     <RadioButton
                         android:id="@+id/radioButton4"
+                        style="?radioButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:buttonTint="@color/colorPrimary"
-                        android:text="@string/me"
-                        android:textColor="@color/colorGrey" />
+                        android:text="@string/me" />
                 </RadioGroup>
 
             </android.support.v7.widget.CardView>
 
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/cv2"
-                app:cardBackgroundColor="@color/colorDarkGrey"
-                app:cardCornerRadius="10dp"
-                android:layout_marginTop="20sp"
-                android:layout_marginLeft="20sp"
-                android:layout_marginRight="20sp">
+            <android.support.v7.widget.CardView style="?cardView">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
                     android:layout_centerHorizontal="true"
                     android:layout_margin="15dp"
-                    >
+                    android:orientation="vertical">
+
                     <TextView
+                        style="?textView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/colorGrey"
                         android:text="@string/appearance"
-                        android:textAllCaps="true"
-                        />
+                        android:textAllCaps="true" />
+
                     <Switch
                         android:id="@+id/themeSwitcher"
+                        style="?switchButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/dark_theme"
-                        android:textSize="15sp"
-                        android:textColor="@color/colorGrey"
-                        android:theme="@style/SCBSwitch"
-                        />
+                        android:textSize="15sp" />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
         </LinearLayout>
 
         <Button
             android:id="@+id/button"
-            style="@style/Btn"
+            style="?button"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="100dp"

@@ -20,31 +20,36 @@
             <ImageView
                 android:id="@+id/imageProfile"
                 style="@style/ImageView"
-                android:src="@drawable/ic_home_orange_24dp" />
+                android:src="@drawable/ic_home_24dp"
+                android:tint="@color/colorPumpkin" />
 
             <ImageView
                 android:id="@+id/imageGrade"
                 style="@style/ImageView"
                 android:onClick="openGrade"
-                android:src="@drawable/ic_school_grey_24dp" />
+                android:src="@drawable/ic_school_24dp"
+                android:tint="?ic_inactive_color" />
 
             <ImageView
                 android:id="@+id/imageSearch"
                 style="@style/ImageView"
                 android:onClick="openSearch"
-                android:src="@drawable/ic_search_grey_24dp" />
+                android:src="@drawable/ic_search_24dp"
+                android:tint="?ic_inactive_color" />
 
             <ImageView
                 android:id="@+id/imageFavorites"
                 style="@style/ImageView"
                 android:onClick="openFavorites"
-                android:src="@drawable/ic_star_border_grey_24dp" />
+                android:src="@drawable/ic_star_border_24dp"
+                android:tint="?ic_inactive_color" />
 
             <ImageView
                 android:id="@+id/imageSettings"
                 style="@style/ImageView"
                 android:onClick="openSettings"
-                android:src="@drawable/ic_settings_grey_24dp" />
+                android:src="@drawable/ic_settings_24dp"
+                android:tint="?ic_inactive_color" />
         </LinearLayout>
     </RelativeLayout>
 

@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <android.support.v7.widget.CardView
-        style="@style/CardFIO"
-        app:cardBackgroundColor="@color/colorDarkGrey"
-        app:cardCornerRadius="10dp">
+    <android.support.v7.widget.CardView style="?cardView">
+
         <LinearLayout
             android:id="@+id/achievement1"
             android:layout_width="match_parent"
@@ -30,36 +27,36 @@
 
                 <TextView
                     android:id="@+id/date"
+                    style="?textView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="XX.XX.XX"
                     android:gravity="center_horizontal"
-                    android:textColor="@color/colorGrey" />
+                    android:text="XX.XX.XX" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
                 android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/name"
+                    style="?textView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Покоряя вершины"
-                    android:textColor="@color/colorGrey"
                     android:textSize="17sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/description"
+                    style="?textView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Сдать сессию на отлично"
-                    android:textColor="@color/colorGrey" />
+                    android:text="Сдать сессию на отлично" />
 
                 <LinearLayout
                     android:id="@+id/starsLayout"
@@ -73,7 +70,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="10dp"
                         android:layout_marginRight="10dp"
-                        android:src="@drawable/ic_star_border_grey_24dp" />
+                        android:src="@drawable/ic_star_border_24dp" />
 
                     <ImageView
                         android:id="@+id/star2"
@@ -81,13 +78,13 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="10dp"
                         android:layout_marginRight="10dp"
-                        android:src="@drawable/ic_star_border_grey_24dp" />
+                        android:src="@drawable/ic_star_border_24dp" />
 
                     <ImageView
                         android:id="@+id/star3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_star_border_grey_24dp" />
+                        android:src="@drawable/ic_star_border_24dp" />
                 </LinearLayout>
 
             </LinearLayout>

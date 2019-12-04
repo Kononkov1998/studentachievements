@@ -3,8 +3,11 @@ package com.example.jenya.studentachievements.activities;
 import android.app.SharedElementCallback;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.support.annotation.ColorInt;
 import android.support.v7.app.AppCompatActivity;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -37,18 +40,21 @@ public class OtherProfileActivity extends AppCompatActivity {
         ThemeController.onActivityCreateSetTheme(this);
         setContentView(R.layout.activity_otherprofile);
         Intent intent = getIntent();
-        ImageView selectedElement;
+        ImageView selectedElement = null;
 
-        switch (intent.getStringExtra("activity"))
-        {
+        switch (intent.getStringExtra("activity")) {
             case "SearchResultsActivity":
                 selectedElement = findViewById(R.id.imageSearch);
-                selectedElement.setImageResource(R.drawable.ic_search_orange_24dp);
                 break;
             case "FavoritesActivity":
                 selectedElement = findViewById(R.id.imageFavorites);
-                selectedElement.setImageResource(R.drawable.ic_star_border_orange_24dp);
                 break;
+        }
+        if (selectedElement != null) {
+            TypedValue typedValue = new TypedValue();
+            getTheme().resolveAttribute(R.attr.ic_active_color, typedValue, true);
+            @ColorInt int color = typedValue.data;
+            selectedElement.setColorFilter(color, PorterDuff.Mode.SRC_IN);
         }
 
         otherStudent = intent.getParcelableExtra("otherStudent");

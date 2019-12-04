@@ -5,11 +5,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/cv"
-        style="@style/CardFIO"
-        app:cardBackgroundColor="@color/colorDarkGrey"
-        app:cardCornerRadius="10dp">
+    <android.support.v7.widget.CardView style="?cardView">
 
         <RelativeLayout
             android:id="@+id/layout"
@@ -25,18 +21,17 @@
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/imageUser"
-                    style="@style/Avatar"
-                    app:civ_border_width="0dp" />
+                    style="@style/Avatar" />
 
                 <TextView
                     android:id="@+id/textProfile"
+                    style="?textView"
                     android:layout_width="180dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="10dp"
                     android:layout_marginLeft="10dp"
                     android:inputType="none"
-                    android:textColor="@color/colorGrey"
                     android:textSize="25sp" />
             </LinearLayout>
 

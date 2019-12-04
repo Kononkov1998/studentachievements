@@ -3,7 +3,7 @@ package com.example.jenya.studentachievements;
 import android.app.Activity;
 
 public class ThemeController {
-    private static int currentTheme = 0;
+    private static int currentTheme = 1;
 
     public static void setCurrentTheme(int currentTheme) {
         ThemeController.currentTheme = currentTheme;
@@ -19,10 +19,10 @@ public class ThemeController {
     public static void onActivityCreateSetTheme(Activity activity) {
         switch (currentTheme) {
             case APP_THEME_DARK:
-                activity.setTheme(R.style.AppThemeDark);
+                activity.setTheme(R.style.AppTheme_Dark);
                 break;
             case APP_THEME_LIGHT:
-                activity.setTheme(R.style.AppThemeLight);
+                activity.setTheme(R.style.AppTheme_Light);
                 break;
         }
     }

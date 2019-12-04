@@ -6,16 +6,17 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="35dp">
+
             <LinearLayout
+                android:id="@+id/semesters_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:id="@+id/semesters_list">
-            </LinearLayout>
+                android:orientation="vertical"></LinearLayout>
         </ScrollView>
 
         <LinearLayout style="?bottomMenu">
@@ -24,30 +25,35 @@
                 android:id="@+id/imageProfile"
                 style="@style/ImageView"
                 android:onClick="openProfile"
-                android:src="@drawable/ic_home_grey_24dp" />
+                android:src="@drawable/ic_home_24dp"
+                android:tint="?ic_inactive_color" />
 
             <ImageView
                 android:id="@+id/imageGrade"
                 style="@style/ImageView"
-                android:src="@drawable/ic_school_orange_24dp" />
+                android:src="@drawable/ic_school_24dp"
+                android:tint="?ic_active_color" />
 
             <ImageView
                 android:id="@+id/imageSearch"
                 style="@style/ImageView"
                 android:onClick="openSearch"
-                android:src="@drawable/ic_search_grey_24dp" />
+                android:src="@drawable/ic_search_24dp"
+                android:tint="?ic_inactive_color" />
 
             <ImageView
                 android:id="@+id/imageFavorites"
                 style="@style/ImageView"
                 android:onClick="openFavorites"
-                android:src="@drawable/ic_star_border_grey_24dp" />
+                android:src="@drawable/ic_star_border_24dp"
+                android:tint="?ic_inactive_color" />
 
             <ImageView
                 android:id="@+id/imageSettings"
                 style="@style/ImageView"
                 android:onClick="openSettings"
-                android:src="@drawable/ic_settings_grey_24dp" />
+                android:src="@drawable/ic_settings_24dp"
+                android:tint="?ic_inactive_color" />
         </LinearLayout>
 
     </RelativeLayout>

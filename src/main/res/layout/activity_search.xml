@@ -13,30 +13,35 @@
                 android:id="@+id/imageProfile"
                 style="@style/ImageView"
                 android:onClick="openProfile"
-                android:src="@drawable/ic_home_grey_24dp" />
+                android:src="@drawable/ic_home_24dp"
+                android:tint="?ic_inactive_color" />
 
             <ImageView
                 android:id="@+id/imageGrade"
                 style="@style/ImageView"
                 android:onClick="openGrade"
-                android:src="@drawable/ic_school_grey_24dp" />
+                android:src="@drawable/ic_school_24dp"
+                android:tint="?ic_inactive_color" />
 
             <ImageView
                 android:id="@+id/imageSearch"
                 style="@style/ImageView"
-                android:src="@drawable/ic_search_orange_24dp" />
+                android:src="@drawable/ic_search_24dp"
+                android:tint="?ic_active_color" />
 
             <ImageView
                 android:id="@+id/imageFavorites"
                 style="@style/ImageView"
                 android:onClick="openFavorites"
-                android:src="@drawable/ic_star_border_grey_24dp" />
+                android:src="@drawable/ic_star_border_24dp"
+                android:tint="?ic_inactive_color" />
 
             <ImageView
                 android:id="@+id/imageSettings"
                 style="@style/ImageView"
                 android:onClick="openSettings"
-                android:src="@drawable/ic_settings_grey_24dp" />
+                android:src="@drawable/ic_settings_24dp"
+                android:tint="?ic_inactive_color" />
         </LinearLayout>
 
         <LinearLayout
@@ -48,7 +53,7 @@
 
             <EditText
                 android:id="@+id/textViewName"
-                style="@style/EditText"
+                style="?editText"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="15dp"
                 android:gravity="center"
@@ -57,7 +62,7 @@
 
             <EditText
                 android:id="@+id/textViewSurname"
-                style="@style/EditText"
+                style="?editText"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="15dp"
                 android:gravity="center"
@@ -66,7 +71,7 @@
 
             <EditText
                 android:id="@+id/textViewPatronymic"
-                style="@style/EditText"
+                style="?editText"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="15dp"
                 android:gravity="center"
@@ -75,7 +80,7 @@
 
             <EditText
                 android:id="@+id/textViewGroup"
-                style="@style/EditText"
+                style="?editText"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="15dp"
                 android:gravity="center"
@@ -85,7 +90,7 @@
 
         <Button
             android:id="@+id/searchBtn"
-            style="@style/Btn"
+            style="?button"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"

@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#FF4500</color>
-    <color name="colorWhite">#fff</color>
+    <color name="colorWhite">#f4f4f4</color>
     <color name="colorGrey">#D5DAE4</color>
     <color name="colorDarkGrey">#2a2c30</color>
     <color name="colorDarkestGrey">#1e1f23</color>
     <color name="colorBlack">#000</color>
     <color name="colorOrange">#FFC50E</color>
     <color name="colorBurgundy">#C81B4D</color>
+    <color name="colorLightBlue">#E1E5EC</color>
+    <color name="colorLightGrey">#FAFAFA</color>
+    <color name="colorPurvisGrey">#333333</color>
+    <color name="colorPearlBlue">#EFFAFE</color>
+    <color name="colorSkyBlue">#83D9F0</color>
+    <color name="colorPumpkin">#F98529</color>
+    <color name="colorPalePumpkin">#99F98529</color>
+    <color name="colorSilver">#c0c0c0</color>
 </resources>

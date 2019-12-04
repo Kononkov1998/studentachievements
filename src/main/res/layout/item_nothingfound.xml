@@ -5,10 +5,10 @@
 
     <TextView
         android:id="@+id/textView2"
+        style="?textView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textSize="30sp"
-        android:text="Ничего не найдено"
         android:gravity="center_vertical|center_horizontal"
-        android:textColor="@color/colorGrey"/>
+        android:text="Ничего не найдено"
+        android:textSize="30sp" />
 </android.support.constraint.ConstraintLayout>

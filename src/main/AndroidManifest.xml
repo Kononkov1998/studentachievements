@@ -14,7 +14,6 @@
         android:roundIcon="@drawable/sfu"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
-        android:theme="@style/AppThemeDark"
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".activities.GradeActivity" />
         <activity
