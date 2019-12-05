@@ -24,7 +24,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Requests {
-    private static final String URL = "https://aafbc70f.ngrok.io";
+    private static final String URL = "http://2920545b.ngrok.io";
     private final UserApi userApi;
     private static Requests instance;
 
