@@ -27,8 +27,8 @@
 
     <style name="AppTheme.Light" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">@color/colorLightBlue</item>
-        <item name="android:navigationBarColor">#A9B4C8</item>
-        <item name="android:statusBarColor">@color/colorLightBlue</item>
+        <item name="android:navigationBarColor">@color/colorGreyBlue</item>
+        <item name="android:statusBarColor">@color/colorPearlGrey</item>
         <item name="android:windowActivityTransitions">true</item>
         <item name="android:windowSharedElementEnterTransition">
             @transition/student_transition

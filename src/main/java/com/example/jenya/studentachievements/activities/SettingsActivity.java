@@ -65,16 +65,18 @@ public class SettingsActivity extends AppCompatActivity {
         });
 
         Switch themeSwitcher = findViewById(R.id.themeSwitcher);
-        if (ThemeController.getCurrentTheme() == 0){
+        if (ThemeController.getCurrentTheme() == ThemeController.APP_THEME_DARK){
             themeSwitcher.setChecked(true);
         }
 
         themeSwitcher.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if(isChecked){
-                changeToTheme(0);
+                changeToTheme(ThemeController.APP_THEME_DARK);
+                SharedPreferencesActions.save("theme", "dark", this);
             }
             else {
-                changeToTheme(1);
+                changeToTheme(ThemeController.APP_THEME_LIGHT);
+                SharedPreferencesActions.save("theme", "light", this);
             }
         });
     }

@@ -16,4 +16,8 @@
     <color name="colorPumpkin">#F98529</color>
     <color name="colorPalePumpkin">#99F98529</color>
     <color name="colorSilver">#c0c0c0</color>
+    <color name="colorTomato">#F76C4B</color>
+    <color name="colorGold">#FED805</color>
+    <color name="colorGreyBlue">#A9B4C8</color>
+    <color name="colorPearlGrey">#b8bbc0</color>
 </resources>

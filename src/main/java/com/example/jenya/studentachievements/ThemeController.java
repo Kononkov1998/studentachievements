@@ -3,18 +3,18 @@ package com.example.jenya.studentachievements;
 import android.app.Activity;
 
 public class ThemeController {
-    private static int currentTheme = 1;
+    public final static int APP_THEME_DARK = 1;
+    public final static int APP_THEME_LIGHT = 0;
+
+    private static int currentTheme = APP_THEME_LIGHT;
 
     public static void setCurrentTheme(int currentTheme) {
         ThemeController.currentTheme = currentTheme;
     }
 
-    public static int getCurrentTheme(){
+    public static int getCurrentTheme() {
         return currentTheme;
     }
-
-    private final static int APP_THEME_DARK = 0;
-    private final static int APP_THEME_LIGHT = 1;
 
     public static void onActivityCreateSetTheme(Activity activity) {
         switch (currentTheme) {

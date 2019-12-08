@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.example.jenya.studentachievements.Requests;
 import com.example.jenya.studentachievements.SharedPreferencesActions;
+import com.example.jenya.studentachievements.ThemeController;
 
 public class SplashScreenActivity extends AppCompatActivity {
     @Override
@@ -26,6 +27,12 @@ public class SplashScreenActivity extends AppCompatActivity {
         } else {
             Intent intent = new Intent(this, AuthActivity.class);
             this.startActivity(intent);
+        }
+
+        if (SharedPreferencesActions.read("theme", this).equals("light")) {
+            ThemeController.setCurrentTheme(ThemeController.APP_THEME_LIGHT);
+        } else if (SharedPreferencesActions.read("theme", this).equals("dark")) {
+            ThemeController.setCurrentTheme(ThemeController.APP_THEME_DARK);
         }
     }
 }
