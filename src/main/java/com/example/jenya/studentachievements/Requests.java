@@ -1,5 +1,6 @@
 package com.example.jenya.studentachievements;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -24,7 +25,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Requests {
-    private static final String URL = "https://e0b5de32.ngrok.io";
+    private static final String URL = "https://bff0407d.ngrok.io";
     private final UserApi userApi;
     private static Requests instance;
 
@@ -103,6 +104,7 @@ public class Requests {
                     UserInfo.setCurrentUser(response.body());
                     getFavourites(ctx);
                     ctx.startActivity(intent);
+                    ((Activity) ctx).finish();
                 } else {
                     initializeStudent(ctx, btn);
                 }
@@ -151,6 +153,7 @@ public class Requests {
                     UserInfo.setCurrentUser(response.body());
                     getFavourites(ctx);
                     ctx.startActivity(intent);
+                    ((Activity) ctx).finish();
                 } else {
                     btn.getBackground().setAlpha(255);
                     btn.setEnabled(true);

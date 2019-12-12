@@ -22,7 +22,7 @@
                 android:id="@+id/imageProfile"
                 style="@style/ImageView"
                 android:src="@drawable/ic_home_24dp"
-                android:tint="@color/colorPumpkin" />
+                android:tint="?ic_active_color" />
 
             <ImageView
                 android:id="@+id/imageGrade"
