@@ -9,12 +9,12 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.jenya.studentachievements.ImageConverter;
 import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.SharedPreferencesActions;
 import com.example.jenya.studentachievements.ThemeController;
@@ -23,7 +23,6 @@ import com.example.jenya.studentachievements.comparators.AchievementsComparator;
 import com.example.jenya.studentachievements.models.Achievement;
 import com.example.jenya.studentachievements.models.UserInfo;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -115,24 +114,31 @@ public class ProfileActivity extends AppCompatActivity
     {
         super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
 
-        Bitmap bitmap = null;
-
-        switch(requestCode)
+        if(requestCode == GALLERY_REQUEST)
         {
-            case GALLERY_REQUEST:
-                if(resultCode == RESULT_OK)
+            if(resultCode == RESULT_OK)
+            {
+                Uri selectedImage = imageReturnedIntent.getData();
+                try
                 {
-                    Uri selectedImage = imageReturnedIntent.getData();
-                    try
-                    {
-                        bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImage);
-                    }
-                    catch (IOException e)
-                    {
-                        e.printStackTrace();
-                    }
-                    avatar.setImageBitmap(bitmap);
+                    //encode image to base64
+                    //ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImage);
+                    String imageSring = ImageConverter.convertImageToBase64(bitmap);
+                    /*bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                    byte[] imageBytes = baos.toByteArray();
+                    String imageString = Base64.encodeToString(imageBytes, Base64.DEFAULT);*/
+
+                    //decode base64 string to image
+                    /*imageBytes = Base64.decode(imageString, Base64.DEFAULT);
+                    Bitmap decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);*/
+                    avatar.setImageBitmap(ImageConverter.convertBase64ToImage(imageSring));
                 }
+                catch (Exception e)
+                {
+                    Toast.makeText(this, "Произошла ошибка. Попробуйте еще раз", Toast.LENGTH_LONG).show();
+                }
+            }
         }
     }
 
