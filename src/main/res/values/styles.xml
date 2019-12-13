@@ -39,7 +39,7 @@
     </style>
 
     <style name="RadioButton.Light" parent="Widget.AppCompat.CompoundButton.RadioButton">
-        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:textColor">@color/colorPurvisGrey</item>
     </style>
 
     <style name="ImageView" parent="Theme.AppCompat.Light">
@@ -51,15 +51,15 @@
     <style name="Switch.Dark" parent="Theme.AppCompat.Light">
         <item name="colorControlActivated">@color/colorPrimary</item>
         <item name="colorSwitchThumbNormal">@color/colorOrange</item>
-        <item name="android:colorForeground">@color/colorWhite</item>
-        <item name="android:textColor">@color/colorGrey</item>
+        <item name="android:colorForeground">@color/colorGreyBlue</item>
+        <item name="android:textColorPrimaryDisableOnly">@color/colorGrey</item>
     </style>
 
     <style name="Switch.Light" parent="Theme.AppCompat.Light">
         <item name="colorControlActivated">@color/colorPrimary</item>
         <item name="colorSwitchThumbNormal">@color/colorOrange</item>
-        <item name="android:colorForeground">@color/colorWhite</item>
-        <item name="android:textColor">@color/colorPurvisGrey</item>
+        <item name="android:colorForeground">@color/colorGreyBlue</item>
+        <item name="android:textColorPrimaryDisableOnly">@color/colorPurvisGrey</item>
     </style>
 
     <style name="CardView.Dark" parent="CardView">
