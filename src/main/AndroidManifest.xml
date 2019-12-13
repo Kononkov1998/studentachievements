@@ -31,5 +31,6 @@
         <activity android:name=".activities.SearchResultsActivity" />
         <activity android:name=".activities.OtherProfileActivity" />
         <activity android:name=".activities.AuthActivity" />
+        <activity android:name=".activities.SearchNoResultsActivity" />
     </application>
 </manifest>

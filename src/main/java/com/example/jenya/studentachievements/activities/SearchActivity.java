@@ -79,12 +79,17 @@ public class SearchActivity extends AppCompatActivity {
         Requests.getInstance().studentSearch(group, fio.trim(), this, btn);
     }
 
-    public static void searchSuccessful(){
+    public static void searchSuccessful() {
         isSearchSuccessful = true;
     }
 
     public void openProfile(View view) {
         Intent intent = new Intent(this, ProfileActivity.class);
+        startActivity(intent);
+    }
+
+    public void openGrade(View view) {
+        Intent intent = new Intent(this, GradeActivity.class);
         startActivity(intent);
     }
 
@@ -95,11 +100,6 @@ public class SearchActivity extends AppCompatActivity {
 
     public void openSettings(View view) {
         Intent intent = new Intent(this, SettingsActivity.class);
-        startActivity(intent);
-    }
-
-    public void openGrade(View view) {
-        Intent intent = new Intent(this, GradeActivity.class);
         startActivity(intent);
     }
 }

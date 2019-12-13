@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.example.jenya.studentachievements.activities.AuthActivity;
 import com.example.jenya.studentachievements.activities.ProfileActivity;
 import com.example.jenya.studentachievements.activities.SearchActivity;
+import com.example.jenya.studentachievements.activities.SearchNoResultsActivity;
 import com.example.jenya.studentachievements.activities.SearchResultsActivity;
 import com.example.jenya.studentachievements.models.User;
 import com.example.jenya.studentachievements.models.UserInfo;
@@ -178,9 +179,15 @@ public class Requests {
                 if (response.isSuccessful()) {
                     SearchActivity.searchSuccessful();
 
-                    Intent intent = new Intent(ctx, SearchResultsActivity.class);
-                    intent.putParcelableArrayListExtra("students", response.body());
-                    ctx.startActivity(intent);
+                    assert response.body() != null;
+                    if (response.body().isEmpty()) {
+                        Intent intent = new Intent(ctx, SearchNoResultsActivity.class);
+                        ctx.startActivity(intent);
+                    } else {
+                        Intent intent = new Intent(ctx, SearchResultsActivity.class);
+                        intent.putParcelableArrayListExtra("students", response.body());
+                        ctx.startActivity(intent);
+                    }
                 } else {
                     btn.getBackground().setAlpha(255);
                     btn.setEnabled(true);

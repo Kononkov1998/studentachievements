@@ -9,11 +9,9 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.SharedPreferencesActions;
@@ -33,6 +31,7 @@ public class ProfileActivity extends AppCompatActivity
 {
     static final int GALLERY_REQUEST = 1;
     private CircleImageView avatar;
+    private ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,9 +59,9 @@ public class ProfileActivity extends AppCompatActivity
         Collections.sort(userAchievements, new AchievementsComparator());
 
         final AchievementsAdapter adapter = new AchievementsAdapter(this, userAchievements);
-        final ListView listView = findViewById(R.id.list);
+        listView = findViewById(R.id.list);
         View header = getLayoutInflater().inflate(R.layout.header_profile, listView, false);
-        avatar = (CircleImageView) header.findViewById(R.id.imageUser);
+        avatar = header.findViewById(R.id.imageUser);
         String headerText = userInfo.getFullName().getLastName() + "\n" + userInfo.getFullName().getFirstName() + "\n" + userInfo.getFullName().getPatronymic() + "\n" + userInfo.getGroup().getName();
         ((TextView) header.findViewById(R.id.textProfile)).setText(headerText);
 
@@ -152,8 +151,17 @@ public class ProfileActivity extends AppCompatActivity
         super.onSaveInstanceState(savedInstanceState);
     }
 
+    public void openProfile(View view) {
+        listView.smoothScrollToPosition(0);
+    }
+
     public void openSearch(View view) {
         Intent intent = new Intent(this, SearchActivity.class);
+        startActivity(intent);
+    }
+
+    public void openGrade(View view) {
+        Intent intent = new Intent(this, GradeActivity.class);
         startActivity(intent);
     }
 
@@ -164,11 +172,6 @@ public class ProfileActivity extends AppCompatActivity
 
     public void openSettings(View view) {
         Intent intent = new Intent(this, SettingsActivity.class);
-        startActivity(intent);
-    }
-
-    public void openGrade(View view) {
-        Intent intent = new Intent(this, GradeActivity.class);
         startActivity(intent);
     }
 }

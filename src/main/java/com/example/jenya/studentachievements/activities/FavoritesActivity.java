@@ -15,6 +15,7 @@ import com.example.jenya.studentachievements.models.UserInfo;
 public class FavoritesActivity extends AppCompatActivity {
 
     private UsersAdapter adapter;
+    private ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +24,7 @@ public class FavoritesActivity extends AppCompatActivity {
         ThemeController.onActivityCreateSetTheme(this);
         setContentView(R.layout.activity_favorites);
         adapter = new UsersAdapter(this, UserInfo.getCurrentUser().getFavouriteStudents(), this.getClass().getSimpleName());
-        final ListView listView = findViewById(R.id.list);
+        listView = findViewById(R.id.list);
         listView.setAdapter(adapter);
     }
 
@@ -49,14 +50,17 @@ public class FavoritesActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void openSettings(View view) {
-        Intent intent = new Intent(this, SettingsActivity.class);
+    public void openGrade(View view) {
+        Intent intent = new Intent(this, GradeActivity.class);
         startActivity(intent);
     }
 
-    public void openGrade(View view)
-    {
-        Intent intent = new Intent(this, GradeActivity.class);
+    public void openFavorites(View view) {
+        listView.smoothScrollToPosition(0);
+    }
+
+    public void openSettings(View view) {
+        Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
     }
 }

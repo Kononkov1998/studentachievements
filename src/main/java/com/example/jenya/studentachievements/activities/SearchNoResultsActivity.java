@@ -5,51 +5,18 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ListView;
 
 import com.example.jenya.studentachievements.R;
-import com.example.jenya.studentachievements.SharedPreferencesActions;
 import com.example.jenya.studentachievements.ThemeController;
-import com.example.jenya.studentachievements.adapters.UsersAdapter;
-import com.example.jenya.studentachievements.models.UserInfo;
 
-import java.util.ArrayList;
-
-public class SearchResultsActivity extends AppCompatActivity {
-
-    private UsersAdapter adapter;
+public class SearchNoResultsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         ThemeController.onActivityCreateSetTheme(this);
-        setContentView(R.layout.activity_searchresults);
-
-        ArrayList<UserInfo> students = getIntent().getParcelableArrayListExtra("students");
-
-        adapter = new UsersAdapter(this, students, this.getClass().getSimpleName());
-        final ListView listView = findViewById(R.id.list);
-        listView.setAdapter(adapter);
-
-        listView.setOnItemClickListener((parent, view, position, id) -> {
-        });
-        SharedPreferencesActions.delete("name", this);
-        SharedPreferencesActions.delete("surname", this);
-        SharedPreferencesActions.delete("patronymic", this);
-        SharedPreferencesActions.delete("group", this);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        overridePendingTransition(0, 0);
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        adapter.notifyDataSetChanged();
+        setContentView(R.layout.activity_searchnoresults);
     }
 
     public void openProfile(View view) {

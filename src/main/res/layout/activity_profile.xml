@@ -21,6 +21,7 @@
             <ImageView
                 android:id="@+id/imageProfile"
                 style="@style/ImageView"
+                android:onClick="openProfile"
                 android:src="@drawable/ic_home_24dp"
                 android:tint="?ic_active_color" />
 

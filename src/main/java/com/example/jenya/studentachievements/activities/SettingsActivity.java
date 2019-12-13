@@ -114,13 +114,13 @@ public class SettingsActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void openFavorites(View view) {
-        Intent intent = new Intent(this, FavoritesActivity.class);
+    public void openGrade(View view) {
+        Intent intent = new Intent(this, GradeActivity.class);
         startActivity(intent);
     }
 
-    public void openGrade(View view) {
-        Intent intent = new Intent(this, GradeActivity.class);
+    public void openFavorites(View view) {
+        Intent intent = new Intent(this, FavoritesActivity.class);
         startActivity(intent);
     }
 }

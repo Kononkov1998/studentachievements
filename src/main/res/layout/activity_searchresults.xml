@@ -23,7 +23,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="35dp"
-            android:divider="@null"/>
+            android:divider="@null" />
 
         <LinearLayout style="?bottomMenu">
 
@@ -32,35 +32,35 @@
                 style="@style/ImageView"
                 android:onClick="openProfile"
                 android:src="@drawable/ic_home_24dp"
-                android:tint="?ic_inactive_color"/>
+                android:tint="?ic_inactive_color" />
 
             <ImageView
                 android:id="@+id/imageGrade"
                 style="@style/ImageView"
                 android:onClick="openGrade"
                 android:src="@drawable/ic_school_24dp"
-                android:tint="?ic_inactive_color"/>
+                android:tint="?ic_inactive_color" />
 
             <ImageView
                 android:id="@+id/imageSearch"
                 style="@style/ImageView"
                 android:onClick="openSearch"
                 android:src="@drawable/ic_search_24dp"
-                android:tint="?ic_active_color"/>
+                android:tint="?ic_active_color" />
 
             <ImageView
                 android:id="@+id/imageFavorites"
                 style="@style/ImageView"
                 android:onClick="openFavorites"
                 android:src="@drawable/ic_star_border_24dp"
-                android:tint="?ic_inactive_color"/>
+                android:tint="?ic_inactive_color" />
 
             <ImageView
                 android:id="@+id/imageSettings"
                 style="@style/ImageView"
                 android:onClick="openSettings"
                 android:src="@drawable/ic_settings_24dp"
-                android:tint="?ic_inactive_color"/>
+                android:tint="?ic_inactive_color" />
         </LinearLayout>
 
     </RelativeLayout>
