@@ -23,6 +23,10 @@ public class UserInfo implements Parcelable {
     @Expose
     private String _id;
 
+    @SerializedName("avatar")
+    @Expose
+    private String avatar;
+
     @SerializedName("visibility")
     @Expose
     private String visibility;
@@ -81,6 +85,14 @@ public class UserInfo implements Parcelable {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public String getIdHumanFace() {

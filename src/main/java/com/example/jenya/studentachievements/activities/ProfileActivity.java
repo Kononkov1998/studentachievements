@@ -24,7 +24,6 @@ import com.example.jenya.studentachievements.ThemeController;
 import com.example.jenya.studentachievements.adapters.AchievementsAdapter;
 import com.example.jenya.studentachievements.comparators.AchievementsComparator;
 import com.example.jenya.studentachievements.models.Achievement;
-import com.example.jenya.studentachievements.models.Avatar;
 import com.example.jenya.studentachievements.models.UserInfo;
 
 import java.io.File;
@@ -72,7 +71,7 @@ public class ProfileActivity extends AppCompatActivity
         listView = findViewById(R.id.list);
         View header = getLayoutInflater().inflate(R.layout.header_profile, listView, false);
         avatar = header.findViewById(R.id.imageUser);
-        if(Avatar.getCurrentAvatar() == null)
+        if(userInfo.getAvatar() != null)
         {
             Requests.getInstance().getAvatar(this, avatar);
         }

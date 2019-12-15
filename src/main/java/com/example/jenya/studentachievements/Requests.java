@@ -15,7 +15,6 @@ import com.example.jenya.studentachievements.activities.ProfileActivity;
 import com.example.jenya.studentachievements.activities.SearchActivity;
 import com.example.jenya.studentachievements.activities.SearchNoResultsActivity;
 import com.example.jenya.studentachievements.activities.SearchResultsActivity;
-import com.example.jenya.studentachievements.models.Avatar;
 import com.example.jenya.studentachievements.models.User;
 import com.example.jenya.studentachievements.models.UserInfo;
 import com.example.jenya.studentachievements.models.UserToken;
@@ -293,19 +292,19 @@ public class Requests {
     // /student/pic
     public void addAvatar(MultipartBody.Part body, Context ctx, CircleImageView avatar, Bitmap bitmap)
     {
-        userApi.addAvatar(SharedPreferencesActions.read("token", ctx), body).enqueue(new Callback<Avatar>() {
+        userApi.addAvatar(SharedPreferencesActions.read("token", ctx), body).enqueue(new Callback<UserInfo>() {
             @Override
-            public void onResponse(@NonNull Call<Avatar> call, @NonNull Response<Avatar> response)
+            public void onResponse(@NonNull Call<UserInfo> call, @NonNull Response<UserInfo> response)
             {
                 if(response.isSuccessful())
                 {
                     avatar.setImageBitmap(bitmap);
-                    Avatar.setCurrentAvatar(response.body());
+                    UserInfo.getCurrentUser().setAvatar(response.body().getAvatar());
                 }
             }
 
             @Override
-            public void onFailure(@NonNull Call<Avatar> call, @NonNull Throwable t)
+            public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t)
             {
                 Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
             }
@@ -315,7 +314,7 @@ public class Requests {
     // /stusent/pic/{avatar}
     public void getAvatar(Context ctx, CircleImageView avatar)
     {
-        userApi.getAvatar(SharedPreferencesActions.read("token", ctx), Avatar.getCurrentAvatar().getAvatar()).enqueue(new Callback<ResponseBody>()
+        userApi.getAvatar(SharedPreferencesActions.read("token", ctx), UserInfo.getCurrentUser().getAvatar()).enqueue(new Callback<ResponseBody>()
         {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response)

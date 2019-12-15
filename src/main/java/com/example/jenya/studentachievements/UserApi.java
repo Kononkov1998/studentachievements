@@ -1,6 +1,5 @@
 package com.example.jenya.studentachievements;
 
-import com.example.jenya.studentachievements.models.Avatar;
 import com.example.jenya.studentachievements.models.User;
 import com.example.jenya.studentachievements.models.UserInfo;
 import com.example.jenya.studentachievements.models.UserToken;
@@ -55,7 +54,7 @@ interface UserApi
 
     @Multipart
     @POST("/student/pic")
-    Call<Avatar> addAvatar(@Header("Authorization") String token, @Part MultipartBody.Part avatar);
+    Call<UserInfo> addAvatar(@Header("Authorization") String token, @Part MultipartBody.Part avatar);
 
     @GET("/student/pic/{avatar}")
     Call<ResponseBody> getAvatar(@Header("Authorization") String  token, @Path("avatar") String avatar);
