@@ -324,7 +324,6 @@ public class Requests {
                     Bitmap bitmap = BitmapFactory.decodeStream(response.body().byteStream());
                     Glide.with(ctx)
                             .load(bitmap)
-                            .placeholder(R.drawable.profile)
                             .into(avatar);
                 }
             }
