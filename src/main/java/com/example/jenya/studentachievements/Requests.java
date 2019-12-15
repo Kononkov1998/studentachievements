@@ -3,22 +3,30 @@ package com.example.jenya.studentachievements;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.jenya.studentachievements.activities.AuthActivity;
 import com.example.jenya.studentachievements.activities.ProfileActivity;
 import com.example.jenya.studentachievements.activities.SearchActivity;
 import com.example.jenya.studentachievements.activities.SearchNoResultsActivity;
 import com.example.jenya.studentachievements.activities.SearchResultsActivity;
+import com.example.jenya.studentachievements.models.Avatar;
 import com.example.jenya.studentachievements.models.User;
 import com.example.jenya.studentachievements.models.UserInfo;
 import com.example.jenya.studentachievements.models.UserToken;
 import com.example.jenya.studentachievements.models.Visibility;
 
+import java.io.File;
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.MultipartBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -26,7 +34,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Requests {
-    private static final String URL = "https://c61134e8.ngrok.io";
+    private static final String URL = "http://476810f2.ngrok.io";
     private final UserApi userApi;
     private static Requests instance;
 
@@ -278,6 +286,54 @@ public class Requests {
                 if (finalUserForRemove != null) {
                     UserInfo.getCurrentUser().getFavouriteStudents().add(finalUserForRemove);
                 }
+            }
+        });
+    }
+
+    // /student/pic
+    public void addAvatar(MultipartBody.Part body, Context ctx, CircleImageView avatar, Bitmap bitmap)
+    {
+        userApi.addAvatar(SharedPreferencesActions.read("token", ctx), body).enqueue(new Callback<Avatar>() {
+            @Override
+            public void onResponse(@NonNull Call<Avatar> call, @NonNull Response<Avatar> response)
+            {
+                if(response.isSuccessful())
+                {
+                    avatar.setImageBitmap(bitmap);
+                    Avatar.setCurrentAvatar(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Avatar> call, @NonNull Throwable t)
+            {
+                Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    // /stusent/pic/{avatar}
+    public void getAvatar(Context ctx, CircleImageView avatar)
+    {
+        userApi.getAvatar(SharedPreferencesActions.read("token", ctx), Avatar.getCurrentAvatar().getAvatar()).enqueue(new Callback<ResponseBody>()
+        {
+            @Override
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response)
+            {
+                if(response.isSuccessful())
+                {
+                    Bitmap bitmap = BitmapFactory.decodeStream(response.body().byteStream());
+                    Glide.with(ctx)
+                            .load(bitmap)
+                            .placeholder(R.drawable.profile)
+                            .into(avatar);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t)
+            {
+
             }
         });
     }

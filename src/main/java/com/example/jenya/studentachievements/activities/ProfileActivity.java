@@ -9,23 +9,33 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.jenya.studentachievements.ImageConverter;
 import com.example.jenya.studentachievements.R;
+import com.example.jenya.studentachievements.Requests;
 import com.example.jenya.studentachievements.SharedPreferencesActions;
 import com.example.jenya.studentachievements.ThemeController;
 import com.example.jenya.studentachievements.adapters.AchievementsAdapter;
 import com.example.jenya.studentachievements.comparators.AchievementsComparator;
 import com.example.jenya.studentachievements.models.Achievement;
+import com.example.jenya.studentachievements.models.Avatar;
 import com.example.jenya.studentachievements.models.UserInfo;
 
+import java.io.File;
+import java.io.NotActiveException;
 import java.util.ArrayList;
 import java.util.Collections;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 public class ProfileActivity extends AppCompatActivity
 {
@@ -62,6 +72,10 @@ public class ProfileActivity extends AppCompatActivity
         listView = findViewById(R.id.list);
         View header = getLayoutInflater().inflate(R.layout.header_profile, listView, false);
         avatar = header.findViewById(R.id.imageUser);
+        if(Avatar.getCurrentAvatar() == null)
+        {
+            Requests.getInstance().getAvatar(this, avatar);
+        }
         String headerText = userInfo.getFullName().getLastName() + "\n" + userInfo.getFullName().getFirstName() + "\n" + userInfo.getFullName().getPatronymic() + "\n" + userInfo.getGroup().getName();
         ((TextView) header.findViewById(R.id.textProfile)).setText(headerText);
 
@@ -121,18 +135,11 @@ public class ProfileActivity extends AppCompatActivity
                 Uri selectedImage = imageReturnedIntent.getData();
                 try
                 {
-                    //encode image to base64
-                    //ByteArrayOutputStream baos = new ByteArrayOutputStream();
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImage);
-                    String imageSring = ImageConverter.convertImageToBase64(bitmap);
-                    /*bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-                    byte[] imageBytes = baos.toByteArray();
-                    String imageString = Base64.encodeToString(imageBytes, Base64.DEFAULT);*/
-
-                    //decode base64 string to image
-                    /*imageBytes = Base64.decode(imageString, Base64.DEFAULT);
-                    Bitmap decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);*/
-                    avatar.setImageBitmap(ImageConverter.convertBase64ToImage(imageSring));
+                    File f = ImageConverter.convertBitmapToFile(bitmap, this);
+                    RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), f);
+                    MultipartBody.Part body = MultipartBody.Part.createFormData("avatar", f.getName(), reqFile);
+                    Requests.getInstance().addAvatar(body, this, avatar, bitmap);
                 }
                 catch (Exception e)
                 {
