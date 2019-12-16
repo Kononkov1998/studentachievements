@@ -158,11 +158,11 @@ public class ProfileActivity extends AppCompatActivity {
         overridePendingTransition(0, 0);
     }
 
-    @Override
+    /*@Override
     protected void onRestart() {
         super.onRestart();
         recreate();
-    }
+    }*/
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
