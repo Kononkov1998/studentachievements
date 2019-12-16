@@ -29,7 +29,7 @@ public class FavoritesActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStart(){
+    protected void onStart() {
         super.onStart();
         overridePendingTransition(0, 0);
     }
@@ -37,7 +37,7 @@ public class FavoritesActivity extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        adapter.notifyDataSetChanged();
+        recreate();
     }
 
     public void openProfile(View view) {

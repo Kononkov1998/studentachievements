@@ -2,11 +2,8 @@ package com.example.jenya.studentachievements;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.widget.Button;
 import android.widget.Toast;
@@ -24,12 +21,10 @@ import com.example.jenya.studentachievements.models.UserInfo;
 import com.example.jenya.studentachievements.models.UserToken;
 import com.example.jenya.studentachievements.models.Visibility;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.MultipartBody;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -37,7 +32,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Requests {
-    private static final String URL = "http://192.168.1.65:8080";
+    private static final String URL = "https://11083ed6.eu.ngrok.io";
     private final UserApi userApi;
     private static Requests instance;
 
@@ -294,14 +289,11 @@ public class Requests {
     }
 
     // /student/pic
-    public void uploadAvatar(MultipartBody.Part body, Context ctx, CircleImageView avatar, AlertDialog dialog)
-    {
+    public void uploadAvatar(MultipartBody.Part body, Context ctx, CircleImageView avatar, AlertDialog dialog) {
         userApi.uploadAvatar(SharedPreferencesActions.read("token", ctx), body).enqueue(new Callback<UserInfo>() {
             @Override
-            public void onResponse(@NonNull Call<UserInfo> call, @NonNull Response<UserInfo> response)
-            {
-                if(response.isSuccessful())
-                {
+            public void onResponse(@NonNull Call<UserInfo> call, @NonNull Response<UserInfo> response) {
+                if (response.isSuccessful()) {
                     UserInfo.getCurrentUser().setAvatar(response.body().getAvatar());
                     GlideUrl glideUrl = new GlideUrl(String.format("%s/student/pic/%s", Requests.getInstance().getURL(), UserInfo.getCurrentUser().getAvatar()), new LazyHeaders.Builder()
                             .addHeader("Authorization", SharedPreferencesActions.read("token", ctx))
@@ -312,16 +304,13 @@ public class Requests {
                             .placeholder(R.drawable.profile)
                             .into(avatar);
                     dialog.dismiss();
-                }
-                else
-                {
+                } else {
                     dialog.dismiss();
                 }
             }
 
             @Override
-            public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t)
-            {
+            public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t) {
                 dialog.dismiss();
                 Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
             }

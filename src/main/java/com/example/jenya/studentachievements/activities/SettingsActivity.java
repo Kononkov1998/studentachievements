@@ -18,6 +18,8 @@ import com.example.jenya.studentachievements.models.Visibility;
 
 public class SettingsActivity extends AppCompatActivity {
 
+    private Switch themeSwitcher;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +47,7 @@ public class SettingsActivity extends AppCompatActivity {
                 break;
         }
 
-        rg.setOnCheckedChangeListener((group, checkedId) -> {
+        rg.setOnClickListener((group) -> {
             int selectedParam = rg.getCheckedRadioButtonId();
             RadioButton selectedRadioButton = findViewById(selectedParam);
             String selectedRadioButtonText = selectedRadioButton.getText().toString();
@@ -64,13 +66,9 @@ public class SettingsActivity extends AppCompatActivity {
             Requests.getInstance().setVisibility(visibility, this);
         });
 
-        Switch themeSwitcher = findViewById(R.id.themeSwitcher);
-        if (ThemeController.getCurrentTheme() == ThemeController.APP_THEME_DARK) {
-            themeSwitcher.setChecked(true);
-        }
-
-        themeSwitcher.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
+        themeSwitcher = findViewById(R.id.themeSwitcher);
+        themeSwitcher.setOnClickListener((buttonView) -> {
+            if (themeSwitcher.isChecked()) {
                 changeToTheme(ThemeController.APP_THEME_DARK);
                 SharedPreferencesActions.save("theme", "dark", this);
             } else {
@@ -90,6 +88,17 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         overridePendingTransition(0, 0);
+        if (ThemeController.getCurrentTheme() == ThemeController.APP_THEME_DARK) {
+            themeSwitcher.setChecked(true);
+        } else {
+            themeSwitcher.setChecked(false);
+        }
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        recreate();
     }
 
     public void exit(View view) {

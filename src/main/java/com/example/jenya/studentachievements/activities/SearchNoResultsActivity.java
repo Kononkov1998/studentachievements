@@ -19,6 +19,12 @@ public class SearchNoResultsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_searchnoresults);
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        recreate();
+    }
+
     public void openProfile(View view) {
         Intent intent = new Intent(this, ProfileActivity.class);
         startActivity(intent);

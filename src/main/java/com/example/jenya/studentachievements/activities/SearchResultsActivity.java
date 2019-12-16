@@ -32,8 +32,6 @@ public class SearchResultsActivity extends AppCompatActivity {
         final ListView listView = findViewById(R.id.list);
         listView.setAdapter(adapter);
 
-        listView.setOnItemClickListener((parent, view, position, id) -> {
-        });
         SharedPreferencesActions.delete("name", this);
         SharedPreferencesActions.delete("surname", this);
         SharedPreferencesActions.delete("patronymic", this);
@@ -49,7 +47,7 @@ public class SearchResultsActivity extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        adapter.notifyDataSetChanged();
+        recreate();
     }
 
     public void openProfile(View view) {

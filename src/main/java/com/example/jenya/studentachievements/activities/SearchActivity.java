@@ -46,6 +46,12 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onRestart() {
+        super.onRestart();
+        recreate();
+    }
+
+    @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         if (isSearchSuccessful) {
             SharedPreferencesActions.delete("name", this);
