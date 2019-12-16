@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.model.LazyHeaders;
 import com.example.jenya.studentachievements.R;
@@ -92,6 +93,8 @@ public class OtherProfileActivity extends AppCompatActivity {
 
             Glide.with(this)
                     .load(glideUrl)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true)
                     .placeholder(R.drawable.profile)
                     .into(avatar);
         }
