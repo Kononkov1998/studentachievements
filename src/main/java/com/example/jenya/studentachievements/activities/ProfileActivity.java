@@ -1,5 +1,7 @@
 package com.example.jenya.studentachievements.activities;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
@@ -34,6 +36,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import dmax.dialog.SpotsDialog;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -143,16 +146,26 @@ public class ProfileActivity extends AppCompatActivity
             if(resultCode == RESULT_OK)
             {
                 Uri selectedImage = imageReturnedIntent.getData();
+
+                AlertDialog dialog = new SpotsDialog(this, R.style.LoadingDialog);
+                //dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                //dialog.setTitle("Loading");
+                //dialog.setMessage("Loading. Please wait...");
+                //dialog.setIndeterminate(true);
+                //dialog.setCanceledOnTouchOutside(false);
+
                 try
                 {
+                    dialog.show();
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImage);
                     File f = ImageConverter.convertBitmapToFile(bitmap, this);
                     RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), f);
                     MultipartBody.Part body = MultipartBody.Part.createFormData("avatar", f.getName(), reqFile);
-                    Requests.getInstance().addAvatar(body, this, avatar, bitmap);
+                    Requests.getInstance().uploadAvatar(body, this, avatar, dialog);
                 }
                 catch (Exception e)
                 {
+                    dialog.dismiss();
                     Toast.makeText(this, "Произошла ошибка. Попробуйте еще раз", Toast.LENGTH_LONG).show();
                 }
             }

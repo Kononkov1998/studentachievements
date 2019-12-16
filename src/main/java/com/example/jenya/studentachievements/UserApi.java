@@ -54,5 +54,5 @@ interface UserApi
 
     @Multipart
     @POST("/student/pic")
-    Call<UserInfo> addAvatar(@Header("Authorization") String token, @Part MultipartBody.Part avatar);
+    Call<UserInfo> uploadAvatar(@Header("Authorization") String token, @Part MultipartBody.Part avatar);
 }
