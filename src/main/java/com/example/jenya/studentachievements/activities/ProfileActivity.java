@@ -12,6 +12,7 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.jenya.studentachievements.ImageConverter;
 import com.example.jenya.studentachievements.R;
@@ -27,8 +28,7 @@ import java.util.Collections;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ProfileActivity extends AppCompatActivity
-{
+public class ProfileActivity extends AppCompatActivity {
     static final int GALLERY_REQUEST = 1;
     private CircleImageView avatar;
     private ListView listView;
@@ -46,11 +46,9 @@ public class ProfileActivity extends AppCompatActivity
         final ArrayList<Achievement> userAchievements = (ArrayList<Achievement>) userInfo.getAchievements().clone();
         int starsSum = 0;
 
-        for (Achievement achievement : userAchievements)
-        {
+        for (Achievement achievement : userAchievements) {
             int stars = achievement.getStars();
-            if (stars != 0)
-            {
+            if (stars != 0) {
                 starsSum += stars;
                 completedAchievements.add(achievement);
             }
@@ -67,7 +65,7 @@ public class ProfileActivity extends AppCompatActivity
 
         int completed = completedAchievements.size();
         int all = userAchievements.size();
-        ((TextView) header.findViewById(R.id.achievementsTextView)).setText(String.format("Получено достижений: %d из %d (%d%%)", completed, all, Math.round((double)completed / (double)all * 100.0)));
+        ((TextView) header.findViewById(R.id.achievementsTextView)).setText(String.format("Получено достижений: %d из %d (%d%%)", completed, all, Math.round((double) completed / (double) all * 100.0)));
         ((ProgressBar) header.findViewById(R.id.achievementsProgressBar)).setProgress(completed);
         ((ProgressBar) header.findViewById(R.id.achievementsProgressBar)).setMax(all);
 
@@ -97,30 +95,21 @@ public class ProfileActivity extends AppCompatActivity
         }
 
         // загрузка изображения по нажатию
-        avatar.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-                photoPickerIntent.setType("image/*");
-                startActivityForResult(photoPickerIntent, GALLERY_REQUEST);
-            }
+        avatar.setOnClickListener(v -> {
+            Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+            photoPickerIntent.setType("image/*");
+            startActivityForResult(photoPickerIntent, GALLERY_REQUEST);
         });
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent)
-    {
+    protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
         super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
 
-        if(requestCode == GALLERY_REQUEST)
-        {
-            if(resultCode == RESULT_OK)
-            {
+        if (requestCode == GALLERY_REQUEST) {
+            if (resultCode == RESULT_OK) {
                 Uri selectedImage = imageReturnedIntent.getData();
-                try
-                {
+                try {
                     //encode image to base64
                     //ByteArrayOutputStream baos = new ByteArrayOutputStream();
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImage);
@@ -133,9 +122,7 @@ public class ProfileActivity extends AppCompatActivity
                     /*imageBytes = Base64.decode(imageString, Base64.DEFAULT);
                     Bitmap decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);*/
                     avatar.setImageBitmap(ImageConverter.convertBase64ToImage(imageSring));
-                }
-                catch (Exception e)
-                {
+                } catch (Exception e) {
                     Toast.makeText(this, "Произошла ошибка. Попробуйте еще раз", Toast.LENGTH_LONG).show();
                 }
             }
@@ -143,9 +130,15 @@ public class ProfileActivity extends AppCompatActivity
     }
 
     @Override
-    protected void onStart(){
+    protected void onStart() {
         super.onStart();
         overridePendingTransition(0, 0);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        recreate();
     }
 
     @Override

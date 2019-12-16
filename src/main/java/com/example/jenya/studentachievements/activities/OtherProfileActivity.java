@@ -153,14 +153,7 @@ public class OtherProfileActivity extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        for (UserInfo user : UserInfo.getCurrentUser().getFavouriteStudents()) {
-            if (user.get_id().equals(otherStudent.get_id())) {
-                checkBox.setChecked(true);
-                break;
-            } else {
-                checkBox.setChecked(false);
-            }
-        }
+        recreate();
     }
 
     public void openProfile(View view) {

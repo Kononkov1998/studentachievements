@@ -63,11 +63,9 @@ public class GradeActivity extends AppCompatActivity {
             row.addView(button);
 
             ViewTreeObserver vto = button.getViewTreeObserver();
-            vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener()
-            {
+            vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
                 @Override
-                public boolean onPreDraw()
-                {
+                public boolean onPreDraw() {
                     button.getViewTreeObserver().removeOnPreDrawListener(this); // удаляем листенер, иначе уйдём в бесконечный цикл
                     params.height = button.getWidth();
                     button.setLayoutParams(params);
@@ -76,11 +74,9 @@ public class GradeActivity extends AppCompatActivity {
             });
 
             // проверяем на последней итерации цикла количество оставшегося места под кнопки
-            if((i == (semesters - 1)) && (semesters % 4 != 0))
-            {
+            if ((i == (semesters - 1)) && (semesters % 4 != 0)) {
                 int freeButtons = 4 - (semesters % 4);
-                for(int j = 0; j < freeButtons; j++)
-                {
+                for (int j = 0; j < freeButtons; j++) {
                     Button buttonInvisible = new Button(this);
                     buttonInvisible.setLayoutParams(params);
                     buttonInvisible.setVisibility(View.INVISIBLE);
@@ -96,6 +92,12 @@ public class GradeActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         overridePendingTransition(0, 0);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        recreate();
     }
 
     public void openProfile(View view) {
