@@ -1,24 +1,28 @@
 package com.example.jenya.studentachievements;
 
+import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.util.Base64;
+import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class ImageConverter
 {
-    public static String convertImageToBase64(Bitmap bitmap)
+    public static File convertBitmapToFile(Bitmap bitmap, Context ctx) throws IOException
     {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] imageBytes = baos.toByteArray();
-        return Base64.encodeToString(imageBytes, Base64.DEFAULT);
-    }
-
-    public static Bitmap convertBase64ToImage(String imageString)
-    {
-        byte[] imageBytes = Base64.decode(imageString, Base64.DEFAULT);
-        return BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+        File f = new File(ctx.getCacheDir(), "avatar");
+        f.createNewFile();
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100 /*ignored for PNG*/, bos);
+        byte[] bitmapdata = bos.toByteArray();
+        FileOutputStream fos = null;
+        fos = new FileOutputStream(f);
+        fos.write(bitmapdata);
+        fos.flush();
+        fos.close();
+        return f;
     }
 }
