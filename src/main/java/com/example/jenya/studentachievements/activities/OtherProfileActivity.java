@@ -14,9 +14,14 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.model.GlideUrl;
+import com.bumptech.glide.load.model.LazyHeaders;
 import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.Requests;
+import com.example.jenya.studentachievements.SharedPreferencesActions;
 import com.example.jenya.studentachievements.ThemeController;
 import com.example.jenya.studentachievements.adapters.AchievementsAdapter;
 import com.example.jenya.studentachievements.comparators.AchievementsComparator;
@@ -27,6 +32,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class OtherProfileActivity extends AppCompatActivity {
 
@@ -75,7 +82,20 @@ public class OtherProfileActivity extends AppCompatActivity {
         final AchievementsAdapter adapter = new AchievementsAdapter(this, userAchievements);
         final ListView listView = findViewById(R.id.list);
         View header = getLayoutInflater().inflate(R.layout.header_otherprofile, listView, false);
-        //((ImageView) header.findViewById(R.id.imageUser)).setImageResource(DataBase.currentUser.getImage());
+        CircleImageView avatar = header.findViewById(R.id.imageUser);
+
+        if(otherStudent.getAvatar() != null)
+        {
+            GlideUrl glideUrl = new GlideUrl(String.format("%s/student/pic/%s", Requests.getInstance().getURL(), otherStudent.getAvatar()), new LazyHeaders.Builder()
+                    .addHeader("Authorization", SharedPreferencesActions.read("token", this))
+                    .build());
+
+            Glide.with(this)
+                    .load(glideUrl)
+                    .placeholder(R.drawable.profile)
+                    .into(avatar);
+        }
+
         String headerText = otherStudent.getFullName().getLastName() + "\n" + otherStudent.getFullName().getFirstName() + "\n" + otherStudent.getFullName().getPatronymic() + "\n" + otherStudent.getGroup().getName();
         ((TextView) header.findViewById(R.id.textProfile)).setText(headerText);
 

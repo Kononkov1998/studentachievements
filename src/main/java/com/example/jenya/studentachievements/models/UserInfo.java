@@ -161,6 +161,7 @@ public class UserInfo implements Parcelable {
         fullName = (FullName) in.readValue(FullName.class.getClassLoader());
         achievements = in.createTypedArrayList(Achievement.CREATOR);
         favouriteStudents = in.createTypedArrayList(UserInfo.CREATOR);
+        avatar = in.readString();
         __v = in.readInt();
     }
 
@@ -180,6 +181,7 @@ public class UserInfo implements Parcelable {
         dest.writeValue(fullName);
         dest.writeTypedList(achievements);
         dest.writeTypedList(favouriteStudents);
+        dest.writeString(avatar);
         dest.writeInt(__v);
     }
 

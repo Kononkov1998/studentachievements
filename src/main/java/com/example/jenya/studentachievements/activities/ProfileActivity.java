@@ -148,11 +148,6 @@ public class ProfileActivity extends AppCompatActivity
                 Uri selectedImage = imageReturnedIntent.getData();
 
                 AlertDialog dialog = new SpotsDialog(this, R.style.LoadingDialog);
-                //dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                //dialog.setTitle("Loading");
-                //dialog.setMessage("Loading. Please wait...");
-                //dialog.setIndeterminate(true);
-                //dialog.setCanceledOnTouchOutside(false);
 
                 try
                 {
