@@ -1,7 +1,6 @@
 package com.example.jenya.studentachievements.activities;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
@@ -11,7 +10,6 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -31,7 +29,6 @@ import com.example.jenya.studentachievements.models.Achievement;
 import com.example.jenya.studentachievements.models.UserInfo;
 
 import java.io.File;
-import java.io.NotActiveException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -41,8 +38,7 @@ import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
-public class ProfileActivity extends AppCompatActivity
-{
+public class ProfileActivity extends AppCompatActivity {
     static final int GALLERY_REQUEST = 1;
     private CircleImageView avatar;
     private ListView listView;
@@ -60,11 +56,9 @@ public class ProfileActivity extends AppCompatActivity
         final ArrayList<Achievement> userAchievements = (ArrayList<Achievement>) userInfo.getAchievements().clone();
         int starsSum = 0;
 
-        for (Achievement achievement : userAchievements)
-        {
+        for (Achievement achievement : userAchievements) {
             int stars = achievement.getStars();
-            if (stars != 0)
-            {
+            if (stars != 0) {
                 starsSum += stars;
                 completedAchievements.add(achievement);
             }
@@ -77,8 +71,7 @@ public class ProfileActivity extends AppCompatActivity
         View header = getLayoutInflater().inflate(R.layout.header_profile, listView, false);
         avatar = header.findViewById(R.id.imageUser);
 
-        if(userInfo.getAvatar() != null)
-        {
+        if (userInfo.getAvatar() != null) {
             GlideUrl glideUrl = new GlideUrl(String.format("%s/student/pic/%s", Requests.getInstance().getURL(), userInfo.getAvatar()), new LazyHeaders.Builder()
                     .addHeader("Authorization", SharedPreferencesActions.read("token", this))
                     .build());
@@ -94,7 +87,7 @@ public class ProfileActivity extends AppCompatActivity
 
         int completed = completedAchievements.size();
         int all = userAchievements.size();
-        ((TextView) header.findViewById(R.id.achievementsTextView)).setText(String.format("Получено достижений: %d из %d (%d%%)", completed, all, Math.round((double)completed / (double)all * 100.0)));
+        ((TextView) header.findViewById(R.id.achievementsTextView)).setText(String.format("Получено достижений: %d из %d (%d%%)", completed, all, Math.round((double) completed / (double) all * 100.0)));
         ((ProgressBar) header.findViewById(R.id.achievementsProgressBar)).setProgress(completed);
         ((ProgressBar) header.findViewById(R.id.achievementsProgressBar)).setMax(all);
 
@@ -124,11 +117,9 @@ public class ProfileActivity extends AppCompatActivity
         }
 
         // загрузка изображения по нажатию
-        avatar.setOnClickListener(new View.OnClickListener()
-        {
+        avatar.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
                 photoPickerIntent.setType("image/*");
                 startActivityForResult(photoPickerIntent, GALLERY_REQUEST);
@@ -137,14 +128,11 @@ public class ProfileActivity extends AppCompatActivity
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent)
-    {
+    protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
         super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
 
-        if(requestCode == GALLERY_REQUEST)
-        {
-            if(resultCode == RESULT_OK)
-            {
+        if (requestCode == GALLERY_REQUEST) {
+            if (resultCode == RESULT_OK) {
                 Uri selectedImage = imageReturnedIntent.getData();
 
                 AlertDialog dialog = new SpotsDialog(this, R.style.LoadingDialog);
@@ -154,17 +142,14 @@ public class ProfileActivity extends AppCompatActivity
                 //dialog.setIndeterminate(true);
                 //dialog.setCanceledOnTouchOutside(false);
 
-                try
-                {
+                try {
                     dialog.show();
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImage);
                     File f = ImageConverter.convertBitmapToFile(bitmap, this);
                     RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), f);
                     MultipartBody.Part body = MultipartBody.Part.createFormData("avatar", f.getName(), reqFile);
                     Requests.getInstance().uploadAvatar(body, this, avatar, dialog);
-                }
-                catch (Exception e)
-                {
+                } catch (Exception e) {
                     dialog.dismiss();
                     Toast.makeText(this, "Произошла ошибка. Попробуйте еще раз", Toast.LENGTH_LONG).show();
                 }
@@ -173,9 +158,15 @@ public class ProfileActivity extends AppCompatActivity
     }
 
     @Override
-    protected void onStart(){
+    protected void onStart() {
         super.onStart();
         overridePendingTransition(0, 0);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        recreate();
     }
 
     @Override
