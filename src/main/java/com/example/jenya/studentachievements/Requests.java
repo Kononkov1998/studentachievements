@@ -33,7 +33,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Requests {
-    private static final String URL = "http://476810f2.ngrok.io";
+    private static final String URL = "http://cfc97bea.ngrok.io";
     private final UserApi userApi;
     private static Requests instance;
 
@@ -307,31 +307,6 @@ public class Requests {
             public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t)
             {
                 Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
-            }
-        });
-    }
-
-    // /stusent/pic/{avatar}
-    public void getAvatar(Context ctx, CircleImageView avatar)
-    {
-        userApi.getAvatar(SharedPreferencesActions.read("token", ctx), UserInfo.getCurrentUser().getAvatar()).enqueue(new Callback<ResponseBody>()
-        {
-            @Override
-            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response)
-            {
-                if(response.isSuccessful())
-                {
-                    Bitmap bitmap = BitmapFactory.decodeStream(response.body().byteStream());
-                    Glide.with(ctx)
-                            .load(bitmap)
-                            .into(avatar);
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t)
-            {
-
             }
         });
     }

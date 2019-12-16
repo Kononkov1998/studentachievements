@@ -16,6 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.model.GlideUrl;
+import com.bumptech.glide.load.model.LazyHeaders;
 import com.example.jenya.studentachievements.ImageConverter;
 import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.Requests;
@@ -71,10 +73,19 @@ public class ProfileActivity extends AppCompatActivity
         listView = findViewById(R.id.list);
         View header = getLayoutInflater().inflate(R.layout.header_profile, listView, false);
         avatar = header.findViewById(R.id.imageUser);
+
         if(userInfo.getAvatar() != null)
         {
-            Requests.getInstance().getAvatar(this, avatar);
+            GlideUrl glideUrl = new GlideUrl(String.format("%s/student/pic/%s", Requests.getInstance().getURL(), userInfo.getAvatar()), new LazyHeaders.Builder()
+                    .addHeader("Authorization", SharedPreferencesActions.read("token", this))
+                    .build());
+
+            Glide.with(this)
+                    .load(glideUrl)
+                    .placeholder(R.drawable.profile)
+                    .into(avatar);
         }
+
         String headerText = userInfo.getFullName().getLastName() + "\n" + userInfo.getFullName().getFirstName() + "\n" + userInfo.getFullName().getPatronymic() + "\n" + userInfo.getGroup().getName();
         ((TextView) header.findViewById(R.id.textProfile)).setText(headerText);
 
