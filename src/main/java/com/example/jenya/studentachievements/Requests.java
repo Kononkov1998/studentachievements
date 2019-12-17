@@ -289,7 +289,7 @@ public class Requests {
     }
 
     // /student/pic
-    public void uploadAvatar(MultipartBody.Part body, Context ctx, CircleImageView avatar, AlertDialog dialog) {
+    public void uploadAvatar(MultipartBody.Part body, Context ctx, CircleImageView avatar) {
         userApi.uploadAvatar(SharedPreferencesActions.read("token", ctx), body).enqueue(new Callback<UserInfo>() {
             @Override
             public void onResponse(@NonNull Call<UserInfo> call, @NonNull Response<UserInfo> response) {
@@ -303,15 +303,12 @@ public class Requests {
                             .load(glideUrl)
                             .placeholder(R.drawable.profile)
                             .into(avatar);
-                    dialog.dismiss();
                 } else {
-                    dialog.dismiss();
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t) {
-                dialog.dismiss();
                 Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
             }
         });
