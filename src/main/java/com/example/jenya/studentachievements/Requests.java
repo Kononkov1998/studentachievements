@@ -3,7 +3,6 @@ package com.example.jenya.studentachievements;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.widget.Button;
 import android.widget.Toast;
@@ -20,7 +19,6 @@ import com.example.jenya.studentachievements.models.Visibility;
 
 import java.util.ArrayList;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -286,7 +284,7 @@ public class Requests {
     }
 
     // /student/pic
-    public void uploadAvatar(MultipartBody.Part body, Context ctx, CircleImageView avatar, Bitmap bitmap) {
+    public void uploadAvatar(MultipartBody.Part body, Context ctx) {
         userApi.uploadAvatar(SharedPreferencesActions.read("token", ctx), body).enqueue(new Callback<UserInfo>() {
             @Override
             public void onResponse(@NonNull Call<UserInfo> call, @NonNull Response<UserInfo> response) {

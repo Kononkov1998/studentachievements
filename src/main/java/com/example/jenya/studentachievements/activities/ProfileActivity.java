@@ -125,7 +125,7 @@ public class ProfileActivity extends AppCompatActivity {
                     File f = ImageConverter.convertBitmapToFile(bitmap, this);
                     RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), f);
                     MultipartBody.Part body = MultipartBody.Part.createFormData("avatar", f.getName(), reqFile);
-                    Requests.getInstance().uploadAvatar(body, this, avatar, bitmap);
+                    Requests.getInstance().uploadAvatar(body, this);
                 } catch (Exception e) {
                     Toast.makeText(this, "Произошла ошибка. Попробуйте еще раз", Toast.LENGTH_LONG).show();
                 }
@@ -154,7 +154,7 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        //recreate();
+        recreate();
     }
 
     @Override
