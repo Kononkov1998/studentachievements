@@ -160,11 +160,11 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
-    /*@Override
+    @Override
     protected void onRestart() {
         super.onRestart();
-        recreate();
-    }*/
+        //recreate();
+    }
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
