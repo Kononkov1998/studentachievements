@@ -1,6 +1,5 @@
 package com.example.jenya.studentachievements.activities;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
@@ -106,13 +105,10 @@ public class ProfileActivity extends AppCompatActivity {
         }
 
         // загрузка изображения по нажатию
-        avatar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-                photoPickerIntent.setType("image/*");
-                startActivityForResult(photoPickerIntent, GALLERY_REQUEST);
-            }
+        avatar.setOnClickListener(v -> {
+            Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+            photoPickerIntent.setType("image/*");
+            startActivityForResult(photoPickerIntent, GALLERY_REQUEST);
         });
     }
 
@@ -129,7 +125,7 @@ public class ProfileActivity extends AppCompatActivity {
                     File f = ImageConverter.convertBitmapToFile(bitmap, this);
                     RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), f);
                     MultipartBody.Part body = MultipartBody.Part.createFormData("avatar", f.getName(), reqFile);
-                    Requests.getInstance().uploadAvatar(body, this, avatar/*, dialog*/);
+                    Requests.getInstance().uploadAvatar(body, this, avatar, bitmap);
                 } catch (Exception e) {
                     Toast.makeText(this, "Произошла ошибка. Попробуйте еще раз", Toast.LENGTH_LONG).show();
                 }

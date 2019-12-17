@@ -1,16 +1,13 @@
 package com.example.jenya.studentachievements;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.model.GlideUrl;
-import com.bumptech.glide.load.model.LazyHeaders;
 import com.example.jenya.studentachievements.activities.AuthActivity;
 import com.example.jenya.studentachievements.activities.ProfileActivity;
 import com.example.jenya.studentachievements.activities.SearchActivity;
@@ -32,7 +29,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Requests {
-    private static final String URL = "http://192.168.1.70:8080";
+    private static final String URL = "https://5413dd40.eu.ngrok.io";
     private final UserApi userApi;
     private static Requests instance;
 
@@ -289,21 +286,13 @@ public class Requests {
     }
 
     // /student/pic
-    public void uploadAvatar(MultipartBody.Part body, Context ctx, CircleImageView avatar) {
+    public void uploadAvatar(MultipartBody.Part body, Context ctx, CircleImageView avatar, Bitmap bitmap) {
         userApi.uploadAvatar(SharedPreferencesActions.read("token", ctx), body).enqueue(new Callback<UserInfo>() {
             @Override
             public void onResponse(@NonNull Call<UserInfo> call, @NonNull Response<UserInfo> response) {
                 if (response.isSuccessful()) {
                     UserInfo.getCurrentUser().setAvatar(response.body().getAvatar());
-                    GlideUrl glideUrl = new GlideUrl(String.format("%s/student/pic/%s", Requests.getInstance().getURL(), UserInfo.getCurrentUser().getAvatar()), new LazyHeaders.Builder()
-                            .addHeader("Authorization", SharedPreferencesActions.read("token", ctx))
-                            .build());
-
-                    Glide.with(ctx)
-                            .load(glideUrl)
-                            .placeholder(R.drawable.profile)
-                            .into(avatar);
-                } else {
+                    ((Activity) ctx).recreate();
                 }
             }
 
