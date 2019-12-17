@@ -94,8 +94,8 @@ public class OtherProfileActivity extends AppCompatActivity {
             Glide.with(this)
                     .load(glideUrl)
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .skipMemoryCache(true)
                     .placeholder(R.drawable.profile)
+                    .centerCrop()
                     .into(avatar);
         }
 

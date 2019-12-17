@@ -79,6 +79,7 @@ public class ProfileActivity extends AppCompatActivity {
             Glide.with(this)
                     .load(glideUrl)
                     .placeholder(R.drawable.profile)
+                    .centerCrop()
                     .into(avatar);
         }
 

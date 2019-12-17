@@ -14,12 +14,19 @@ import android.widget.CheckBox;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.model.GlideUrl;
+import com.bumptech.glide.load.model.LazyHeaders;
 import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.Requests;
+import com.example.jenya.studentachievements.SharedPreferencesActions;
 import com.example.jenya.studentachievements.activities.OtherProfileActivity;
 import com.example.jenya.studentachievements.models.UserInfo;
 
 import java.util.ArrayList;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UsersAdapter extends BaseAdapter {
     private final Context ctx;
@@ -62,8 +69,22 @@ public class UsersAdapter extends BaseAdapter {
             view = lInflater.inflate(R.layout.item_student, parent, false);
         }
 
-        // заполняем View в пункте списка данными из студентов
-       // ((ImageView) view.findViewById(R.id.imageUser)).setImageResource(s.getImage());
+        CircleImageView avatar = view.findViewById(R.id.imageUser);
+
+        if(s.getAvatar() != null)
+        {
+            GlideUrl glideUrl = new GlideUrl(String.format("%s/student/pic/%s", Requests.getInstance().getURL(), s.getAvatar()), new LazyHeaders.Builder()
+                    .addHeader("Authorization", SharedPreferencesActions.read("token", ctx))
+                    .build());
+
+            Glide.with(ctx)
+                    .load(glideUrl)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .placeholder(R.drawable.profile)
+                    .centerCrop()
+                    .into(avatar);
+        }
+
         String textProfile = s.getFullName().getLastName() + "\n" + s.getFullName().getFirstName() + "\n" + s.getFullName().getPatronymic() + "\n" + s.getGroup().getName();
         ((TextView) view.findViewById(R.id.textProfile)).setText(textProfile);
         final CheckBox checkBox = view.findViewById(R.id.checkboxFavorite);
