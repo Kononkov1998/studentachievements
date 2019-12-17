@@ -42,6 +42,7 @@ public class ProfileActivity extends AppCompatActivity {
     static final int GALLERY_REQUEST = 1;
     private CircleImageView avatar;
     private ListView listView;
+    private UserInfo userInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +52,7 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         final ArrayList<Achievement> completedAchievements = new ArrayList<>();
-        UserInfo userInfo = UserInfo.getCurrentUser();
+        userInfo = UserInfo.getCurrentUser();
         //noinspection unchecked
         final ArrayList<Achievement> userAchievements = (ArrayList<Achievement>) userInfo.getAchievements().clone();
         int starsSum = 0;
@@ -70,18 +71,6 @@ public class ProfileActivity extends AppCompatActivity {
         listView = findViewById(R.id.list);
         View header = getLayoutInflater().inflate(R.layout.header_profile, listView, false);
         avatar = header.findViewById(R.id.imageUser);
-
-        if (userInfo.getAvatar() != null) {
-            GlideUrl glideUrl = new GlideUrl(String.format("%s/student/pic/%s", Requests.getInstance().getURL(), userInfo.getAvatar()), new LazyHeaders.Builder()
-                    .addHeader("Authorization", SharedPreferencesActions.read("token", this))
-                    .build());
-
-            Glide.with(this)
-                    .load(glideUrl)
-                    .placeholder(R.drawable.profile)
-                    .centerCrop()
-                    .into(avatar);
-        }
 
         String headerText = userInfo.getFullName().getLastName() + "\n" + userInfo.getFullName().getFirstName() + "\n" + userInfo.getFullName().getPatronymic() + "\n" + userInfo.getGroup().getName();
         ((TextView) header.findViewById(R.id.textProfile)).setText(headerText);
@@ -157,6 +146,18 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         overridePendingTransition(0, 0);
+        if (userInfo.getAvatar() != null)
+        {
+            GlideUrl glideUrl = new GlideUrl(String.format("%s/student/pic/%s", Requests.getInstance().getURL(), userInfo.getAvatar()), new LazyHeaders.Builder()
+                    .addHeader("Authorization", SharedPreferencesActions.read("token", this))
+                    .build());
+
+            Glide.with(this)
+                    .load(glideUrl)
+                    .placeholder(R.drawable.profile)
+                    .centerCrop()
+                    .into(avatar);
+        }
     }
 
     /*@Override
