@@ -3,7 +3,6 @@ package com.example.jenya.studentachievements.activities;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ListView;
 
@@ -12,7 +11,7 @@ import com.example.jenya.studentachievements.ThemeController;
 import com.example.jenya.studentachievements.adapters.UsersAdapter;
 import com.example.jenya.studentachievements.models.UserInfo;
 
-public class FavoritesActivity extends AppCompatActivity {
+public class FavoritesActivity extends AbstractActivity {
 
     private UsersAdapter adapter;
     private ListView listView;
@@ -32,12 +31,6 @@ public class FavoritesActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         overridePendingTransition(0, 0);
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        recreate();
     }
 
     public void openProfile(View view) {

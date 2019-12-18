@@ -69,8 +69,7 @@ public class UsersAdapter extends BaseAdapter {
 
         CircleImageView avatar = view.findViewById(R.id.imageUser);
 
-        if(s.getAvatar() != null)
-        {
+        if (s.getAvatar() != null) {
             GlideUrl glideUrl = new GlideUrl(String.format("%s/student/pic/%s", Requests.getInstance().getURL(), s.getAvatar()), new LazyHeaders.Builder()
                     .addHeader("Authorization", SharedPreferencesActions.read("token", ctx))
                     .build());
@@ -88,11 +87,10 @@ public class UsersAdapter extends BaseAdapter {
         final CheckBox checkBox = view.findViewById(R.id.checkboxFavorite);
 
         for (UserInfo user : UserInfo.getCurrentUser().getFavouriteStudents()) {
-            if (user.get_id().equals(s.get_id())){
+            if (user.get_id().equals(s.get_id())) {
                 checkBox.setChecked(true);
                 break;
-            }
-            else {
+            } else {
                 checkBox.setChecked(false);
             }
         }
@@ -110,8 +108,8 @@ public class UsersAdapter extends BaseAdapter {
             Bundle bundle = null;
 
             if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
-                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) ctx, layout, "student_transition");
-                    bundle = options.toBundle();
+                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) ctx, layout, "student_transition");
+                bundle = options.toBundle();
             }
 
             Intent intent = new Intent(ctx, OtherProfileActivity.class);

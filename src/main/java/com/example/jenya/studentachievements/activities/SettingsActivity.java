@@ -80,6 +80,8 @@ public class SettingsActivity extends AppCompatActivity {
 
     private void changeToTheme(int theme) {
         ThemeController.setCurrentTheme(theme);
+        Intent i = new Intent("recreate"); // the two action strings MUST be same
+        sendBroadcast(i);
         finish();
         startActivity(new Intent(this, getClass()));
     }
