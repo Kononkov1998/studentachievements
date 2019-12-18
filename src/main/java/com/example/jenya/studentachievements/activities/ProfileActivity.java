@@ -3,7 +3,6 @@ package com.example.jenya.studentachievements.activities;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -109,8 +108,6 @@ public class ProfileActivity extends AppCompatActivity {
 
     public void uploadAvatar(View view)
     {
-        avatar.setEnabled(false);
-        avatar.setClickable(false);
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
         photoPickerIntent.setType("image/*");
         startActivityForResult(photoPickerIntent, GALLERY_REQUEST);
@@ -137,8 +134,6 @@ public class ProfileActivity extends AppCompatActivity {
                 }
                 catch (Exception e)
                 {
-                    avatar.setEnabled(true);
-                    avatar.setClickable(true);
                     Toast.makeText(this, "Произошла ошибка. Попробуйте еще раз", Toast.LENGTH_LONG).show();
                 }
             }
