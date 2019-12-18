@@ -15,7 +15,8 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imageUser"
-                style="@style/Avatar" />
+                style="@style/Avatar"
+                android:onClick="uploadAvatar" />
 
             <TextView
                 android:id="@+id/textProfile"

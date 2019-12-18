@@ -105,13 +105,15 @@ public class ProfileActivity extends AppCompatActivity {
         if (SharedPreferencesActions.check("showCompleted", this)) {
             hideBox.setChecked(true);
         }
+    }
 
-        // загрузка изображения по нажатию
-        avatar.setOnClickListener(v -> {
-            Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-            photoPickerIntent.setType("image/*");
-            startActivityForResult(photoPickerIntent, GALLERY_REQUEST);
-        });
+    public void uploadAvatar(View view)
+    {
+        avatar.setEnabled(false);
+        avatar.setClickable(false);
+        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+        photoPickerIntent.setType("image/*");
+        startActivityForResult(photoPickerIntent, GALLERY_REQUEST);
     }
 
     @Override
@@ -135,6 +137,8 @@ public class ProfileActivity extends AppCompatActivity {
                 }
                 catch (Exception e)
                 {
+                    avatar.setEnabled(true);
+                    avatar.setClickable(true);
                     Toast.makeText(this, "Произошла ошибка. Попробуйте еще раз", Toast.LENGTH_LONG).show();
                 }
             }
