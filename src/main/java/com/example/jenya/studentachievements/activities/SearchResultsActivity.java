@@ -3,7 +3,6 @@ package com.example.jenya.studentachievements.activities;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ListView;
 
@@ -15,7 +14,7 @@ import com.example.jenya.studentachievements.models.UserInfo;
 
 import java.util.ArrayList;
 
-public class SearchResultsActivity extends AppCompatActivity {
+public class SearchResultsActivity extends AbstractActivity {
 
     private UsersAdapter adapter;
 
@@ -28,7 +27,7 @@ public class SearchResultsActivity extends AppCompatActivity {
 
         ArrayList<UserInfo> students = getIntent().getParcelableArrayListExtra("students");
 
-        adapter = new UsersAdapter(this, students, this.getClass().getSimpleName());
+        adapter = new UsersAdapter(this, students);
         final ListView listView = findViewById(R.id.list);
         listView.setAdapter(adapter);
 
@@ -42,12 +41,6 @@ public class SearchResultsActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         overridePendingTransition(0, 0);
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        recreate();
     }
 
     public void openProfile(View view) {
