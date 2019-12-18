@@ -28,7 +28,7 @@ public class SearchResultsActivity extends AppCompatActivity {
 
         ArrayList<UserInfo> students = getIntent().getParcelableArrayListExtra("students");
 
-        adapter = new UsersAdapter(this, students, this.getClass().getSimpleName());
+        adapter = new UsersAdapter(this, students);
         final ListView listView = findViewById(R.id.list);
         listView.setAdapter(adapter);
 

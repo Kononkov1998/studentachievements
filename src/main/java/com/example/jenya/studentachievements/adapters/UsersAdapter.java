@@ -32,13 +32,11 @@ public class UsersAdapter extends BaseAdapter {
     private final Context ctx;
     private final LayoutInflater lInflater;
     private final ArrayList<UserInfo> objects;
-    private final String activity;
 
-    public UsersAdapter(Context context, ArrayList<UserInfo> students, String activity) {
+    public UsersAdapter(Context context, ArrayList<UserInfo> students) {
         ctx = context;
         objects = students;
         lInflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        this.activity = activity;
     }
 
     // кол-во элементов
@@ -118,7 +116,7 @@ public class UsersAdapter extends BaseAdapter {
 
             Intent intent = new Intent(ctx, OtherProfileActivity.class);
             intent.putExtra("otherStudent", s);
-            intent.putExtra("activity", activity);
+            intent.putExtra("activity", ctx.getClass().getSimpleName());
 
             if (bundle == null) {
                 ctx.startActivity(intent);

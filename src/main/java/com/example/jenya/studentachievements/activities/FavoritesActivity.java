@@ -23,7 +23,7 @@ public class FavoritesActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         ThemeController.onActivityCreateSetTheme(this);
         setContentView(R.layout.activity_favorites);
-        adapter = new UsersAdapter(this, UserInfo.getCurrentUser().getFavouriteStudents(), this.getClass().getSimpleName());
+        adapter = new UsersAdapter(this, UserInfo.getCurrentUser().getFavouriteStudents());
         listView = findViewById(R.id.list);
         listView.setAdapter(adapter);
     }
