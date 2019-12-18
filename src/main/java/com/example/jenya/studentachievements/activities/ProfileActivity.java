@@ -3,6 +3,7 @@ package com.example.jenya.studentachievements.activities;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -15,9 +16,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.model.LazyHeaders;
-import com.example.jenya.studentachievements.ImageConverter;
+import com.example.jenya.studentachievements.ImageActions;
 import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.Requests;
 import com.example.jenya.studentachievements.SharedPreferencesActions;
@@ -120,13 +122,19 @@ public class ProfileActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 Uri selectedImage = imageReturnedIntent.getData();
 
-                try {
+                try
+                {
+                    int px = getResources().getDimensionPixelSize(R.dimen.image_size);
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImage);
-                    File f = ImageConverter.convertBitmapToFile(bitmap, this);
+                    File f = ImageActions.convertBitmapToFile(bitmap, this);
+                    bitmap = ImageActions.decodeSampledBitmapFromResource(f.getAbsolutePath(), px, px);
+                    f = ImageActions.convertBitmapToFile(bitmap, this);
                     RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), f);
                     MultipartBody.Part body = MultipartBody.Part.createFormData("avatar", f.getName(), reqFile);
                     Requests.getInstance().uploadAvatar(body, this);
-                } catch (Exception e) {
+                }
+                catch (Exception e)
+                {
                     Toast.makeText(this, "Произошла ошибка. Попробуйте еще раз", Toast.LENGTH_LONG).show();
                 }
             }
@@ -139,6 +147,8 @@ public class ProfileActivity extends AppCompatActivity {
         overridePendingTransition(0, 0);
         if (userInfo.getAvatar() != null)
         {
+            int px = getResources().getDimensionPixelSize(R.dimen.image_size);
+
             GlideUrl glideUrl = new GlideUrl(String.format("%s/student/pic/%s", Requests.getInstance().getURL(), userInfo.getAvatar()), new LazyHeaders.Builder()
                     .addHeader("Authorization", SharedPreferencesActions.read("token", this))
                     .build());
@@ -146,7 +156,8 @@ public class ProfileActivity extends AppCompatActivity {
             Glide.with(this)
                     .load(glideUrl)
                     .placeholder(R.drawable.profile)
-                    .centerCrop()
+                    .override(px, px)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .into(avatar);
         }
     }

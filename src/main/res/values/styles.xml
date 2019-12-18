@@ -83,8 +83,8 @@
     </style>
 
     <style name="Avatar" parent="Theme.AppCompat.Light">
-        <item name="android:layout_width">130dp</item>
-        <item name="android:layout_height">130dp</item>
+        <item name="android:layout_width">@dimen/image_size</item>
+        <item name="android:layout_height">@dimen/image_size</item>
         <item name="android:layout_gravity">center_horizontal</item>
         <item name="android:src">@drawable/profile</item>
         <item name="civ_border_width">0dp</item>

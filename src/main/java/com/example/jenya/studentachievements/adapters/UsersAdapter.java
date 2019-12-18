@@ -73,6 +73,8 @@ public class UsersAdapter extends BaseAdapter {
 
         if(s.getAvatar() != null)
         {
+            int px = ctx.getResources().getDimensionPixelSize(R.dimen.image_size);
+
             GlideUrl glideUrl = new GlideUrl(String.format("%s/student/pic/%s", Requests.getInstance().getURL(), s.getAvatar()), new LazyHeaders.Builder()
                     .addHeader("Authorization", SharedPreferencesActions.read("token", ctx))
                     .build());
@@ -81,7 +83,7 @@ public class UsersAdapter extends BaseAdapter {
                     .load(glideUrl)
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .placeholder(R.drawable.profile)
-                    .centerCrop()
+                    .override(px, px)
                     .into(avatar);
         }
 

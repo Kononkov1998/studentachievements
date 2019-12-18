@@ -87,6 +87,8 @@ public class OtherProfileActivity extends AppCompatActivity {
 
         if(otherStudent.getAvatar() != null)
         {
+            int px = getResources().getDimensionPixelSize(R.dimen.image_size);
+
             GlideUrl glideUrl = new GlideUrl(String.format("%s/student/pic/%s", Requests.getInstance().getURL(), otherStudent.getAvatar()), new LazyHeaders.Builder()
                     .addHeader("Authorization", SharedPreferencesActions.read("token", this))
                     .build());
@@ -95,7 +97,7 @@ public class OtherProfileActivity extends AppCompatActivity {
                     .load(glideUrl)
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .placeholder(R.drawable.profile)
-                    .centerCrop()
+                    .override(px, px)
                     .into(avatar);
         }
 
