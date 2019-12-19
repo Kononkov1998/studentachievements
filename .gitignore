@@ -6,3 +6,4 @@ gradlew
 gradlew.bat
 proguard-rules.pro
 studentachievements.iml
+/src/main/java/com/example/jenya/studentachievements/URL.java
