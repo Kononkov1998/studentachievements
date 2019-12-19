@@ -4,10 +4,12 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.jenya.studentachievements.PxDpConverter;
 import com.example.jenya.studentachievements.R;
@@ -22,7 +24,7 @@ public class GradeActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         ThemeController.onActivityCreateSetTheme(this);
         setContentView(R.layout.activity_grade);
-        initButtons(10); // число семестров из запроса
+        initButtons(9); // число семестров из запроса
     }
 
     private void initButtons(int semesters) {
@@ -64,7 +66,19 @@ public class GradeActivity extends AppCompatActivity {
             button.setTextSize(20);
             button.setBackground(this.getResources().getDrawable(R.drawable.button_semester_shape));
 
-            button.setId(i + 1); // id кнопки === номер семестра
+            // здесь открываем новую активити с дисциплинами, отпрвляя номер семестра
+            button.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View view)
+                {
+                    Intent intent = new Intent(getApplicationContext(), DisciplinesActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("semester", String.valueOf(button.getText()));
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
+            });
 
             row.addView(button);
 
@@ -80,13 +94,14 @@ public class GradeActivity extends AppCompatActivity {
             });
 
             // проверяем на последней итерации цикла количество оставшегося места под кнопки
-            if ((i == (semesters - 1)) && (semesters % 4 != 0)) {
+            if ((i == (semesters - 1)) && (semesters % 4 != 0))
+            {
                 int freeButtons = 4 - (semesters % 4);
                 for (int j = 0; j < freeButtons; j++) {
                     Button buttonInvisible = new Button(this);
                     buttonInvisible.setLayoutParams(params);
                     buttonInvisible.setVisibility(View.INVISIBLE);
-                    button.setEnabled(false);
+                    buttonInvisible.setEnabled(false);
 
                     row.addView(buttonInvisible);
                 }

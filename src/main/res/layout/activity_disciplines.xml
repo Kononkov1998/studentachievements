@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="35dp">
+
+            <LinearLayout
+                android:id="@+id/disciplines_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+            </LinearLayout>
+        </ScrollView>
+
+        <LinearLayout style="?bottomMenu">
+
+            <ImageView
+                android:id="@+id/imageProfile"
+                style="@style/ImageView"
+                android:onClick="openProfile"
+                android:src="@drawable/ic_home_24dp"
+                android:tint="?ic_inactive_color" />
+
+            <ImageView
+                android:id="@+id/imageGrade"
+                style="@style/ImageView"
+                android:src="@drawable/ic_school_24dp"
+                android:tint="?ic_active_color"
+                android:onClick="openGrade"/>
+
+            <ImageView
+                android:id="@+id/imageSearch"
+                style="@style/ImageView"
+                android:onClick="openSearch"
+                android:src="@drawable/ic_search_24dp"
+                android:tint="?ic_inactive_color" />
+
+            <ImageView
+                android:id="@+id/imageFavorites"
+                style="@style/ImageView"
+                android:onClick="openFavorites"
+                android:src="@drawable/ic_star_border_24dp"
+                android:tint="?ic_inactive_color" />
+
+            <ImageView
+                android:id="@+id/imageSettings"
+                style="@style/ImageView"
+                android:onClick="openSettings"
+                android:src="@drawable/ic_settings_24dp"
+                android:tint="?ic_inactive_color" />
+        </LinearLayout>
+
+    </RelativeLayout>
+</android.support.constraint.ConstraintLayout>
