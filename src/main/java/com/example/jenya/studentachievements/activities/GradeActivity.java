@@ -9,6 +9,7 @@ import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import com.example.jenya.studentachievements.PxDpConverter;
 import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.ThemeController;
 
@@ -51,7 +52,12 @@ public class GradeActivity extends AppCompatActivity {
                     0, // height
                     1 // weight
             );
-            params.setMargins(25, 25, 25, 25);
+            params.setMargins(
+                    (int) PxDpConverter.pxFromDp(15, this),
+                    (int) PxDpConverter.pxFromDp(15, this),
+                    (int) PxDpConverter.pxFromDp(15, this),
+                    (int) PxDpConverter.pxFromDp(15, this)
+            );
             button.setLayoutParams(params);
             button.setText(String.format(Locale.getDefault(), "%d", (i + 1)));
             button.setTextColor(getResources().getColor(R.color.colorWhite));
