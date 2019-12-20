@@ -25,7 +25,7 @@
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginEnd="15dp"
-                    app:cardBackgroundColor="@color/colorOrange"
+                    app:cardBackgroundColor="@color/colorCoursePractice"
                     app:cardCornerRadius="10dp">
                     <LinearLayout
                         android:layout_width="match_parent"

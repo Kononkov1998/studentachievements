@@ -5,10 +5,16 @@ import android.content.pm.ActivityInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.jenya.studentachievements.PxDpConverter;
 import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.ThemeController;
+
+import java.util.Locale;
 
 public class DisciplinesActivity extends AppCompatActivity
 {
@@ -22,6 +28,37 @@ public class DisciplinesActivity extends AppCompatActivity
 
         Bundle bundle = getIntent().getExtras();
         String semester = bundle.getString("semester");
+        initCards(2);
+    }
+
+    private void initCards(int disciplines)
+    {
+        if(disciplines < 1)
+        {
+            return;
+        }
+
+        LinearLayout row = null;
+
+        for (int i = 0; i < disciplines; i++)
+        {
+            // если итерация делится на 2, то создаем горизонтальный список
+            if (i % 2 == 0)
+            {
+                row = new LinearLayout(this);
+                row.setOrientation(LinearLayout.HORIZONTAL);
+                row.setLayoutParams(new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                ));
+                row.setWeightSum((float) 2);
+                LinearLayout list = findViewById(R.id.disciplines_list);
+                list.addView(row);
+            }
+
+            View discipline = getLayoutInflater().inflate(R.layout.item_discipline, row, false);
+            row.addView(discipline);
+        }
     }
 
     @Override
