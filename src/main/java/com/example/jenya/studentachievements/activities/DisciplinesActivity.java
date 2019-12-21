@@ -4,10 +4,12 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.jenya.studentachievements.PxDpConverter;
@@ -27,8 +29,10 @@ public class DisciplinesActivity extends AppCompatActivity
         setContentView(R.layout.activity_disciplines);
 
         Bundle bundle = getIntent().getExtras();
+        // узнаем в каком мы семестре
         String semester = bundle.getString("semester");
-        initCards(2);
+        // создаем карточку для каждого предмета
+        initCards(4);
     }
 
     private void initCards(int disciplines)
@@ -57,8 +61,31 @@ public class DisciplinesActivity extends AppCompatActivity
             }
 
             View discipline = getLayoutInflater().inflate(R.layout.item_discipline, row, false);
+            /*** Пример изменения даты ***/
+            TextView date = discipline.findViewById(R.id.discipline_date);
+            date.setText(String.format(Locale.getDefault(),"%d.%d.%d", i, i, i));
+            /*** ***/
             row.addView(discipline);
+
+            // проверяем на последней итерации цикла количество оставшегося места под карточки
+            if ((i == (disciplines - 1)) && (disciplines % 2 != 0))
+            {
+                View disciplineInvisible = getLayoutInflater().inflate(R.layout.item_discipline, row, false);
+                disciplineInvisible.setVisibility(View.INVISIBLE);
+                disciplineInvisible.setEnabled(false);
+                row.addView(disciplineInvisible);
+            }
         }
+    }
+
+    public void setAsMain(View view)
+    {
+        /*** Пример выставления карточки как главной ***/
+        TextView textView = view.findViewById(R.id.discipline_date);
+        String date = textView.getText().toString();
+        TextView textViewMain = findViewById(R.id.discipline_date);
+        textViewMain.setText(date);
+        /*** ***/
     }
 
     @Override
