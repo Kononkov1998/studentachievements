@@ -8,17 +8,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class AchievementInfo implements Parcelable
 {
-    @SerializedName("_id")
-    @Expose
-    private String _id;
-
     @SerializedName("description")
     @Expose
     private String description;
-
-    @SerializedName("generalProgress")
-    @Expose
-    private int generalProgress;
 
     @SerializedName("name")
     @Expose
@@ -28,28 +20,12 @@ public class AchievementInfo implements Parcelable
     @Expose
     private String code;
 
-    @SerializedName("__v")
-    @Expose
-    private int __v;
-
     public String getCode() {
         return code;
     }
 
-    public String get_id() {
-        return _id;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public int get__v() {
-        return __v;
-    }
-
-    public int getGeneralProgress() {
-        return generalProgress;
     }
 
     public String getDescription() {
@@ -60,33 +36,18 @@ public class AchievementInfo implements Parcelable
         this.code = code;
     }
 
-    public void set_id(String _id) {
-        this._id = _id;
-    }
-
     public void setName(String name) {
         this.name = name;
-    }
-
-    public void set__v(int __v) {
-        this.__v = __v;
     }
 
     public void setDescription(String description) {
         this.description = description;
     }
 
-    public void setGeneralProgress(int generalProgress) {
-        this.generalProgress = generalProgress;
-    }
-
     private AchievementInfo(Parcel in) {
-        _id = in.readString();
         description = in.readString();
-        generalProgress = in.readInt();
         name = in.readString();
         code = in.readString();
-        __v = in.readInt();
     }
 
     @Override
@@ -96,12 +57,9 @@ public class AchievementInfo implements Parcelable
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(_id);
         dest.writeString(description);
-        dest.writeInt(generalProgress);
         dest.writeString(name);
         dest.writeString(code);
-        dest.writeInt(__v);
     }
 
     public static final Parcelable.Creator<AchievementInfo> CREATOR = new Parcelable.Creator<AchievementInfo>() {
