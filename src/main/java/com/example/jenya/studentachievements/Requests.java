@@ -207,18 +207,18 @@ public class Requests
 
     // /student/visibility
     public void setVisibility(Visibility visibility, Context ctx) {
+        String visibilityStr = UserInfo.getCurrentUser().getVisibility();
+        UserInfo.getCurrentUser().setVisibility(visibility.getVisibility());
+
         userApi.visibility(SharedPreferencesActions.read("token", ctx), visibility).enqueue(new Callback<UserInfo>() {
             @Override
             public void onResponse(@NonNull Call<UserInfo> call, @NonNull Response<UserInfo> response) {
-                if (response.isSuccessful()) {
-                    assert response.body() != null;
-                    UserInfo.getCurrentUser().setVisibility(response.body().getVisibility());
-                }
             }
 
             @Override
             public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t) {
                 Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
+                UserInfo.getCurrentUser().setVisibility(visibilityStr);
             }
         });
     }
@@ -290,7 +290,9 @@ public class Requests
             @Override
             public void onResponse(@NonNull Call<UserInfo> call, @NonNull Response<UserInfo> response) {
                 if (response.isSuccessful()) {
-                    UserInfo.getCurrentUser().setAvatar(response.body().getAvatar());
+                    if (response.body() != null) {
+                        UserInfo.getCurrentUser().setAvatar(response.body().getAvatar());
+                    }
                     ((Activity) ctx).recreate();
                 }
             }

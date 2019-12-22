@@ -19,6 +19,8 @@ import com.example.jenya.studentachievements.models.Visibility;
 public class SettingsActivity extends AppCompatActivity {
 
     private Switch themeSwitcher;
+    private RadioGroup.OnCheckedChangeListener listener;
+    private RadioGroup rg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,33 +29,12 @@ public class SettingsActivity extends AppCompatActivity {
         ThemeController.onActivityCreateSetTheme(this);
         setContentView(R.layout.activity_settings);
 
-        RadioGroup rg = findViewById(R.id.radioGroup);
-
-        UserInfo userInfo = UserInfo.getCurrentUser();
-        String visibilityStr = userInfo.getVisibility();
-
-        switch (visibilityStr) {
-            case "all":
-                RadioButton rb = findViewById(R.id.radioButton0);
-                rb.setChecked(true);
-                break;
-            case "me":
-                rb = findViewById(R.id.radioButton4);
-                rb.setChecked(true);
-                break;
-            case "groupmates":
-                rb = findViewById(R.id.radioButton1);
-                rb.setChecked(true);
-                break;
-        }
-
-        rg.setOnClickListener((group) -> {
-            int selectedParam = rg.getCheckedRadioButtonId();
-            RadioButton selectedRadioButton = findViewById(selectedParam);
+        listener = (radioGroup, i) -> {
+            RadioButton selectedRadioButton = findViewById(i);
             String selectedRadioButtonText = selectedRadioButton.getText().toString();
             Visibility visibility = new Visibility();
             switch (selectedRadioButtonText) {
-                case "Все":
+                case "Все пользователи":
                     visibility.setAll();
                     break;
                 case "Одногруппники":
@@ -64,7 +45,10 @@ public class SettingsActivity extends AppCompatActivity {
                     break;
             }
             Requests.getInstance().setVisibility(visibility, this);
-        });
+        };
+
+        rg = findViewById(R.id.radioGroup);
+        rg.setOnCheckedChangeListener(listener);
 
         themeSwitcher = findViewById(R.id.themeSwitcher);
         themeSwitcher.setOnClickListener((buttonView) -> {
@@ -90,6 +74,25 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         overridePendingTransition(0, 0);
+
+        rg.setOnCheckedChangeListener(null);
+        String visibilityStr = UserInfo.getCurrentUser().getVisibility();
+        switch (visibilityStr) {
+            case "all":
+                RadioButton rb = findViewById(R.id.radioButton0);
+                rb.setChecked(true);
+                break;
+            case "me":
+                rb = findViewById(R.id.radioButton4);
+                rb.setChecked(true);
+                break;
+            case "groupmates":
+                rb = findViewById(R.id.radioButton1);
+                rb.setChecked(true);
+                break;
+        }
+        rg.setOnCheckedChangeListener(listener);
+
         if (ThemeController.getCurrentTheme() == ThemeController.APP_THEME_DARK) {
             themeSwitcher.setChecked(true);
         } else {

@@ -90,11 +90,10 @@ public class UsersAdapter extends BaseAdapter {
         final CheckBox checkBox = view.findViewById(R.id.checkboxFavorite);
 
         for (UserInfo user : UserInfo.getCurrentUser().getFavouriteStudents()) {
-            if (user.get_id().equals(s.get_id())){
+            if (user.get_id().equals(s.get_id())) {
                 checkBox.setChecked(true);
                 break;
-            }
-            else {
+            } else {
                 checkBox.setChecked(false);
             }
         }
@@ -111,19 +110,20 @@ public class UsersAdapter extends BaseAdapter {
         layout.setOnClickListener(v -> {
             Bundle bundle = null;
 
-            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
-                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) ctx, layout, "student_transition");
-                    bundle = options.toBundle();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) ctx, layout, "student_transition");
+                bundle = options.toBundle();
             }
 
             Intent intent = new Intent(ctx, OtherProfileActivity.class);
             intent.putExtra("otherStudent", s);
             intent.putExtra("activity", ctx.getClass().getSimpleName());
+            intent.putExtra("position", position);
 
             if (bundle == null) {
-                ctx.startActivity(intent);
+                ((Activity) ctx).startActivityForResult(intent, 1);
             } else {
-                ctx.startActivity(intent, bundle);
+                ((Activity) ctx).startActivityForResult(intent, 1, bundle);
             }
         });
 

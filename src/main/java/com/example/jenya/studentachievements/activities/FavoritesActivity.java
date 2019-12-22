@@ -1,7 +1,9 @@
 package com.example.jenya.studentachievements.activities;
 
+import android.app.SharedElementCallback;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
@@ -10,6 +12,9 @@ import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.ThemeController;
 import com.example.jenya.studentachievements.adapters.UsersAdapter;
 import com.example.jenya.studentachievements.models.UserInfo;
+
+import java.util.List;
+import java.util.Map;
 
 public class FavoritesActivity extends AbstractActivity {
 
@@ -25,6 +30,42 @@ public class FavoritesActivity extends AbstractActivity {
         adapter = new UsersAdapter(this, UserInfo.getCurrentUser().getFavouriteStudents());
         listView = findViewById(R.id.list);
         listView.setAdapter(adapter);
+
+    }
+
+    private void setSharedElementCallback(final View view) {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            setExitSharedElementCallback(new SharedElementCallback() {
+                @Override
+                public void onMapSharedElements(List<String> names,
+                                                Map<String, View> sharedElements) {
+                    names.clear();
+                    sharedElements.clear();
+                    names.add(view.getTransitionName());
+                    sharedElements.put(view.getTransitionName(), view);
+                    //Toast.makeText(getApplicationContext(), "callback1", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            int position = data.getIntExtra("position", -1);
+
+            if (position != -1) {
+                View view = listView.getChildAt(position).findViewById(R.id.layout);
+                //Toast.makeText(getApplicationContext(), "onactivityresult", Toast.LENGTH_SHORT).show();
+                //setSharedElementCallback(view);
+            }
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //Toast.makeText(getApplicationContext(), "BOOM", Toast.LENGTH_SHORT).show();
     }
 
     @Override

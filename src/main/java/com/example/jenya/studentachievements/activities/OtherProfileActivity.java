@@ -4,6 +4,7 @@ import android.app.SharedElementCallback;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.PorterDuff;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.ColorInt;
 import android.support.v7.app.AppCompatActivity;
@@ -154,18 +155,18 @@ public class OtherProfileActivity extends AppCompatActivity {
         setSharedElementCallback(header.findViewById(R.id.layout));
     }
 
-    private void setSharedElementCallback(final View view) {
+    private void setSharedElementCallback(View view) {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            SharedElementCallback callback = new SharedElementCallback() {
+            setEnterSharedElementCallback(new SharedElementCallback() {
                 @Override
                 public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
-                    names.clear();
-                    sharedElements.clear();
-                    names.add(view.getTransitionName());
+                   // names.clear();
+                    //sharedElements.clear();
+                    //names.add(view.getTransitionName());
                     sharedElements.put(view.getTransitionName(), view);
+                    Toast.makeText(getApplicationContext(), "enterCallback", Toast.LENGTH_SHORT).show();
                 }
-            };
-            setEnterSharedElementCallback(callback);
+            });
         }
     }
 
@@ -179,6 +180,17 @@ public class OtherProfileActivity extends AppCompatActivity {
     protected void onRestart() {
         super.onRestart();
         recreate();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            setEnterSharedElementCallback((SharedElementCallback) null);
+        }
+        Intent intent = new Intent();
+        intent.putExtra("position", getIntent().getIntExtra("position", -1));
+        setResult(RESULT_OK, intent);
+        super.onBackPressed();
     }
 
     public void openProfile(View view) {
