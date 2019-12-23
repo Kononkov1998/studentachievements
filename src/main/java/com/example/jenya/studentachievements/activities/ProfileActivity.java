@@ -27,6 +27,7 @@ import com.example.jenya.studentachievements.adapters.AchievementsAdapter;
 import com.example.jenya.studentachievements.comparators.AchievementsComparator;
 import com.example.jenya.studentachievements.models.Achievement;
 import com.example.jenya.studentachievements.models.UserInfo;
+import com.soundcloud.android.crop.Crop;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -108,35 +109,53 @@ public class ProfileActivity extends AppCompatActivity {
 
     public void uploadAvatar(View view)
     {
-        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-        photoPickerIntent.setType("image/*");
-        startActivityForResult(photoPickerIntent, GALLERY_REQUEST);
+        Crop.pickImage(this);
+        //Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+        //photoPickerIntent.setType("image/*");
+        //startActivityForResult(photoPickerIntent, GALLERY_REQUEST);
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
-        super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
+    protected void onActivityResult(int requestCode, int resultCode, Intent result)
+    {
+        if (requestCode == Crop.REQUEST_PICK && resultCode == RESULT_OK)
+        {
+            beginCrop(result.getData());
+        }
+        else if (requestCode == Crop.REQUEST_CROP)
+        {
+            handleCrop(resultCode, result);
+        }
+    }
 
-        if (requestCode == GALLERY_REQUEST) {
-            if (resultCode == RESULT_OK) {
-                Uri selectedImage = imageReturnedIntent.getData();
+    private void beginCrop(Uri source)
+    {
+        Uri destination = Uri.fromFile(new File(getCacheDir(), "cropped"));
+        Crop.of(source, destination).asSquare().start(this);
+    }
 
-                try
-                {
-                    int px = getResources().getDimensionPixelSize(R.dimen.image_size);
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImage);
-                    File f = ImageActions.convertBitmapToFile(bitmap, this);
-                    bitmap = ImageActions.decodeSampledBitmapFromResource(f.getAbsolutePath(), px, px);
-                    f = ImageActions.convertBitmapToFile(bitmap, this);
-                    RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), f);
-                    MultipartBody.Part body = MultipartBody.Part.createFormData("avatar", f.getName(), reqFile);
-                    Requests.getInstance().uploadAvatar(body, this);
-                }
-                catch (Exception e)
-                {
-                    Toast.makeText(this, "Произошла ошибка. Попробуйте еще раз", Toast.LENGTH_LONG).show();
-                }
+    private void handleCrop(int resultCode, Intent result)
+    {
+        if (resultCode == RESULT_OK)
+        {
+            try
+            {
+                int px = ImageActions.getAvatarSizeInPx(this);
+                File file = new File(Crop.getOutput(result).getPath());
+                Bitmap bitmap = ImageActions.decodeSampledBitmapFromResource(file.getAbsolutePath(), px, px);
+                file = ImageActions.convertBitmapToFile(bitmap, this);
+                RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), file);
+                MultipartBody.Part body = MultipartBody.Part.createFormData("avatar", file.getName(), reqFile);
+                Requests.getInstance().uploadAvatar(body, this);
             }
+            catch (Exception e)
+            {
+                Toast.makeText(this, "Произошла ошибка. Попробуйте еще раз", Toast.LENGTH_LONG).show();
+            }
+        }
+        else if (resultCode == Crop.RESULT_ERROR)
+        {
+            Toast.makeText(this, Crop.getError(result).getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 

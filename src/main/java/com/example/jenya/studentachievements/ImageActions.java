@@ -66,4 +66,9 @@ public class ImageActions
 
         return inSampleSize;
     }
+
+    public static int getAvatarSizeInPx(Context ctx)
+    {
+        return ctx.getResources().getDimensionPixelSize(R.dimen.image_size);
+    }
 }
