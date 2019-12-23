@@ -71,4 +71,14 @@ public class ImageActions
     {
         return ctx.getResources().getDimensionPixelSize(R.dimen.image_size);
     }
+
+    public static float dpFromPx(float px, Context ctx)
+    {
+        return px / ctx.getApplicationContext().getResources().getDisplayMetrics().density;
+    }
+
+    public static float pxFromDp(float dp, Context ctx)
+    {
+        return dp * ctx.getApplicationContext().getResources().getDisplayMetrics().density;
+    }
 }
