@@ -4,15 +4,9 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewTreeObserver;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.example.jenya.studentachievements.PxDpConverter;
 import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.ThemeController;
 
@@ -61,10 +55,10 @@ public class DisciplinesActivity extends AppCompatActivity
             }
 
             View discipline = getLayoutInflater().inflate(R.layout.item_discipline, row, false);
-            /*** Пример изменения даты ***/
+            ////////////////////////////////////////////////// Пример изменения даты
             TextView date = discipline.findViewById(R.id.discipline_date);
             date.setText(String.format(Locale.getDefault(),"%d.%d.%d", i, i, i));
-            /*** ***/
+            //////////////////////////////////////////////////
             row.addView(discipline);
 
             // проверяем на последней итерации цикла количество оставшегося места под карточки
@@ -80,12 +74,12 @@ public class DisciplinesActivity extends AppCompatActivity
 
     public void setAsMain(View view)
     {
-        /*** Пример выставления карточки как главной ***/
+        ////////////////////////////////////////////////// Пример изменения даты Пример выставления карточки как главной
         TextView textView = view.findViewById(R.id.discipline_date);
         String date = textView.getText().toString();
         TextView textViewMain = findViewById(R.id.discipline_date);
         textViewMain.setText(date);
-        /*** ***/
+        //////////////////////////////////////////////////
     }
 
     @Override

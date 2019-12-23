@@ -32,17 +32,20 @@ import com.soundcloud.android.crop.Crop;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
-public class ProfileActivity extends AppCompatActivity {
-    static final int GALLERY_REQUEST = 1;
+public class ProfileActivity extends AppCompatActivity
+{
     private CircleImageView avatar;
     private ListView listView;
     private UserInfo userInfo;
+    private View header;
+    private CheckBox hideBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +56,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         final ArrayList<Achievement> completedAchievements = new ArrayList<>();
         userInfo = UserInfo.getCurrentUser();
-        //noinspection unchecked
+        @SuppressWarnings("unchecked")
         final ArrayList<Achievement> userAchievements = (ArrayList<Achievement>) userInfo.getAchievements().clone();
         int starsSum = 0;
 
@@ -69,27 +72,26 @@ public class ProfileActivity extends AppCompatActivity {
 
         final AchievementsAdapter adapter = new AchievementsAdapter(this, userAchievements);
         listView = findViewById(R.id.list);
-        View header = getLayoutInflater().inflate(R.layout.header_profile, listView, false);
+        header = getLayoutInflater().inflate(R.layout.header_profile, listView, false);
         avatar = header.findViewById(R.id.imageUser);
 
-        String headerText = userInfo.getFullName().getLastName() + "\n" + userInfo.getFullName().getFirstName() + "\n" + userInfo.getFullName().getPatronymic() + "\n" + userInfo.getGroup().getName();
-        ((TextView) header.findViewById(R.id.textProfile)).setText(headerText);
+        ((TextView) header.findViewById(R.id.textProfile)).setText(String.format("%s\n%s\n%s\n%s", userInfo.getFullName().getLastName(), userInfo.getFullName().getFirstName(), userInfo.getFullName().getPatronymic(), userInfo.getGroup().getName()));
 
         int completed = completedAchievements.size();
         int all = userAchievements.size();
-        ((TextView) header.findViewById(R.id.achievementsTextView)).setText(String.format("Получено достижений: %d из %d (%d%%)", completed, all, Math.round((double) completed / (double) all * 100.0)));
+        ((TextView) header.findViewById(R.id.achievementsTextView)).setText(String.format(Locale.getDefault(),"Получено достижений: %d из %d (%d%%)", completed, all, Math.round((double) completed / (double) all * 100.0)));
         ((ProgressBar) header.findViewById(R.id.achievementsProgressBar)).setProgress(completed);
         ((ProgressBar) header.findViewById(R.id.achievementsProgressBar)).setMax(all);
 
         int allStars = all * 3;
-        ((TextView) header.findViewById(R.id.starsTextView)).setText(String.format("Получено звезд: %d из %d (%d%%)", starsSum, allStars, Math.round((double) starsSum / (double) allStars * 100.0)));
+        ((TextView) header.findViewById(R.id.starsTextView)).setText(String.format(Locale.getDefault(),"Получено звезд: %d из %d (%d%%)", starsSum, allStars, Math.round((double) starsSum / (double) allStars * 100.0)));
         ((ProgressBar) header.findViewById(R.id.starsProgressBar)).setProgress(starsSum);
         ((ProgressBar) header.findViewById(R.id.starsProgressBar)).setMax(allStars);
 
         listView.addHeaderView(header);
         listView.setAdapter(adapter);
 
-        CheckBox hideBox = findViewById(R.id.checkboxHide);
+        hideBox = findViewById(R.id.checkboxHide);
         hideBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 for (Achievement achievement : completedAchievements) {
@@ -102,6 +104,7 @@ public class ProfileActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
             }
         });
+
         if (SharedPreferencesActions.check("showCompleted", this)) {
             hideBox.setChecked(true);
         }
@@ -110,9 +113,6 @@ public class ProfileActivity extends AppCompatActivity {
     public void uploadAvatar(View view)
     {
         Crop.pickImage(this);
-        //Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-        //photoPickerIntent.setType("image/*");
-        //startActivityForResult(photoPickerIntent, GALLERY_REQUEST);
     }
 
     @Override
