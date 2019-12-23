@@ -11,7 +11,7 @@ import android.widget.Toast;
 import com.example.jenya.studentachievements.ThemeController;
 import com.example.jenya.studentachievements.models.User;
 import com.example.jenya.studentachievements.R;
-import com.example.jenya.studentachievements.Requests;
+import com.example.jenya.studentachievements.requests.Requests;
 
 public class AuthActivity extends AppCompatActivity {
     private Button btn;

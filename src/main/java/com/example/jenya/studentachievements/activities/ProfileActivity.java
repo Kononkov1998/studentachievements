@@ -5,7 +5,6 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.CheckBox;
@@ -20,7 +19,7 @@ import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.model.LazyHeaders;
 import com.example.jenya.studentachievements.ImageActions;
 import com.example.jenya.studentachievements.R;
-import com.example.jenya.studentachievements.Requests;
+import com.example.jenya.studentachievements.requests.Requests;
 import com.example.jenya.studentachievements.SharedPreferencesActions;
 import com.example.jenya.studentachievements.ThemeController;
 import com.example.jenya.studentachievements.adapters.AchievementsAdapter;
@@ -44,7 +43,11 @@ public class ProfileActivity extends AppCompatActivity
     private CircleImageView avatar;
     private ListView listView;
     private UserInfo userInfo;
+
+    @SuppressWarnings("FieldCanBeLocal")
     private View header;
+
+    @SuppressWarnings("FieldCanBeLocal")
     private CheckBox hideBox;
 
     @Override
@@ -75,7 +78,14 @@ public class ProfileActivity extends AppCompatActivity
         header = getLayoutInflater().inflate(R.layout.header_profile, listView, false);
         avatar = header.findViewById(R.id.imageUser);
 
-        ((TextView) header.findViewById(R.id.textProfile)).setText(String.format("%s\n%s\n%s\n%s", userInfo.getFullName().getLastName(), userInfo.getFullName().getFirstName(), userInfo.getFullName().getPatronymic(), userInfo.getGroup().getName()));
+        ((TextView) header.findViewById(R.id.textProfile))
+                .setText(String.format(
+                        "%s\n%s\n%s\n%s",
+                        userInfo.getFullName().getLastName(),
+                        userInfo.getFullName().getFirstName(),
+                        userInfo.getFullName().getPatronymic(),
+                        userInfo.getGroup().getName())
+                );
 
         int completed = completedAchievements.size();
         int all = userAchievements.size();

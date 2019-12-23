@@ -14,14 +14,13 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.model.LazyHeaders;
 import com.example.jenya.studentachievements.R;
-import com.example.jenya.studentachievements.Requests;
+import com.example.jenya.studentachievements.requests.Requests;
 import com.example.jenya.studentachievements.SharedPreferencesActions;
 import com.example.jenya.studentachievements.ThemeController;
 import com.example.jenya.studentachievements.adapters.AchievementsAdapter;
@@ -32,6 +31,7 @@ import com.example.jenya.studentachievements.models.UserInfo;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -41,6 +41,18 @@ public class OtherProfileActivity extends AppCompatActivity {
     private CheckBox checkBox;
     private UserInfo otherStudent;
 
+    @SuppressWarnings("FieldCanBeLocal")
+    private ImageView selectedElement;
+
+    @SuppressWarnings("FieldCanBeLocal")
+    private View header;
+
+    @SuppressWarnings("FieldCanBeLocal")
+    private CircleImageView avatar;
+
+    @SuppressWarnings("FieldCanBeLocal")
+    private CheckBox hideBox;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +60,7 @@ public class OtherProfileActivity extends AppCompatActivity {
         ThemeController.onActivityCreateSetTheme(this);
         setContentView(R.layout.activity_otherprofile);
         Intent intent = getIntent();
-        ImageView selectedElement = null;
+        selectedElement = null;
 
         switch (intent.getStringExtra("activity")) {
             case "SearchResultsActivity":
@@ -82,8 +94,8 @@ public class OtherProfileActivity extends AppCompatActivity {
 
         final AchievementsAdapter adapter = new AchievementsAdapter(this, userAchievements);
         final ListView listView = findViewById(R.id.list);
-        View header = getLayoutInflater().inflate(R.layout.header_otherprofile, listView, false);
-        CircleImageView avatar = header.findViewById(R.id.imageUser);
+        header = getLayoutInflater().inflate(R.layout.header_otherprofile, listView, false);
+        avatar = header.findViewById(R.id.imageUser);
 
         if(otherStudent.getAvatar() != null)
         {
@@ -101,24 +113,30 @@ public class OtherProfileActivity extends AppCompatActivity {
                     .into(avatar);
         }
 
-        String headerText = otherStudent.getFullName().getLastName() + "\n" + otherStudent.getFullName().getFirstName() + "\n" + otherStudent.getFullName().getPatronymic() + "\n" + otherStudent.getGroup().getName();
-        ((TextView) header.findViewById(R.id.textProfile)).setText(headerText);
+        ((TextView) header.findViewById(R.id.textProfile))
+                .setText(String.format(
+                        "%s\n%s\n%s\n%s",
+                        otherStudent.getFullName().getLastName(),
+                        otherStudent.getFullName().getFirstName(),
+                        otherStudent.getFullName().getPatronymic(),
+                        otherStudent.getGroup().getName()
+                ));
 
         int completed = completedAchievements.size();
         int all = userAchievements.size();
-        ((TextView) header.findViewById(R.id.achievementsTextView)).setText(String.format("Получено достижений: %d из %d (%d%%)", completed, all, Math.round((double) completed / (double) all * 100.0)));
+        ((TextView) header.findViewById(R.id.achievementsTextView)).setText(String.format(Locale.getDefault(),"Получено достижений: %d из %d (%d%%)", completed, all, Math.round((double) completed / (double) all * 100.0)));
         ((ProgressBar) header.findViewById(R.id.achievementsProgressBar)).setProgress(completed);
         ((ProgressBar) header.findViewById(R.id.achievementsProgressBar)).setMax(all);
 
         int allStars = all * 3;
-        ((TextView) header.findViewById(R.id.starsTextView)).setText(String.format("Получено звезд: %d из %d (%d%%)", starsSum, allStars, Math.round((double) starsSum / (double) allStars * 100.0)));
+        ((TextView) header.findViewById(R.id.starsTextView)).setText(String.format(Locale.getDefault(),"Получено звезд: %d из %d (%d%%)", starsSum, allStars, Math.round((double) starsSum / (double) allStars * 100.0)));
         ((ProgressBar) header.findViewById(R.id.starsProgressBar)).setProgress(starsSum);
         ((ProgressBar) header.findViewById(R.id.starsProgressBar)).setMax(allStars);
 
         listView.addHeaderView(header);
         listView.setAdapter(adapter);
 
-        CheckBox hideBox = findViewById(R.id.checkboxHide);
+        hideBox = findViewById(R.id.checkboxHide);
         hideBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 for (Achievement achievement : completedAchievements) {
@@ -154,19 +172,18 @@ public class OtherProfileActivity extends AppCompatActivity {
         setSharedElementCallback(header.findViewById(R.id.layout));
     }
 
-    private void setSharedElementCallback(final View view) {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            SharedElementCallback callback = new SharedElementCallback() {
-                @Override
-                public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
-                    names.clear();
-                    sharedElements.clear();
-                    names.add(view.getTransitionName());
-                    sharedElements.put(view.getTransitionName(), view);
-                }
-            };
-            setEnterSharedElementCallback(callback);
-        }
+    private void setSharedElementCallback(final View view)
+    {
+        SharedElementCallback callback = new SharedElementCallback() {
+            @Override
+            public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
+                names.clear();
+                sharedElements.clear();
+                names.add(view.getTransitionName());
+                sharedElements.put(view.getTransitionName(), view);
+            }
+        };
+        setEnterSharedElementCallback(callback);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.example.jenya.studentachievements;
+package com.example.jenya.studentachievements.requests;
 
 import android.app.Activity;
 import android.content.Context;
@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.jenya.studentachievements.SharedPreferencesActions;
 import com.example.jenya.studentachievements.activities.AuthActivity;
 import com.example.jenya.studentachievements.activities.ProfileActivity;
 import com.example.jenya.studentachievements.activities.SearchActivity;
