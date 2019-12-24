@@ -16,7 +16,7 @@ import com.example.jenya.studentachievements.ThemeController;
 
 import java.util.Locale;
 
-public class GradeActivity extends AppCompatActivity {
+public class SemestersActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

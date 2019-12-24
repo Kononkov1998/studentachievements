@@ -85,7 +85,7 @@ public class FavoritesActivity extends AbstractActivity {
     }
 
     public void openGrade(View view) {
-        Intent intent = new Intent(this, GradeActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);;
+        Intent intent = new Intent(this, SemestersActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);;
         startActivity(intent);
     }
 
