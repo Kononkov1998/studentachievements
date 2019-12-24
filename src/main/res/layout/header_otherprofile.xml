@@ -29,7 +29,6 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="10dp"
-                    android:layout_marginLeft="10dp"
                     android:inputType="none"
                     android:textSize="25sp" />
             </LinearLayout>

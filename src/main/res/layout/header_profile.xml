@@ -12,10 +12,21 @@
             android:layout_margin="15dp"
             android:orientation="horizontal">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/imageUser"
-                style="@style/Avatar"
-                android:onClick="uploadAvatar" />
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/imageUser"
+                    style="@style/Avatar"
+                    android:onClick="uploadAvatar" />
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_plus_orange_24dp"
+                    android:layout_marginStart="100dp"
+                    android:layout_marginTop="100dp"
+                    />
+            </FrameLayout>
 
             <TextView
                 android:id="@+id/textProfile"
