@@ -33,8 +33,6 @@
         <activity android:name=".activities.SettingsActivity" />
         <activity android:name=".activities.SearchResultsActivity" />
         <activity android:name=".activities.OtherProfileActivity" />
-        <activity android:name=".activities.AuthActivity" />
-        <activity android:name=".activities.SearchNoResultsActivity" />
         <activity android:name="com.soundcloud.android.crop.CropImageActivity" />
     </application>
 </manifest>

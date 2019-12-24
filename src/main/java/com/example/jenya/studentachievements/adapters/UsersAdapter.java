@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,10 +18,10 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.model.LazyHeaders;
 import com.example.jenya.studentachievements.R;
-import com.example.jenya.studentachievements.requests.Requests;
 import com.example.jenya.studentachievements.SharedPreferencesActions;
 import com.example.jenya.studentachievements.activities.OtherProfileActivity;
 import com.example.jenya.studentachievements.models.UserInfo;
+import com.example.jenya.studentachievements.requests.Requests;
 
 import java.util.ArrayList;
 
@@ -69,8 +68,7 @@ public class UsersAdapter extends BaseAdapter {
 
         CircleImageView avatar = view.findViewById(R.id.imageUser);
 
-        if(s.getAvatar() != null)
-        {
+        if (s.getAvatar() != null) {
             int px = ctx.getResources().getDimensionPixelSize(R.dimen.image_size);
 
             GlideUrl glideUrl = new GlideUrl(String.format("%s/student/pic/%s", Requests.getInstance().getURL(), s.getAvatar()), new LazyHeaders.Builder()
@@ -108,23 +106,15 @@ public class UsersAdapter extends BaseAdapter {
 
         RelativeLayout layout = view.findViewById(R.id.layout);
         layout.setOnClickListener(v -> {
-            Bundle bundle = null;
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) ctx, layout, "student_transition");
-                bundle = options.toBundle();
-            }
+            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) ctx, layout, "student_transition");
+            Bundle bundle = options.toBundle();
 
             Intent intent = new Intent(ctx, OtherProfileActivity.class);
             intent.putExtra("otherStudent", s);
             intent.putExtra("activity", ctx.getClass().getSimpleName());
             intent.putExtra("position", position);
 
-            if (bundle == null) {
-                ((Activity) ctx).startActivityForResult(intent, 1);
-            } else {
-                ((Activity) ctx).startActivityForResult(intent, 1, bundle);
-            }
+            ((Activity) ctx).startActivityForResult(intent, 1, bundle);
         });
 
         return view;

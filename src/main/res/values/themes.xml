@@ -3,6 +3,16 @@
 
     <style name="AppTheme.Dark" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">@color/colorDarkestGrey</item>
+        <item name="android:navigationBarColor">@color/colorBlack</item>
+        <item name="android:statusBarColor">@color/colorDarkestGrey</item>
+        <item name="android:windowActivityTransitions">true</item>
+        <item name="android:windowSharedElementEnterTransition">
+            @transition/student_transition
+        </item>
+
+        <item name="android:windowSharedElementExitTransition">
+            @transition/student_transition
+        </item>
         <item name="radioButton">@style/RadioButton.Dark</item>
         <item name="bottomMenu">@style/BottomMenu.Dark</item>
         <item name="cardView">@style/CardView.Dark</item>
@@ -17,6 +27,15 @@
 
     <style name="AppTheme.Light" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">@color/colorLightBlue</item>
+        <item name="android:navigationBarColor">@color/colorGreyBlue</item>
+        <item name="android:statusBarColor">@color/colorPearlGrey</item>
+        <item name="android:windowActivityTransitions">true</item>
+        <item name="android:windowSharedElementEnterTransition">
+            @transition/student_transition
+        </item>
+        <item name="android:windowSharedElementExitTransition">
+            @transition/student_transition
+        </item>
         <item name="radioButton">@style/RadioButton.Light</item>
         <item name="bottomMenu">@style/BottomMenu.Light</item>
         <item name="cardView">@style/CardView.Light</item>
