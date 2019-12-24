@@ -43,10 +43,8 @@ public class ProfileActivity extends AppCompatActivity
     private CircleImageView avatar;
     private ListView listView;
     private UserInfo userInfo;
-
     @SuppressWarnings("FieldCanBeLocal")
     private View header;
-
     @SuppressWarnings("FieldCanBeLocal")
     private CheckBox hideBox;
 

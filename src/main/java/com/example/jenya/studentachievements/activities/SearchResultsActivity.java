@@ -15,7 +15,7 @@ import com.example.jenya.studentachievements.models.UserInfo;
 import java.util.ArrayList;
 
 public class SearchResultsActivity extends AbstractActivity {
-
+    @SuppressWarnings("FieldCanBeLocal")
     private UsersAdapter adapter;
 
     @Override

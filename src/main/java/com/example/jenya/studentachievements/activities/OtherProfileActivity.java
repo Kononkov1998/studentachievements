@@ -40,16 +40,12 @@ public class OtherProfileActivity extends AppCompatActivity {
 
     private CheckBox checkBox;
     private UserInfo otherStudent;
-
     @SuppressWarnings("FieldCanBeLocal")
     private ImageView selectedElement;
-
     @SuppressWarnings("FieldCanBeLocal")
     private View header;
-
     @SuppressWarnings("FieldCanBeLocal")
     private CircleImageView avatar;
-
     @SuppressWarnings("FieldCanBeLocal")
     private CheckBox hideBox;
 

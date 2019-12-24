@@ -81,7 +81,7 @@ public class SettingsActivity extends AppCompatActivity {
         String visibilityStr = UserInfo.getCurrentUser().getVisibility();
         switch (visibilityStr) {
             case "all":
-                RadioButton rb = findViewById(R.id.radioButton0);
+                rb = findViewById(R.id.radioButton0);
                 rb.setChecked(true);
                 break;
             case "me":
