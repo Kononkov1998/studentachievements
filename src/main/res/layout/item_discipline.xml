@@ -50,7 +50,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:gravity="right"
+                android:gravity="end"
                 android:text="01.01.20"
                 android:textColor="@color/colorBlack" />
         </LinearLayout>

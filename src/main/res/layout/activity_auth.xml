@@ -26,24 +26,20 @@
             style="?editText"
             android:layout_marginBottom="15dp"
             android:drawableStart="@drawable/ic_person_grey_24dp"
-            android:drawableLeft="@drawable/ic_person_grey_24dp"
             android:gravity="center"
             android:hint="@string/login"
             android:inputType="text"
             android:paddingStart="10dp"
-            android:paddingLeft="10dp"
             android:paddingEnd="10dp" />
 
         <EditText
             android:id="@+id/passText"
             style="?editText"
             android:drawableStart="@drawable/ic_lock_grey_24dp"
-            android:drawableLeft="@drawable/ic_lock_grey_24dp"
             android:gravity="center"
             android:hint="@string/pass"
             android:inputType="textPassword"
             android:paddingStart="10dp"
-            android:paddingLeft="10dp"
             android:paddingEnd="10dp" />
     </LinearLayout>
 
