@@ -8,10 +8,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.jenya.studentachievements.R;
-import com.example.jenya.studentachievements.Requests;
 import com.example.jenya.studentachievements.ThemeController;
 import com.example.jenya.studentachievements.models.User;
+import com.example.jenya.studentachievements.R;
+import com.example.jenya.studentachievements.requests.Requests;
 
 public class AuthActivity extends AppCompatActivity {
     private Button btn;
@@ -44,7 +44,6 @@ public class AuthActivity extends AppCompatActivity {
     public void enter(View view) {
         if (login.getText().toString().trim().equals("") || pass.getText().toString().trim().equals("")) {
             Toast.makeText(this, "Введите логин и пароль!", Toast.LENGTH_LONG).show();
-            Requests.getInstance().getUserToken(new User("ekononkov-ki16", "Rjyjyrjd1998"), this, btn);
             return;
         }
         btn.getBackground().setAlpha(100);

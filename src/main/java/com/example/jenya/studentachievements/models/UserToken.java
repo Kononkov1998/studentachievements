@@ -8,9 +8,6 @@ public class UserToken
     @SerializedName("usertoken")
     @Expose
     private String userToken;
-    @SerializedName("status")
-    @Expose
-    private String status;
 
     public String getUserToken()
     {
@@ -21,15 +18,4 @@ public class UserToken
     {
         this.userToken = token;
     }
-
-    public String getStatus()
-    {
-        return status;
-    }
-
-    public void setStatus(String status)
-    {
-        this.status = status;
-    }
-
 }

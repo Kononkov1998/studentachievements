@@ -2,8 +2,8 @@ package com.example.jenya.studentachievements.activities;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -13,11 +13,9 @@ import com.example.jenya.studentachievements.ThemeController;
 
 import java.util.Locale;
 
-public class DisciplinesActivity extends AppCompatActivity
-{
+public class DisciplinesActivity extends AppCompatActivity {
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         ThemeController.onActivityCreateSetTheme(this);
@@ -30,20 +28,16 @@ public class DisciplinesActivity extends AppCompatActivity
         initCards(4);
     }
 
-    private void initCards(int disciplines)
-    {
-        if(disciplines < 1)
-        {
+    private void initCards(int disciplines) {
+        if (disciplines < 1) {
             return;
         }
 
         LinearLayout row = null;
 
-        for (int i = 0; i < disciplines; i++)
-        {
+        for (int i = 0; i < disciplines; i++) {
             // если итерация делится на 2, то создаем горизонтальный список
-            if (i % 2 == 0)
-            {
+            if (i % 2 == 0) {
                 row = new LinearLayout(this);
                 row.setOrientation(LinearLayout.HORIZONTAL);
                 row.setLayoutParams(new LinearLayout.LayoutParams(
@@ -56,15 +50,14 @@ public class DisciplinesActivity extends AppCompatActivity
             }
 
             View discipline = getLayoutInflater().inflate(R.layout.item_discipline, row, false);
-            /*** Пример изменения даты ***/
+            ////////////////////////////////////////////////// Пример изменения даты
             TextView date = discipline.findViewById(R.id.discipline_date);
-            date.setText(String.format(Locale.getDefault(),"%d.%d.%d", i, i, i));
-            /*** ***/
+            date.setText(String.format(Locale.getDefault(), "%d.%d.%d", i, i, i));
+            //////////////////////////////////////////////////
             row.addView(discipline);
 
             // проверяем на последней итерации цикла количество оставшегося места под карточки
-            if ((i == (disciplines - 1)) && (disciplines % 2 != 0))
-            {
+            if ((i == (disciplines - 1)) && (disciplines % 2 != 0)) {
                 View disciplineInvisible = getLayoutInflater().inflate(R.layout.item_discipline, row, false);
                 disciplineInvisible.setVisibility(View.INVISIBLE);
                 disciplineInvisible.setEnabled(false);
@@ -73,14 +66,13 @@ public class DisciplinesActivity extends AppCompatActivity
         }
     }
 
-    public void setAsMain(View view)
-    {
-        /*** Пример выставления карточки как главной ***/
+    public void setAsMain(View view) {
+        ////////////////////////////////////////////////// Пример изменения даты Пример выставления карточки как главной
         TextView textView = view.findViewById(R.id.discipline_date);
         String date = textView.getText().toString();
         TextView textViewMain = findViewById(R.id.discipline_date);
         textViewMain.setText(date);
-        /*** ***/
+        //////////////////////////////////////////////////
     }
 
     @Override
@@ -96,27 +88,27 @@ public class DisciplinesActivity extends AppCompatActivity
     }
 
     public void openProfile(View view) {
-        Intent intent = new Intent(this, ProfileActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);;
+        Intent intent = new Intent(this, ProfileActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
     }
 
     public void openSearch(View view) {
-        Intent intent = new Intent(this, SearchActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);;
+        Intent intent = new Intent(this, SearchActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
     }
 
     public void openFavorites(View view) {
-        Intent intent = new Intent(this, FavoritesActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);;
+        Intent intent = new Intent(this, FavoritesActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
     }
 
     public void openSettings(View view) {
-        Intent intent = new Intent(this, SettingsActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);;
+        Intent intent = new Intent(this, SettingsActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
     }
 
     public void openGrade(View view) {
-        Intent intent = new Intent(this, GradeActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);;
+        Intent intent = new Intent(this, GradeActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
     }
 }

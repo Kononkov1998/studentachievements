@@ -7,9 +7,6 @@ import com.google.gson.annotations.SerializedName;
 
 public class FullName implements Parcelable
 {
-    @SerializedName("_id")
-    @Expose
-    private String _id;
 
     @SerializedName("firstName")
     @Expose
@@ -23,10 +20,6 @@ public class FullName implements Parcelable
     @Expose
     private String patronymic;
 
-    public String get_id() {
-        return _id;
-    }
-
     public String getFirstName() {
         return firstName;
     }
@@ -37,10 +30,6 @@ public class FullName implements Parcelable
 
     public String getPatronymic() {
         return patronymic;
-    }
-
-    public void set_id(String _id) {
-        this._id = _id;
     }
 
     public void setFirstName(String firstName) {
@@ -56,7 +45,6 @@ public class FullName implements Parcelable
     }
 
     private FullName(Parcel in) {
-        _id = in.readString();
         firstName = in.readString();
         lastName = in.readString();
         patronymic = in.readString();
@@ -69,7 +57,6 @@ public class FullName implements Parcelable
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(_id);
         dest.writeString(firstName);
         dest.writeString(lastName);
         dest.writeString(patronymic);

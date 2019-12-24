@@ -19,7 +19,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.model.LazyHeaders;
 import com.example.jenya.studentachievements.R;
-import com.example.jenya.studentachievements.Requests;
+import com.example.jenya.studentachievements.requests.Requests;
 import com.example.jenya.studentachievements.SharedPreferencesActions;
 import com.example.jenya.studentachievements.activities.OtherProfileActivity;
 import com.example.jenya.studentachievements.models.UserInfo;

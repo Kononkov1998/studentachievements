@@ -31,18 +31,6 @@ public class UserInfo implements Parcelable {
     @Expose
     private String visibility;
 
-    @SerializedName("idHumanFace")
-    @Expose
-    private String idHumanFace;
-
-    @SerializedName("institute")
-    @Expose
-    private String institute;
-
-    @SerializedName("email")
-    @Expose
-    private String email;
-
     @SerializedName("group")
     @Expose
     private Group group;
@@ -54,10 +42,6 @@ public class UserInfo implements Parcelable {
     @SerializedName("achievements")
     @Expose
     private ArrayList<Achievement> achievements;
-
-    @SerializedName("__v")
-    @Expose
-    private int __v;
 
     @SerializedName("favouriteStudents")
     @Expose
@@ -75,18 +59,6 @@ public class UserInfo implements Parcelable {
         return group;
     }
 
-    public int get__v() {
-        return __v;
-    }
-
-    public String get_id() {
-        return _id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
     public String getAvatar() {
         return avatar;
     }
@@ -95,28 +67,16 @@ public class UserInfo implements Parcelable {
         this.avatar = avatar;
     }
 
-    public String getIdHumanFace() {
-        return idHumanFace;
-    }
-
-    public String getInstitute() {
-        return institute;
-    }
-
-    public void set__v(int __v) {
-        this.__v = __v;
-    }
-
-    public void set_id(String _id) {
-        this._id = _id;
-    }
-
     public void setAchievements(ArrayList<Achievement> achievements) {
         this.achievements = achievements;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
     }
 
     public void setFullName(FullName fullName) {
@@ -125,14 +85,6 @@ public class UserInfo implements Parcelable {
 
     public void setGroup(Group group) {
         this.group = group;
-    }
-
-    public void setIdHumanFace(String idHumanFace) {
-        this.idHumanFace = idHumanFace;
-    }
-
-    public void setInstitute(String institute) {
-        this.institute = institute;
     }
 
     public String getVisibility() {
@@ -152,17 +104,12 @@ public class UserInfo implements Parcelable {
     }
 
     private UserInfo(Parcel in) {
-        _id = in.readString();
         visibility = in.readString();
-        idHumanFace = in.readString();
-        institute = in.readString();
-        email = in.readString();
         group = (Group) in.readValue(Group.class.getClassLoader());
         fullName = (FullName) in.readValue(FullName.class.getClassLoader());
         achievements = in.createTypedArrayList(Achievement.CREATOR);
         favouriteStudents = in.createTypedArrayList(UserInfo.CREATOR);
         avatar = in.readString();
-        __v = in.readInt();
     }
 
     @Override
@@ -172,17 +119,12 @@ public class UserInfo implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(_id);
         dest.writeString(visibility);
-        dest.writeString(idHumanFace);
-        dest.writeString(institute);
-        dest.writeString(email);
         dest.writeValue(group);
         dest.writeValue(fullName);
         dest.writeTypedList(achievements);
         dest.writeTypedList(favouriteStudents);
         dest.writeString(avatar);
-        dest.writeInt(__v);
     }
 
     public static final Parcelable.Creator<UserInfo> CREATOR = new Parcelable.Creator<UserInfo>() {

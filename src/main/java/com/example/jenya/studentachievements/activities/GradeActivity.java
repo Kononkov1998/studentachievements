@@ -3,13 +3,14 @@ package com.example.jenya.studentachievements.activities;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-import com.example.jenya.studentachievements.PxDpConverter;
+import com.example.jenya.studentachievements.ImageActions;
 import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.ThemeController;
 
@@ -53,16 +54,16 @@ public class GradeActivity extends AppCompatActivity {
                     1 // weight
             );
             params.setMargins(
-                    (int) PxDpConverter.pxFromDp(15, this),
-                    (int) PxDpConverter.pxFromDp(15, this),
-                    (int) PxDpConverter.pxFromDp(15, this),
-                    (int) PxDpConverter.pxFromDp(15, this)
+                    (int) ImageActions.pxFromDp(15, this),
+                    (int) ImageActions.pxFromDp(15, this),
+                    (int) ImageActions.pxFromDp(15, this),
+                    (int) ImageActions.pxFromDp(15, this)
             );
             button.setLayoutParams(params);
             button.setText(String.format(Locale.getDefault(), "%d", (i + 1)));
-            button.setTextColor(getResources().getColor(R.color.colorWhite));
+            button.setTextColor(ContextCompat.getColor(this, R.color.colorWhite));
             button.setTextSize(20);
-            button.setBackground(this.getResources().getDrawable(R.drawable.button_semester_shape));
+            button.setBackground(ContextCompat.getDrawable(this, R.drawable.button_semester_shape));
 
             // здесь открываем новую активити с дисциплинами, отпрвляя номер семестра
             button.setOnClickListener(new View.OnClickListener()

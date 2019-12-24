@@ -10,7 +10,7 @@ import android.widget.RadioGroup;
 import android.widget.Switch;
 
 import com.example.jenya.studentachievements.R;
-import com.example.jenya.studentachievements.Requests;
+import com.example.jenya.studentachievements.requests.Requests;
 import com.example.jenya.studentachievements.SharedPreferencesActions;
 import com.example.jenya.studentachievements.ThemeController;
 import com.example.jenya.studentachievements.models.UserInfo;
@@ -19,8 +19,10 @@ import com.example.jenya.studentachievements.models.Visibility;
 public class SettingsActivity extends AppCompatActivity {
 
     private Switch themeSwitcher;
-    private RadioGroup.OnCheckedChangeListener listener;
     private RadioGroup rg;
+    private RadioGroup.OnCheckedChangeListener listener;
+    @SuppressWarnings("FieldCanBeLocal")
+    private RadioButton rb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,4 +1,4 @@
-package com.example.jenya.studentachievements;
+package com.example.jenya.studentachievements.requests;
 
 import com.example.jenya.studentachievements.models.User;
 import com.example.jenya.studentachievements.models.UserInfo;

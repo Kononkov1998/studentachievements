@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.jenya.studentachievements.R;
-import com.example.jenya.studentachievements.Requests;
+import com.example.jenya.studentachievements.requests.Requests;
 import com.example.jenya.studentachievements.SharedPreferencesActions;
 import com.example.jenya.studentachievements.ThemeController;
 
