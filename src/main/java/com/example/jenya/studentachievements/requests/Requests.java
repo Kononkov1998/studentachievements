@@ -19,8 +19,10 @@ import com.example.jenya.studentachievements.models.UserToken;
 import com.example.jenya.studentachievements.models.Visibility;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -32,9 +34,16 @@ public class Requests {
     private final UserApi userApi;
     private static Requests instance;
 
-    private Requests() {
+    private Requests()
+    {
+        OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
+                .connectTimeout(60, TimeUnit.SECONDS)
+                .readTimeout(60, TimeUnit.SECONDS)
+                .writeTimeout(60, TimeUnit.SECONDS)
+                .build();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(URL)
+                .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         userApi = retrofit.create(UserApi.class); // методы сервера
