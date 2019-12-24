@@ -26,27 +26,27 @@ public class SearchNoResultsActivity extends AppCompatActivity {
     }
 
     public void openProfile(View view) {
-        Intent intent = new Intent(this, ProfileActivity.class);
+        Intent intent = new Intent(this, ProfileActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);;
         startActivity(intent);
     }
 
     public void openSearch(View view) {
-        Intent intent = new Intent(this, SearchActivity.class);
+        Intent intent = new Intent(this, SearchActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);;
         startActivity(intent);
     }
 
     public void openGrade(View view) {
-        Intent intent = new Intent(this, GradeActivity.class);
+        Intent intent = new Intent(this, GradeActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);;
         startActivity(intent);
     }
 
     public void openFavorites(View view) {
-        Intent intent = new Intent(this, FavoritesActivity.class);
+        Intent intent = new Intent(this, FavoritesActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);;
         startActivity(intent);
     }
 
     public void openSettings(View view) {
-        Intent intent = new Intent(this, SettingsActivity.class);
+        Intent intent = new Intent(this, SettingsActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);;
         startActivity(intent);
     }
 }

@@ -10,10 +10,6 @@ import com.example.jenya.studentachievements.ThemeController;
 
 public class SplashScreenActivity extends AppCompatActivity {
     @Override
-    public void onBackPressed() {
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -22,17 +18,17 @@ public class SplashScreenActivity extends AppCompatActivity {
         SharedPreferencesActions.delete("patronymic", this);
         SharedPreferencesActions.delete("group", this);
 
+        if (SharedPreferencesActions.read("theme", this).equals("light")) {
+            ThemeController.setCurrentTheme(ThemeController.APP_THEME_LIGHT);
+        } else if (SharedPreferencesActions.read("theme", this).equals("dark")) {
+            ThemeController.setCurrentTheme(ThemeController.APP_THEME_DARK);
+        }
+
         if (SharedPreferencesActions.check("token", this)) {
             Requests.getInstance().getUserInfoFromSplashScreen(this);
         } else {
             Intent intent = new Intent(this, AuthActivity.class);
             this.startActivity(intent);
-        }
-
-        if (SharedPreferencesActions.read("theme", this).equals("light")) {
-            ThemeController.setCurrentTheme(ThemeController.APP_THEME_LIGHT);
-        } else if (SharedPreferencesActions.read("theme", this).equals("dark")) {
-            ThemeController.setCurrentTheme(ThemeController.APP_THEME_DARK);
         }
     }
 }

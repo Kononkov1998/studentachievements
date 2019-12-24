@@ -114,27 +114,29 @@ public class SettingsActivity extends AppCompatActivity {
         SharedPreferencesActions.delete("group", this);
         SharedPreferencesActions.delete("showCompleted", this);
         SharedPreferencesActions.delete("theme", this);
-        Intent intent = new Intent(this, AuthActivity.class);
+        ThemeController.setCurrentTheme(ThemeController.APP_THEME_LIGHT);
+        Intent intent = new Intent(this, SplashScreenActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+        overridePendingTransition(0, 0);
     }
 
     public void openProfile(View view) {
-        Intent intent = new Intent(this, ProfileActivity.class);
+        Intent intent = new Intent(this, ProfileActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
     }
 
     public void openSearch(View view) {
-        Intent intent = new Intent(this, SearchActivity.class);
+        Intent intent = new Intent(this, SearchActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
     }
 
     public void openGrade(View view) {
-        Intent intent = new Intent(this, GradeActivity.class);
+        Intent intent = new Intent(this, GradeActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
     }
 
     public void openFavorites(View view) {
-        Intent intent = new Intent(this, FavoritesActivity.class);
+        Intent intent = new Intent(this, FavoritesActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
     }
 }

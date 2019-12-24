@@ -29,9 +29,9 @@
         <item name="ic_active_color">@color/colorPumpkin</item>
     </style>
 
-    <style name="SplashScreen" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme.Light.SplashScreen">
         <item name="colorPrimary">@color/colorDarkGrey</item>
-        <item name="colorPrimaryDark">@color/colorWhite</item>
-        <item name="android:windowBackground">@drawable/background_splash</item>
+        <item name="colorPrimaryDark">@color/colorLightBlue</item>
+<!--        <item name="android:windowBackground">@drawable/background_splash</item>-->
     </style>
 </resources>

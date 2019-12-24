@@ -165,7 +165,6 @@ public class Requests
 
             @Override
             public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t) {
-
                 Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
                 btn.getBackground().setAlpha(255);
                 btn.setEnabled(true);
