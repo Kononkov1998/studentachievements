@@ -104,6 +104,7 @@ public class UserInfo implements Parcelable {
     }
 
     private UserInfo(Parcel in) {
+        _id = in.readString();
         visibility = in.readString();
         group = (Group) in.readValue(Group.class.getClassLoader());
         fullName = (FullName) in.readValue(FullName.class.getClassLoader());
@@ -119,6 +120,7 @@ public class UserInfo implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(_id);
         dest.writeString(visibility);
         dest.writeValue(group);
         dest.writeValue(fullName);

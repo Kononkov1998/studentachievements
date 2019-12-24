@@ -97,8 +97,7 @@ public class OtherProfileActivity extends AppCompatActivity {
         header = getLayoutInflater().inflate(R.layout.header_otherprofile, listView, false);
         avatar = header.findViewById(R.id.imageUser);
 
-        if(otherStudent.getAvatar() != null)
-        {
+        if (otherStudent.getAvatar() != null) {
             int px = getResources().getDimensionPixelSize(R.dimen.image_size);
 
             GlideUrl glideUrl = new GlideUrl(String.format("%s/student/pic/%s", Requests.getInstance().getURL(), otherStudent.getAvatar()), new LazyHeaders.Builder()
@@ -124,12 +123,12 @@ public class OtherProfileActivity extends AppCompatActivity {
 
         int completed = completedAchievements.size();
         int all = userAchievements.size();
-        ((TextView) header.findViewById(R.id.achievementsTextView)).setText(String.format(Locale.getDefault(),"Получено достижений: %d из %d (%d%%)", completed, all, Math.round((double) completed / (double) all * 100.0)));
+        ((TextView) header.findViewById(R.id.achievementsTextView)).setText(String.format(Locale.getDefault(), "Получено достижений: %d из %d (%d%%)", completed, all, Math.round((double) completed / (double) all * 100.0)));
         ((ProgressBar) header.findViewById(R.id.achievementsProgressBar)).setProgress(completed);
         ((ProgressBar) header.findViewById(R.id.achievementsProgressBar)).setMax(all);
 
         int allStars = all * 3;
-        ((TextView) header.findViewById(R.id.starsTextView)).setText(String.format(Locale.getDefault(),"Получено звезд: %d из %d (%d%%)", starsSum, allStars, Math.round((double) starsSum / (double) allStars * 100.0)));
+        ((TextView) header.findViewById(R.id.starsTextView)).setText(String.format(Locale.getDefault(), "Получено звезд: %d из %d (%d%%)", starsSum, allStars, Math.round((double) starsSum / (double) allStars * 100.0)));
         ((ProgressBar) header.findViewById(R.id.starsProgressBar)).setProgress(starsSum);
         ((ProgressBar) header.findViewById(R.id.starsProgressBar)).setMax(allStars);
 
@@ -172,8 +171,7 @@ public class OtherProfileActivity extends AppCompatActivity {
         setSharedElementCallback(header.findViewById(R.id.layout));
     }
 
-    private void setSharedElementCallback(final View view)
-    {
+    private void setSharedElementCallback(final View view) {
         SharedElementCallback callback = new SharedElementCallback() {
             @Override
             public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
@@ -200,9 +198,7 @@ public class OtherProfileActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            setEnterSharedElementCallback((SharedElementCallback) null);
-        }
+        setEnterSharedElementCallback((SharedElementCallback) null);
         Intent intent = new Intent();
         intent.putExtra("position", getIntent().getIntExtra("position", -1));
         setResult(RESULT_OK, intent);
@@ -210,27 +206,27 @@ public class OtherProfileActivity extends AppCompatActivity {
     }
 
     public void openProfile(View view) {
-        Intent intent = new Intent(this, ProfileActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);;
+        Intent intent = new Intent(this, ProfileActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
     }
 
     public void openSearch(View view) {
-        Intent intent = new Intent(this, SearchActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);;
+        Intent intent = new Intent(this, SearchActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
     }
 
     public void openFavorites(View view) {
-        Intent intent = new Intent(this, FavoritesActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);;
+        Intent intent = new Intent(this, FavoritesActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
     }
 
     public void openSettings(View view) {
-        Intent intent = new Intent(this, SettingsActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);;
+        Intent intent = new Intent(this, SettingsActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
     }
 
     public void openGrade(View view) {
-        Intent intent = new Intent(this, GradeActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);;
+        Intent intent = new Intent(this, GradeActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
     }
 }

@@ -27,9 +27,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class Requests
-{
-    private static final String URL = com.example.jenya.studentachievements.URL.getCurrentURL();
+public class Requests {
+    private static final String URL = com.example.jenya.studentachievements.requests.URL.getCurrentURL();
     private final UserApi userApi;
     private static Requests instance;
 
