@@ -4,10 +4,11 @@ import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.RelativeLayout;
@@ -24,6 +25,7 @@ import com.example.jenya.studentachievements.models.UserInfo;
 import com.example.jenya.studentachievements.requests.Requests;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -106,16 +108,24 @@ public class UsersAdapter extends BaseAdapter {
 
         RelativeLayout layout = view.findViewById(R.id.layout);
         layout.setOnClickListener(v -> {
-            String transitionName = layout.getTransitionName();
-            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) ctx, layout, transitionName);
-            Bundle bundle = options.toBundle();
+            View statusBar = ((Activity) ctx).findViewById(android.R.id.statusBarBackground);
+            View navigationBar = ((Activity) ctx).findViewById(android.R.id.navigationBarBackground);
+            View bottomMenu = ((Activity) ctx).findViewById(R.id.bottomMenu);
+
+            List<Pair<View, String>> pairs = new ArrayList<>();
+            pairs.add(Pair.create(statusBar, Window.STATUS_BAR_BACKGROUND_TRANSITION_NAME));
+            pairs.add(Pair.create(navigationBar, Window.NAVIGATION_BAR_BACKGROUND_TRANSITION_NAME));
+            pairs.add(Pair.create(bottomMenu, bottomMenu.getTransitionName()));
+            pairs.add(Pair.create(layout, layout.getTransitionName()));
+
+            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) ctx, pairs.toArray(new Pair[0]));
 
             Intent intent = new Intent(ctx, OtherProfileActivity.class);
             intent.putExtra("otherStudent", s);
             intent.putExtra("activity", ctx.getClass().getSimpleName());
             intent.putExtra("position", position);
 
-            ((Activity) ctx).startActivityForResult(intent, 1, bundle);
+            ((Activity) ctx).startActivityForResult(intent, 1, options.toBundle());
         });
 
         return view;

@@ -15,8 +15,10 @@
             android:layout_marginBottom="35dp"
             android:divider="@null" />
 
-
-        <LinearLayout style="?bottomMenu">
+        <LinearLayout
+            android:id="@+id/bottomMenu"
+            style="?bottomMenu"
+            android:transitionName="bottomMenu">
 
             <ImageView
                 android:id="@+id/imageProfile"

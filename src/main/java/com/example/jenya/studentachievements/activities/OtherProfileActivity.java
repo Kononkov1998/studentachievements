@@ -9,6 +9,7 @@ import android.support.annotation.ColorInt;
 import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -20,19 +21,17 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.model.LazyHeaders;
 import com.example.jenya.studentachievements.R;
-import com.example.jenya.studentachievements.requests.Requests;
 import com.example.jenya.studentachievements.SharedPreferencesActions;
 import com.example.jenya.studentachievements.ThemeController;
 import com.example.jenya.studentachievements.adapters.AchievementsAdapter;
 import com.example.jenya.studentachievements.comparators.AchievementsComparator;
 import com.example.jenya.studentachievements.models.Achievement;
 import com.example.jenya.studentachievements.models.UserInfo;
+import com.example.jenya.studentachievements.requests.Requests;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -55,6 +54,7 @@ public class OtherProfileActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         ThemeController.onActivityCreateSetTheme(this);
         setContentView(R.layout.activity_otherprofile);
+        postponeEnterTransition();
         Intent intent = getIntent();
         selectedElement = null;
 
@@ -164,20 +164,16 @@ public class OtherProfileActivity extends AppCompatActivity {
             }
         });
 
-        setSharedElementCallback(header.findViewById(R.id.layout));
-    }
 
-    private void setSharedElementCallback(final View view) {
-        SharedElementCallback callback = new SharedElementCallback() {
+        final View decor = getWindow().getDecorView();
+        decor.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
-            public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
-                names.clear();
-                sharedElements.clear();
-                names.add(view.getTransitionName());
-                sharedElements.put(view.getTransitionName(), view);
+            public boolean onPreDraw() {
+                decor.getViewTreeObserver().removeOnPreDrawListener(this);
+                startPostponedEnterTransition();
+                return true;
             }
-        };
-        setEnterSharedElementCallback(callback);
+        });
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.example.jenya.studentachievements.activities;
 
-import android.app.SharedElementCallback;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -11,9 +10,6 @@ import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.ThemeController;
 import com.example.jenya.studentachievements.adapters.UsersAdapter;
 import com.example.jenya.studentachievements.models.UserInfo;
-
-import java.util.List;
-import java.util.Map;
 
 public class FavoritesActivity extends AbstractActivity {
     @SuppressWarnings("FieldCanBeLocal")
@@ -29,21 +25,6 @@ public class FavoritesActivity extends AbstractActivity {
         adapter = new UsersAdapter(this, UserInfo.getCurrentUser().getFavouriteStudents());
         listView = findViewById(R.id.list);
         listView.setAdapter(adapter);
-
-    }
-
-    private void setSharedElementCallback(final View view) {
-        setExitSharedElementCallback(new SharedElementCallback() {
-            @Override
-            public void onMapSharedElements(List<String> names,
-                                            Map<String, View> sharedElements) {
-                names.clear();
-                sharedElements.clear();
-                names.add(view.getTransitionName());
-                sharedElements.put(view.getTransitionName(), view);
-                //Toast.makeText(getApplicationContext(), "callback1", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     @Override
@@ -58,29 +39,29 @@ public class FavoritesActivity extends AbstractActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        //Toast.makeText(getApplicationContext(), "BOOM", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
     protected void onStart() {
         super.onStart();
         overridePendingTransition(0, 0);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        overridePendingTransition(0, 0);
+    }
+
     public void openProfile(View view) {
-        Intent intent = new Intent(this, ProfileActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);;
+        Intent intent = new Intent(this, ProfileActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
     }
 
     public void openSearch(View view) {
-        Intent intent = new Intent(this, SearchActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);;
+        Intent intent = new Intent(this, SearchActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
     }
 
     public void openGrade(View view) {
-        Intent intent = new Intent(this, SemestersActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);;
+        Intent intent = new Intent(this, SemestersActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
     }
 
@@ -89,7 +70,7 @@ public class FavoritesActivity extends AbstractActivity {
     }
 
     public void openSettings(View view) {
-        Intent intent = new Intent(this, SettingsActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);;
+        Intent intent = new Intent(this, SettingsActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
     }
 }
