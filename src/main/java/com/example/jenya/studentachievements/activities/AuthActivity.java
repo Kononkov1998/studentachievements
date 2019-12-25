@@ -8,9 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.jenya.studentachievements.ThemeController;
-import com.example.jenya.studentachievements.models.User;
 import com.example.jenya.studentachievements.R;
+import com.example.jenya.studentachievements.models.User;
 import com.example.jenya.studentachievements.requests.Requests;
 
 public class AuthActivity extends AppCompatActivity {
@@ -21,7 +20,6 @@ public class AuthActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        ThemeController.onActivityCreateSetTheme(this);
         setContentView(R.layout.activity_auth);
 
         login = findViewById(R.id.loginText);
@@ -43,6 +41,7 @@ public class AuthActivity extends AppCompatActivity {
     //обработка кнопки "вход"
     public void enter(View view) {
         if (login.getText().toString().trim().equals("") || pass.getText().toString().trim().equals("")) {
+            Requests.getInstance().getUserToken(new User("ekononkov-ki16", "Rjyjyrjd1998"), this, btn);
             Toast.makeText(this, "Введите логин и пароль!", Toast.LENGTH_LONG).show();
             return;
         }

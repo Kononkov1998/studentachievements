@@ -49,8 +49,14 @@
     </style>
 
     <style name="AppTheme.Light.SplashScreen">
-        <item name="colorPrimary">@color/colorDarkGrey</item>
-        <item name="colorPrimaryDark">@color/colorLightBlue</item>
+<!--        <item name="colorPrimary">@color/colorDarkGrey</item>-->
+<!--        <item name="colorPrimaryDark">@color/colorLightBlue</item>-->
 <!--        <item name="android:windowBackground">@drawable/background_splash</item>-->
+    </style>
+
+    <style name="AppTheme.Dark.SplashScreen">
+<!--        <item name="colorPrimary">@color/colorDarkGrey</item>-->
+<!--        <item name="colorPrimaryDark">@color/colorLightBlue</item>-->
+        <!--        <item name="android:windowBackground">@drawable/background_splash</item>-->
     </style>
 </resources>

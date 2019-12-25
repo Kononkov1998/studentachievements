@@ -106,7 +106,8 @@ public class UsersAdapter extends BaseAdapter {
 
         RelativeLayout layout = view.findViewById(R.id.layout);
         layout.setOnClickListener(v -> {
-            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) ctx, layout, "student_transition");
+            String transitionName = layout.getTransitionName();
+            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) ctx, layout, transitionName);
             Bundle bundle = options.toBundle();
 
             Intent intent = new Intent(ctx, OtherProfileActivity.class);

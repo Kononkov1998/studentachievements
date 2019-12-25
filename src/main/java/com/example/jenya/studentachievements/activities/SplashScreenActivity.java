@@ -11,18 +11,19 @@ import com.example.jenya.studentachievements.ThemeController;
 public class SplashScreenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (SharedPreferencesActions.read("theme", this).equals("light")) {
+            ThemeController.setCurrentTheme(ThemeController.APP_THEME_LIGHT);
+        } else if (SharedPreferencesActions.read("theme", this).equals("dark")) {
+            ThemeController.setCurrentTheme(ThemeController.APP_THEME_DARK);
+        }
+        ThemeController.onActivityCreateSetTheme(this);
+
         super.onCreate(savedInstanceState);
 
         SharedPreferencesActions.delete("name", this);
         SharedPreferencesActions.delete("surname", this);
         SharedPreferencesActions.delete("patronymic", this);
         SharedPreferencesActions.delete("group", this);
-
-        if (SharedPreferencesActions.read("theme", this).equals("light")) {
-            ThemeController.setCurrentTheme(ThemeController.APP_THEME_LIGHT);
-        } else if (SharedPreferencesActions.read("theme", this).equals("dark")) {
-            ThemeController.setCurrentTheme(ThemeController.APP_THEME_DARK);
-        }
 
         if (SharedPreferencesActions.check("token", this)) {
             Requests.getInstance().getUserInfoFromSplashScreen(this);
