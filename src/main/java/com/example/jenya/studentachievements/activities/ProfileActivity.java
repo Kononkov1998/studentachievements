@@ -173,7 +173,7 @@ public class ProfileActivity extends AppCompatActivity
         overridePendingTransition(0, 0);
         if (userInfo.getAvatar() != null)
         {
-            int px = getResources().getDimensionPixelSize(R.dimen.image_size);
+            int px = ImageActions.getAvatarSizeInPx(this);
 
             GlideUrl glideUrl = new GlideUrl(String.format("%s/student/pic/%s", Requests.getInstance().getURL(), userInfo.getAvatar()), new LazyHeaders.Builder()
                     .addHeader("Authorization", SharedPreferencesActions.read("token", this))
