@@ -99,6 +99,7 @@
         <item name="android:background">@drawable/edittext_dark</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textCursorDrawable">@drawable/cursor</item>
+        <item name="android:maxLength">50</item>
     </style>
 
     <style name="EditText.Light" parent="Widget.AppCompat.EditText">
@@ -110,6 +111,7 @@
         <item name="android:background">@drawable/edittext_light</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textCursorDrawable">@drawable/cursor</item>
+        <item name="android:maxLength">50</item>
     </style>
 
     <style name="TextView.Dark" parent="Theme.AppCompat">

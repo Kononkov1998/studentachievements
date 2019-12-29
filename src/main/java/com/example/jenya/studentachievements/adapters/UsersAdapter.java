@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.model.LazyHeaders;
+import com.example.jenya.studentachievements.ImageActions;
 import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.SharedPreferencesActions;
 import com.example.jenya.studentachievements.activities.OtherProfileActivity;
@@ -71,7 +72,7 @@ public class UsersAdapter extends BaseAdapter {
         CircleImageView avatar = view.findViewById(R.id.imageUser);
 
         if (s.getAvatar() != null) {
-            int px = ctx.getResources().getDimensionPixelSize(R.dimen.image_size);
+            int px = ImageActions.getAvatarSizeInPx(ctx);
 
             GlideUrl glideUrl = new GlideUrl(String.format("%s/student/pic/%s", Requests.getInstance().getURL(), s.getAvatar()), new LazyHeaders.Builder()
                     .addHeader("Authorization", SharedPreferencesActions.read("token", ctx))

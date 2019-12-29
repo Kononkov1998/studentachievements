@@ -20,6 +20,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.model.LazyHeaders;
+import com.example.jenya.studentachievements.ImageActions;
 import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.SharedPreferencesActions;
 import com.example.jenya.studentachievements.ThemeController;
@@ -96,7 +97,7 @@ public class OtherProfileActivity extends AppCompatActivity {
         avatar = header.findViewById(R.id.imageUser);
 
         if (otherStudent.getAvatar() != null) {
-            int px = getResources().getDimensionPixelSize(R.dimen.image_size);
+            int px = ImageActions.getAvatarSizeInPx(this);
 
             GlideUrl glideUrl = new GlideUrl(String.format("%s/student/pic/%s", Requests.getInstance().getURL(), otherStudent.getAvatar()), new LazyHeaders.Builder()
                     .addHeader("Authorization", SharedPreferencesActions.read("token", this))

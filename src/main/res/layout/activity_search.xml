@@ -78,14 +78,15 @@
                 android:hint="@string/patronymic"
                 android:singleLine="true" />
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/textViewGroup"
                 style="?editText"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="15dp"
                 android:gravity="center"
                 android:hint="@string/group_number"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:completionThreshold="1"/>
         </LinearLayout>
 
         <Button

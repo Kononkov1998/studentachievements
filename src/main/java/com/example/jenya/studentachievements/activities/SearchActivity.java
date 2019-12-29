@@ -5,11 +5,14 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.jenya.studentachievements.R;
+import com.example.jenya.studentachievements.models.UserInfo;
 import com.example.jenya.studentachievements.requests.Requests;
 import com.example.jenya.studentachievements.SharedPreferencesActions;
 import com.example.jenya.studentachievements.ThemeController;
@@ -30,9 +33,18 @@ public class SearchActivity extends AppCompatActivity {
         ((EditText) findViewById(R.id.textViewName)).setText(SharedPreferencesActions.read("name", this));
         ((EditText) findViewById(R.id.textViewSurname)).setText(SharedPreferencesActions.read("surname", this));
         ((EditText) findViewById(R.id.textViewPatronymic)).setText(SharedPreferencesActions.read("patronymic", this));
-        ((EditText) findViewById(R.id.textViewGroup)).setText(SharedPreferencesActions.read("group", this));
+        ((AutoCompleteTextView) findViewById(R.id.textViewGroup)).setText(SharedPreferencesActions.read("group", this));
 
         btn = findViewById(R.id.searchBtn);
+        String myGroup = UserInfo.getCurrentUser().getGroup().getName();
+        String myFlow = myGroup.split("-")[0];
+
+        final String[] groups = {
+                myGroup,
+                myFlow
+        };
+
+        ((AutoCompleteTextView) findViewById(R.id.textViewGroup)).setAdapter(new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, groups));
     }
 
     @Override
@@ -63,7 +75,7 @@ public class SearchActivity extends AppCompatActivity {
             SharedPreferencesActions.save("name", ((EditText) findViewById(R.id.textViewName)).getText().toString(), this);
             SharedPreferencesActions.save("surname", ((EditText) findViewById(R.id.textViewSurname)).getText().toString(), this);
             SharedPreferencesActions.save("patronymic", ((EditText) findViewById(R.id.textViewPatronymic)).getText().toString(), this);
-            SharedPreferencesActions.save("group", ((EditText) findViewById(R.id.textViewGroup)).getText().toString(), this);
+            SharedPreferencesActions.save("group", ((AutoCompleteTextView) findViewById(R.id.textViewGroup)).getText().toString(), this);
         }
         super.onSaveInstanceState(savedInstanceState);
     }
@@ -72,7 +84,7 @@ public class SearchActivity extends AppCompatActivity {
         String name = ((EditText) findViewById(R.id.textViewName)).getText().toString().trim();
         String surname = ((EditText) findViewById(R.id.textViewSurname)).getText().toString().trim();
         String patronymic = ((EditText) findViewById(R.id.textViewPatronymic)).getText().toString().trim();
-        String group = ((EditText) findViewById(R.id.textViewGroup)).getText().toString().trim();
+        String group = ((AutoCompleteTextView) findViewById(R.id.textViewGroup)).getText().toString().trim();
 
         if (name.isEmpty() && surname.isEmpty() && patronymic.isEmpty() && group.isEmpty()) {
             Toast.makeText(this, "Заполните хотя бы одно поле!", Toast.LENGTH_LONG).show();
