@@ -108,24 +108,32 @@ public class UsersAdapter extends BaseAdapter {
 
         RelativeLayout layout = view.findViewById(R.id.layout);
         layout.setOnClickListener(v -> {
-            View statusBar = ((Activity) ctx).findViewById(android.R.id.statusBarBackground);
-            View navigationBar = ((Activity) ctx).findViewById(android.R.id.navigationBarBackground);
-            View bottomMenu = ((Activity) ctx).findViewById(R.id.bottomMenu);
+            ActivityOptions options = null;
 
-            List<Pair<View, String>> pairs = new ArrayList<>();
-            pairs.add(Pair.create(statusBar, Window.STATUS_BAR_BACKGROUND_TRANSITION_NAME));
-            pairs.add(Pair.create(navigationBar, Window.NAVIGATION_BAR_BACKGROUND_TRANSITION_NAME));
-            pairs.add(Pair.create(bottomMenu, bottomMenu.getTransitionName()));
-            pairs.add(Pair.create(layout, layout.getTransitionName()));
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                View statusBar = ((Activity) ctx).findViewById(android.R.id.statusBarBackground);
+                View navigationBar = ((Activity) ctx).findViewById(android.R.id.navigationBarBackground);
+                View bottomMenu = ((Activity) ctx).findViewById(R.id.bottomMenu);
 
-            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) ctx, pairs.toArray(new Pair[0]));
+                List<Pair<View, String>> pairs = new ArrayList<>();
+                pairs.add(Pair.create(statusBar, Window.STATUS_BAR_BACKGROUND_TRANSITION_NAME));
+                pairs.add(Pair.create(navigationBar, Window.NAVIGATION_BAR_BACKGROUND_TRANSITION_NAME));
+                pairs.add(Pair.create(bottomMenu, bottomMenu.getTransitionName()));
+                pairs.add(Pair.create(layout, layout.getTransitionName()));
+
+                options = ActivityOptions.makeSceneTransitionAnimation((Activity) ctx, pairs.toArray(new Pair[0]));
+            }
 
             Intent intent = new Intent(ctx, OtherProfileActivity.class);
             intent.putExtra("otherStudent", s);
             intent.putExtra("activity", ctx.getClass().getSimpleName());
             intent.putExtra("position", position);
 
-            ((Activity) ctx).startActivityForResult(intent, 1, options.toBundle());
+            if (options == null) {
+                ((Activity) ctx).startActivityForResult(intent, 1);
+            } else {
+                ((Activity) ctx).startActivityForResult(intent, 1, options.toBundle());
+            }
         });
 
         return view;
