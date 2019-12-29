@@ -1,15 +1,22 @@
 package com.example.jenya.studentachievements.activities;
 
+import android.app.SharedElementCallback;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.ListView;
 
 import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.ThemeController;
 import com.example.jenya.studentachievements.adapters.UsersAdapter;
 import com.example.jenya.studentachievements.models.UserInfo;
+
+import java.util.List;
+import java.util.Map;
 
 public class FavoritesActivity extends AbstractActivity {
     @SuppressWarnings("FieldCanBeLocal")
@@ -25,16 +32,34 @@ public class FavoritesActivity extends AbstractActivity {
         adapter = new UsersAdapter(this, UserInfo.getCurrentUser().getFavouriteStudents());
         listView = findViewById(R.id.list);
         listView.setAdapter(adapter);
+
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityReenter(int resultCode, Intent data) {
         int position = data.getIntExtra("position", -1);
 
         if (position != -1) {
+            postponeEnterTransition();
+
             View view = listView.getChildAt(position).findViewById(R.id.layout);
-            //Toast.makeText(getApplicationContext(), "onactivityresult", Toast.LENGTH_SHORT).show();
-            //setSharedElementCallback(view);
+            setExitSharedElementCallback(new SharedElementCallback() {
+                @Override
+                public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
+                    sharedElements.put(view.getTransitionName(), view);
+                }
+            });
+
+            final View decor = getWindow().getDecorView();
+            decor.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+                @Override
+                public boolean onPreDraw() {
+                    decor.getViewTreeObserver().removeOnPreDrawListener(this);
+                    startPostponedEnterTransition();
+                    return true;
+                }
+            });
         }
     }
 

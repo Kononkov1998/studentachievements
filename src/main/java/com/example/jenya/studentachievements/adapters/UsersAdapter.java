@@ -112,6 +112,8 @@ public class UsersAdapter extends BaseAdapter {
             ActivityOptions options = null;
 
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                ((Activity) ctx).setExitSharedElementCallback(null);
+
                 View statusBar = ((Activity) ctx).findViewById(android.R.id.statusBarBackground);
                 View navigationBar = ((Activity) ctx).findViewById(android.R.id.navigationBarBackground);
                 View bottomMenu = ((Activity) ctx).findViewById(R.id.bottomMenu);
