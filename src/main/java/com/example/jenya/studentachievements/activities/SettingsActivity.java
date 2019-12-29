@@ -3,20 +3,19 @@ package com.example.jenya.studentachievements.activities;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Switch;
 
 import com.example.jenya.studentachievements.R;
-import com.example.jenya.studentachievements.requests.Requests;
 import com.example.jenya.studentachievements.SharedPreferencesActions;
 import com.example.jenya.studentachievements.ThemeController;
 import com.example.jenya.studentachievements.models.UserInfo;
 import com.example.jenya.studentachievements.models.Visibility;
+import com.example.jenya.studentachievements.requests.Requests;
 
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends AbstractActivity {
 
     private Switch themeSwitcher;
     private RadioGroup rg;
@@ -105,7 +104,7 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        recreate();
+        //recreate();
     }
 
     public void exit(View view) {

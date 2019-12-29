@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ListView;
@@ -23,13 +22,13 @@ import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.model.LazyHeaders;
 import com.example.jenya.studentachievements.ImageActions;
 import com.example.jenya.studentachievements.R;
-import com.example.jenya.studentachievements.requests.Requests;
 import com.example.jenya.studentachievements.SharedPreferencesActions;
 import com.example.jenya.studentachievements.ThemeController;
 import com.example.jenya.studentachievements.adapters.AchievementsAdapter;
 import com.example.jenya.studentachievements.comparators.AchievementsComparator;
 import com.example.jenya.studentachievements.models.Achievement;
 import com.example.jenya.studentachievements.models.UserInfo;
+import com.example.jenya.studentachievements.requests.Requests;
 import com.soundcloud.android.crop.Crop;
 
 import java.io.File;
@@ -42,9 +41,10 @@ import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
-public class ProfileActivity extends AppCompatActivity
+public class ProfileActivity extends AbstractActivity
 {
     private static final int PICK_FROM_GALLERY = 1;
+    private int currentActivityTheme;
     private CircleImageView avatar;
     private ListView listView;
     private UserInfo userInfo;
@@ -58,6 +58,7 @@ public class ProfileActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         ThemeController.onActivityCreateSetTheme(this);
+        currentActivityTheme = ThemeController.getCurrentTheme();
         setContentView(R.layout.activity_profile);
 
         final ArrayList<Achievement> completedAchievements = new ArrayList<>();
@@ -189,7 +190,7 @@ public class ProfileActivity extends AppCompatActivity
                 file = ImageActions.convertBitmapToFile(bitmap, this);
                 RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), file);
                 MultipartBody.Part body = MultipartBody.Part.createFormData("avatar", file.getName(), reqFile);
-                Requests.getInstance().uploadAvatar(body, this);
+                Requests.getInstance().uploadAvatar(body, this, avatar);
             }
             catch (Exception e)
             {
@@ -223,11 +224,13 @@ public class ProfileActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        recreate();
-    }
+//    @Override
+//    protected void onResume(){
+//        super.onResume();
+//        if (currentActivityTheme != ThemeController.getCurrentTheme()){
+//            recreate();
+//        }
+//    }
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {

@@ -2,7 +2,6 @@ package com.example.jenya.studentachievements.activities;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -13,7 +12,7 @@ import com.example.jenya.studentachievements.ThemeController;
 
 import java.util.Locale;
 
-public class DisciplinesActivity extends AppCompatActivity {
+public class DisciplinesActivity extends AbstractActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,7 +83,7 @@ public class DisciplinesActivity extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        recreate();
+        //recreate();
     }
 
     public void openProfile(View view) {

@@ -6,7 +6,6 @@ import android.graphics.PorterDuff;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.ColorInt;
-import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -36,7 +35,7 @@ import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class OtherProfileActivity extends AppCompatActivity {
+public class OtherProfileActivity extends AbstractActivity {
 
     private CheckBox checkBox;
     private UserInfo otherStudent;
@@ -189,7 +188,7 @@ public class OtherProfileActivity extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        recreate();
+        //recreate();
     }
 
     @Override

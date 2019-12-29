@@ -7,6 +7,12 @@ import android.support.annotation.NonNull;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.model.GlideUrl;
+import com.bumptech.glide.load.model.LazyHeaders;
+import com.example.jenya.studentachievements.ImageActions;
+import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.SharedPreferencesActions;
 import com.example.jenya.studentachievements.activities.AuthActivity;
 import com.example.jenya.studentachievements.activities.ProfileActivity;
@@ -21,6 +27,7 @@ import com.example.jenya.studentachievements.models.Visibility;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
@@ -34,8 +41,7 @@ public class Requests {
     private final UserApi userApi;
     private static Requests instance;
 
-    private Requests()
-    {
+    private Requests() {
         OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
                 .connectTimeout(60, TimeUnit.SECONDS)
                 .readTimeout(60, TimeUnit.SECONDS)
@@ -293,15 +299,26 @@ public class Requests {
     }
 
     // /student/pic
-    public void uploadAvatar(MultipartBody.Part body, Context ctx) {
+    public void uploadAvatar(MultipartBody.Part body, Context ctx, CircleImageView avatar) {
         userApi.uploadAvatar(SharedPreferencesActions.read("token", ctx), body).enqueue(new Callback<UserInfo>() {
             @Override
             public void onResponse(@NonNull Call<UserInfo> call, @NonNull Response<UserInfo> response) {
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
                         UserInfo.getCurrentUser().setAvatar(response.body().getAvatar());
+                        int px = ImageActions.getAvatarSizeInPx(ctx);
+
+                        GlideUrl glideUrl = new GlideUrl(String.format("%s/student/pic/%s", Requests.getInstance().getURL(), response.body().getAvatar()), new LazyHeaders.Builder()
+                                .addHeader("Authorization", SharedPreferencesActions.read("token", ctx))
+                                .build());
+
+                        Glide.with(ctx)
+                                .load(glideUrl)
+                                .placeholder(R.drawable.profile)
+                                .override(px, px)
+                                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                                .into(avatar);
                     }
-                    ((Activity) ctx).recreate();
                 }
             }
 

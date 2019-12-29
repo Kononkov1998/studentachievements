@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
@@ -16,7 +15,7 @@ import com.example.jenya.studentachievements.ThemeController;
 
 import java.util.Locale;
 
-public class SemestersActivity extends AppCompatActivity {
+public class SemestersActivity extends AbstractActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,7 +116,7 @@ public class SemestersActivity extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        recreate();
+        //recreate();
     }
 
     public void openProfile(View view) {

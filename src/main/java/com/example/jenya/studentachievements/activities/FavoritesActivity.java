@@ -75,6 +75,12 @@ public class FavoritesActivity extends AbstractActivity {
         overridePendingTransition(0, 0);
     }
 
+    @Override
+    protected void onRestart(){
+        super.onRestart();
+        //recreate();
+    }
+
     public void openProfile(View view) {
         Intent intent = new Intent(this, ProfileActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);

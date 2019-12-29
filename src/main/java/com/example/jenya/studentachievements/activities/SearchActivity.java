@@ -3,7 +3,6 @@ package com.example.jenya.studentachievements.activities;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -12,12 +11,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.jenya.studentachievements.R;
-import com.example.jenya.studentachievements.models.UserInfo;
-import com.example.jenya.studentachievements.requests.Requests;
 import com.example.jenya.studentachievements.SharedPreferencesActions;
 import com.example.jenya.studentachievements.ThemeController;
+import com.example.jenya.studentachievements.models.UserInfo;
+import com.example.jenya.studentachievements.requests.Requests;
 
-public class SearchActivity extends AppCompatActivity {
+public class SearchActivity extends AbstractActivity {
 
     private Button btn;
     private static boolean isSearchSuccessful;
@@ -60,7 +59,7 @@ public class SearchActivity extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        recreate();
+        //recreate();
     }
 
     @Override

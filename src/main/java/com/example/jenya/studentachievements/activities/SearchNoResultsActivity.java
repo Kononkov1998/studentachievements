@@ -3,13 +3,12 @@ package com.example.jenya.studentachievements.activities;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.ThemeController;
 
-public class SearchNoResultsActivity extends AppCompatActivity {
+public class SearchNoResultsActivity extends AbstractActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +21,7 @@ public class SearchNoResultsActivity extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        recreate();
+        //recreate();
     }
 
     public void openProfile(View view) {
