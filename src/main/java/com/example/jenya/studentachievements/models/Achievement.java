@@ -6,6 +6,8 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
+
 public class Achievement implements Parcelable
 {
     @SerializedName("code")
@@ -15,6 +17,10 @@ public class Achievement implements Parcelable
     @SerializedName("stars")
     @Expose
     private int stars;
+
+    @SerializedName("date")
+    @Expose
+    private Date date;
 
     @SerializedName("achievement")
     @Expose
@@ -36,6 +42,15 @@ public class Achievement implements Parcelable
         this.achievementInfo = achievementInfo;
     }
 
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date)
+    {
+        this.date = date;
+    }
+
     public void setCode(String code) {
         this.code = code;
     }
@@ -48,6 +63,7 @@ public class Achievement implements Parcelable
         code = in.readString();
         stars = in.readInt();
         achievementInfo = (AchievementInfo) in.readValue(AchievementInfo.class.getClassLoader());
+        date = (Date) in.readSerializable();
     }
 
     @Override
@@ -60,6 +76,7 @@ public class Achievement implements Parcelable
         dest.writeString(code);
         dest.writeInt(stars);
         dest.writeValue(achievementInfo);
+        dest.writeSerializable(date);
     }
 
     public static final Parcelable.Creator<Achievement> CREATOR = new Parcelable.Creator<Achievement>() {

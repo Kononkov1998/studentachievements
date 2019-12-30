@@ -31,7 +31,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
-                    android:text="XX.XX.XX" />
+                    android:text="01.01.20" />
 
             </LinearLayout>
 

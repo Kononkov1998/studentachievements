@@ -23,6 +23,8 @@ import com.example.jenya.studentachievements.models.User;
 import com.example.jenya.studentachievements.models.UserInfo;
 import com.example.jenya.studentachievements.models.UserToken;
 import com.example.jenya.studentachievements.models.Visibility;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
@@ -42,6 +44,9 @@ public class Requests {
     private static Requests instance;
 
     private Requests() {
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                .create();
         OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
                 .connectTimeout(60, TimeUnit.SECONDS)
                 .readTimeout(60, TimeUnit.SECONDS)
@@ -50,7 +55,7 @@ public class Requests {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(URL)
                 .client(okHttpClient)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         userApi = retrofit.create(UserApi.class); // методы сервера
     }

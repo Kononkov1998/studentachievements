@@ -13,7 +13,10 @@ import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.requests.Requests;
 import com.example.jenya.studentachievements.models.Achievement;
 
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class AchievementsAdapter extends BaseAdapter {
     private final Context ctx;
@@ -57,8 +60,10 @@ public class AchievementsAdapter extends BaseAdapter {
         // заполняем View в пункте списка данными из ачивок
         ((TextView) view.findViewById(R.id.name)).setText(a.getAchievementInfo().getName());
         ((TextView) view.findViewById(R.id.description)).setText(a.getAchievementInfo().getDescription());
-        //((TextView) view.findViewById(R.id.date)).setText(a.getDate());
-        //((TextView) view.findViewById(R.id.studentsProgress)).setText(a.getAchievement().getStudentsProgress() + "% студентов получили");
+
+        Format formatter = new SimpleDateFormat("d.MM.yy", Locale.getDefault());
+        ((TextView) view.findViewById(R.id.date)).setText(formatter.format(a.getDate()));
+
         switch (a.getStars()){ // меняем иконки звёзд в зависимости от их количества
             default:
                 ((ImageView) view.findViewById(R.id.star1)).setImageResource(R.drawable.ic_star_border_grey_24dp);
