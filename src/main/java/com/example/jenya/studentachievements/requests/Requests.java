@@ -45,7 +45,7 @@ public class Requests {
 
     private Requests() {
         Gson gson = new GsonBuilder()
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                .setDateFormat("yyyy-MM-dd")
                 .create();
         OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
                 .connectTimeout(60, TimeUnit.SECONDS)
