@@ -26,6 +26,16 @@ public class Achievement implements Parcelable
     @Expose
     private AchievementInfo achievementInfo;
 
+    public int isReceived()
+    {
+        if(this.stars >= 1)
+        {
+            return 1;
+        }
+
+        return 0;
+    }
+
     public AchievementInfo getAchievementInfo() {
         return achievementInfo;
     }
