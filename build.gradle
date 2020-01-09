@@ -55,4 +55,7 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:28.0.+'
     implementation 'com.kaopiz:kprogresshud:1.0.2'
     implementation 'com.soundcloud.android:android-crop:1.0.1@aar'
+
+    //сортировка
+    implementation("com.google.guava:guava:28.2-jre")
 }
