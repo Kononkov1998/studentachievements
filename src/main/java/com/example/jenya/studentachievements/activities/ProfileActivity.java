@@ -29,6 +29,7 @@ import com.example.jenya.studentachievements.comparators.AchievementsComparator;
 import com.example.jenya.studentachievements.models.Achievement;
 import com.example.jenya.studentachievements.models.UserInfo;
 import com.example.jenya.studentachievements.requests.Requests;
+import com.kaopiz.kprogresshud.KProgressHUD;
 import com.soundcloud.android.crop.Crop;
 
 import java.io.File;
@@ -52,6 +53,7 @@ public class ProfileActivity extends AbstractActivity
     private View header;
     @SuppressWarnings("FieldCanBeLocal")
     private CheckBox hideBox;
+    private KProgressHUD hud;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,6 +124,12 @@ public class ProfileActivity extends AbstractActivity
         if (SharedPreferencesActions.check("showCompleted", this)) {
             hideBox.setChecked(true);
         }
+
+        hud = KProgressHUD.create(this)
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setCancellable(false)
+                .setAnimationSpeed(2)
+                .setDimAmount(0.5f);
     }
 
     public void uploadAvatar(View view)
@@ -184,16 +192,18 @@ public class ProfileActivity extends AbstractActivity
         {
             try
             {
+                hud.show();
                 int px = ImageActions.getAvatarSizeInPx(this);
                 File file = new File(Crop.getOutput(result).getPath());
                 Bitmap bitmap = ImageActions.decodeSampledBitmapFromResource(file.getAbsolutePath(), px, px);
                 file = ImageActions.convertBitmapToFile(bitmap, this);
                 RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), file);
                 MultipartBody.Part body = MultipartBody.Part.createFormData("avatar", file.getName(), reqFile);
-                Requests.getInstance().uploadAvatar(body, this, avatar);
+                Requests.getInstance().uploadAvatar(body, this, avatar, hud);
             }
             catch (Exception e)
             {
+                hud.dismiss();
                 Toast.makeText(this, "Произошла ошибка. Попробуйте еще раз", Toast.LENGTH_LONG).show();
             }
         }

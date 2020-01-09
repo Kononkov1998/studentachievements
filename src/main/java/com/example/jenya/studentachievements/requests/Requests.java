@@ -25,6 +25,7 @@ import com.example.jenya.studentachievements.models.UserToken;
 import com.example.jenya.studentachievements.models.Visibility;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.kaopiz.kprogresshud.KProgressHUD;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
@@ -304,11 +305,14 @@ public class Requests {
     }
 
     // /student/pic
-    public void uploadAvatar(MultipartBody.Part body, Context ctx, CircleImageView avatar) {
-        userApi.uploadAvatar(SharedPreferencesActions.read("token", ctx), body).enqueue(new Callback<UserInfo>() {
+    public void uploadAvatar(MultipartBody.Part body, Context ctx, CircleImageView avatar, KProgressHUD hud)
+    {
+        userApi.uploadAvatar(SharedPreferencesActions.read("token", ctx), body).enqueue(new Callback<UserInfo>()
+        {
             @Override
             public void onResponse(@NonNull Call<UserInfo> call, @NonNull Response<UserInfo> response) {
-                if (response.isSuccessful()) {
+                if (response.isSuccessful())
+                {
                     if (response.body() != null) {
                         UserInfo.getCurrentUser().setAvatar(response.body().getAvatar());
                         int px = ImageActions.getAvatarSizeInPx(ctx);
@@ -325,10 +329,12 @@ public class Requests {
                                 .into(avatar);
                     }
                 }
+                hud.dismiss();
             }
 
             @Override
             public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t) {
+                hud.dismiss();
                 Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
             }
         });
