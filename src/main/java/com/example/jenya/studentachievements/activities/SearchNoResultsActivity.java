@@ -24,6 +24,12 @@ public class SearchNoResultsActivity extends AbstractActivity {
         //recreate();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        overridePendingTransition(0, 0);
+    }
+
     public void openProfile(View view) {
         Intent intent = new Intent(this, ProfileActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);;
         startActivity(intent);

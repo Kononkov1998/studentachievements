@@ -34,7 +34,8 @@ public class DisciplinesActivity extends AbstractActivity {
 
         LinearLayout row = null;
 
-        for (int i = 0; i < disciplines; i++) {
+        for (int i = 0; i < disciplines; i++)
+        {
             // если итерация делится на 2, то создаем горизонтальный список
             if (i % 2 == 0) {
                 row = new LinearLayout(this);

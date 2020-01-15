@@ -22,7 +22,9 @@
             android:layout_alignParentTop="true"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="35dp"
-            android:divider="@null" />
+            android:divider="@null"
+            android:listSelector="@android:color/transparent"
+            android:cacheColorHint="@android:color/transparent"/>
 
         <LinearLayout
             android:id="@+id/bottomMenu"
