@@ -1,35 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="match_parent"
+    tools:context=".activities.TopActivity">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            style="?textView"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_marginStart="20sp"
-            android:text="@string/search_results"
-            android:textSize="20sp" />
-
-        <ListView
-            android:id="@+id/list"
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="35dp"
-            android:divider="@null"
-            android:listSelector="@android:color/transparent"
-            android:cacheColorHint="@android:color/transparent"/>
+            android:layout_marginBottom="35dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Здесь будет выводиться топ всех студентов"/>
+        </ScrollView>
 
-        <LinearLayout
-            android:id="@+id/bottomMenu"
-            style="?bottomMenu"
-            android:transitionName="bottomMenu">
+        <LinearLayout style="?bottomMenu">
 
             <ImageView
                 android:id="@+id/imageProfile"
@@ -41,16 +31,16 @@
             <ImageView
                 android:id="@+id/imageGrade"
                 style="@style/ImageView"
-                android:onClick="openGrade"
                 android:src="@drawable/ic_school_24dp"
-                android:tint="?ic_inactive_color" />
+                android:tint="?ic_inactive_color"
+                android:onClick="openGrade"/>
 
             <ImageView
                 android:id="@+id/imageSearch"
                 style="@style/ImageView"
                 android:onClick="openSearch"
                 android:src="@drawable/ic_search_24dp"
-                android:tint="?ic_active_color" />
+                android:tint="?ic_inactive_color" />
 
             <ImageView
                 android:id="@+id/imageFavorites"
@@ -63,8 +53,7 @@
                 android:id="@+id/imageSettings"
                 style="@style/ImageView"
                 android:src="@drawable/ic_supervisor_account_24dp"
-                android:tint="?ic_inactive_color"
-                android:onClick="openTop"/>
+                android:tint="?ic_active_color"/>
         </LinearLayout>
 
     </RelativeLayout>

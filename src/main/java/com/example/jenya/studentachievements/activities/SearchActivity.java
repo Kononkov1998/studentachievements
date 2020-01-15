@@ -115,8 +115,9 @@ public class SearchActivity extends AbstractActivity {
         startActivity(intent);
     }
 
-    public void openSettings(View view) {
-        Intent intent = new Intent(this, SettingsActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);;
+    public void openTop(View view)
+    {
+        Intent intent = new Intent(this, TopActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
     }
 }

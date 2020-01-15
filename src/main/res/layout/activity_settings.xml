@@ -104,7 +104,7 @@
                 style="@style/ImageView"
                 android:onClick="openProfile"
                 android:src="@drawable/ic_home_24dp"
-                android:tint="?ic_inactive_color" />
+                android:tint="?ic_active_color" />
 
             <ImageView
                 android:id="@+id/imageGrade"
@@ -130,8 +130,9 @@
             <ImageView
                 android:id="@+id/imageSettings"
                 style="@style/ImageView"
-                android:src="@drawable/ic_settings_24dp"
-                android:tint="?ic_active_color" />
+                android:src="@drawable/ic_supervisor_account_24dp"
+                android:tint="?ic_inactive_color"
+                android:onClick="openTop"/>
         </LinearLayout>
 
     </RelativeLayout>

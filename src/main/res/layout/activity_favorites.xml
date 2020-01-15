@@ -53,9 +53,9 @@
             <ImageView
                 android:id="@+id/imageSettings"
                 style="@style/ImageView"
-                android:onClick="openSettings"
-                android:src="@drawable/ic_settings_24dp"
-                android:tint="?ic_inactive_color" />
+                android:src="@drawable/ic_supervisor_account_24dp"
+                android:tint="?ic_inactive_color"
+                android:onClick="openTop"/>
         </LinearLayout>
 
     </RelativeLayout>
