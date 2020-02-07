@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 
 public class AbstractActivity extends AppCompatActivity {
     private BroadcastReceiver receiver;
+    private boolean recreateIsNeeded = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,17 +17,26 @@ public class AbstractActivity extends AppCompatActivity {
 
         if (receiver == null) {
             IntentFilter intentFilter = new IntentFilter();
-            intentFilter.addAction("recreate");// a string to identify your action
+            intentFilter.addAction("recreateIsNeeded");// a string to identify your action
             receiver = new BroadcastReceiver() {
                 @Override
                 public void onReceive(Context context, Intent intent) {
                     // How can I finish the current activity here?
-                    if ("recreate".equals(intent.getAction())) {
-                        recreate();
+                    if ("recreateIsNeeded".equals(intent.getAction())) {
+                        recreateIsNeeded = true;
                     }
                 }
             };
             registerReceiver(receiver, intentFilter);
+        }
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        if (recreateIsNeeded) {
+            recreateIsNeeded = false;
+            recreate();
         }
     }
 

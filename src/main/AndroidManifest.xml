@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme.Light"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activities.TopActivity"></activity>
+        <activity android:name=".activities.TopActivity" />
         <activity
             android:name=".activities.SplashScreenActivity"
             android:noHistory="true">

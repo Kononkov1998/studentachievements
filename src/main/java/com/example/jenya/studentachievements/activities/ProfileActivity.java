@@ -42,10 +42,8 @@ import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
-public class ProfileActivity extends AbstractActivity
-{
+public class ProfileActivity extends AbstractActivity {
     private static final int PICK_FROM_GALLERY = 1;
-    private int currentActivityTheme;
     private CircleImageView avatar;
     private ListView listView;
     private UserInfo userInfo;
@@ -60,13 +58,11 @@ public class ProfileActivity extends AbstractActivity
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         ThemeController.onActivityCreateSetTheme(this);
-        currentActivityTheme = ThemeController.getCurrentTheme();
         setContentView(R.layout.activity_profile);
 
         final ArrayList<Achievement> completedAchievements = new ArrayList<>();
         userInfo = UserInfo.getCurrentUser();
-        @SuppressWarnings("unchecked")
-        final ArrayList<Achievement> userAchievements = (ArrayList<Achievement>) userInfo.getAchievements().clone();
+        @SuppressWarnings("unchecked") final ArrayList<Achievement> userAchievements = (ArrayList<Achievement>) userInfo.getAchievements().clone();
         int starsSum = 0;
 
         for (Achievement achievement : userAchievements) {
@@ -95,12 +91,12 @@ public class ProfileActivity extends AbstractActivity
 
         int completed = completedAchievements.size();
         int all = userAchievements.size();
-        ((TextView) header.findViewById(R.id.achievementsTextView)).setText(String.format(Locale.getDefault(),"Получено достижений: %d из %d (%d%%)", completed, all, Math.round((double) completed / (double) all * 100.0)));
+        ((TextView) header.findViewById(R.id.achievementsTextView)).setText(String.format(Locale.getDefault(), "Получено достижений: %d из %d (%d%%)", completed, all, Math.round((double) completed / (double) all * 100.0)));
         ((ProgressBar) header.findViewById(R.id.achievementsProgressBar)).setProgress(completed);
         ((ProgressBar) header.findViewById(R.id.achievementsProgressBar)).setMax(all);
 
         int allStars = all * 3;
-        ((TextView) header.findViewById(R.id.starsTextView)).setText(String.format(Locale.getDefault(),"Получено звезд: %d из %d (%d%%)", starsSum, allStars, Math.round((double) starsSum / (double) allStars * 100.0)));
+        ((TextView) header.findViewById(R.id.starsTextView)).setText(String.format(Locale.getDefault(), "Получено звезд: %d из %d (%d%%)", starsSum, allStars, Math.round((double) starsSum / (double) allStars * 100.0)));
         ((ProgressBar) header.findViewById(R.id.starsProgressBar)).setProgress(starsSum);
         ((ProgressBar) header.findViewById(R.id.starsProgressBar)).setMax(allStars);
 
@@ -132,66 +128,46 @@ public class ProfileActivity extends AbstractActivity
                 .setDimAmount(0.5f);
     }
 
-    public void uploadAvatar(View view)
-    {
-        try
-        {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
-            {
+    public void uploadAvatar(View view) {
+        try {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PICK_FROM_GALLERY);
-            }
-            else
-            {
+            } else {
                 Crop.pickImage(this);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             Toast.makeText(this, "Произошла ошибка. Попробуйте еще раз", Toast.LENGTH_LONG).show();
         }
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults)
-    {
-        if(requestCode == PICK_FROM_GALLERY)
-        {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-            {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+        if (requestCode == PICK_FROM_GALLERY) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Crop.pickImage(this);
-            }
-            else
-            {
+            } else {
                 Toast.makeText(this, "Для загрузки аватара необходимо предоставить доступ к фотографиям", Toast.LENGTH_LONG).show();
             }
         }
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent result)
-    {
-        if (requestCode == Crop.REQUEST_PICK && resultCode == RESULT_OK)
-        {
+    protected void onActivityResult(int requestCode, int resultCode, Intent result) {
+        if (requestCode == Crop.REQUEST_PICK && resultCode == RESULT_OK) {
             beginCrop(result.getData());
-        }
-        else if (requestCode == Crop.REQUEST_CROP)
-        {
+        } else if (requestCode == Crop.REQUEST_CROP) {
             handleCrop(resultCode, result);
         }
     }
 
-    private void beginCrop(Uri source)
-    {
+    private void beginCrop(Uri source) {
         Uri destination = Uri.fromFile(new File(getCacheDir(), "cropped"));
         Crop.of(source, destination).asSquare().start(this);
     }
 
-    private void handleCrop(int resultCode, Intent result)
-    {
-        if (resultCode == RESULT_OK)
-        {
-            try
-            {
+    private void handleCrop(int resultCode, Intent result) {
+        if (resultCode == RESULT_OK) {
+            try {
                 hud.show();
                 int px = ImageActions.getAvatarSizeInPx(this);
                 File file = new File(Crop.getOutput(result).getPath());
@@ -200,15 +176,11 @@ public class ProfileActivity extends AbstractActivity
                 RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), file);
                 MultipartBody.Part body = MultipartBody.Part.createFormData("avatar", file.getName(), reqFile);
                 Requests.getInstance().uploadAvatar(body, this, avatar, hud);
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 hud.dismiss();
                 Toast.makeText(this, "Произошла ошибка. Попробуйте еще раз", Toast.LENGTH_LONG).show();
             }
-        }
-        else if (resultCode == Crop.RESULT_ERROR)
-        {
+        } else if (resultCode == Crop.RESULT_ERROR) {
             Toast.makeText(this, Crop.getError(result).getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
@@ -217,8 +189,7 @@ public class ProfileActivity extends AbstractActivity
     protected void onStart() {
         super.onStart();
         overridePendingTransition(0, 0);
-        if (userInfo.getAvatar() != null)
-        {
+        if (userInfo.getAvatar() != null) {
             int px = ImageActions.getAvatarSizeInPx(this);
 
             GlideUrl glideUrl = new GlideUrl(String.format("%s/student/pic/%s", Requests.getInstance().getURL(), userInfo.getAvatar()), new LazyHeaders.Builder()
@@ -233,14 +204,6 @@ public class ProfileActivity extends AbstractActivity
                     .into(avatar);
         }
     }
-
-//    @Override
-//    protected void onResume(){
-//        super.onResume();
-//        if (currentActivityTheme != ThemeController.getCurrentTheme()){
-//            recreate();
-//        }
-//    }
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
@@ -257,27 +220,30 @@ public class ProfileActivity extends AbstractActivity
     }
 
     public void openSearch(View view) {
-        Intent intent = new Intent(this, SearchActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);;
+        Intent intent = new Intent(this, SearchActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        ;
         startActivity(intent);
     }
 
     public void openGrade(View view) {
-        Intent intent = new Intent(this, SemestersActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);;
+        Intent intent = new Intent(this, SemestersActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        ;
         startActivity(intent);
     }
 
     public void openFavorites(View view) {
-        Intent intent = new Intent(this, FavoritesActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);;
+        Intent intent = new Intent(this, FavoritesActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        ;
         startActivity(intent);
     }
 
     public void openSettings(View view) {
-        Intent intent = new Intent(this, SettingsActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);;
+        Intent intent = new Intent(this, SettingsActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        ;
         startActivity(intent);
     }
 
-    public void openTop(View view)
-    {
+    public void openTop(View view) {
         Intent intent = new Intent(this, TopActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
     }

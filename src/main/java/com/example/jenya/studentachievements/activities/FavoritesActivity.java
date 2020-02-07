@@ -1,22 +1,15 @@
 package com.example.jenya.studentachievements.activities;
 
-import android.app.SharedElementCallback;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.ListView;
 
 import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.ThemeController;
 import com.example.jenya.studentachievements.adapters.UsersAdapter;
 import com.example.jenya.studentachievements.models.UserInfo;
-
-import java.util.List;
-import java.util.Map;
 
 public class FavoritesActivity extends AbstractActivity {
     @SuppressWarnings("FieldCanBeLocal")
@@ -35,33 +28,35 @@ public class FavoritesActivity extends AbstractActivity {
 
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    @Override
-    public void onActivityReenter(int resultCode, Intent data) {
-        int position = data.getIntExtra("position", -1);
-
-        if (position != -1) {
-            postponeEnterTransition();
-
-            View view = listView.getChildAt(position).findViewById(R.id.layout);
-            setExitSharedElementCallback(new SharedElementCallback() {
-                @Override
-                public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
-                    sharedElements.put(view.getTransitionName(), view);
-                }
-            });
-
-            final View decor = getWindow().getDecorView();
-            decor.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-                @Override
-                public boolean onPreDraw() {
-                    decor.getViewTreeObserver().removeOnPreDrawListener(this);
-                    startPostponedEnterTransition();
-                    return true;
-                }
-            });
-        }
-    }
+//    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+//    @Override
+//    public void onActivityReenter(int resultCode, Intent data) {
+//        postponeEnterTransition();
+//
+//        int position = data.getIntExtra("position", -1);
+//        if (position != -1) {
+//            View listElement = listView.getChildAt(position);
+//            if (listElement != null) {
+//                View sharedView = listElement.findViewById(R.id.layout);
+//                setExitSharedElementCallback(new SharedElementCallback() {
+//                    @Override
+//                    public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
+//                        sharedElements.put(sharedView.getTransitionName(), sharedView);
+//                    }
+//                });
+//            }
+//        }
+//
+//        final View decor = getWindow().getDecorView();
+//        decor.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+//            @Override
+//            public boolean onPreDraw() {
+//                decor.getViewTreeObserver().removeOnPreDrawListener(this);
+//                startPostponedEnterTransition();
+//                return true;
+//            }
+//        });
+//    }
 
     @Override
     protected void onStart() {
