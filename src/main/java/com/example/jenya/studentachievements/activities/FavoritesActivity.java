@@ -1,9 +1,13 @@
 package com.example.jenya.studentachievements.activities;
 
+import android.app.SharedElementCallback;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.ListView;
 
 import com.example.jenya.studentachievements.R;
@@ -11,7 +15,10 @@ import com.example.jenya.studentachievements.ThemeController;
 import com.example.jenya.studentachievements.adapters.UsersAdapter;
 import com.example.jenya.studentachievements.models.UserInfo;
 
-public class FavoritesActivity extends AbstractActivity {
+import java.util.List;
+import java.util.Map;
+
+public class FavoritesActivity extends AbstractActivityWithUsers {
     @SuppressWarnings("FieldCanBeLocal")
     private UsersAdapter adapter;
     private ListView listView;
@@ -25,55 +32,42 @@ public class FavoritesActivity extends AbstractActivity {
         adapter = new UsersAdapter(this, UserInfo.getCurrentUser().getFavouriteStudents());
         listView = findViewById(R.id.list);
         listView.setAdapter(adapter);
-
     }
 
-//    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-//    @Override
-//    public void onActivityReenter(int resultCode, Intent data) {
-//        postponeEnterTransition();
-//
-//        int position = data.getIntExtra("position", -1);
-//        if (position != -1) {
-//            View listElement = listView.getChildAt(position);
-//            if (listElement != null) {
-//                View sharedView = listElement.findViewById(R.id.layout);
-//                setExitSharedElementCallback(new SharedElementCallback() {
-//                    @Override
-//                    public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
-//                        sharedElements.put(sharedView.getTransitionName(), sharedView);
-//                    }
-//                });
-//            }
-//        }
-//
-//        final View decor = getWindow().getDecorView();
-//        decor.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-//            @Override
-//            public boolean onPreDraw() {
-//                decor.getViewTreeObserver().removeOnPreDrawListener(this);
-//                startPostponedEnterTransition();
-//                return true;
-//            }
-//        });
-//    }
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @Override
+    public void onActivityReenter(int resultCode, Intent data) {
+        postponeEnterTransition();
+        int sharedElementPosition = data.getIntExtra("position", -1);
+        if (sharedElementPosition != -1) {
+            View listElement = listView.getChildAt(sharedElementPosition);
+            if (listElement != null) {
+                View sharedView = listElement.findViewById(R.id.layout);
+                setExitSharedElementCallback(new SharedElementCallback() {
+                    @Override
+                    public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
+                        sharedElements.put(sharedView.getTransitionName(), sharedView);
+                    }
+                });
+            }
+        }
+
+        final View decor = getWindow().getDecorView();
+        decor.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                decor.getViewTreeObserver().removeOnPreDrawListener(this);
+                startPostponedEnterTransition();
+                return true;
+            }
+        });
+    }
 
     @Override
     protected void onStart() {
         super.onStart();
         overridePendingTransition(0, 0);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        overridePendingTransition(0, 0);
-    }
-
-    @Override
-    protected void onRestart(){
-        super.onRestart();
-        //recreate();
+        adapter.notifyDataSetChanged();
     }
 
     public void openProfile(View view) {
@@ -95,8 +89,7 @@ public class FavoritesActivity extends AbstractActivity {
         listView.smoothScrollToPosition(0);
     }
 
-    public void openTop(View view)
-    {
+    public void openTop(View view) {
         Intent intent = new Intent(this, TopActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
     }

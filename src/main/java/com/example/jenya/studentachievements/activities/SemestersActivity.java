@@ -65,11 +65,9 @@ public class SemestersActivity extends AbstractActivity {
             button.setBackground(ContextCompat.getDrawable(this, R.drawable.button_semester_shape));
 
             // здесь открываем новую активити с дисциплинами, отпрвляя номер семестра
-            button.setOnClickListener(new View.OnClickListener()
-            {
+            button.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View view)
-                {
+                public void onClick(View view) {
                     Intent intent = new Intent(getApplicationContext(), DisciplinesActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putString("semester", String.valueOf(button.getText()));
@@ -92,8 +90,7 @@ public class SemestersActivity extends AbstractActivity {
             });
 
             // проверяем на последней итерации цикла количество оставшегося места под кнопки
-            if ((i == (semesters - 1)) && (semesters % 4 != 0))
-            {
+            if ((i == (semesters - 1)) && (semesters % 4 != 0)) {
                 int freeButtons = 4 - (semesters % 4);
                 for (int j = 0; j < freeButtons; j++) {
                     Button buttonInvisible = new Button(this);
@@ -113,29 +110,22 @@ public class SemestersActivity extends AbstractActivity {
         overridePendingTransition(0, 0);
     }
 
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        //recreate();
-    }
-
     public void openProfile(View view) {
-        Intent intent = new Intent(this, ProfileActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);;
+        Intent intent = new Intent(this, ProfileActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
     }
 
     public void openSearch(View view) {
-        Intent intent = new Intent(this, SearchActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);;
+        Intent intent = new Intent(this, SearchActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
     }
 
     public void openFavorites(View view) {
-        Intent intent = new Intent(this, FavoritesActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);;
+        Intent intent = new Intent(this, FavoritesActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
     }
 
-    public void openTop(View view)
-    {
+    public void openTop(View view) {
         Intent intent = new Intent(this, TopActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
     }

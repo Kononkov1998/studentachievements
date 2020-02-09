@@ -34,8 +34,7 @@ public class DisciplinesActivity extends AbstractActivity {
 
         LinearLayout row = null;
 
-        for (int i = 0; i < disciplines; i++)
-        {
+        for (int i = 0; i < disciplines; i++) {
             // если итерация делится на 2, то создаем горизонтальный список
             if (i % 2 == 0) {
                 row = new LinearLayout(this);
@@ -81,12 +80,6 @@ public class DisciplinesActivity extends AbstractActivity {
         overridePendingTransition(0, 0);
     }
 
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        //recreate();
-    }
-
     public void openProfile(View view) {
         Intent intent = new Intent(this, ProfileActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
@@ -107,8 +100,7 @@ public class DisciplinesActivity extends AbstractActivity {
         startActivity(intent);
     }
 
-    public void openTop(View view)
-    {
+    public void openTop(View view) {
         Intent intent = new Intent(this, TopActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
     }

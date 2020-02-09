@@ -37,10 +37,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class OtherProfileActivity extends AbstractActivity {
 
-    private CheckBox checkBox;
+    private CheckBox checkBoxFavorite;
     private UserInfo otherStudent;
     @SuppressWarnings("FieldCanBeLocal")
-    private ImageView selectedElement;
+    private ImageView selectedElement = null;
     @SuppressWarnings("FieldCanBeLocal")
     private View header;
     @SuppressWarnings("FieldCanBeLocal")
@@ -57,9 +57,8 @@ public class OtherProfileActivity extends AbstractActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             postponeEnterTransition();
         }
-        Intent intent = getIntent();
-        selectedElement = null;
 
+        Intent intent = getIntent();
         switch (intent.getStringExtra("activity")) {
             case "SearchResultsActivity":
                 selectedElement = findViewById(R.id.imageSearch);
@@ -147,22 +146,18 @@ public class OtherProfileActivity extends AbstractActivity {
             }
         });
 
-        checkBox = header.findViewById(R.id.checkboxFavorite);
+        checkBoxFavorite = header.findViewById(R.id.checkboxFavorite);
 
-        for (UserInfo user : UserInfo.getCurrentUser().getFavouriteStudents()) {
-            if (user.get_id().equals(otherStudent.get_id())) {
-                checkBox.setChecked(true);
-                break;
-            } else {
-                checkBox.setChecked(false);
-            }
-        }
+        updateCheckBoxFavorite();
 
-        checkBox.setOnClickListener((buttonView) -> {
-            if (checkBox.isChecked()) {
+        checkBoxFavorite.setOnClickListener((buttonView) -> {
+            if (checkBoxFavorite.isChecked()) {
                 Requests.getInstance().addFavourite(otherStudent, this);
             } else {
                 Requests.getInstance().removeFavourite(otherStudent, this);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    // header.findViewById(R.id.layout).setTransitionName(null);
+                }
             }
         });
 
@@ -183,12 +178,7 @@ public class OtherProfileActivity extends AbstractActivity {
     protected void onStart() {
         super.onStart();
         overridePendingTransition(0, 0);
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        //recreate();
+        updateCheckBoxFavorite();
     }
 
     @Override
@@ -197,6 +187,17 @@ public class OtherProfileActivity extends AbstractActivity {
         intent.putExtra("position", getIntent().getIntExtra("position", -1));
         setResult(RESULT_OK, intent);
         super.onBackPressed();
+    }
+
+    private void updateCheckBoxFavorite(){
+        for (UserInfo user : UserInfo.getCurrentUser().getFavouriteStudents()) {
+            if (user.get_id().equals(otherStudent.get_id())) {
+                checkBoxFavorite.setChecked(true);
+                break;
+            } else {
+                checkBoxFavorite.setChecked(false);
+            }
+        }
     }
 
     public void openProfile(View view) {
@@ -219,8 +220,7 @@ public class OtherProfileActivity extends AbstractActivity {
         startActivity(intent);
     }
 
-    public void openTop(View view)
-    {
+    public void openTop(View view) {
         Intent intent = new Intent(this, TopActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
     }

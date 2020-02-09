@@ -19,7 +19,7 @@ public class SettingsActivity extends AbstractActivity {
 
     private Switch themeSwitcher;
     private RadioGroup rg;
-    private RadioGroup.OnCheckedChangeListener listener;
+    private RadioGroup.OnCheckedChangeListener rgListener;
     @SuppressWarnings("FieldCanBeLocal")
     private RadioButton rb;
 
@@ -30,7 +30,7 @@ public class SettingsActivity extends AbstractActivity {
         ThemeController.onActivityCreateSetTheme(this);
         setContentView(R.layout.activity_settings);
 
-        listener = (radioGroup, i) -> {
+        rgListener = (radioGroup, i) -> {
             RadioButton selectedRadioButton = findViewById(i);
             String selectedRadioButtonText = selectedRadioButton.getText().toString();
             Visibility visibility = new Visibility();
@@ -49,7 +49,7 @@ public class SettingsActivity extends AbstractActivity {
         };
 
         rg = findViewById(R.id.radioGroup);
-        rg.setOnCheckedChangeListener(listener);
+        rg.setOnCheckedChangeListener(rgListener);
 
         themeSwitcher = findViewById(R.id.themeSwitcher);
         themeSwitcher.setOnClickListener((buttonView) -> {
@@ -65,7 +65,9 @@ public class SettingsActivity extends AbstractActivity {
 
     private void changeToTheme(int theme) {
         ThemeController.setCurrentTheme(theme);
-        Intent i = new Intent("recreateIsNeeded"); // the two action strings MUST be same
+        Intent i = new Intent("recreateIsNeeded");
+        sendBroadcast(i);
+        i = new Intent("recreate");
         sendBroadcast(i);
         finish();
         startActivity(new Intent(this, getClass()));
@@ -92,19 +94,13 @@ public class SettingsActivity extends AbstractActivity {
                 rb.setChecked(true);
                 break;
         }
-        rg.setOnCheckedChangeListener(listener);
+        rg.setOnCheckedChangeListener(rgListener);
 
         if (ThemeController.getCurrentTheme() == ThemeController.APP_THEME_DARK) {
             themeSwitcher.setChecked(true);
         } else {
             themeSwitcher.setChecked(false);
         }
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        //recreate();
     }
 
     public void exit(View view) {
@@ -141,8 +137,7 @@ public class SettingsActivity extends AbstractActivity {
         startActivity(intent);
     }
 
-    public void openTop(View view)
-    {
+    public void openTop(View view) {
         Intent intent = new Intent(this, TopActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
     }

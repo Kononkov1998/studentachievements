@@ -7,9 +7,8 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-public abstract class AbstractActivity extends AppCompatActivity {
+public abstract class AbstractActivityWithUsers extends AppCompatActivity {
     private BroadcastReceiver receiver;
-    private boolean recreateIsNeeded = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,25 +16,16 @@ public abstract class AbstractActivity extends AppCompatActivity {
 
         if (receiver == null) {
             IntentFilter intentFilter = new IntentFilter();
-            intentFilter.addAction("recreateIsNeeded");
+            intentFilter.addAction("recreate");
             receiver = new BroadcastReceiver() {
                 @Override
                 public void onReceive(Context context, Intent intent) {
-                    if ("recreateIsNeeded".equals(intent.getAction())) {
-                        recreateIsNeeded = true;
+                    if ("recreate".equals(intent.getAction())) {
+                        recreate();
                     }
                 }
             };
             registerReceiver(receiver, intentFilter);
-        }
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        if (recreateIsNeeded) {
-            recreateIsNeeded = false;
-            recreate();
         }
     }
 

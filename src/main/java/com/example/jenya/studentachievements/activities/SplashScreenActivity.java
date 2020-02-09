@@ -29,7 +29,7 @@ public class SplashScreenActivity extends AppCompatActivity {
             Requests.getInstance().getUserInfoFromSplashScreen(this);
         } else {
             Intent intent = new Intent(this, AuthActivity.class);
-            this.startActivity(intent);
+            startActivity(intent);
         }
     }
 }
