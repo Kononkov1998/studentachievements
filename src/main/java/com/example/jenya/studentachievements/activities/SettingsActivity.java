@@ -105,10 +105,6 @@ public class SettingsActivity extends AbstractActivity {
 
     public void exit(View view) {
         SharedPreferencesActions.delete("token", this);
-        SharedPreferencesActions.delete("name", this);
-        SharedPreferencesActions.delete("surname", this);
-        SharedPreferencesActions.delete("patronymic", this);
-        SharedPreferencesActions.delete("group", this);
         SharedPreferencesActions.delete("showCompleted", this);
         SharedPreferencesActions.delete("theme", this);
         ThemeController.setCurrentTheme(ThemeController.APP_THEME_LIGHT);

@@ -20,11 +20,6 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
 
-        SharedPreferencesActions.delete("name", this);
-        SharedPreferencesActions.delete("surname", this);
-        SharedPreferencesActions.delete("patronymic", this);
-        SharedPreferencesActions.delete("group", this);
-
         if (SharedPreferencesActions.check("token", this)) {
             Requests.getInstance().getUserInfoFromSplashScreen(this);
         } else {

@@ -11,7 +11,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.jenya.studentachievements.R;
-import com.example.jenya.studentachievements.SharedPreferencesActions;
 import com.example.jenya.studentachievements.ThemeController;
 import com.example.jenya.studentachievements.models.UserInfo;
 import com.example.jenya.studentachievements.requests.Requests;
@@ -27,12 +26,6 @@ public class SearchActivity extends AbstractActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         ThemeController.onActivityCreateSetTheme(this);
         setContentView(R.layout.activity_search);
-
-        isSearchSuccessful = false;
-        ((EditText) findViewById(R.id.textViewName)).setText(SharedPreferencesActions.read("name", this));
-        ((EditText) findViewById(R.id.textViewSurname)).setText(SharedPreferencesActions.read("surname", this));
-        ((EditText) findViewById(R.id.textViewPatronymic)).setText(SharedPreferencesActions.read("patronymic", this));
-        ((AutoCompleteTextView) findViewById(R.id.textViewGroup)).setText(SharedPreferencesActions.read("group", this));
 
         btn = findViewById(R.id.searchBtn);
         String myGroup = UserInfo.getCurrentUser().getGroup().getName();
@@ -50,6 +43,7 @@ public class SearchActivity extends AbstractActivity {
     protected void onStart() {
         super.onStart();
         overridePendingTransition(0, 0);
+        isSearchSuccessful = false;
         if (!btn.isEnabled()) {
             btn.getBackground().setAlpha(255);
             btn.setEnabled(true);
@@ -59,16 +53,7 @@ public class SearchActivity extends AbstractActivity {
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         if (isSearchSuccessful) {
-            SharedPreferencesActions.delete("name", this);
-            SharedPreferencesActions.delete("surname", this);
-            SharedPreferencesActions.delete("patronymic", this);
-            SharedPreferencesActions.delete("group", this);
-
-        } else {
-            SharedPreferencesActions.save("name", ((EditText) findViewById(R.id.textViewName)).getText().toString(), this);
-            SharedPreferencesActions.save("surname", ((EditText) findViewById(R.id.textViewSurname)).getText().toString(), this);
-            SharedPreferencesActions.save("patronymic", ((EditText) findViewById(R.id.textViewPatronymic)).getText().toString(), this);
-            SharedPreferencesActions.save("group", ((AutoCompleteTextView) findViewById(R.id.textViewGroup)).getText().toString(), this);
+            clearFields();
         }
         super.onSaveInstanceState(savedInstanceState);
     }
@@ -88,6 +73,13 @@ public class SearchActivity extends AbstractActivity {
         btn.getBackground().setAlpha(100);
         btn.setEnabled(false);
         Requests.getInstance().studentSearch(group, fio.trim(), this, btn);
+    }
+
+    private void clearFields() {
+        ((EditText) findViewById(R.id.textViewName)).setText("");
+        ((EditText) findViewById(R.id.textViewSurname)).setText("");
+        ((EditText) findViewById(R.id.textViewPatronymic)).setText("");
+        ((AutoCompleteTextView) findViewById(R.id.textViewGroup)).setText("");
     }
 
     public static void searchSuccessful() {
