@@ -34,9 +34,6 @@ interface UserApi
     @GET("/student/info")
     Call<UserInfo> info(@Header("Authorization") String token);
 
-    /*@GET("/student/groupmates")
-    Call<UserInfo[]> groupmates(@Header("Authorization") String token);*/
-
     @GET("/student/anotherStudent")
     Call<ArrayList<UserInfo>> search(@Header("Authorization") String token, @Query("group") String group, @Query("search") String search);
 

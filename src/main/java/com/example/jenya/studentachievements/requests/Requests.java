@@ -132,7 +132,7 @@ public class Requests {
                             // если пользователь не обновлялся 30 дней
                             if(days > 30)
                             {
-                                update(ctx);
+                                update(ctx, btn);
                                 return;
                             }
                         }
@@ -142,13 +142,11 @@ public class Requests {
                     // если такого токена нет
                     else
                     {
-                        update(ctx);
+                        update(ctx, btn);
                         return;
                     }
-                    Intent intent = new Intent(ctx, ProfileActivity.class);
                     UserInfo.setCurrentUser(response.body());
                     getFavourites(ctx);
-                    ctx.startActivity(intent);
                     ((Activity) ctx).finish();
                 } else
                     {
@@ -205,10 +203,8 @@ public class Requests {
                         updateFromSplashScreen(ctx);
                         return;
                     }
-                    Intent intent = new Intent(ctx, ProfileActivity.class);
                     UserInfo.setCurrentUser(response.body());
                     getFavourites(ctx);
-                    ctx.startActivity(intent);
                 } else {
                     Intent intent = new Intent(ctx, AuthActivity.class);
                     ctx.startActivity(intent);
@@ -237,10 +233,8 @@ public class Requests {
                     String todayAsString = dateFormat.format(today);
                     SharedPreferencesActions.save(id, todayAsString, ctx);
 
-                    Intent intent = new Intent(ctx, ProfileActivity.class);
                     UserInfo.setCurrentUser(response.body());
                     getFavourites(ctx);
-                    ctx.startActivity(intent);
                     ((Activity) ctx).finish();
                 } else {
                     btn.getBackground().setAlpha(255);
@@ -314,6 +308,8 @@ public class Requests {
             public void onResponse(@NonNull Call<ArrayList<UserInfo>> call, @NonNull Response<ArrayList<UserInfo>> response) {
                 if (response.isSuccessful()) {
                     UserInfo.getCurrentUser().setFavouriteStudents(response.body());
+                    Intent intent = new Intent(ctx, ProfileActivity.class);
+                    ctx.startActivity(intent);
                 }
             }
 
@@ -405,7 +401,7 @@ public class Requests {
     }
 
     // /achievements/update
-    private void update(Context ctx)
+    private void update(Context ctx, Button btn)
     {
         userApi.update(SharedPreferencesActions.read("token", ctx)).enqueue(new Callback<UserInfo>()
         {
@@ -421,10 +417,8 @@ public class Requests {
                     String todayAsString = dateFormat.format(today);
                     SharedPreferencesActions.save(id, todayAsString, ctx);
 
-                    Intent intent = new Intent(ctx, ProfileActivity.class);
                     UserInfo.setCurrentUser(response.body());
                     getFavourites(ctx);
-                    ctx.startActivity(intent);
                     ((Activity) ctx).finish();
                 }
             }
@@ -433,6 +427,8 @@ public class Requests {
             public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t)
             {
                 Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
+                btn.getBackground().setAlpha(255);
+                btn.setEnabled(true);
             }
         });
     }
@@ -451,10 +447,8 @@ public class Requests {
                 String todayAsString = dateFormat.format(today);
                 SharedPreferencesActions.save(id, todayAsString, ctx);
 
-                Intent intent = new Intent(ctx, ProfileActivity.class);
                 UserInfo.setCurrentUser(response.body());
                 getFavourites(ctx);
-                ctx.startActivity(intent);
             }
 
             @Override

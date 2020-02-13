@@ -74,6 +74,9 @@ public class OtherProfileActivity extends AbstractActivity {
         }
 
         otherStudent = getIntent().getParcelableExtra("otherStudent");
+        final ListView listView = findViewById(R.id.list);
+        header = getLayoutInflater().inflate(R.layout.header_otherprofile, listView, false);
+
         final ArrayList<Achievement> completedAchievements = new ArrayList<>();
         final ArrayList<Achievement> userAchievements = otherStudent.getAchievements();
         int starsSum = 0;
@@ -89,8 +92,7 @@ public class OtherProfileActivity extends AbstractActivity {
         Collections.sort(userAchievements, new AchievementsComparator());
 
         final AchievementsAdapter adapter = new AchievementsAdapter(this, userAchievements);
-        final ListView listView = findViewById(R.id.list);
-        header = getLayoutInflater().inflate(R.layout.header_otherprofile, listView, false);
+
         avatar = header.findViewById(R.id.imageUser);
 
         if (otherStudent.getAvatar() != null) {

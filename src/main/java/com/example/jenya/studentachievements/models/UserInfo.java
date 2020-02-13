@@ -27,6 +27,10 @@ public class UserInfo implements Parcelable {
     @Expose
     private String avatar;
 
+    @SerializedName("isAvailable")
+    @Expose
+    private boolean isAvailable;
+
     @SerializedName("visibility")
     @Expose
     private String visibility;
@@ -77,6 +81,15 @@ public class UserInfo implements Parcelable {
 
     public void set_id(String _id) {
         this._id = _id;
+    }
+
+    public void setIsAvailable(boolean isAvailable) {
+        this.isAvailable = isAvailable;
+    }
+
+    public boolean getIsAvailable()
+    {
+        return this.isAvailable;
     }
 
     public void setFullName(FullName fullName) {
