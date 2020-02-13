@@ -58,8 +58,7 @@ public class OtherProfileActivity extends AbstractActivity {
             postponeEnterTransition();
         }
 
-        Intent intent = getIntent();
-        switch (intent.getStringExtra("activity")) {
+        switch (getIntent().getStringExtra("activity")) {
             case "SearchResultsActivity":
                 selectedElement = findViewById(R.id.imageSearch);
                 break;
@@ -74,7 +73,7 @@ public class OtherProfileActivity extends AbstractActivity {
             selectedElement.setColorFilter(color, PorterDuff.Mode.SRC_IN);
         }
 
-        otherStudent = intent.getParcelableExtra("otherStudent");
+        otherStudent = getIntent().getParcelableExtra("otherStudent");
         final ArrayList<Achievement> completedAchievements = new ArrayList<>();
         final ArrayList<Achievement> userAchievements = otherStudent.getAchievements();
         int starsSum = 0;
@@ -155,9 +154,6 @@ public class OtherProfileActivity extends AbstractActivity {
                 Requests.getInstance().addFavourite(otherStudent, this);
             } else {
                 Requests.getInstance().removeFavourite(otherStudent, this);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    // header.findViewById(R.id.layout).setTransitionName(null);
-                }
             }
         });
 
@@ -186,10 +182,17 @@ public class OtherProfileActivity extends AbstractActivity {
         Intent intent = new Intent();
         intent.putExtra("position", getIntent().getIntExtra("position", -1));
         setResult(RESULT_OK, intent);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            if (getIntent().getStringExtra("activity").equals("FavoritesActivity")) {
+                if(!checkBoxFavorite.isChecked()) {
+                    header.findViewById(R.id.layout).setTransitionName(null);
+                }
+            }
+        }
         super.onBackPressed();
     }
 
-    private void updateCheckBoxFavorite(){
+    private void updateCheckBoxFavorite() {
         for (UserInfo user : UserInfo.getCurrentUser().getFavouriteStudents()) {
             if (user.get_id().equals(otherStudent.get_id())) {
                 checkBoxFavorite.setChecked(true);

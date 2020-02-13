@@ -11,7 +11,6 @@ import android.view.ViewTreeObserver;
 import android.widget.ListView;
 
 import com.example.jenya.studentachievements.R;
-import com.example.jenya.studentachievements.SharedPreferencesActions;
 import com.example.jenya.studentachievements.ThemeController;
 import com.example.jenya.studentachievements.adapters.UsersAdapter;
 import com.example.jenya.studentachievements.models.UserInfo;
@@ -36,11 +35,6 @@ public class SearchResultsActivity extends AbstractActivityWithUsers {
         adapter = new UsersAdapter(this, students);
         listView = findViewById(R.id.list);
         listView.setAdapter(adapter);
-
-        SharedPreferencesActions.delete("name", this);
-        SharedPreferencesActions.delete("surname", this);
-        SharedPreferencesActions.delete("patronymic", this);
-        SharedPreferencesActions.delete("group", this);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
