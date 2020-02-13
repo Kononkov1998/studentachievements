@@ -27,7 +27,12 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -72,25 +77,6 @@ public class Requests {
         return URL;
     }
 
-    // /student/groupmates
-    /*public void getGroupmates(String token)
-    {
-        userApi.groupmates(token).enqueue(new Callback<UserInfo[]>()
-        {
-            @Override
-            public void onResponse(Call<UserInfo[]> call, Response<UserInfo[]> response)
-            {
-                UserInfo[] groupmates = response.body();
-            }
-
-            @Override
-            public void onFailure(Call<UserInfo[]> call, Throwable t)
-            {
-
-            }
-        });
-    }*/
-
     // /student/signin
     public void getUserToken(User user, Context ctx, Button btn) {
         userApi.signin(user).enqueue(new Callback<UserToken>() {
@@ -119,17 +105,53 @@ public class Requests {
     }
 
     // /student/info
-    private void getUserInfo(Context ctx, Button btn) {
+    private void getUserInfo(Context ctx, Button btn)
+    {
         userApi.info(SharedPreferencesActions.read("token", ctx)).enqueue(new Callback<UserInfo>() {
             @Override
             public void onResponse(@NonNull Call<UserInfo> call, @NonNull Response<UserInfo> response) {
-                if (response.isSuccessful()) {
+                if (response.isSuccessful())
+                {
+                    String id = response.body().get_id();
+
+                    // если такой токен есть
+                    if(SharedPreferencesActions.check(id, ctx))
+                    {
+                        String pattern = "dd.MM.yyyy";
+                        DateFormat format = new SimpleDateFormat(pattern, Locale.ENGLISH);
+
+                        String dateAsString = SharedPreferencesActions.read(id, ctx);
+                        Date today = Calendar.getInstance().getTime();
+
+                        try
+                        {
+                            // вычисляем разницу в днях
+                            Date date = format.parse(dateAsString);
+                            long milliseconds = Math.abs(today.getTime() - date.getTime());
+                            int days = (int) (milliseconds / (24 * 60 * 60 * 1000));
+                            // если пользователь не обновлялся 30 дней
+                            if(days > 30)
+                            {
+                                update(ctx);
+                                return;
+                            }
+                        }
+                        catch (Exception e){}
+
+                    }
+                    // если такого токена нет
+                    else
+                    {
+                        update(ctx);
+                        return;
+                    }
                     Intent intent = new Intent(ctx, ProfileActivity.class);
                     UserInfo.setCurrentUser(response.body());
                     getFavourites(ctx);
                     ctx.startActivity(intent);
                     ((Activity) ctx).finish();
-                } else {
+                } else
+                    {
                     initializeStudent(ctx, btn);
                 }
             }
@@ -148,7 +170,41 @@ public class Requests {
         userApi.info(SharedPreferencesActions.read("token", ctx)).enqueue(new Callback<UserInfo>() {
             @Override
             public void onResponse(@NonNull Call<UserInfo> call, @NonNull Response<UserInfo> response) {
-                if (response.isSuccessful()) {
+                if (response.isSuccessful())
+                {
+                    String id = response.body().get_id();
+
+                    // если такой токен есть
+                    if(SharedPreferencesActions.check(id, ctx))
+                    {
+                        String pattern = "dd.MM.yyyy";
+                        DateFormat format = new SimpleDateFormat(pattern, Locale.ENGLISH);
+
+                        String dateAsString = SharedPreferencesActions.read(id, ctx);
+                        Date today = Calendar.getInstance().getTime();
+
+                        try
+                        {
+                            // вычисляем разницу в днях
+                            Date date = format.parse(dateAsString);
+                            long milliseconds = Math.abs(today.getTime() - date.getTime());
+                            int days = (int) (milliseconds / (24 * 60 * 60 * 1000));
+                            // если пользователь не обновлялся 30 дней
+                            if(days > 30)
+                            {
+                                updateFromSplashScreen(ctx);
+                                return;
+                            }
+                        }
+                        catch (Exception e){}
+
+                    }
+                    // если такого токена нет
+                    else
+                    {
+                        updateFromSplashScreen(ctx);
+                        return;
+                    }
                     Intent intent = new Intent(ctx, ProfileActivity.class);
                     UserInfo.setCurrentUser(response.body());
                     getFavourites(ctx);
@@ -172,7 +228,15 @@ public class Requests {
         userApi.initialize(SharedPreferencesActions.read("token", ctx)).enqueue(new Callback<UserInfo>() {
             @Override
             public void onResponse(@NonNull Call<UserInfo> call, @NonNull Response<UserInfo> response) {
-                if (response.isSuccessful()) {
+                if (response.isSuccessful())
+                {
+                    String id = response.body().get_id();
+                    String pattern = "dd.MM.yyyy";
+                    DateFormat dateFormat = new SimpleDateFormat(pattern, Locale.getDefault());
+                    Date today = Calendar.getInstance().getTime();
+                    String todayAsString = dateFormat.format(today);
+                    SharedPreferencesActions.save(id, todayAsString, ctx);
+
                     Intent intent = new Intent(ctx, ProfileActivity.class);
                     UserInfo.setCurrentUser(response.body());
                     getFavourites(ctx);
@@ -336,6 +400,69 @@ public class Requests {
             public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t) {
                 hud.dismiss();
                 Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    // /achievements/update
+    private void update(Context ctx)
+    {
+        userApi.update(SharedPreferencesActions.read("token", ctx)).enqueue(new Callback<UserInfo>()
+        {
+            @Override
+            public void onResponse(@NonNull Call<UserInfo> call, @NonNull Response<UserInfo> response)
+            {
+                if(response.isSuccessful())
+                {
+                    String id = response.body().get_id();
+                    String pattern = "dd.MM.yyyy";
+                    DateFormat dateFormat = new SimpleDateFormat(pattern, Locale.getDefault());
+                    Date today = Calendar.getInstance().getTime();
+                    String todayAsString = dateFormat.format(today);
+                    SharedPreferencesActions.save(id, todayAsString, ctx);
+
+                    Intent intent = new Intent(ctx, ProfileActivity.class);
+                    UserInfo.setCurrentUser(response.body());
+                    getFavourites(ctx);
+                    ctx.startActivity(intent);
+                    ((Activity) ctx).finish();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t)
+            {
+                Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void updateFromSplashScreen(Context ctx)
+    {
+        userApi.update(SharedPreferencesActions.read("token", ctx)).enqueue(new Callback<UserInfo>()
+        {
+            @Override
+            public void onResponse(@NonNull Call<UserInfo> call, @NonNull Response<UserInfo> response)
+            {
+                String id = response.body().get_id();
+                String pattern = "dd.MM.yyyy";
+                DateFormat dateFormat = new SimpleDateFormat(pattern, Locale.getDefault());
+                Date today = Calendar.getInstance().getTime();
+                String todayAsString = dateFormat.format(today);
+                SharedPreferencesActions.save(id, todayAsString, ctx);
+
+                Intent intent = new Intent(ctx, ProfileActivity.class);
+                UserInfo.setCurrentUser(response.body());
+                getFavourites(ctx);
+                ctx.startActivity(intent);
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t)
+            {
+                Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(ctx, AuthActivity.class);
+                ctx.startActivity(intent);
             }
         });
     }
