@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.jenya.studentachievements.ButtonActions;
 import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.ThemeController;
 import com.example.jenya.studentachievements.models.UserInfo;
@@ -45,8 +46,7 @@ public class SearchActivity extends AbstractActivity {
         overridePendingTransition(0, 0);
         isSearchSuccessful = false;
         if (!btn.isEnabled()) {
-            btn.getBackground().setAlpha(255);
-            btn.setEnabled(true);
+            ButtonActions.enableButton(btn);
         }
     }
 
@@ -70,8 +70,7 @@ public class SearchActivity extends AbstractActivity {
         }
 
         String fio = String.format("%s %s %s", surname, name, patronymic);
-        btn.getBackground().setAlpha(100);
-        btn.setEnabled(false);
+        ButtonActions.disableButton(btn);
         Requests.getInstance().studentSearch(group, fio.trim(), this, btn);
     }
 

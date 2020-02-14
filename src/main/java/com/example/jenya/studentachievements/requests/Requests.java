@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.model.LazyHeaders;
+import com.example.jenya.studentachievements.ButtonActions;
 import com.example.jenya.studentachievements.ImageActions;
 import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.SharedPreferencesActions;
@@ -89,16 +90,14 @@ public class Requests {
                     getUserInfo(ctx, btn);
                 } else {
                     Toast.makeText(ctx, "Неверный логин и/или пароль!", Toast.LENGTH_LONG).show();
-                    btn.getBackground().setAlpha(255);
-                    btn.setEnabled(true);
+                    ButtonActions.enableButton(btn);
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<UserToken> call, @NonNull Throwable t) {
                 Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
-                btn.getBackground().setAlpha(255);
-                btn.setEnabled(true);
+                ButtonActions.enableButton(btn);
             }
         });
     }
@@ -148,8 +147,7 @@ public class Requests {
             @Override
             public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t) {
                 Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
-                btn.getBackground().setAlpha(255);
-                btn.setEnabled(true);
+                ButtonActions.enableButton(btn);
             }
         });
     }
@@ -221,16 +219,14 @@ public class Requests {
                     UserInfo.setCurrentUser(response.body());
                     getFavourites(ctx, true);
                 } else {
-                    btn.getBackground().setAlpha(255);
-                    btn.setEnabled(true);
+                    ButtonActions.enableButton(btn);
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t) {
                 Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
-                btn.getBackground().setAlpha(255);
-                btn.setEnabled(true);
+                ButtonActions.enableButton(btn);
             }
         });
     }
@@ -252,16 +248,14 @@ public class Requests {
                         ctx.startActivity(intent);
                     }
                 } else {
-                    btn.getBackground().setAlpha(255);
-                    btn.setEnabled(true);
+                    ButtonActions.enableButton(btn);
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<ArrayList<UserInfo>> call, @NonNull Throwable t) {
                 Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
-                btn.getBackground().setAlpha(255);
-                btn.setEnabled(true);
+                ButtonActions.enableButton(btn);
             }
         });
     }
@@ -404,8 +398,7 @@ public class Requests {
             @Override
             public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t) {
                 Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
-                btn.getBackground().setAlpha(255);
-                btn.setEnabled(true);
+                ButtonActions.enableButton(btn);
             }
         });
     }

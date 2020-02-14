@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.jenya.studentachievements.ButtonActions;
 import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.models.User;
 import com.example.jenya.studentachievements.requests.Requests;
@@ -35,13 +36,12 @@ public class AuthActivity extends AppCompatActivity {
 
     //обработка кнопки "вход"
     public void enter(View view) {
-        if (login.getText().toString().trim().equals("") || pass.getText().toString().trim().equals("")) {
+        if (login.getText().toString().trim().equals("") && pass.getText().toString().trim().equals("")) {
             Requests.getInstance().getUserToken(new User("ekononkov-ki16", "Rjyjyrjd1998"), this, btn);
             Toast.makeText(this, "Введите логин и пароль!", Toast.LENGTH_LONG).show();
             return;
         }
-        btn.getBackground().setAlpha(100);
-        btn.setEnabled(false);
+        ButtonActions.disableButton(btn);
         Requests.getInstance().getUserToken(new User(login.getText().toString(), pass.getText().toString()), this, btn);
     }
 }
