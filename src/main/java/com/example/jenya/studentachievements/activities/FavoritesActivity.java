@@ -11,7 +11,7 @@ import android.view.ViewTreeObserver;
 import android.widget.ListView;
 
 import com.example.jenya.studentachievements.R;
-import com.example.jenya.studentachievements.ThemeController;
+import com.example.jenya.studentachievements.utils.ThemeController;
 import com.example.jenya.studentachievements.adapters.UsersAdapter;
 import com.example.jenya.studentachievements.models.UserInfo;
 

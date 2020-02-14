@@ -9,8 +9,8 @@ import android.widget.RadioGroup;
 import android.widget.Switch;
 
 import com.example.jenya.studentachievements.R;
-import com.example.jenya.studentachievements.SharedPreferencesActions;
-import com.example.jenya.studentachievements.ThemeController;
+import com.example.jenya.studentachievements.utils.SharedPreferencesActions;
+import com.example.jenya.studentachievements.utils.ThemeController;
 import com.example.jenya.studentachievements.models.UserInfo;
 import com.example.jenya.studentachievements.models.Visibility;
 import com.example.jenya.studentachievements.requests.Requests;

@@ -1,9 +1,11 @@
-package com.example.jenya.studentachievements;
+package com.example.jenya.studentachievements.utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.widget.Toast;
+
+import com.example.jenya.studentachievements.R;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

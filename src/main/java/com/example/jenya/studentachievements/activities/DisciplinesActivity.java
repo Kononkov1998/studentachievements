@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.jenya.studentachievements.R;
-import com.example.jenya.studentachievements.ThemeController;
+import com.example.jenya.studentachievements.utils.ThemeController;
 
 import java.util.Locale;
 

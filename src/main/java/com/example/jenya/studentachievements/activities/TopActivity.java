@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.jenya.studentachievements.R;
-import com.example.jenya.studentachievements.ThemeController;
+import com.example.jenya.studentachievements.utils.ThemeController;
 
 public class TopActivity extends AbstractActivity {
     @Override

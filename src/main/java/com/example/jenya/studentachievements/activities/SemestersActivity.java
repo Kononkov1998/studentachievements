@@ -9,9 +9,9 @@ import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-import com.example.jenya.studentachievements.ImageActions;
+import com.example.jenya.studentachievements.utils.ImageActions;
 import com.example.jenya.studentachievements.R;
-import com.example.jenya.studentachievements.ThemeController;
+import com.example.jenya.studentachievements.utils.ThemeController;
 
 import java.util.Locale;
 

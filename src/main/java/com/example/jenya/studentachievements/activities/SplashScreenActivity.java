@@ -5,8 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.jenya.studentachievements.requests.Requests;
-import com.example.jenya.studentachievements.SharedPreferencesActions;
-import com.example.jenya.studentachievements.ThemeController;
+import com.example.jenya.studentachievements.utils.SharedPreferencesActions;
+import com.example.jenya.studentachievements.utils.ThemeController;
 
 public class SplashScreenActivity extends AppCompatActivity {
     @Override

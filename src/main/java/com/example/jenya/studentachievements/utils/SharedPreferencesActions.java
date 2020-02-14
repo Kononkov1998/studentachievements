@@ -1,4 +1,4 @@
-package com.example.jenya.studentachievements;
+package com.example.jenya.studentachievements.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;

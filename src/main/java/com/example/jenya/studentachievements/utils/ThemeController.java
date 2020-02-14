@@ -1,6 +1,8 @@
-package com.example.jenya.studentachievements;
+package com.example.jenya.studentachievements.utils;
 
 import android.app.Activity;
+
+import com.example.jenya.studentachievements.R;
 
 public class ThemeController {
     public final static int APP_THEME_DARK = 1;
