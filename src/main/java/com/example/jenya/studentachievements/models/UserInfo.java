@@ -113,7 +113,7 @@ public class UserInfo implements Parcelable {
     }
 
     public void setFavouriteStudents(ArrayList<UserInfo> favouriteStudents) {
-        UserInfo.getCurrentUser().favouriteStudents = favouriteStudents;
+        this.favouriteStudents = favouriteStudents;
     }
 
     private UserInfo(Parcel in) {
