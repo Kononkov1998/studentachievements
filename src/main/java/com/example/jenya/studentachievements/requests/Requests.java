@@ -139,8 +139,13 @@ public class Requests {
                     }
                     UserInfo.setCurrentUser(response.body());
                     getFavourites(ctx, true);
-                } else {
+                } else if(response.code() == 403) {
                     initializeStudent(ctx, btn);
+                }
+                else
+                {
+                    Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
+                    ButtonActions.enableButton(btn);
                 }
             }
 
