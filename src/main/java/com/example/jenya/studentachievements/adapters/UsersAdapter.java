@@ -13,6 +13,7 @@ import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -107,8 +108,16 @@ public class UsersAdapter extends BaseAdapter {
             }
         });
 
+        if (ctx.getClass().getSimpleName().equals("FavoritesActivity") && !s.getIsAvailable()) {
+            view.setAlpha(0.5f);
+        }
+
         RelativeLayout layout = view.findViewById(R.id.layout);
         layout.setOnClickListener(v -> {
+            if (ctx.getClass().getSimpleName().equals("FavoritesActivity") && !s.getIsAvailable()) {
+                Toast.makeText(ctx, "Профиль недоступен из-за настроек приватности", Toast.LENGTH_SHORT).show();
+                return;
+            }
             ActivityOptions options = null;
 
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
