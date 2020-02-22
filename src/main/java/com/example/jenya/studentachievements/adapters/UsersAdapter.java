@@ -129,7 +129,9 @@ public class UsersAdapter extends BaseAdapter {
 
                 List<Pair<View, String>> pairs = new ArrayList<>();
                 pairs.add(Pair.create(statusBar, Window.STATUS_BAR_BACKGROUND_TRANSITION_NAME));
-                pairs.add(Pair.create(navigationBar, Window.NAVIGATION_BAR_BACKGROUND_TRANSITION_NAME));
+                if (navigationBar != null) {
+                    pairs.add(Pair.create(navigationBar, Window.NAVIGATION_BAR_BACKGROUND_TRANSITION_NAME));
+                }
                 pairs.add(Pair.create(bottomMenu, bottomMenu.getTransitionName()));
                 pairs.add(Pair.create(layout, layout.getTransitionName()));
 
