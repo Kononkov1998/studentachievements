@@ -302,6 +302,8 @@ public class Requests {
             @Override
             public void onFailure(@NonNull Call<ArrayList<UserInfo>> call, @NonNull Throwable t) {
                 Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(ctx, AuthActivity.class);
+                ctx.startActivity(intent);
             }
         });
     }
