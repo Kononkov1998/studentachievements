@@ -19,16 +19,14 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.model.LazyHeaders;
-import com.example.jenya.studentachievements.comparators.StudentsComparator;
-import com.example.jenya.studentachievements.utils.ImageActions;
 import com.example.jenya.studentachievements.R;
-import com.example.jenya.studentachievements.utils.SharedPreferencesActions;
 import com.example.jenya.studentachievements.activities.OtherProfileActivity;
 import com.example.jenya.studentachievements.models.UserInfo;
 import com.example.jenya.studentachievements.requests.Requests;
+import com.example.jenya.studentachievements.utils.ImageActions;
+import com.example.jenya.studentachievements.utils.SharedPreferencesActions;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -40,7 +38,6 @@ public class UsersAdapter extends BaseAdapter {
 
     public UsersAdapter(Context context, ArrayList<UserInfo> students)
     {
-        Collections.sort(students, new StudentsComparator());
         ctx = context;
         objects = students;
         lInflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -62,11 +59,6 @@ public class UsersAdapter extends BaseAdapter {
     @Override
     public long getItemId(int position) {
         return position;
-    }
-
-    public void updateObjects(ArrayList<UserInfo> students){
-        objects.clear();
-        objects.addAll(students);
     }
 
     // пункт списка
@@ -119,6 +111,9 @@ public class UsersAdapter extends BaseAdapter {
 
         if (ctx.getClass().getSimpleName().equals("FavoritesActivity") && !s.getIsAvailable()) {
             view.setAlpha(0.5f);
+        }
+        else {
+            view.setAlpha(1f);
         }
 
         RelativeLayout layout = view.findViewById(R.id.layout);

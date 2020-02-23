@@ -18,6 +18,7 @@ import com.example.jenya.studentachievements.activities.SearchActivity;
 import com.example.jenya.studentachievements.activities.SearchNoResultsActivity;
 import com.example.jenya.studentachievements.activities.SearchResultsActivity;
 import com.example.jenya.studentachievements.adapters.UsersAdapter;
+import com.example.jenya.studentachievements.comparators.StudentsComparator;
 import com.example.jenya.studentachievements.models.User;
 import com.example.jenya.studentachievements.models.UserInfo;
 import com.example.jenya.studentachievements.models.UserToken;
@@ -33,6 +34,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
@@ -140,11 +142,9 @@ public class Requests {
                     }
                     UserInfo.setCurrentUser(response.body());
                     getFavourites(ctx, true);
-                } else if(response.code() == 403) {
+                } else if (response.code() == 403) {
                     initializeStudent(ctx, btn);
-                }
-                else
-                {
+                } else {
                     Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
                     ButtonActions.enableButton(btn);
                 }
@@ -291,6 +291,7 @@ public class Requests {
             public void onResponse(@NonNull Call<ArrayList<UserInfo>> call, @NonNull Response<ArrayList<UserInfo>> response) {
                 if (response.isSuccessful()) {
                     UserInfo.getCurrentUser().setFavouriteStudents(response.body());
+                    Collections.sort(UserInfo.getCurrentUser().getFavouriteStudents(), new StudentsComparator());
                     Intent intent = new Intent(ctx, ProfileActivity.class);
                     ctx.startActivity(intent);
                     if (needToFinishActivity) {
@@ -314,9 +315,16 @@ public class Requests {
             @Override
             public void onResponse(@NonNull Call<ArrayList<UserInfo>> call, @NonNull Response<ArrayList<UserInfo>> response) {
                 if (response.isSuccessful()) {
-                    adapter.updateObjects(response.body());
-                    adapter.notifyDataSetChanged();
+                    if (response.body() != null) {
+                        UserInfo.getCurrentUser().getFavouriteStudents().clear();
+                        UserInfo.getCurrentUser().getFavouriteStudents().addAll(response.body());
+                        Collections.sort(UserInfo.getCurrentUser().getFavouriteStudents(), new StudentsComparator());
+                        adapter.notifyDataSetChanged();
+                    }
                     hud.dismiss();
+                } else {
+                    hud.dismiss();
+                    Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
                 }
             }
 

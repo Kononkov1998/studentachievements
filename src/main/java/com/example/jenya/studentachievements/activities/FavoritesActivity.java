@@ -54,6 +54,7 @@ public class FavoritesActivity extends AbstractActivityWithUsers {
                 setExitSharedElementCallback(new SharedElementCallback() {
                     @Override
                     public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
+                        sharedElements.clear();
                         sharedElements.put(sharedView.getTransitionName(), sharedView);
                     }
                 });
