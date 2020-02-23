@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,8 +37,7 @@ public class UsersAdapter extends BaseAdapter {
     private final LayoutInflater lInflater;
     private final ArrayList<UserInfo> objects;
 
-    public UsersAdapter(Context context, ArrayList<UserInfo> students)
-    {
+    public UsersAdapter(Context context, ArrayList<UserInfo> students) {
         ctx = context;
         objects = students;
         lInflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -111,12 +111,14 @@ public class UsersAdapter extends BaseAdapter {
 
         if (ctx.getClass().getSimpleName().equals("FavoritesActivity") && !s.getIsAvailable()) {
             view.setAlpha(0.5f);
-        }
-        else {
+        } else {
             view.setAlpha(1f);
         }
 
         RelativeLayout layout = view.findViewById(R.id.layout);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            layout.setTransitionName(s.get_id());
+        }
         layout.setOnClickListener(v -> {
             if (ctx.getClass().getSimpleName().equals("FavoritesActivity") && !s.getIsAvailable()) {
                 Toast.makeText(ctx, "Профиль недоступен из-за настроек приватности", Toast.LENGTH_SHORT).show();
@@ -124,7 +126,7 @@ public class UsersAdapter extends BaseAdapter {
             }
             ActivityOptions options = null;
 
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 ((Activity) ctx).setExitSharedElementCallback(null);
 
                 View statusBar = ((Activity) ctx).findViewById(android.R.id.statusBarBackground);
@@ -138,14 +140,12 @@ public class UsersAdapter extends BaseAdapter {
                 }
                 pairs.add(Pair.create(bottomMenu, bottomMenu.getTransitionName()));
                 pairs.add(Pair.create(layout, layout.getTransitionName()));
-
                 options = ActivityOptions.makeSceneTransitionAnimation((Activity) ctx, pairs.toArray(new Pair[0]));
             }
 
             Intent intent = new Intent(ctx, OtherProfileActivity.class);
             intent.putExtra("otherStudent", s);
             intent.putExtra("activity", ctx.getClass().getSimpleName());
-            intent.putExtra("position", position);
 
             if (options == null) {
                 ((Activity) ctx).startActivityForResult(intent, 1);

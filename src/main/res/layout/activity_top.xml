@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.TopActivity">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -13,10 +14,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="35dp">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Здесь будет выводиться топ всех студентов"/>
+                android:text="Здесь будет выводиться топ всех студентов" />
         </ScrollView>
 
         <LinearLayout style="?bottomMenu">
@@ -31,9 +33,9 @@
             <ImageView
                 android:id="@+id/imageGrade"
                 style="@style/ImageView"
+                android:onClick="openGrade"
                 android:src="@drawable/ic_school_24dp"
-                android:tint="?ic_inactive_color"
-                android:onClick="openGrade"/>
+                android:tint="?ic_inactive_color" />
 
             <ImageView
                 android:id="@+id/imageSearch"
@@ -53,7 +55,7 @@
                 android:id="@+id/imageSettings"
                 style="@style/ImageView"
                 android:src="@drawable/ic_supervisor_account_24dp"
-                android:tint="?ic_active_color"/>
+                android:tint="?ic_active_color" />
         </LinearLayout>
 
     </RelativeLayout>

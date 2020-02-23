@@ -16,8 +16,7 @@
                 android:id="@+id/semesters_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-            </LinearLayout>
+                android:orientation="vertical" />
         </ScrollView>
 
         <LinearLayout style="?bottomMenu">
@@ -52,9 +51,9 @@
             <ImageView
                 android:id="@+id/imageSettings"
                 style="@style/ImageView"
+                android:onClick="openTop"
                 android:src="@drawable/ic_supervisor_account_24dp"
-                android:tint="?ic_inactive_color"
-                android:onClick="openTop"/>
+                android:tint="?ic_inactive_color" />
         </LinearLayout>
 
     </RelativeLayout>

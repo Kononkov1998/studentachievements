@@ -39,9 +39,9 @@
             <ImageView
                 android:id="@+id/imageSettings"
                 style="@style/ImageView"
+                android:onClick="openTop"
                 android:src="@drawable/ic_supervisor_account_24dp"
-                android:tint="?ic_inactive_color"
-                android:onClick="openTop"/>
+                android:tint="?ic_inactive_color" />
         </LinearLayout>
 
         <LinearLayout
@@ -83,10 +83,10 @@
                 style="?editText"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="15dp"
+                android:completionThreshold="1"
                 android:gravity="center"
                 android:hint="@string/group_number"
-                android:singleLine="true"
-                android:completionThreshold="1"/>
+                android:singleLine="true" />
         </LinearLayout>
 
         <Button

@@ -1,6 +1,5 @@
 package com.example.jenya.studentachievements.activities;
 
-import android.app.SharedElementCallback;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
@@ -11,13 +10,11 @@ import android.view.ViewTreeObserver;
 import android.widget.ListView;
 
 import com.example.jenya.studentachievements.R;
-import com.example.jenya.studentachievements.utils.ThemeController;
 import com.example.jenya.studentachievements.adapters.UsersAdapter;
 import com.example.jenya.studentachievements.models.UserInfo;
+import com.example.jenya.studentachievements.utils.ThemeController;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 public class SearchResultsActivity extends AbstractActivityWithUsers {
     private UsersAdapter adapter;
@@ -41,20 +38,6 @@ public class SearchResultsActivity extends AbstractActivityWithUsers {
     @Override
     public void onActivityReenter(int resultCode, Intent data) {
         postponeEnterTransition();
-        int sharedElementPosition = data.getIntExtra("position", -1);
-        if (sharedElementPosition != -1) {
-            View listElement = listView.getChildAt(sharedElementPosition);
-            if (listElement != null) {
-                View sharedView = listElement.findViewById(R.id.layout);
-                setExitSharedElementCallback(new SharedElementCallback() {
-                    @Override
-                    public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
-                        sharedElements.put(sharedView.getTransitionName(), sharedView);
-                    }
-                });
-            }
-        }
-
         final View decor = getWindow().getDecorView();
         decor.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override

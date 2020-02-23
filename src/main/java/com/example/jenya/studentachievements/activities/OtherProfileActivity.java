@@ -19,15 +19,15 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.model.LazyHeaders;
-import com.example.jenya.studentachievements.utils.ImageActions;
 import com.example.jenya.studentachievements.R;
-import com.example.jenya.studentachievements.utils.SharedPreferencesActions;
-import com.example.jenya.studentachievements.utils.ThemeController;
 import com.example.jenya.studentachievements.adapters.AchievementsAdapter;
 import com.example.jenya.studentachievements.comparators.AchievementsComparator;
 import com.example.jenya.studentachievements.models.Achievement;
 import com.example.jenya.studentachievements.models.UserInfo;
 import com.example.jenya.studentachievements.requests.Requests;
+import com.example.jenya.studentachievements.utils.ImageActions;
+import com.example.jenya.studentachievements.utils.SharedPreferencesActions;
+import com.example.jenya.studentachievements.utils.ThemeController;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -54,6 +54,8 @@ public class OtherProfileActivity extends AbstractActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         ThemeController.onActivityCreateSetTheme(this);
         setContentView(R.layout.activity_otherprofile);
+
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             postponeEnterTransition();
         }
@@ -66,6 +68,7 @@ public class OtherProfileActivity extends AbstractActivity {
                 selectedElement = findViewById(R.id.imageFavorites);
                 break;
         }
+
         if (selectedElement != null) {
             TypedValue typedValue = new TypedValue();
             getTheme().resolveAttribute(R.attr.ic_active_color, typedValue, true);
@@ -76,6 +79,10 @@ public class OtherProfileActivity extends AbstractActivity {
         otherStudent = getIntent().getParcelableExtra("otherStudent");
         final ListView listView = findViewById(R.id.list);
         header = getLayoutInflater().inflate(R.layout.header_otherprofile, listView, false);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            header.findViewById(R.id.layout).setTransitionName(otherStudent.get_id());
+        }
 
         final ArrayList<Achievement> completedAchievements = new ArrayList<>();
         final ArrayList<Achievement> userAchievements = otherStudent.getAchievements();
@@ -182,11 +189,10 @@ public class OtherProfileActivity extends AbstractActivity {
     @Override
     public void onBackPressed() {
         Intent intent = new Intent();
-        intent.putExtra("position", getIntent().getIntExtra("position", -1));
         setResult(RESULT_OK, intent);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             if (getIntent().getStringExtra("activity").equals("FavoritesActivity")) {
-                if(!checkBoxFavorite.isChecked()) {
+                if (!checkBoxFavorite.isChecked()) {
                     header.findViewById(R.id.layout).setTransitionName(null);
                 }
             }
