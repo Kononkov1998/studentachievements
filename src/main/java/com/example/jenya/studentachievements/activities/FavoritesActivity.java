@@ -11,9 +11,11 @@ import android.view.ViewTreeObserver;
 import android.widget.ListView;
 
 import com.example.jenya.studentachievements.R;
-import com.example.jenya.studentachievements.utils.ThemeController;
 import com.example.jenya.studentachievements.adapters.UsersAdapter;
 import com.example.jenya.studentachievements.models.UserInfo;
+import com.example.jenya.studentachievements.requests.Requests;
+import com.example.jenya.studentachievements.utils.ThemeController;
+import com.kaopiz.kprogresshud.KProgressHUD;
 
 import java.util.List;
 import java.util.Map;
@@ -22,6 +24,7 @@ public class FavoritesActivity extends AbstractActivityWithUsers {
     @SuppressWarnings("FieldCanBeLocal")
     private UsersAdapter adapter;
     private ListView listView;
+    private KProgressHUD hud;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +35,11 @@ public class FavoritesActivity extends AbstractActivityWithUsers {
         adapter = new UsersAdapter(this, UserInfo.getCurrentUser().getFavouriteStudents());
         listView = findViewById(R.id.list);
         listView.setAdapter(adapter);
+        hud = KProgressHUD.create(this)
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setCancellable(false)
+                .setAnimationSpeed(2)
+                .setDimAmount(0.5f);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -67,7 +75,8 @@ public class FavoritesActivity extends AbstractActivityWithUsers {
     protected void onStart() {
         super.onStart();
         overridePendingTransition(0, 0);
-        adapter.notifyDataSetChanged();
+        hud.show();
+        Requests.getInstance().updateFavourites(this, hud, adapter);
     }
 
     public void openProfile(View view) {

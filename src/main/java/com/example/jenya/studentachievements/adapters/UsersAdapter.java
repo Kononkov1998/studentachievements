@@ -60,6 +60,11 @@ public class UsersAdapter extends BaseAdapter {
         return position;
     }
 
+    public void updateObjects(ArrayList<UserInfo> students){
+        objects.clear();
+        objects.addAll(students);
+    }
+
     // пункт списка
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {

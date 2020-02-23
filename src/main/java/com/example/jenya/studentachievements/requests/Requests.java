@@ -11,19 +11,20 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.model.LazyHeaders;
-import com.example.jenya.studentachievements.utils.ButtonActions;
-import com.example.jenya.studentachievements.utils.ImageActions;
 import com.example.jenya.studentachievements.R;
-import com.example.jenya.studentachievements.utils.SharedPreferencesActions;
 import com.example.jenya.studentachievements.activities.AuthActivity;
 import com.example.jenya.studentachievements.activities.ProfileActivity;
 import com.example.jenya.studentachievements.activities.SearchActivity;
 import com.example.jenya.studentachievements.activities.SearchNoResultsActivity;
 import com.example.jenya.studentachievements.activities.SearchResultsActivity;
+import com.example.jenya.studentachievements.adapters.UsersAdapter;
 import com.example.jenya.studentachievements.models.User;
 import com.example.jenya.studentachievements.models.UserInfo;
 import com.example.jenya.studentachievements.models.UserToken;
 import com.example.jenya.studentachievements.models.Visibility;
+import com.example.jenya.studentachievements.utils.ButtonActions;
+import com.example.jenya.studentachievements.utils.ImageActions;
+import com.example.jenya.studentachievements.utils.SharedPreferencesActions;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.kaopiz.kprogresshud.KProgressHUD;
@@ -300,6 +301,26 @@ public class Requests {
 
             @Override
             public void onFailure(@NonNull Call<ArrayList<UserInfo>> call, @NonNull Throwable t) {
+                Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    // /student/favourite/list
+    public void updateFavourites(Context ctx, KProgressHUD hud, UsersAdapter adapter) {
+        userApi.favourites(SharedPreferencesActions.read("token", ctx)).enqueue(new Callback<ArrayList<UserInfo>>() {
+            @Override
+            public void onResponse(@NonNull Call<ArrayList<UserInfo>> call, @NonNull Response<ArrayList<UserInfo>> response) {
+                if (response.isSuccessful()) {
+                    adapter.updateObjects(response.body());
+                    adapter.notifyDataSetChanged();
+                    hud.dismiss();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ArrayList<UserInfo>> call, @NonNull Throwable t) {
+                hud.dismiss();
                 Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
             }
         });
