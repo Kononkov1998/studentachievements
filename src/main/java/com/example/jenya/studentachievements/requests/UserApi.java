@@ -1,5 +1,6 @@
 package com.example.jenya.studentachievements.requests;
 
+import com.example.jenya.studentachievements.models.Semester;
 import com.example.jenya.studentachievements.models.User;
 import com.example.jenya.studentachievements.models.UserInfo;
 import com.example.jenya.studentachievements.models.UserToken;
@@ -56,4 +57,6 @@ interface UserApi
     @POST("/student/achievements/update")
     Call<UserInfo> update(@Header("Authorization") String token);
 
+    @GET("/student/semester/list")
+    Call<ArrayList<Semester>> semesters(@Header("Authorization") String token);
 }

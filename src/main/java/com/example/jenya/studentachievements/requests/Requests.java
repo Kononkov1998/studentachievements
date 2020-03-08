@@ -19,6 +19,7 @@ import com.example.jenya.studentachievements.activities.SearchNoResultsActivity;
 import com.example.jenya.studentachievements.activities.SearchResultsActivity;
 import com.example.jenya.studentachievements.adapters.UsersAdapter;
 import com.example.jenya.studentachievements.comparators.StudentsComparator;
+import com.example.jenya.studentachievements.models.Semester;
 import com.example.jenya.studentachievements.models.User;
 import com.example.jenya.studentachievements.models.UserInfo;
 import com.example.jenya.studentachievements.models.UserToken;
@@ -439,26 +440,53 @@ public class Requests {
         });
     }
 
-    private void updateFromSplashScreen(Context ctx) {
+    private void updateFromSplashScreen(Context ctx)
+    {
         userApi.update(SharedPreferencesActions.read("token", ctx)).enqueue(new Callback<UserInfo>() {
             @Override
             public void onResponse(@NonNull Call<UserInfo> call, @NonNull Response<UserInfo> response) {
-                String id = response.body().get_id();
-                String pattern = "dd.MM.yyyy";
-                DateFormat dateFormat = new SimpleDateFormat(pattern, Locale.getDefault());
-                Date today = Calendar.getInstance().getTime();
-                String todayAsString = dateFormat.format(today);
-                SharedPreferencesActions.save(id, todayAsString, ctx);
+                if(response.isSuccessful())
+                {
+                    String id = response.body().get_id();
+                    String pattern = "dd.MM.yyyy";
+                    DateFormat dateFormat = new SimpleDateFormat(pattern, Locale.getDefault());
+                    Date today = Calendar.getInstance().getTime();
+                    String todayAsString = dateFormat.format(today);
+                    SharedPreferencesActions.save(id, todayAsString, ctx);
 
-                UserInfo.setCurrentUser(response.body());
-                getFavourites(ctx, false);
+                    UserInfo.setCurrentUser(response.body());
+                    getFavourites(ctx, false);
+                }
             }
 
             @Override
-            public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t)
+            {
                 Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(ctx, AuthActivity.class);
                 ctx.startActivity(intent);
+            }
+        });
+    }
+
+    // /student/semester/list
+    public void semesters(Context ctx)
+    {
+        userApi.semesters(SharedPreferencesActions.read("token", ctx)).enqueue(new Callback<ArrayList<Semester>>()
+        {
+            @Override
+            public void onResponse(@NonNull Call<ArrayList<Semester>> call, @NonNull Response<ArrayList<Semester>> response)
+            {
+                if(response.isSuccessful())
+                {
+                    ArrayList<Semester> semesters = response.body(); // список семестров
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ArrayList<Semester>> call, @NonNull Throwable t)
+            {
+                Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
             }
         });
     }
