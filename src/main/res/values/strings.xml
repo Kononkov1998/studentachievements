@@ -18,4 +18,5 @@
     <string name="hide">Скрыть полученные достижения</string>
     <string name="appearance">Внешний вид</string>
     <string name="dark_theme">Темная тема</string>
+    <string name="delete_account">Удалить аккаунт</string>
 </resources>

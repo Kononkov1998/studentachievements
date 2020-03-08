@@ -17,6 +17,7 @@ import com.example.jenya.studentachievements.activities.ProfileActivity;
 import com.example.jenya.studentachievements.activities.SearchActivity;
 import com.example.jenya.studentachievements.activities.SearchNoResultsActivity;
 import com.example.jenya.studentachievements.activities.SearchResultsActivity;
+import com.example.jenya.studentachievements.activities.SettingsActivity;
 import com.example.jenya.studentachievements.adapters.UsersAdapter;
 import com.example.jenya.studentachievements.comparators.StudentsComparator;
 import com.example.jenya.studentachievements.models.Mark;
@@ -441,13 +442,11 @@ public class Requests {
         });
     }
 
-    private void updateFromSplashScreen(Context ctx)
-    {
+    private void updateFromSplashScreen(Context ctx) {
         userApi.update(SharedPreferencesActions.read("token", ctx)).enqueue(new Callback<UserInfo>() {
             @Override
             public void onResponse(@NonNull Call<UserInfo> call, @NonNull Response<UserInfo> response) {
-                if(response.isSuccessful())
-                {
+                if (response.isSuccessful()) {
                     String id = response.body().get_id();
                     String pattern = "dd.MM.yyyy";
                     DateFormat dateFormat = new SimpleDateFormat(pattern, Locale.getDefault());
@@ -461,8 +460,7 @@ public class Requests {
             }
 
             @Override
-            public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t)
-            {
+            public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t) {
                 Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(ctx, AuthActivity.class);
                 ctx.startActivity(intent);
@@ -471,68 +469,52 @@ public class Requests {
     }
 
     // /student/semester/list
-    public void semesters(Context ctx)
-    {
-        userApi.semesters(SharedPreferencesActions.read("token", ctx)).enqueue(new Callback<ArrayList<Semester>>()
-        {
+    public void semesters(Context ctx) {
+        userApi.semesters(SharedPreferencesActions.read("token", ctx)).enqueue(new Callback<ArrayList<Semester>>() {
             @Override
-            public void onResponse(@NonNull Call<ArrayList<Semester>> call, @NonNull Response<ArrayList<Semester>> response)
-            {
-                if(response.isSuccessful())
-                {
+            public void onResponse(@NonNull Call<ArrayList<Semester>> call, @NonNull Response<ArrayList<Semester>> response) {
+                if (response.isSuccessful()) {
                     ArrayList<Semester> semesters = response.body(); // список семестров
                 }
             }
 
             @Override
-            public void onFailure(@NonNull Call<ArrayList<Semester>> call, @NonNull Throwable t)
-            {
+            public void onFailure(@NonNull Call<ArrayList<Semester>> call, @NonNull Throwable t) {
                 Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
             }
         });
     }
 
     // /student/semester/marks/{idLGS}
-    public void marks(Context ctx, int idLGS)
-    {
-        userApi.marks(SharedPreferencesActions.read("token", ctx), idLGS).enqueue(new Callback<ArrayList<Mark>>()
-        {
+    public void marks(Context ctx, int idLGS) {
+        userApi.marks(SharedPreferencesActions.read("token", ctx), idLGS).enqueue(new Callback<ArrayList<Mark>>() {
             @Override
-            public void onResponse(@NonNull Call<ArrayList<Mark>> call, @NonNull Response<ArrayList<Mark>> response)
-            {
-                if(response.isSuccessful())
-                {
+            public void onResponse(@NonNull Call<ArrayList<Mark>> call, @NonNull Response<ArrayList<Mark>> response) {
+                if (response.isSuccessful()) {
                     ArrayList<Mark> marks = response.body();
                 }
             }
 
             @Override
-            public void onFailure(@NonNull Call<ArrayList<Mark>> call, @NonNull Throwable t)
-            {
+            public void onFailure(@NonNull Call<ArrayList<Mark>> call, @NonNull Throwable t) {
                 Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
             }
         });
     }
 
     // /student/account
-    public void deleteAccount(Context ctx)
-    {
-        userApi.deleteAccount(SharedPreferencesActions.read("token", ctx)).enqueue(new Callback<Void>()
-        {
+    public void deleteAccount(Context ctx) {
+        userApi.deleteAccount(SharedPreferencesActions.read("token", ctx)).enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response)
-            {
-                if(response.isSuccessful())
-                {
-                    // выходим из аккаунта
-
-                    SharedPreferencesActions.deleteAll(ctx);
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                if (response.isSuccessful()) {
+                    ((SettingsActivity) ctx).exit(null);
+                    Toast.makeText(ctx, "Аккаунт успешно удалён из базы данных", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t)
-            {
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
                 Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
             }
         });

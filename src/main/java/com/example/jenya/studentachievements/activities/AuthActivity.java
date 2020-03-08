@@ -8,14 +8,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.jenya.studentachievements.utils.ButtonActions;
 import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.models.User;
 import com.example.jenya.studentachievements.requests.Requests;
+import com.example.jenya.studentachievements.utils.ButtonActions;
 
 public class AuthActivity extends AppCompatActivity {
     private Button btn;
     private EditText login, pass;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
