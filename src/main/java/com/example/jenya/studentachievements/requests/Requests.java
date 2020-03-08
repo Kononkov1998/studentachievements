@@ -525,7 +525,8 @@ public class Requests {
                 if(response.isSuccessful())
                 {
                     // выходим из аккаунта
-                    // удаляем все SharedPreferences
+
+                    SharedPreferencesActions.deleteAll(ctx);
                 }
             }
 

@@ -34,4 +34,11 @@ final public class SharedPreferencesActions {
     public static boolean check(String name, Context ctx) {
         return ctx.getSharedPreferences("User", MODE_PRIVATE).contains(name);
     }
+
+    public static void deleteAll(Context ctx)
+    {
+        SharedPreferences.Editor prefEditor = ctx.getSharedPreferences("User", MODE_PRIVATE).edit();
+        prefEditor.clear();
+        prefEditor.apply();
+    }
 }
