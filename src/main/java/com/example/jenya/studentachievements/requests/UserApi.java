@@ -1,5 +1,6 @@
 package com.example.jenya.studentachievements.requests;
 
+import com.example.jenya.studentachievements.models.Mark;
 import com.example.jenya.studentachievements.models.Semester;
 import com.example.jenya.studentachievements.models.User;
 import com.example.jenya.studentachievements.models.UserInfo;
@@ -59,4 +60,8 @@ interface UserApi
 
     @GET("/student/semester/list")
     Call<ArrayList<Semester>> semesters(@Header("Authorization") String token);
+
+    @GET("/student/semester/marks/{idLGS}")
+    Call<ArrayList<Mark>> marks(@Header("Authorization") String token, @Path("idLGS") int idLGS);
+
 }

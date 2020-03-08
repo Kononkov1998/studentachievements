@@ -19,6 +19,7 @@ import com.example.jenya.studentachievements.activities.SearchNoResultsActivity;
 import com.example.jenya.studentachievements.activities.SearchResultsActivity;
 import com.example.jenya.studentachievements.adapters.UsersAdapter;
 import com.example.jenya.studentachievements.comparators.StudentsComparator;
+import com.example.jenya.studentachievements.models.Mark;
 import com.example.jenya.studentachievements.models.Semester;
 import com.example.jenya.studentachievements.models.User;
 import com.example.jenya.studentachievements.models.UserInfo;
@@ -485,6 +486,28 @@ public class Requests {
 
             @Override
             public void onFailure(@NonNull Call<ArrayList<Semester>> call, @NonNull Throwable t)
+            {
+                Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    // /student/semester/marks/{idLGS}
+    public void marks(Context ctx, int idLGS)
+    {
+        userApi.marks(SharedPreferencesActions.read("token", ctx), idLGS).enqueue(new Callback<ArrayList<Mark>>()
+        {
+            @Override
+            public void onResponse(@NonNull Call<ArrayList<Mark>> call, @NonNull Response<ArrayList<Mark>> response)
+            {
+                if(response.isSuccessful())
+                {
+                    ArrayList<Mark> marks = response.body();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ArrayList<Mark>> call, @NonNull Throwable t)
             {
                 Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
             }
