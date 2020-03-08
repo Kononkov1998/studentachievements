@@ -513,4 +513,27 @@ public class Requests {
             }
         });
     }
+
+    // /student/account
+    public void deleteAccount(Context ctx)
+    {
+        userApi.deleteAccount(SharedPreferencesActions.read("token", ctx)).enqueue(new Callback<Void>()
+        {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response)
+            {
+                if(response.isSuccessful())
+                {
+                    // выходим из аккаунта
+                    // удаляем все SharedPreferences
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t)
+            {
+                Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
 }

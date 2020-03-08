@@ -64,4 +64,6 @@ interface UserApi
     @GET("/student/semester/marks/{idLGS}")
     Call<ArrayList<Mark>> marks(@Header("Authorization") String token, @Path("idLGS") int idLGS);
 
+    @DELETE("/student/account")
+    Call<Void> deleteAccount(@Header("Authorization") String token);
 }
