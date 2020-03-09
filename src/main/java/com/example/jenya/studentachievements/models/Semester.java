@@ -3,8 +3,22 @@ package com.example.jenya.studentachievements.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+
 public class Semester
 {
+    private static ArrayList<Semester> semesters;
+
+    public static ArrayList<Semester> getSemesters()
+    {
+        return semesters;
+    }
+
+    public static void setSemesters(ArrayList<Semester> semesters)
+    {
+        Semester.semesters = semesters;
+    }
+
     @SerializedName("semesterName")
     @Expose
     private String semesterName;
@@ -15,7 +29,7 @@ public class Semester
 
     @SerializedName("groupname")
     @Expose
-    private int groupname;
+    private String groupname;
 
     @SerializedName("semesterNumber")
     @Expose
@@ -25,7 +39,7 @@ public class Semester
     @Expose
     private int idSSS;
 
-    public int getGroupname() {
+    public String getGroupname() {
         return groupname;
     }
 
@@ -45,7 +59,7 @@ public class Semester
         return semesterName;
     }
 
-    public void setGroupname(int groupname) {
+    public void setGroupname(String groupname) {
         this.groupname = groupname;
     }
 

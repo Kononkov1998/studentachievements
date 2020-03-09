@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -22,6 +23,7 @@ import com.example.jenya.studentachievements.adapters.UsersAdapter;
 import com.example.jenya.studentachievements.comparators.StudentsComparator;
 import com.example.jenya.studentachievements.models.Mark;
 import com.example.jenya.studentachievements.models.Semester;
+import com.example.jenya.studentachievements.models.StudentSemesters;
 import com.example.jenya.studentachievements.models.User;
 import com.example.jenya.studentachievements.models.UserInfo;
 import com.example.jenya.studentachievements.models.UserToken;
@@ -470,17 +472,17 @@ public class Requests {
 
     // /student/semester/list
     public void semesters(Context ctx) {
-        userApi.semesters(SharedPreferencesActions.read("token", ctx)).enqueue(new Callback<ArrayList<Semester>>() {
+        userApi.semesters(SharedPreferencesActions.read("token", ctx)).enqueue(new Callback<StudentSemesters>() {
             @Override
-            public void onResponse(@NonNull Call<ArrayList<Semester>> call, @NonNull Response<ArrayList<Semester>> response) {
+            public void onResponse(@NonNull Call<StudentSemesters> call, @NonNull Response<StudentSemesters> response) {
                 if (response.isSuccessful()) {
-                    ArrayList<Semester> semesters = response.body(); // список семестров
+                    Semester.setSemesters(response.body().getStudentSemesters());
                 }
             }
 
             @Override
-            public void onFailure(@NonNull Call<ArrayList<Semester>> call, @NonNull Throwable t) {
-                Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
+            public void onFailure(@NonNull Call<StudentSemesters> call, @NonNull Throwable t) {
+                Toast.makeText(ctx, t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }

@@ -9,10 +9,13 @@ import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import com.example.jenya.studentachievements.models.Semester;
+import com.example.jenya.studentachievements.requests.Requests;
 import com.example.jenya.studentachievements.utils.ImageActions;
 import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.utils.ThemeController;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class SemestersActivity extends AbstractActivity {
@@ -22,10 +25,10 @@ public class SemestersActivity extends AbstractActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         ThemeController.onActivityCreateSetTheme(this);
         setContentView(R.layout.activity_grade);
-        initButtons(9); // число семестров из запроса
+        initButtons(Semester.getSemesters().size());
     }
 
-    private void initButtons(int semesters) {
+    public void initButtons(int semesters) {
         if (semesters < 1) {
             return;
         }
