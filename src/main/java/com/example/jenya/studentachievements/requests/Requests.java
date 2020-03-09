@@ -507,7 +507,9 @@ public class Requests {
         userApi.deleteAccount(SharedPreferencesActions.read("token", ctx)).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
-                if (response.isSuccessful()) {
+                if (response.isSuccessful())
+                {
+                    SharedPreferencesActions.deleteAll(ctx);
                     ((SettingsActivity) ctx).exit(null);
                     Toast.makeText(ctx, "Аккаунт успешно удалён из базы данных", Toast.LENGTH_SHORT).show();
                 }

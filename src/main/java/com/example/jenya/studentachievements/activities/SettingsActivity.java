@@ -104,7 +104,9 @@ public class SettingsActivity extends AbstractActivity {
     }
 
     public void exit(View view) {
-        SharedPreferencesActions.deleteAll(this);
+        SharedPreferencesActions.delete("token", this);
+        SharedPreferencesActions.delete("showCompleted", this);
+        SharedPreferencesActions.delete("theme", this);
         ThemeController.setCurrentTheme(ThemeController.APP_THEME_LIGHT);
         Intent intent = new Intent(this, SplashScreenActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
