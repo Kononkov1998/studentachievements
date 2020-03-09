@@ -23,6 +23,7 @@ import com.example.jenya.studentachievements.adapters.UsersAdapter;
 import com.example.jenya.studentachievements.comparators.StudentsComparator;
 import com.example.jenya.studentachievements.models.Mark;
 import com.example.jenya.studentachievements.models.Semester;
+import com.example.jenya.studentachievements.models.StudentMarks;
 import com.example.jenya.studentachievements.models.StudentSemesters;
 import com.example.jenya.studentachievements.models.User;
 import com.example.jenya.studentachievements.models.UserInfo;
@@ -489,16 +490,16 @@ public class Requests {
 
     // /student/semester/marks/{idLGS}
     public void marks(Context ctx, int idLGS) {
-        userApi.marks(SharedPreferencesActions.read("token", ctx), idLGS).enqueue(new Callback<ArrayList<Mark>>() {
+        userApi.marks(SharedPreferencesActions.read("token", ctx), idLGS).enqueue(new Callback<StudentMarks>() {
             @Override
-            public void onResponse(@NonNull Call<ArrayList<Mark>> call, @NonNull Response<ArrayList<Mark>> response) {
+            public void onResponse(@NonNull Call<StudentMarks> call, @NonNull Response<StudentMarks> response) {
                 if (response.isSuccessful()) {
-                    ArrayList<Mark> marks = response.body();
+                    StudentMarks marks = response.body();
                 }
             }
 
             @Override
-            public void onFailure(@NonNull Call<ArrayList<Mark>> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<StudentMarks> call, @NonNull Throwable t) {
                 Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
             }
         });

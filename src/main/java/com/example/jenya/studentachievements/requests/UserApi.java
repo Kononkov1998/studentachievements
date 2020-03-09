@@ -2,6 +2,7 @@ package com.example.jenya.studentachievements.requests;
 
 import com.example.jenya.studentachievements.models.Mark;
 import com.example.jenya.studentachievements.models.Semester;
+import com.example.jenya.studentachievements.models.StudentMarks;
 import com.example.jenya.studentachievements.models.StudentSemesters;
 import com.example.jenya.studentachievements.models.User;
 import com.example.jenya.studentachievements.models.UserInfo;
@@ -63,7 +64,7 @@ interface UserApi
     Call<StudentSemesters> semesters(@Header("Authorization") String token);
 
     @GET("/student/semester/marks/{idLGS}")
-    Call<ArrayList<Mark>> marks(@Header("Authorization") String token, @Path("idLGS") int idLGS);
+    Call<StudentMarks> marks(@Header("Authorization") String token, @Path("idLGS") int idLGS);
 
     @DELETE("/student/account")
     Call<Void> deleteAccount(@Header("Authorization") String token);
