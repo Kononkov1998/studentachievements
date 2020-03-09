@@ -39,6 +39,8 @@ public class Semester
     @Expose
     private int idSSS;
 
+    private ArrayList<Mark> marks;
+
     public String getGroupname() {
         return groupname;
     }
@@ -59,6 +61,10 @@ public class Semester
         return semesterName;
     }
 
+    public ArrayList<Mark> getMarks() {
+        return marks;
+    }
+
     public void setGroupname(String groupname) {
         this.groupname = groupname;
     }
@@ -77,5 +83,9 @@ public class Semester
 
     public void setSemesterNumber(int semesterNumber) {
         this.semesterNumber = semesterNumber;
+    }
+
+    public void setMarks(ArrayList<Mark> marks) {
+        this.marks = marks;
     }
 }

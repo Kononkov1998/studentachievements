@@ -9,13 +9,11 @@ import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-import com.example.jenya.studentachievements.models.Semester;
-import com.example.jenya.studentachievements.requests.Requests;
-import com.example.jenya.studentachievements.utils.ImageActions;
 import com.example.jenya.studentachievements.R;
+import com.example.jenya.studentachievements.models.Semester;
+import com.example.jenya.studentachievements.utils.ImageActions;
 import com.example.jenya.studentachievements.utils.ThemeController;
 
-import java.util.ArrayList;
 import java.util.Locale;
 
 public class SemestersActivity extends AbstractActivity {
@@ -68,15 +66,10 @@ public class SemestersActivity extends AbstractActivity {
             button.setBackground(ContextCompat.getDrawable(this, R.drawable.button_semester_shape));
 
             // здесь открываем новую активити с дисциплинами, отпрвляя номер семестра
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(getApplicationContext(), DisciplinesActivity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putString("semester", String.valueOf(button.getText()));
-                    intent.putExtras(bundle);
-                    startActivity(intent);
-                }
+            button.setOnClickListener(view -> {
+                Intent intent = new Intent(getApplicationContext(), DisciplinesActivity.class);
+                intent.putExtra("semesterNumber", Integer.parseInt(button.getText().toString()));
+                startActivity(intent);
             });
 
             row.addView(button);

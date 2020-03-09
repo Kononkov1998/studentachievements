@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -21,7 +20,6 @@ import com.example.jenya.studentachievements.activities.SearchResultsActivity;
 import com.example.jenya.studentachievements.activities.SettingsActivity;
 import com.example.jenya.studentachievements.adapters.UsersAdapter;
 import com.example.jenya.studentachievements.comparators.StudentsComparator;
-import com.example.jenya.studentachievements.models.Mark;
 import com.example.jenya.studentachievements.models.Semester;
 import com.example.jenya.studentachievements.models.StudentMarks;
 import com.example.jenya.studentachievements.models.StudentSemesters;
@@ -296,6 +294,8 @@ public class Requests {
             @Override
             public void onResponse(@NonNull Call<ArrayList<UserInfo>> call, @NonNull Response<ArrayList<UserInfo>> response) {
                 if (response.isSuccessful()) {
+                    semesters(ctx);
+
                     UserInfo.getCurrentUser().setFavouriteStudents(response.body());
                     Collections.sort(UserInfo.getCurrentUser().getFavouriteStudents(), new StudentsComparator());
                     Intent intent = new Intent(ctx, ProfileActivity.class);
@@ -478,6 +478,9 @@ public class Requests {
             public void onResponse(@NonNull Call<StudentSemesters> call, @NonNull Response<StudentSemesters> response) {
                 if (response.isSuccessful()) {
                     Semester.setSemesters(response.body().getStudentSemesters());
+                    for (Semester semester : Semester.getSemesters()) {
+                        marks(ctx, semester.getIdLGS(), semester);
+                    }
                 }
             }
 
@@ -489,12 +492,12 @@ public class Requests {
     }
 
     // /student/semester/marks/{idLGS}
-    public void marks(Context ctx, int idLGS) {
+    public void marks(Context ctx, int idLGS, Semester semester) {
         userApi.marks(SharedPreferencesActions.read("token", ctx), idLGS).enqueue(new Callback<StudentMarks>() {
             @Override
             public void onResponse(@NonNull Call<StudentMarks> call, @NonNull Response<StudentMarks> response) {
                 if (response.isSuccessful()) {
-                    StudentMarks marks = response.body();
+                    semester.setMarks(response.body().getRatings());
                 }
             }
 

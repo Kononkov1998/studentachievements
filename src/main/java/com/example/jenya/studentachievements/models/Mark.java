@@ -3,10 +3,12 @@ package com.example.jenya.studentachievements.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
-public class Mark
-{
+public class Mark {
     @SerializedName("examrating")
     @Expose
     private int examrating;
@@ -225,5 +227,81 @@ public class Mark
 
     public void setSubjectName(String subjectName) {
         this.subjectName = subjectName;
+    }
+
+    public boolean isCP() {
+        return isCP;
+    }
+
+    public boolean isExam() {
+        return isExam;
+    }
+
+    public boolean isCW() {
+        return isCW;
+    }
+
+    public boolean isPractice() {
+        return isPractice;
+    }
+
+    public boolean isPass() {
+        return isPass;
+    }
+
+    public String getStrDate() {
+        if (dateOfPass == null) {
+            return "";
+        }
+        DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+        return dateFormat.format(dateOfPass);
+    }
+
+    public String getStrRating() {
+
+        if (isPass && passrating == 1) {
+            return "Зачтено";
+        }
+
+        int rating = -1;
+        if (isExam) {
+            rating = examrating;
+        } else if (isPractice) {
+            rating = practicerating;
+        }
+
+        switch (rating) {
+            case 5:
+                return "Отлично";
+            case 4:
+                return "Хорошо";
+            case 3:
+                return "Удовлетворительно";
+            case 2:
+                return "Неудовлетворительно";
+            case 1:
+                return "Посредственно";
+        }
+        return null;
+    }
+
+    public String getStrTutor() {
+        if (isPass || isPractice) {
+            return passTutor;
+        } else if (isExam) {
+            return examTutor;
+        }
+        return null;
+    }
+
+    public String getDisciplineType() {
+        if (isExam()) {
+            return "Экзамен";
+        } else if (isPass()) {
+            return "Зачёт";
+        } else if (isPractice()) {
+            return "Практика";
+        }
+        return null;
     }
 }

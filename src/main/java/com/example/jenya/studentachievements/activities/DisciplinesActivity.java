@@ -5,14 +5,20 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.jenya.studentachievements.R;
+import com.example.jenya.studentachievements.models.Mark;
+import com.example.jenya.studentachievements.models.Semester;
 import com.example.jenya.studentachievements.utils.ThemeController;
 
-import java.util.Locale;
+import java.util.ArrayList;
 
 public class DisciplinesActivity extends AbstractActivity {
+
+    private ArrayList<Mark> marks;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,21 +26,22 @@ public class DisciplinesActivity extends AbstractActivity {
         ThemeController.onActivityCreateSetTheme(this);
         setContentView(R.layout.activity_disciplines);
 
-        Bundle bundle = getIntent().getExtras();
         // узнаем в каком мы семестре
-        String semester = bundle.getString("semester");
+        int semesterNumber = getIntent().getIntExtra("semesterNumber", 0);
+        marks = Semester.getSemesters().get(semesterNumber - 1).getMarks();
         // создаем карточку для каждого предмета
-        initCards(4);
+        initCards();
     }
 
-    private void initCards(int disciplines) {
-        if (disciplines < 1) {
+    private void initCards() {
+        if (marks.size() < 1) {
             return;
         }
 
         LinearLayout row = null;
 
-        for (int i = 0; i < disciplines; i++) {
+        for (int i = 0; i < marks.size(); i++) {
+            Mark currentMark = marks.get(i);
             // если итерация делится на 2, то создаем горизонтальный список
             if (i % 2 == 0) {
                 row = new LinearLayout(this);
@@ -48,31 +55,70 @@ public class DisciplinesActivity extends AbstractActivity {
                 list.addView(row);
             }
 
+
             View discipline = getLayoutInflater().inflate(R.layout.item_discipline, row, false);
             ////////////////////////////////////////////////// Пример изменения даты
+            TextView name = discipline.findViewById(R.id.discipline_name);
+            TextView rating = discipline.findViewById(R.id.discipline_rating);
             TextView date = discipline.findViewById(R.id.discipline_date);
-            date.setText(String.format(Locale.getDefault(), "%d.%d.%d", i, i, i));
+
+            name.setText(currentMark.getSubjectName());
+            rating.setText(currentMark.getStrRating());
+            date.setText(currentMark.getStrDate());
+
             //////////////////////////////////////////////////
             row.addView(discipline);
 
             // проверяем на последней итерации цикла количество оставшегося места под карточки
-            if ((i == (disciplines - 1)) && (disciplines % 2 != 0)) {
+            if ((i == (marks.size() - 1)) && (marks.size() % 2 != 0)) {
                 View disciplineInvisible = getLayoutInflater().inflate(R.layout.item_discipline, row, false);
                 disciplineInvisible.setVisibility(View.INVISIBLE);
                 disciplineInvisible.setEnabled(false);
                 row.addView(disciplineInvisible);
+            }
+
+            if (i == 0) {
+                setAsMain(discipline);
             }
         }
     }
 
     public void setAsMain(View view) {
         ////////////////////////////////////////////////// Пример изменения даты Пример выставления карточки как главной
-        TextView textView = view.findViewById(R.id.discipline_date);
-        String date = textView.getText().toString();
-        TextView textViewMain = findViewById(R.id.discipline_date);
-        textViewMain.setText(date);
+        ScrollView scrollView = findViewById(R.id.scrollView);
+        scrollView.smoothScrollTo(0, 0);
+        TextView textView = view.findViewById(R.id.discipline_name);
+        String name = textView.getText().toString();
+        Mark currentMark = findMark(name);
+
+        View mainView = findViewById(R.id.discipline_main);
+        TextView textViewName = mainView.findViewById(R.id.discipline_name);
+        TextView textViewType = mainView.findViewById(R.id.discipline_type);
+        TextView textViewTutor = mainView.findViewById(R.id.discipline_tutor);
+        TextView textViewRating = mainView.findViewById(R.id.discipline_rating);
+        TextView textViewHours = mainView.findViewById(R.id.discipline_hours);
+        TextView textViewDate = mainView.findViewById(R.id.discipline_date);
+
+        textViewName.setText(currentMark.getSubjectName());
+        textViewType.setText(currentMark.getDisciplineType());
+        textViewTutor.setText(currentMark.getStrTutor());
+        textViewRating.setText(currentMark.getStrRating());
+        String hours = currentMark.getHoursCount() + "";
+        textViewHours.setText(hours);
+        textViewDate.setText(currentMark.getStrDate());
         //////////////////////////////////////////////////
     }
+
+
+    private Mark findMark(String name) {
+        for (Mark mark : marks) {
+            if (mark.getSubjectName().equals(name)) {
+                return mark;
+            }
+        }
+        return null;
+    }
+
 
     @Override
     protected void onStart() {

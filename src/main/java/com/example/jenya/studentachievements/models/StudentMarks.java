@@ -5,8 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
-public class StudentMarks
-{
+public class StudentMarks {
     @SerializedName("ratings")
     @Expose
     private ArrayList<Mark> ratings;
@@ -14,4 +13,12 @@ public class StudentMarks
     @SerializedName("status")
     @Expose
     private String status;
+
+    public void setRatings(ArrayList<Mark> ratings) {
+        this.ratings = ratings;
+    }
+
+    public ArrayList<Mark> getRatings() {
+        return ratings;
+    }
 }

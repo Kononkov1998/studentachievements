@@ -37,11 +37,10 @@
             android:weightSum="1">
 
             <TextView
-                android:id="@+id/discipline_grade"
+                android:id="@+id/discipline_rating"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:text="Отлично"
                 android:textColor="@color/colorBlack" />
 
             <TextView
@@ -50,7 +49,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
                 android:gravity="end"
-                android:text="01.01.20"
                 android:textColor="@color/colorBlack" />
         </LinearLayout>
     </LinearLayout>
