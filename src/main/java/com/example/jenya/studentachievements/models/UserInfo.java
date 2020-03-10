@@ -29,7 +29,7 @@ public class UserInfo implements Parcelable {
 
     @SerializedName("isAvailable")
     @Expose
-    private boolean isAvailable;
+    private boolean isAvailable = true;
 
     @SerializedName("visibility")
     @Expose

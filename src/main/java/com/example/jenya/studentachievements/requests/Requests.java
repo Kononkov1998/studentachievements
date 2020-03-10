@@ -353,7 +353,7 @@ public class Requests {
     }
 
     // /student/favourite/list
-    public void updateFavourites(Context ctx, KProgressHUD hud, UsersAdapter adapter) {
+    public void updateFavourites(Context ctx, UsersAdapter adapter) {
         userApi.favourites(SharedPreferencesActions.read("token", ctx)).enqueue(new Callback<ArrayList<UserInfo>>() {
             @Override
             public void onResponse(@NonNull Call<ArrayList<UserInfo>> call, @NonNull Response<ArrayList<UserInfo>> response) {
@@ -364,16 +364,13 @@ public class Requests {
                         Collections.sort(UserInfo.getCurrentUser().getFavouriteStudents(), new StudentsComparator());
                         adapter.notifyDataSetChanged();
                     }
-                    hud.dismiss();
                 } else {
-                    hud.dismiss();
                     Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<ArrayList<UserInfo>> call, @NonNull Throwable t) {
-                hud.dismiss();
                 Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
             }
         });
