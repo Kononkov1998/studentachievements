@@ -5,17 +5,14 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
-public class Semester
-{
-    private static ArrayList<Semester> semesters;
+public class Semester {
+    private static ArrayList<Semester> semesters = new ArrayList<>();
 
-    public static ArrayList<Semester> getSemesters()
-    {
+    public static ArrayList<Semester> getSemesters() {
         return semesters;
     }
 
-    public static void setSemesters(ArrayList<Semester> semesters)
-    {
+    public static void setSemesters(ArrayList<Semester> semesters) {
         Semester.semesters = semesters;
     }
 
@@ -39,7 +36,7 @@ public class Semester
     @Expose
     private int idSSS;
 
-    private ArrayList<Mark> marks;
+    private ArrayList<Mark> marks = new ArrayList<>();
 
     public String getGroupname() {
         return groupname;

@@ -14,10 +14,11 @@ import com.example.jenya.studentachievements.models.Semester;
 import com.example.jenya.studentachievements.utils.ThemeController;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class DisciplinesActivity extends AbstractActivity {
-
     private ArrayList<Mark> marks;
+    private View mainView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +27,7 @@ public class DisciplinesActivity extends AbstractActivity {
         ThemeController.onActivityCreateSetTheme(this);
         setContentView(R.layout.activity_disciplines);
 
+        mainView = findViewById(R.id.discipline_main);
         // узнаем в каком мы семестре
         int semesterNumber = getIntent().getIntExtra("semesterNumber", 0);
         marks = Semester.getSemesters().get(semesterNumber - 1).getMarks();
@@ -35,6 +37,7 @@ public class DisciplinesActivity extends AbstractActivity {
 
     private void initCards() {
         if (marks.size() < 1) {
+            mainView.setVisibility(View.INVISIBLE);
             return;
         }
 
@@ -90,8 +93,6 @@ public class DisciplinesActivity extends AbstractActivity {
         TextView textView = view.findViewById(R.id.discipline_name);
         String name = textView.getText().toString();
         Mark currentMark = findMark(name);
-
-        View mainView = findViewById(R.id.discipline_main);
         TextView textViewName = mainView.findViewById(R.id.discipline_name);
         TextView textViewType = mainView.findViewById(R.id.discipline_type);
         TextView textViewTutor = mainView.findViewById(R.id.discipline_tutor);
@@ -103,7 +104,7 @@ public class DisciplinesActivity extends AbstractActivity {
         textViewType.setText(currentMark.getDisciplineType());
         textViewTutor.setText(currentMark.getStrTutor());
         textViewRating.setText(currentMark.getStrRating());
-        String hours = currentMark.getHoursCount() + "";
+        String hours = String.format(Locale.getDefault(), "%d (%d з.е.)", currentMark.getHoursCount(), currentMark.getCreditUnits());
         textViewHours.setText(hours);
         textViewDate.setText(currentMark.getStrDate());
         //////////////////////////////////////////////////

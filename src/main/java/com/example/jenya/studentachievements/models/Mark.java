@@ -9,6 +9,8 @@ import java.util.Date;
 import java.util.Locale;
 
 public class Mark {
+    private static final int CREDIT_UNIT_MULTIPLIER = 36;
+
     @SerializedName("examrating")
     @Expose
     private int examrating;
@@ -229,26 +231,6 @@ public class Mark {
         this.subjectName = subjectName;
     }
 
-    public boolean isCP() {
-        return isCP;
-    }
-
-    public boolean isExam() {
-        return isExam;
-    }
-
-    public boolean isCW() {
-        return isCW;
-    }
-
-    public boolean isPractice() {
-        return isPractice;
-    }
-
-    public boolean isPass() {
-        return isPass;
-    }
-
     public String getStrDate() {
         if (dateOfPass == null) {
             return "";
@@ -259,15 +241,17 @@ public class Mark {
 
     public String getStrRating() {
 
-        if (isPass && passrating == 1) {
-            return "Зачтено";
-        }
-
         int rating = -1;
         if (isExam) {
             rating = examrating;
+        } else if (isPass) {
+            rating = passrating;
         } else if (isPractice) {
             rating = practicerating;
+        } else if (isCP) {
+            rating = cprating;
+        } else if (isCW) {
+            rating = cwrating;
         }
 
         switch (rating) {
@@ -280,7 +264,7 @@ public class Mark {
             case 2:
                 return "Неудовлетворительно";
             case 1:
-                return "Посредственно";
+                return "Зачтено";
         }
         return null;
     }
@@ -295,13 +279,21 @@ public class Mark {
     }
 
     public String getDisciplineType() {
-        if (isExam()) {
+        if (isExam) {
             return "Экзамен";
-        } else if (isPass()) {
+        } else if (isPass) {
             return "Зачёт";
-        } else if (isPractice()) {
+        } else if (isPractice) {
             return "Практика";
+        } else if (isCW) {
+            return "Курсовая работа";
+        } else if (isCP) {
+            return "Курсовой проект";
         }
         return null;
+    }
+
+    public int getCreditUnits() {
+        return hoursCount / CREDIT_UNIT_MULTIPLIER;
     }
 }

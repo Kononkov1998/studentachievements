@@ -145,7 +145,7 @@ public class Requests {
                         return;
                     }
                     UserInfo.setCurrentUser(response.body());
-                    getFavourites(ctx, true);
+                    semesters(ctx, true);
                 } else if (response.code() == 403) {
                     initializeStudent(ctx, btn);
                 } else {
@@ -198,7 +198,7 @@ public class Requests {
                         return;
                     }
                     UserInfo.setCurrentUser(response.body());
-                    getFavourites(ctx, false);
+                    semesters(ctx, false);
                 } else {
                     Intent intent = new Intent(ctx, AuthActivity.class);
                     ctx.startActivity(intent);
@@ -227,7 +227,7 @@ public class Requests {
                     SharedPreferencesActions.save(id, todayAsString, ctx);
 
                     UserInfo.setCurrentUser(response.body());
-                    getFavourites(ctx, true);
+                    semesters(ctx, true);
                 } else {
                     ButtonActions.enableButton(btn);
                 }
@@ -294,10 +294,9 @@ public class Requests {
             @Override
             public void onResponse(@NonNull Call<ArrayList<UserInfo>> call, @NonNull Response<ArrayList<UserInfo>> response) {
                 if (response.isSuccessful()) {
-                    semesters(ctx);
-
                     UserInfo.getCurrentUser().setFavouriteStudents(response.body());
                     Collections.sort(UserInfo.getCurrentUser().getFavouriteStudents(), new StudentsComparator());
+
                     Intent intent = new Intent(ctx, ProfileActivity.class);
                     ctx.startActivity(intent);
                     if (needToFinishActivity) {
@@ -311,6 +310,44 @@ public class Requests {
                 Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(ctx, AuthActivity.class);
                 ctx.startActivity(intent);
+            }
+        });
+    }
+
+    // /student/semester/list
+    private void semesters(Context ctx, boolean needToFinishActivity) {
+        userApi.semesters(SharedPreferencesActions.read("token", ctx)).enqueue(new Callback<StudentSemesters>() {
+            @Override
+            public void onResponse(@NonNull Call<StudentSemesters> call, @NonNull Response<StudentSemesters> response) {
+                if (response.isSuccessful()) {
+                    Semester.setSemesters(response.body().getStudentSemesters());
+                    for (Semester semester : Semester.getSemesters()) {
+                        marks(ctx, semester.getIdLGS(), semester);
+                    }
+                    getFavourites(ctx, needToFinishActivity);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<StudentSemesters> call, @NonNull Throwable t) {
+                Toast.makeText(ctx, t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    // /student/semester/marks/{idLGS}
+    private void marks(Context ctx, int idLGS, Semester semester) {
+        userApi.marks(SharedPreferencesActions.read("token", ctx), idLGS).enqueue(new Callback<StudentMarks>() {
+            @Override
+            public void onResponse(@NonNull Call<StudentMarks> call, @NonNull Response<StudentMarks> response) {
+                if (response.isSuccessful()) {
+                    semester.setMarks(response.body().getRatings());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<StudentMarks> call, @NonNull Throwable t) {
+                Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -433,7 +470,7 @@ public class Requests {
                     SharedPreferencesActions.save(id, todayAsString, ctx);
 
                     UserInfo.setCurrentUser(response.body());
-                    getFavourites(ctx, true);
+                    semesters(ctx, true);
                 }
             }
 
@@ -458,7 +495,7 @@ public class Requests {
                     SharedPreferencesActions.save(id, todayAsString, ctx);
 
                     UserInfo.setCurrentUser(response.body());
-                    getFavourites(ctx, false);
+                    semesters(ctx, false);
                 }
             }
 
@@ -471,50 +508,12 @@ public class Requests {
         });
     }
 
-    // /student/semester/list
-    public void semesters(Context ctx) {
-        userApi.semesters(SharedPreferencesActions.read("token", ctx)).enqueue(new Callback<StudentSemesters>() {
-            @Override
-            public void onResponse(@NonNull Call<StudentSemesters> call, @NonNull Response<StudentSemesters> response) {
-                if (response.isSuccessful()) {
-                    Semester.setSemesters(response.body().getStudentSemesters());
-                    for (Semester semester : Semester.getSemesters()) {
-                        marks(ctx, semester.getIdLGS(), semester);
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<StudentSemesters> call, @NonNull Throwable t) {
-                Toast.makeText(ctx, t.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
-    }
-
-    // /student/semester/marks/{idLGS}
-    public void marks(Context ctx, int idLGS, Semester semester) {
-        userApi.marks(SharedPreferencesActions.read("token", ctx), idLGS).enqueue(new Callback<StudentMarks>() {
-            @Override
-            public void onResponse(@NonNull Call<StudentMarks> call, @NonNull Response<StudentMarks> response) {
-                if (response.isSuccessful()) {
-                    semester.setMarks(response.body().getRatings());
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<StudentMarks> call, @NonNull Throwable t) {
-                Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
-            }
-        });
-    }
-
     // /student/account
     public void deleteAccount(Context ctx) {
         userApi.deleteAccount(SharedPreferencesActions.read("token", ctx)).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
-                if (response.isSuccessful())
-                {
+                if (response.isSuccessful()) {
                     SharedPreferencesActions.deleteAll(ctx);
                     ((SettingsActivity) ctx).exit(null);
                     Toast.makeText(ctx, "Аккаунт успешно удалён из базы данных", Toast.LENGTH_SHORT).show();
