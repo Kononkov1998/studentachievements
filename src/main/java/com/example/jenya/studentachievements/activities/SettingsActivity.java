@@ -1,5 +1,7 @@
 package com.example.jenya.studentachievements.activities;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -113,8 +115,14 @@ public class SettingsActivity extends AbstractActivity {
         overridePendingTransition(0, 0);
     }
 
-    public void deleteAccount(View view) {
-        Requests.getInstance().deleteAccount(this);
+    public void deleteAccount(View view)
+    {
+        new AlertDialog.Builder(this, R.style.AlertDialogDanger)
+                .setMessage("Вы уверены, что хотите удалить свой аккаунт?")
+                .setCancelable(false)
+                .setPositiveButton("Да", (dialog, id) -> Requests.getInstance().deleteAccount(SettingsActivity.this))
+                .setNegativeButton("Нет", null)
+                .show();
     }
 
     public void openProfile(View view) {
