@@ -130,4 +130,8 @@
         <item name="android:textColor">@color/colorPurvisGrey</item>
     </style>
 
+    <style name="AlertDialogDanger" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/colorPrimary</item>
+    </style>
+
 </resources>
