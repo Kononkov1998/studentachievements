@@ -1,5 +1,9 @@
 package com.example.jenya.studentachievements.models;
 
+import android.content.Context;
+import android.support.v4.content.ContextCompat;
+
+import com.example.jenya.studentachievements.R;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -235,12 +239,11 @@ public class Mark {
         if (dateOfPass == null) {
             return "";
         }
-        DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+        DateFormat dateFormat = new SimpleDateFormat("dd.MM.yy", Locale.getDefault());
         return dateFormat.format(dateOfPass);
     }
 
     public String getStrRating() {
-
         int rating = -1;
         if (isExam) {
             rating = examrating;
@@ -295,5 +298,20 @@ public class Mark {
 
     public int getCreditUnits() {
         return hoursCount / CREDIT_UNIT_MULTIPLIER;
+    }
+
+    public int getColor(Context ctx) {
+        if (isExam) {
+            return ContextCompat.getColor(ctx, R.color.colorExam);
+        } else if (isPass) {
+            return ContextCompat.getColor(ctx, R.color.colorPass);
+        } else if (isPractice) {
+            return ContextCompat.getColor(ctx, R.color.colorPractice);
+        } else if (isCW) {
+            return ContextCompat.getColor(ctx, R.color.colorCW);
+        } else if (isCP) {
+            return ContextCompat.getColor(ctx, R.color.colorCP);
+        }
+        return -1;
     }
 }

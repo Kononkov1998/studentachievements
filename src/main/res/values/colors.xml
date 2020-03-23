@@ -20,9 +20,9 @@
     <color name="colorGold">#FED805</color>
     <color name="colorGreyBlue">#A9B4C8</color>
     <color name="colorPearlGrey">#b8bbc0</color>
-    <color name="colorExam">#fe7761</color>
-    <color name="colorOffset">#cbf1f4</color>
-    <color name="colorCoursePractice">#a2fecd</color>
-    <color name="colorCourseWork">#ffcb66</color>
-    <color name="colorPractice">#dadbe0</color>
+    <color name="colorExam">#FF7373</color>
+    <color name="colorPass">#4DE2F7</color>
+    <color name="colorCP">#95FF82</color>
+    <color name="colorCW">#FFFE7E</color>
+    <color name="colorPractice">#EDEDED</color>
 </resources>
