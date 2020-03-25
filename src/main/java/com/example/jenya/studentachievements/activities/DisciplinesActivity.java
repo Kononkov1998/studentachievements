@@ -8,11 +8,13 @@ import android.widget.ListView;
 
 import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.adapters.DisciplinesAdapter;
+import com.example.jenya.studentachievements.comparators.DisciplinesComparator;
 import com.example.jenya.studentachievements.models.Mark;
 import com.example.jenya.studentachievements.models.Semester;
 import com.example.jenya.studentachievements.utils.ThemeController;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class DisciplinesActivity extends AbstractActivity {
     private ArrayList<Mark> marks;
@@ -29,6 +31,8 @@ public class DisciplinesActivity extends AbstractActivity {
         // узнаем в каком мы семестре
         int semesterNumber = getIntent().getIntExtra("semesterNumber", 0);
         marks = Semester.getSemesters().get(semesterNumber - 1).getMarks();
+
+        Collections.sort(marks, new DisciplinesComparator());
 
         listView = findViewById(R.id.list);
         adapter = new DisciplinesAdapter(this, marks);
