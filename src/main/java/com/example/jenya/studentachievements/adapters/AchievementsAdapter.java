@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.requests.Requests;
 import com.example.jenya.studentachievements.models.Achievement;
@@ -88,6 +89,7 @@ public class AchievementsAdapter extends BaseAdapter {
         }
 
         Glide.with(ctx)
+                .setDefaultRequestOptions(new RequestOptions().timeout(30000))
                 .load(Requests.getInstance().getURL() + "/icons/" + a.getCode() + ".png")
                 .placeholder(R.drawable.no_photo)
                 .into((ImageView) view.findViewById(R.id.image));

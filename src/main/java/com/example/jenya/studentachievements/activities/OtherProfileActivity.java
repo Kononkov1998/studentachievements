@@ -19,6 +19,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.model.LazyHeaders;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.adapters.AchievementsAdapter;
 import com.example.jenya.studentachievements.comparators.AchievementsComparator;
@@ -110,6 +111,7 @@ public class OtherProfileActivity extends AbstractActivity {
                     .build());
 
             Glide.with(this)
+                    .setDefaultRequestOptions(new RequestOptions().timeout(30000))
                     .load(glideUrl)
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .placeholder(R.drawable.profile)

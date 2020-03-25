@@ -20,6 +20,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.model.LazyHeaders;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.jenya.studentachievements.utils.ImageActions;
 import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.utils.SharedPreferencesActions;
@@ -197,6 +198,7 @@ public class ProfileActivity extends AbstractActivity {
                     .build());
 
             Glide.with(this)
+                    .setDefaultRequestOptions(new RequestOptions().timeout(30000))
                     .load(glideUrl)
                     .placeholder(R.drawable.profile)
                     .override(px, px)
