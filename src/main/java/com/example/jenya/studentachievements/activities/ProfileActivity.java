@@ -1,6 +1,7 @@
 package com.example.jenya.studentachievements.activities;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
@@ -54,6 +55,7 @@ public class ProfileActivity extends AbstractActivity {
     private CheckBox hideBox;
     private KProgressHUD hud;
 
+    @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

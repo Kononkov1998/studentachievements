@@ -1,20 +1,89 @@
 package com.example.jenya.studentachievements.activities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.model.GlideUrl;
+import com.bumptech.glide.load.model.LazyHeaders;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.jenya.studentachievements.R;
+import com.example.jenya.studentachievements.adapters.AchievementsAdapter;
+import com.example.jenya.studentachievements.comparators.AchievementsComparator;
+import com.example.jenya.studentachievements.models.Achievement;
+import com.example.jenya.studentachievements.models.UserInfo;
+import com.example.jenya.studentachievements.requests.Requests;
+import com.example.jenya.studentachievements.utils.ImageActions;
+import com.example.jenya.studentachievements.utils.SharedPreferencesActions;
 import com.example.jenya.studentachievements.utils.ThemeController;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Locale;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class TopActivity extends AbstractActivity {
+
+    private UserInfo userInfo;
+    private CircleImageView avatar;
+    private TextView textProfile;
+    private TextView starsSumTextView;
+
+    @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         ThemeController.onActivityCreateSetTheme(this);
         setContentView(R.layout.activity_top);
+
+        userInfo = UserInfo.getCurrentUser();
+        final ArrayList<Achievement> completedAchievements = new ArrayList<>();
+        @SuppressWarnings("unchecked") final ArrayList<Achievement> userAchievements = (ArrayList<Achievement>) userInfo.getAchievements().clone();
+        int starsSum = 0;
+
+        for (Achievement achievement : userAchievements) {
+            int stars = achievement.getStars();
+            if (stars != 0) {
+                starsSum += stars;
+                completedAchievements.add(achievement);
+            }
+        }
+
+        ((TextView) findViewById(R.id.starsSum)).setText(String.valueOf(starsSum));
+
+        avatar = findViewById(R.id.imageUser);
+        ((TextView) findViewById(R.id.textProfile))
+                .setText(String.format(
+                        "%s\n%s\n%s\n%s",
+                        userInfo.getFullName().getLastName(),
+                        userInfo.getFullName().getFirstName(),
+                        userInfo.getFullName().getPatronymic(),
+                        userInfo.getGroup().getName())
+                );
+        if (userInfo.getAvatar() != null) {
+            int px = ImageActions.getAvatarSizeInPx(this);
+
+            GlideUrl glideUrl = new GlideUrl(String.format("%s/student/pic/%s", Requests.getInstance().getURL(), userInfo.getAvatar()), new LazyHeaders.Builder()
+                    .addHeader("Authorization", SharedPreferencesActions.read("token", this))
+                    .build());
+
+            Glide.with(this)
+                    .setDefaultRequestOptions(new RequestOptions().timeout(30000))
+                    .load(glideUrl)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .placeholder(R.drawable.profile)
+                    .override(px, px)
+                    .into(avatar);
+        }
     }
 
     @Override
