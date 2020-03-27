@@ -63,12 +63,15 @@ public class TopActivity extends AbstractActivity {
         avatar = findViewById(R.id.imageUser);
         ((TextView) findViewById(R.id.textProfile))
                 .setText(String.format(
-                        "%s\n%s\n%s\n%s",
+                        "%s\n%s\n%s",
                         userInfo.getFullName().getLastName(),
                         userInfo.getFullName().getFirstName(),
-                        userInfo.getFullName().getPatronymic(),
-                        userInfo.getGroup().getName())
-                );
+                        userInfo.getFullName().getPatronymic()
+                ));
+
+        ((TextView) findViewById(R.id.groupProfile))
+                .setText(userInfo.getGroup().getName());
+
         if (userInfo.getAvatar() != null) {
             int px = ImageActions.getAvatarSizeInPx(this);
 
