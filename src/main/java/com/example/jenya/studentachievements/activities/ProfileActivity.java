@@ -85,12 +85,14 @@ public class ProfileActivity extends AbstractActivity {
 
         ((TextView) header.findViewById(R.id.textProfile))
                 .setText(String.format(
-                        "%s\n%s\n%s\n%s",
+                        "%s\n%s\n%s",
                         userInfo.getFullName().getLastName(),
                         userInfo.getFullName().getFirstName(),
-                        userInfo.getFullName().getPatronymic(),
-                        userInfo.getGroup().getName())
+                        userInfo.getFullName().getPatronymic())
                 );
+
+        ((TextView) header.findViewById(R.id.groupProfile))
+                .setText(userInfo.getGroup().getName());
 
         int completed = completedAchievements.size();
         int all = userAchievements.size();

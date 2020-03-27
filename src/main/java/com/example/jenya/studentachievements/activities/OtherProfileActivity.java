@@ -121,12 +121,14 @@ public class OtherProfileActivity extends AbstractActivity {
 
         ((TextView) header.findViewById(R.id.textProfile))
                 .setText(String.format(
-                        "%s\n%s\n%s\n%s",
+                        "%s\n%s\n%s",
                         otherStudent.getFullName().getLastName(),
                         otherStudent.getFullName().getFirstName(),
-                        otherStudent.getFullName().getPatronymic(),
-                        otherStudent.getGroup().getName()
+                        otherStudent.getFullName().getPatronymic()
                 ));
+
+        ((TextView) header.findViewById(R.id.groupProfile))
+                .setText(otherStudent.getGroup().getName());
 
         int completed = completedAchievements.size();
         int all = userAchievements.size();

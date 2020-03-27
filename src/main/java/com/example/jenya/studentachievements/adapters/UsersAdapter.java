@@ -90,8 +90,8 @@ public class UsersAdapter extends BaseAdapter {
                     .into(avatar);
         }
 
-        String textProfile = s.getFullName().getLastName() + "\n" + s.getFullName().getFirstName() + "\n" + s.getFullName().getPatronymic() + "\n" + s.getGroup().getName();
-        ((TextView) view.findViewById(R.id.textProfile)).setText(textProfile);
+        ((TextView) view.findViewById(R.id.textProfile)).setText(String.format("%s\n%s\n%s", s.getFullName().getLastName(), s.getFullName().getFirstName(), s.getFullName().getPatronymic()));
+        ((TextView) view.findViewById(R.id.groupProfile)).setText(s.getGroup().getName());
         final CheckBox checkBoxFavorite = view.findViewById(R.id.checkboxFavorite);
 
         for (UserInfo user : UserInfo.getCurrentUser().getFavouriteStudents()) {

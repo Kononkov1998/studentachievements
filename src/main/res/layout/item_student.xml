@@ -21,15 +21,30 @@
                     android:id="@+id/imageUser"
                     style="@style/Avatar" />
 
-                <TextView
-                    android:id="@+id/textProfile"
-                    style="?textView"
-                    android:layout_width="180dp"
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="10dp"
-                    android:inputType="none"
-                    android:textSize="25sp" />
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textProfile"
+                        style="?textView"
+                        android:layout_width="180dp"
+                        android:layout_height="wrap_content"
+                        android:inputType="none"
+                        android:textSize="25sp"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:id="@+id/groupProfile"
+                        android:layout_width="180dp"
+                        style="?textView"
+                        android:layout_height="wrap_content"
+                        android:inputType="none"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
             </LinearLayout>
 
             <CheckBox
