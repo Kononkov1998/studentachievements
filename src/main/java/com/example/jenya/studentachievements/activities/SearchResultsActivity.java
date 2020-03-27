@@ -1,5 +1,6 @@
 package com.example.jenya.studentachievements.activities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
@@ -20,6 +21,7 @@ public class SearchResultsActivity extends AbstractActivityWithUsers {
     private UsersAdapter adapter;
     private ListView listView;
 
+    @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

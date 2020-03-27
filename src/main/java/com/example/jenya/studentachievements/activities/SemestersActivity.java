@@ -1,5 +1,6 @@
 package com.example.jenya.studentachievements.activities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import com.example.jenya.studentachievements.utils.ThemeController;
 import java.util.Locale;
 
 public class SemestersActivity extends AbstractActivity {
+    @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +64,7 @@ public class SemestersActivity extends AbstractActivity {
             button.setLayoutParams(params);
             button.setText(String.format(Locale.getDefault(), "%d", (i + 1)));
             button.setTextColor(ContextCompat.getColor(this, R.color.colorWhite));
-            button.setTextSize(20);
+            button.setTextSize(25);
             button.setBackground(ContextCompat.getDrawable(this, R.drawable.button_semester_shape));
 
             // здесь открываем новую активити с дисциплинами, отпрвляя номер семестра

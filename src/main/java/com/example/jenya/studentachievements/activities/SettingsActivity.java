@@ -1,5 +1,6 @@
 package com.example.jenya.studentachievements.activities;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -25,6 +26,7 @@ public class SettingsActivity extends AbstractActivity {
     @SuppressWarnings("FieldCanBeLocal")
     private RadioButton rb;
 
+    @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

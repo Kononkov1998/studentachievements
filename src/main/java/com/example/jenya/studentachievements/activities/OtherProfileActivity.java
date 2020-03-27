@@ -1,5 +1,6 @@
 package com.example.jenya.studentachievements.activities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.PorterDuff;
@@ -49,6 +50,7 @@ public class OtherProfileActivity extends AbstractActivity {
     @SuppressWarnings("FieldCanBeLocal")
     private CheckBox hideBox;
 
+    @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

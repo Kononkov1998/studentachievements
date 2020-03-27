@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -15,8 +13,6 @@ import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.model.LazyHeaders;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.jenya.studentachievements.R;
-import com.example.jenya.studentachievements.adapters.AchievementsAdapter;
-import com.example.jenya.studentachievements.comparators.AchievementsComparator;
 import com.example.jenya.studentachievements.models.Achievement;
 import com.example.jenya.studentachievements.models.UserInfo;
 import com.example.jenya.studentachievements.requests.Requests;
@@ -25,17 +21,15 @@ import com.example.jenya.studentachievements.utils.SharedPreferencesActions;
 import com.example.jenya.studentachievements.utils.ThemeController;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class TopActivity extends AbstractActivity {
 
+    @SuppressWarnings("FieldCanBeLocal")
     private UserInfo userInfo;
+    @SuppressWarnings("FieldCanBeLocal")
     private CircleImageView avatar;
-    private TextView textProfile;
-    private TextView starsSumTextView;
 
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
@@ -46,7 +40,7 @@ public class TopActivity extends AbstractActivity {
         setContentView(R.layout.activity_top);
 
         userInfo = UserInfo.getCurrentUser();
-        final ArrayList<Achievement> completedAchievements = new ArrayList<>();
+        @SuppressWarnings("MismatchedQueryAndUpdateOfCollection") ArrayList<Achievement> completedAchievements = new ArrayList<>();
         @SuppressWarnings("unchecked") final ArrayList<Achievement> userAchievements = (ArrayList<Achievement>) userInfo.getAchievements().clone();
         int starsSum = 0;
 
