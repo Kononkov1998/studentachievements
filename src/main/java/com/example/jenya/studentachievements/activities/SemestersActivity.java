@@ -64,7 +64,7 @@ public class SemestersActivity extends AbstractActivity {
             button.setLayoutParams(params);
             button.setText(String.format(Locale.getDefault(), "%d", (i + 1)));
             button.setTextColor(ContextCompat.getColor(this, R.color.colorWhite));
-            button.setTextSize(25);
+            button.setTextSize(20);
             button.setBackground(ContextCompat.getDrawable(this, R.drawable.button_semester_shape));
 
             // здесь открываем новую активити с дисциплинами, отпрвляя номер семестра

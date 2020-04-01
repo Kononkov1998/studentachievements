@@ -2,7 +2,7 @@
 
     <style name="Button.Dark" parent="Widget.AppCompat.Button">
         <item name="android:textSize">20sp</item>
-        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_width">250dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:textColor">@color/colorWhite</item>
@@ -11,7 +11,7 @@
 
     <style name="Button.Light" parent="Widget.AppCompat.Button">
         <item name="android:textSize">20sp</item>
-        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_width">250dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:textColor">@color/colorPurvisGrey</item>
@@ -97,7 +97,7 @@
         <item name="android:textColorHint">@color/colorGrey</item>
         <item name="android:ems">15</item>
         <item name="android:background">@drawable/edittext_dark</item>
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">20sp</item>
         <item name="android:textCursorDrawable">@drawable/cursor</item>
         <item name="android:maxLength">50</item>
     </style>
@@ -109,7 +109,7 @@
         <item name="android:textColorHint">@color/colorSilver</item>
         <item name="android:ems">15</item>
         <item name="android:background">@drawable/edittext_light</item>
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">20sp</item>
         <item name="android:textCursorDrawable">@drawable/cursor</item>
         <item name="android:maxLength">50</item>
     </style>
