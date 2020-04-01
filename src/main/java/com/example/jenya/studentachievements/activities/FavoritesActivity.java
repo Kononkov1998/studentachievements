@@ -6,6 +6,7 @@ import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ListView;
@@ -16,10 +17,11 @@ import com.example.jenya.studentachievements.models.UserInfo;
 import com.example.jenya.studentachievements.requests.Requests;
 import com.example.jenya.studentachievements.utils.ThemeController;
 
-public class FavoritesActivity extends AbstractActivityWithUsers {
+public class FavoritesActivity extends AbstractActivityWithUsers implements SwipeRefreshLayout.OnRefreshListener {
     @SuppressWarnings("FieldCanBeLocal")
     private UsersAdapter adapter;
     private ListView listView;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
@@ -28,6 +30,10 @@ public class FavoritesActivity extends AbstractActivityWithUsers {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         ThemeController.onActivityCreateSetTheme(this);
         setContentView(R.layout.activity_favorites);
+
+        swipeRefreshLayout = findViewById(R.id.refresh);
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorOrange, R.color.colorGold, R.color.colorExam, R.color.colorPass);
         adapter = new UsersAdapter(this, UserInfo.getCurrentUser().getFavouriteStudents());
         listView = findViewById(R.id.list);
         listView.setAdapter(adapter);
@@ -49,11 +55,18 @@ public class FavoritesActivity extends AbstractActivityWithUsers {
     }
 
     @Override
+    public void onRefresh() {
+        swipeRefreshLayout.setRefreshing(true);
+        Requests.getInstance().updateFavourites(this, adapter, swipeRefreshLayout);
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
         overridePendingTransition(0, 0);
-        adapter.notifyDataSetChanged();
-        Requests.getInstance().updateFavourites(this, adapter);
+        onRefresh();
+        //adapter.notifyDataSetChanged();
+        //Requests.getInstance().updateFavourites(this, adapter);
     }
 
     public void openProfile(View view) {

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -354,7 +355,7 @@ public class Requests {
     }
 
     // /student/favourite/list
-    public void updateFavourites(Context ctx, UsersAdapter adapter) {
+    public void updateFavourites(Context ctx, UsersAdapter adapter, SwipeRefreshLayout swipeRefreshLayout) {
         userApi.favourites(SharedPreferencesActions.read("token", ctx)).enqueue(new Callback<ArrayList<UserInfo>>() {
             @Override
             public void onResponse(@NonNull Call<ArrayList<UserInfo>> call, @NonNull Response<ArrayList<UserInfo>> response) {
@@ -364,6 +365,7 @@ public class Requests {
                         UserInfo.getCurrentUser().getFavouriteStudents().addAll(response.body());
                         Collections.sort(UserInfo.getCurrentUser().getFavouriteStudents(), new StudentsComparator());
                         adapter.notifyDataSetChanged();
+                        swipeRefreshLayout.setRefreshing(false);
                     }
                 } else {
                     Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
