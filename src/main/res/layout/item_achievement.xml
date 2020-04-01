@@ -31,7 +31,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
-                    android:text="01.01.20" />
+                    android:text="01.01.20"
+                    android:textSize="15sp"/>
 
             </LinearLayout>
 
@@ -47,7 +48,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Покоряя вершины"
-                    android:textSize="17sp"
+                    android:textSize="25sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -55,7 +56,8 @@
                     style="?textView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Сдать сессию на отлично" />
+                    android:text="Сдать сессию на отлично"
+                    android:textSize="15sp"/>
 
                 <LinearLayout
                     android:id="@+id/starsLayout"

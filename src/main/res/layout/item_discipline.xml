@@ -26,7 +26,7 @@
                 android:layout_height="wrap_content"
                 android:text="Название предмета"
                 android:textColor="@color/colorBlack"
-                android:textSize="20sp"
+                android:textSize="25sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -34,14 +34,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Экзамен"
-                android:textColor="@color/colorBlack" />
+                android:textColor="@color/colorBlack"
+                android:textSize="15sp"/>
 
             <TextView
                 android:id="@+id/discipline_tutor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="ФИО преподавателя"
-                android:textColor="@color/colorBlack" />
+                android:textColor="@color/colorBlack"
+                android:textSize="15sp"/>
 
             <Space
                 android:layout_width="match_parent"
@@ -94,7 +96,8 @@
                     android:layout_weight="0.5"
                     android:gravity="center_horizontal"
                     android:text="Отлично"
-                    android:textColor="@color/colorBlack" />
+                    android:textColor="@color/colorBlack"
+                    android:textSize="15sp"/>
 
                 <TextView
                     android:id="@+id/discipline_hours"
@@ -103,7 +106,8 @@
                     android:layout_weight="2"
                     android:gravity="center_horizontal"
                     android:text="180 (5 з.е.)"
-                    android:textColor="@color/colorBlack" />
+                    android:textColor="@color/colorBlack"
+                    android:textSize="15sp"/>
 
                 <TextView
                     android:id="@+id/discipline_date"
@@ -112,7 +116,8 @@
                     android:layout_weight="0.5"
                     android:gravity="center_horizontal"
                     android:text="01.01.20"
-                    android:textColor="@color/colorBlack" />
+                    android:textColor="@color/colorBlack"
+                    android:textSize="15sp"/>
             </LinearLayout>
         </LinearLayout>
     </android.support.v7.widget.CardView>
