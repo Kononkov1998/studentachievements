@@ -9,7 +9,7 @@ public class StudentsComparator implements Comparator<UserInfo> {
     @Override
     public int compare(UserInfo u1, UserInfo u2) {
         return ComparisonChain.start()
-                .compareTrueFirst(u2.getIsAvailable(), u1.getIsAvailable())
+                .compareFalseFirst(u2.getIsAvailable(), u1.getIsAvailable())
                 .result();
     }
 }
