@@ -5,11 +5,9 @@ import com.google.common.collect.ComparisonChain;
 
 import java.util.Comparator;
 
-public class AchievementsComparator implements Comparator<Achievement>
-{
+public class AchievementsComparator implements Comparator<Achievement> {
     @Override
-    public int compare(Achievement a1, Achievement a2)
-    {
+    public int compare(Achievement a1, Achievement a2) {
         return ComparisonChain.start()
                 .compare(a2.isReceived(), a1.isReceived())
                 .compare(a2.getDate(), a2.getDate())

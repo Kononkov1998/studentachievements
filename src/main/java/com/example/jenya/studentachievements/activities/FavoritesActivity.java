@@ -65,8 +65,6 @@ public class FavoritesActivity extends AbstractActivityWithUsers implements Swip
         super.onStart();
         overridePendingTransition(0, 0);
         onRefresh();
-        //adapter.notifyDataSetChanged();
-        //Requests.getInstance().updateFavourites(this, adapter);
     }
 
     public void openProfile(View view) {

@@ -5,13 +5,11 @@ import com.google.common.collect.ComparisonChain;
 
 import java.util.Comparator;
 
-public class StudentsComparator implements Comparator<UserInfo>
-{
+public class StudentsComparator implements Comparator<UserInfo> {
     @Override
-    public int compare(UserInfo u1, UserInfo u2)
-    {
+    public int compare(UserInfo u1, UserInfo u2) {
         return ComparisonChain.start()
-                .compare(u2.getIsAvailable(), u1.getIsAvailable())
+                .compareTrueFirst(u2.getIsAvailable(), u1.getIsAvailable())
                 .result();
     }
 }
