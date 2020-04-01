@@ -20,7 +20,7 @@
 
     <style name="BottomMenu.Dark" parent="Theme.AppCompat.Light">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">35dp</item>
+        <item name="android:layout_height">40dp</item>
         <item name="android:layout_alignParentBottom">true</item>
         <item name="android:background">@color/colorDarkGrey</item>
         <item name="android:orientation">horizontal</item>
@@ -28,7 +28,7 @@
 
     <style name="BottomMenu.Light" parent="Theme.AppCompat.Light">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">35dp</item>
+        <item name="android:layout_height">40dp</item>
         <item name="android:layout_alignParentBottom">true</item>
         <item name="android:background">@color/colorLightGrey</item>
         <item name="android:orientation">horizontal</item>
