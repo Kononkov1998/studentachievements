@@ -30,7 +30,6 @@
         <activity android:name=".activities.SemestersActivity" />
         <activity android:name=".activities.DisciplinesActivity" />
         <activity android:name=".activities.SearchActivity" />
-        <activity android:name=".activities.SearchNoResultsActivity" />
         <activity android:name=".activities.FavoritesActivity" />
         <activity android:name=".activities.SettingsActivity" />
         <activity android:name=".activities.SearchResultsActivity" />

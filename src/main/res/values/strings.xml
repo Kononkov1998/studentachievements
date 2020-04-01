@@ -19,4 +19,6 @@
     <string name="appearance">Внешний вид</string>
     <string name="dark_theme">Темная тема</string>
     <string name="delete_account">Удалить аккаунт</string>
+    <string name="no_favorites">Нет избранных пользователей</string>
+    <string name="no_search_results">По вашему запросу ничего не найдено</string>
 </resources>

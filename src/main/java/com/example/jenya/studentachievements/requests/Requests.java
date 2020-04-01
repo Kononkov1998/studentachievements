@@ -17,7 +17,6 @@ import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.activities.AuthActivity;
 import com.example.jenya.studentachievements.activities.ProfileActivity;
 import com.example.jenya.studentachievements.activities.SearchActivity;
-import com.example.jenya.studentachievements.activities.SearchNoResultsActivity;
 import com.example.jenya.studentachievements.activities.SearchResultsActivity;
 import com.example.jenya.studentachievements.activities.SettingsActivity;
 import com.example.jenya.studentachievements.adapters.UsersAdapter;
@@ -250,15 +249,9 @@ public class Requests {
             public void onResponse(@NonNull Call<ArrayList<UserInfo>> call, @NonNull Response<ArrayList<UserInfo>> response) {
                 if (response.isSuccessful()) {
                     SearchActivity.searchSuccessful();
-
-                    if (response.body().isEmpty()) {
-                        Intent intent = new Intent(ctx, SearchNoResultsActivity.class);
-                        ctx.startActivity(intent);
-                    } else {
-                        Intent intent = new Intent(ctx, SearchResultsActivity.class);
-                        intent.putParcelableArrayListExtra("students", response.body());
-                        ctx.startActivity(intent);
-                    }
+                    Intent intent = new Intent(ctx, SearchResultsActivity.class);
+                    intent.putParcelableArrayListExtra("students", response.body());
+                    ctx.startActivity(intent);
                 } else {
                     ButtonActions.enableButton(btn);
                 }

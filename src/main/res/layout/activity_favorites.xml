@@ -23,6 +23,17 @@
                 android:listSelector="@android:color/transparent" />
         </android.support.v4.widget.SwipeRefreshLayout>
 
+        <TextView
+            android:id="@+id/empty"
+            style="?textView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="40dp"
+            android:gravity="center"
+            android:text="@string/no_favorites"
+            android:textSize="30sp"
+            android:visibility="gone" />
+
         <LinearLayout
             android:id="@+id/bottomMenu"
             style="?bottomMenu"

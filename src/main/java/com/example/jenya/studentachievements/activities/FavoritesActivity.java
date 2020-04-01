@@ -37,6 +37,7 @@ public class FavoritesActivity extends AbstractActivityWithUsers implements Swip
         adapter = new UsersAdapter(this, UserInfo.getCurrentUser().getFavouriteStudents());
         listView = findViewById(R.id.list);
         listView.setAdapter(adapter);
+        listView.setEmptyView(findViewById(R.id.empty));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)

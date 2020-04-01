@@ -20,6 +20,7 @@ import java.util.ArrayList;
 public class SearchResultsActivity extends AbstractActivityWithUsers {
     private UsersAdapter adapter;
     private ListView listView;
+    private View header;
 
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
@@ -30,10 +31,12 @@ public class SearchResultsActivity extends AbstractActivityWithUsers {
         setContentView(R.layout.activity_searchresults);
 
         ArrayList<UserInfo> students = getIntent().getParcelableArrayListExtra("students");
-
+        header = getLayoutInflater().inflate(R.layout.header_searchresults, listView, false);
         adapter = new UsersAdapter(this, students);
         listView = findViewById(R.id.list);
+        listView.addHeaderView(header);
         listView.setAdapter(adapter);
+        listView.setEmptyView(findViewById(R.id.empty));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
