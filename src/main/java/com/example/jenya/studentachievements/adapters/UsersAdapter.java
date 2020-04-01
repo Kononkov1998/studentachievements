@@ -73,22 +73,23 @@ public class UsersAdapter extends BaseAdapter {
         }
 
         CircleImageView avatar = view.findViewById(R.id.imageUser);
-
+        int px = ImageActions.getAvatarSizeInPx(ctx);
+        GlideUrl glideUrl = null;
         if (s.getAvatar() != null) {
-            int px = ImageActions.getAvatarSizeInPx(ctx);
-
-            GlideUrl glideUrl = new GlideUrl(String.format("%s/student/pic/%s", Requests.getInstance().getURL(), s.getAvatar()), new LazyHeaders.Builder()
+            glideUrl = new GlideUrl(String.format("%s/student/pic/%s", Requests.getInstance().getURL(), s.getAvatar()), new LazyHeaders.Builder()
                     .addHeader("Authorization", SharedPreferencesActions.read("token", ctx))
                     .build());
-
-            Glide.with(ctx)
-                    .setDefaultRequestOptions(new RequestOptions().timeout(30000))
-                    .load(glideUrl)
-                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .placeholder(R.drawable.profile)
-                    .override(px, px)
-                    .into(avatar);
         }
+
+        Glide.with(ctx)
+                .setDefaultRequestOptions(new RequestOptions().timeout(30000))
+                .load(glideUrl)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .placeholder(R.drawable.profile)
+                .override(px, px)
+                .fallback(R.drawable.profile)
+                .into(avatar);
+
 
         ((TextView) view.findViewById(R.id.textProfile)).setText(String.format("%s\n%s\n%s", s.getFullName().getLastName(), s.getFullName().getFirstName(), s.getFullName().getPatronymic()));
         ((TextView) view.findViewById(R.id.groupProfile)).setText(s.getGroup().getName());
