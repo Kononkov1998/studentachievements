@@ -1,5 +1,7 @@
 package com.example.jenya.studentachievements.adapters;
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Context;
@@ -103,11 +105,40 @@ public class UsersAdapter extends BaseAdapter {
             }
         }
 
+        UsersAdapter adapter = this;
+        View finalView = view;
         checkBoxFavorite.setOnClickListener((buttonView) -> {
             if (checkBoxFavorite.isChecked()) {
                 Requests.getInstance().addFavourite(s, ctx);
             } else {
-                Requests.getInstance().removeFavourite(s, ctx, this);
+                if (ctx.getClass().getSimpleName().equals("FavoritesActivity")) {
+                    Animator.AnimatorListener listener = new Animator.AnimatorListener() {
+                        @Override
+                        public void onAnimationStart(Animator animator) {
+
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animator animator) {
+                            Requests.getInstance().removeFavouriteFromFavoritesActivity(s, ctx, adapter);
+                        }
+
+                        @Override
+                        public void onAnimationCancel(Animator animator) {
+
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animator animator) {
+
+                        }
+                    };
+                    ObjectAnimator animation = ObjectAnimator.ofFloat(finalView, "alpha", 1f, 0f);
+                    animation.addListener(listener);
+                    animation.start();
+                } else {
+                    Requests.getInstance().removeFavourite(s, ctx);
+                }
             }
         });
 

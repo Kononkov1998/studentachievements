@@ -390,19 +390,9 @@ public class Requests {
     }
 
     // /student/favourite?student=<idStudent>
-    public void removeFavourite(UserInfo otherStudent, Context ctx, UsersAdapter adapter) {
-        UserInfo userForRemove = null;
-        for (UserInfo user : UserInfo.getCurrentUser().getFavouriteStudents()) {
-            if (user.get_id().equals(otherStudent.get_id())) {
-                userForRemove = user;
-                break;
-            }
-        }
+    public void removeFavourite(UserInfo otherStudent, Context ctx) {
+        UserInfo userForRemove = findStudentInFavourites(otherStudent);
         UserInfo.getCurrentUser().getFavouriteStudents().remove(userForRemove);
-        if (adapter != null) {
-            adapter.notifyDataSetChanged();
-        }
-        UserInfo finalUserForRemove = userForRemove;
 
         userApi.removeFavourite(SharedPreferencesActions.read("token", ctx), otherStudent.get_id()).enqueue(new Callback<UserInfo>() {
             @Override
@@ -412,11 +402,30 @@ public class Requests {
             @Override
             public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t) {
                 Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
-                if (finalUserForRemove != null) {
-                    UserInfo.getCurrentUser().getFavouriteStudents().add(finalUserForRemove);
-                    if (adapter != null) {
-                        adapter.notifyDataSetChanged();
-                    }
+                if (userForRemove != null) {
+                    UserInfo.getCurrentUser().getFavouriteStudents().add(userForRemove);
+                }
+            }
+        });
+    }
+
+    // /student/favourite?student=<idStudent>
+    public void removeFavouriteFromFavoritesActivity(UserInfo otherStudent, Context ctx, UsersAdapter adapter) {
+        UserInfo userForRemove = findStudentInFavourites(otherStudent);
+        UserInfo.getCurrentUser().getFavouriteStudents().remove(userForRemove);
+        adapter.notifyDataSetChanged();
+
+        userApi.removeFavourite(SharedPreferencesActions.read("token", ctx), otherStudent.get_id()).enqueue(new Callback<UserInfo>() {
+            @Override
+            public void onResponse(@NonNull Call<UserInfo> call, @NonNull Response<UserInfo> response) {
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t) {
+                Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
+                if (userForRemove != null) {
+                    UserInfo.getCurrentUser().getFavouriteStudents().add(userForRemove);
+                    adapter.notifyDataSetChanged();
                 }
             }
         });
@@ -525,5 +534,14 @@ public class Requests {
                 Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    private UserInfo findStudentInFavourites(UserInfo student) {
+        for (UserInfo user : UserInfo.getCurrentUser().getFavouriteStudents()) {
+            if (user.get_id().equals(student.get_id())) {
+                return user;
+            }
+        }
+        return null;
     }
 }
