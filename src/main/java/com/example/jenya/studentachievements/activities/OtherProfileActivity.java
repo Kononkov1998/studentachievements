@@ -168,7 +168,7 @@ public class OtherProfileActivity extends AbstractActivity {
             if (checkBoxFavorite.isChecked()) {
                 Requests.getInstance().addFavourite(otherStudent, this);
             } else {
-                Requests.getInstance().removeFavourite(otherStudent, this);
+                Requests.getInstance().removeFavourite(otherStudent, this, null);
             }
         });
 

@@ -107,7 +107,7 @@ public class UsersAdapter extends BaseAdapter {
             if (checkBoxFavorite.isChecked()) {
                 Requests.getInstance().addFavourite(s, ctx);
             } else {
-                Requests.getInstance().removeFavourite(s, ctx);
+                Requests.getInstance().removeFavourite(s, ctx, this);
             }
         });
 
