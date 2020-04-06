@@ -52,7 +52,7 @@ public class UsersAdapter extends BaseAdapter {
 
     // элемент по позиции
     @Override
-    public Object getItem(int position) {
+    public UserInfo getItem(int position) {
         return objects.get(position);
     }
 
@@ -65,7 +65,7 @@ public class UsersAdapter extends BaseAdapter {
     // пункт списка
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final UserInfo s = getUserInfo(position);
+        final UserInfo s = getItem(position);
         // используем созданные, но не используемые view
         View view = convertView;
         if (view == null) {
@@ -94,13 +94,12 @@ public class UsersAdapter extends BaseAdapter {
         ((TextView) view.findViewById(R.id.textProfile)).setText(String.format("%s\n%s\n%s", s.getFullName().getLastName(), s.getFullName().getFirstName(), s.getFullName().getPatronymic()));
         ((TextView) view.findViewById(R.id.groupProfile)).setText(s.getGroup().getName());
         final CheckBox checkBoxFavorite = view.findViewById(R.id.checkboxFavorite);
+        checkBoxFavorite.setChecked(false);
 
         for (UserInfo user : UserInfo.getCurrentUser().getFavouriteStudents()) {
             if (user.get_id().equals(s.get_id())) {
                 checkBoxFavorite.setChecked(true);
                 break;
-            } else {
-                checkBoxFavorite.setChecked(false);
             }
         }
 
@@ -158,10 +157,5 @@ public class UsersAdapter extends BaseAdapter {
         });
 
         return view;
-    }
-
-    // студент по позиции
-    private UserInfo getUserInfo(int position) {
-        return ((UserInfo) getItem(position));
     }
 }
