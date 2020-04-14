@@ -71,9 +71,11 @@ public class SearchActivity extends AbstractActivity {
             return;
         }
 
-        String fio = String.format("%s %s %s", surname, name, patronymic);
-        ButtonActions.disableButton(btn);
-        Requests.getInstance().studentSearch(group, fio.trim(), this, btn);
+        String fio = String.format("%s %s %s", surname, name, patronymic).trim();
+        Intent intent = new Intent(this, SearchResultsActivity.class);
+        intent.putExtra("fio", fio);
+        intent.putExtra("group", group);
+        startActivity(intent);
     }
 
     private void clearFields() {
