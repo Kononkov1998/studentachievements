@@ -327,6 +327,8 @@ public class Requests {
             @Override
             public void onFailure(@NonNull Call<StudentSemesters> call, @NonNull Throwable t) {
                 Toast.makeText(ctx, t.getMessage(), Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(ctx, AuthActivity.class);
+                ctx.startActivity(intent);
             }
         });
     }
@@ -344,6 +346,8 @@ public class Requests {
             @Override
             public void onFailure(@NonNull Call<StudentMarks> call, @NonNull Throwable t) {
                 Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(ctx, AuthActivity.class);
+                ctx.startActivity(intent);
             }
         });
     }
