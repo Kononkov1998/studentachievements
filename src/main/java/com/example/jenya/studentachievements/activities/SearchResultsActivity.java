@@ -9,18 +9,19 @@ import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.adapters.UsersAdapter;
 import com.example.jenya.studentachievements.models.UserInfo;
+import com.example.jenya.studentachievements.requests.Requests;
 import com.example.jenya.studentachievements.utils.ThemeController;
+import com.kaopiz.kprogresshud.KProgressHUD;
 
 import java.util.ArrayList;
 
 public class SearchResultsActivity extends AbstractActivityWithUsers {
-    private UsersAdapter adapter;
     private ListView listView;
-    private View header;
 
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
@@ -30,13 +31,19 @@ public class SearchResultsActivity extends AbstractActivityWithUsers {
         ThemeController.onActivityCreateSetTheme(this);
         setContentView(R.layout.activity_searchresults);
 
-        ArrayList<UserInfo> students = getIntent().getParcelableArrayListExtra("students");
-        header = getLayoutInflater().inflate(R.layout.header_searchresults, listView, false);
-        adapter = new UsersAdapter(this, students);
         listView = findViewById(R.id.list);
+        Bundle args = getIntent().getExtras();
+        assert args != null;
+        KProgressHUD progress = KProgressHUD.create(this)
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setCancellable(true)
+                .setAnimationSpeed(2)
+                .setDimAmount(0.5f)
+                .show();
+        Requests.getInstance().studentSearch(args.getString("group"), args.getString("fio"), this, listView, this, progress);
+
+        View header = getLayoutInflater().inflate(R.layout.header_searchresults, listView, false);
         listView.addHeaderView(header);
-        listView.setAdapter(adapter);
-        listView.setEmptyView(findViewById(R.id.empty));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -58,7 +65,7 @@ public class SearchResultsActivity extends AbstractActivityWithUsers {
     protected void onStart() {
         super.onStart();
         overridePendingTransition(0, 0);
-        adapter.notifyDataSetChanged();
+        //adapter.notifyDataSetChanged();
     }
 
     public void openProfile(View view) {

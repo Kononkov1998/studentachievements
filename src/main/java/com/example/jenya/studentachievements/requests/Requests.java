@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -243,24 +244,24 @@ public class Requests {
     }
 
     // /student/anotherStudent
-    public void studentSearch(String group, String search, Context ctx, Button btn) {
+    public void studentSearch(String group, String search, Context ctx, ListView listView, Activity activity, KProgressHUD progress)
+    {
         userApi.search(SharedPreferencesActions.read("token", ctx), group, search).enqueue(new Callback<ArrayList<UserInfo>>() {
             @Override
             public void onResponse(@NonNull Call<ArrayList<UserInfo>> call, @NonNull Response<ArrayList<UserInfo>> response) {
                 if (response.isSuccessful()) {
                     SearchActivity.searchSuccessful();
-                    Intent intent = new Intent(ctx, SearchResultsActivity.class);
-                    intent.putParcelableArrayListExtra("students", response.body());
-                    ctx.startActivity(intent);
-                } else {
-                    ButtonActions.enableButton(btn);
+                    UsersAdapter adapter = new UsersAdapter(ctx, response.body());
+                    listView.setAdapter(adapter);
+                    listView.setEmptyView(activity.findViewById(R.id.empty));
                 }
+                progress.dismiss();
             }
 
             @Override
             public void onFailure(@NonNull Call<ArrayList<UserInfo>> call, @NonNull Throwable t) {
                 Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
-                ButtonActions.enableButton(btn);
+                progress.dismiss();
             }
         });
     }
@@ -326,6 +327,8 @@ public class Requests {
             @Override
             public void onFailure(@NonNull Call<StudentSemesters> call, @NonNull Throwable t) {
                 Toast.makeText(ctx, t.getMessage(), Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(ctx, AuthActivity.class);
+                ctx.startActivity(intent);
             }
         });
     }
@@ -343,6 +346,8 @@ public class Requests {
             @Override
             public void onFailure(@NonNull Call<StudentMarks> call, @NonNull Throwable t) {
                 Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(ctx, AuthActivity.class);
+                ctx.startActivity(intent);
             }
         });
     }
