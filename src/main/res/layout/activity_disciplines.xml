@@ -14,8 +14,10 @@
             android:layout_alignParentTop="true"
             android:layout_marginBottom="40dp"
             android:cacheColorHint="@android:color/transparent"
+            android:clipToPadding="false"
             android:divider="@null"
-            android:listSelector="@android:color/transparent" />
+            android:listSelector="@android:color/transparent"
+            android:paddingTop="15dp" />
 
         <LinearLayout style="?bottomMenu">
 

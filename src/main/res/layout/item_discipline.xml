@@ -1,18 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <android.support.v7.widget.CardView
         android:id="@+id/card"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="15dp"
-        app:cardBackgroundColor="@color/colorPass"
-        app:cardCornerRadius="10dp">
+        style="?cardView">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -35,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:text="Экзамен"
                 android:textColor="@color/colorBlack"
-                android:textSize="15sp"/>
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/discipline_tutor"
@@ -43,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:text="ФИО преподавателя"
                 android:textColor="@color/colorBlack"
-                android:textSize="15sp"/>
+                android:textSize="15sp" />
 
             <Space
                 android:layout_width="match_parent"
@@ -97,7 +90,7 @@
                     android:gravity="center_horizontal"
                     android:text="Отлично"
                     android:textColor="@color/colorBlack"
-                    android:textSize="15sp"/>
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/discipline_hours"
@@ -107,7 +100,7 @@
                     android:gravity="center_horizontal"
                     android:text="180 (5 з.е.)"
                     android:textColor="@color/colorBlack"
-                    android:textSize="15sp"/>
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/discipline_date"
@@ -117,7 +110,7 @@
                     android:gravity="center_horizontal"
                     android:text="01.01.20"
                     android:textColor="@color/colorBlack"
-                    android:textSize="15sp"/>
+                    android:textSize="15sp" />
             </LinearLayout>
         </LinearLayout>
     </android.support.v7.widget.CardView>

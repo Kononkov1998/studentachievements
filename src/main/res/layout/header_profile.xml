@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -38,9 +37,10 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginStart="10dp">
+                    android:layout_marginStart="10dp"
+                    android:orientation="vertical">
+
                     <TextView
                         android:id="@+id/textProfile"
                         style="?textView"
@@ -48,11 +48,12 @@
                         android:layout_height="wrap_content"
                         android:inputType="none"
                         android:textSize="25sp"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
+
                     <TextView
                         android:id="@+id/groupProfile"
-                        android:layout_width="180dp"
                         style="?textView"
+                        android:layout_width="180dp"
                         android:layout_height="wrap_content"
                         android:inputType="none"
                         android:textSize="15sp" />
@@ -88,16 +89,16 @@
                 style="?textView"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:textSize="15sp"/>
+                android:textSize="15sp" />
 
             <ProgressBar
                 android:id="@+id/achievementsProgressBar"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
                 android:indeterminate="false"
-                android:progressDrawable="@drawable/progressbar"
-                android:layout_marginTop="1dp"/>
+                android:progressDrawable="@drawable/progressbar" />
 
             <TextView
                 android:id="@+id/starsTextView"
@@ -105,16 +106,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginTop="5dp"
-                android:textSize="15sp"/>
+                android:textSize="15sp" />
 
             <ProgressBar
                 android:id="@+id/starsProgressBar"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
                 android:indeterminate="false"
-                android:progressDrawable="@drawable/progressbar"
-                android:layout_marginTop="1dp"/>
+                android:progressDrawable="@drawable/progressbar" />
 
             <CheckBox
                 android:id="@+id/checkboxHide"
@@ -124,7 +125,7 @@
                 android:layout_marginTop="5dp"
                 android:buttonTint="@color/colorPrimary"
                 android:text="@string/hide"
-                android:textSize="15sp"/>
+                android:textSize="15sp" />
 
         </LinearLayout>
     </android.support.v7.widget.CardView>
