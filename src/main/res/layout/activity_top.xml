@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".activities.TopActivity">
+    android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginBottom="40dp">
-        <android.support.v7.widget.CardView style="?cardView">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+            style="?cardView">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -54,7 +52,7 @@
                     </LinearLayout>
                 </LinearLayout>
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
@@ -62,42 +60,88 @@
                     android:layout_marginBottom="15dp"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/starsSum"
+                    <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:inputType="none"
-                        android:textColor="@color/colorStarOrange"
-                        android:textSize="25sp"
-                        android:textStyle="bold" />
+                        android:layout_height="wrap_content">
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_star_yellow_32dp" />
+                        <TextView
+                            android:id="@+id/starsSum"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:inputType="none"
+                            android:textColor="@color/colorStarOrange"
+                            android:textSize="25sp"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_star_yellow_32dp" />
+                    </LinearLayout>
 
                     <TextView
                         style="?textView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
+                        android:layout_alignParentEnd="true"
                         android:inputType="none"
                         android:text="X место"
+                        android:textColor="@color/colorPumpkin"
                         android:textSize="25sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/colorPumpkin"/>
-                </LinearLayout>
+                        android:textStyle="bold" />
+                </RelativeLayout>
             </LinearLayout>
 
         </android.support.v7.widget.CardView>
 
-        <ListView
-            android:id="@+id/list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:cacheColorHint="@android:color/transparent"
-            android:divider="@null"
-            android:listSelector="@android:color/transparent" />
+        <android.support.v7.widget.CardView style="?cardView">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:onClick="openOverallTop"
+                    android:text="Общий"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:onClick="openCourseTop"
+                    android:text="Курс"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:onClick="openStreamTop"
+                    android:text="Поток"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:onClick="openGroupTop"
+                    android:text="Группа"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            style="?cardView"
+            android:layout_marginBottom="40dp">
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/pager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></android.support.v4.view.ViewPager>
+        </android.support.v7.widget.CardView>
     </LinearLayout>
 
     <LinearLayout style="?bottomMenu">
@@ -131,8 +175,9 @@
             android:tint="?ic_inactive_color" />
 
         <ImageView
-            android:id="@+id/imageSettings"
+            android:id="@+id/imageTop"
             style="@style/ImageView"
+            android:onClick="openTop"
             android:src="@drawable/ic_supervisor_account_24dp"
             android:tint="?ic_active_color" />
     </LinearLayout>

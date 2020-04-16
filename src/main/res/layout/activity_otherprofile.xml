@@ -1,62 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
+    <ListView
+        android:id="@+id/list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="40dp"
+        android:cacheColorHint="@android:color/transparent"
+        android:divider="@null"
+        android:listSelector="@android:color/transparent" />
 
-        <ListView
-            android:id="@+id/list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
-            android:layout_marginBottom="40dp"
-            android:cacheColorHint="@android:color/transparent"
-            android:divider="@null"
-            android:listSelector="@android:color/transparent" />
+    <LinearLayout style="?bottomMenu">
 
-        <LinearLayout
-            android:id="@+id/bottomMenu"
-            style="?bottomMenu"
-            android:transitionName="bottomMenu">
+        <ImageView
+            android:id="@+id/imageProfile"
+            style="@style/ImageView"
+            android:onClick="openProfile"
+            android:src="@drawable/ic_home_24dp"
+            android:tint="?ic_active_color" />
 
-            <ImageView
-                android:id="@+id/imageProfile"
-                style="@style/ImageView"
-                android:onClick="openProfile"
-                android:src="@drawable/ic_home_24dp"
-                android:tint="?ic_inactive_color" />
+        <ImageView
+            android:id="@+id/imageGrade"
+            style="@style/ImageView"
+            android:onClick="openGrade"
+            android:src="@drawable/ic_school_24dp"
+            android:tint="?ic_inactive_color" />
 
-            <ImageView
-                android:id="@+id/imageGrade"
-                style="@style/ImageView"
-                android:onClick="openGrade"
-                android:src="@drawable/ic_school_24dp"
-                android:tint="?ic_inactive_color" />
+        <ImageView
+            android:id="@+id/imageSearch"
+            style="@style/ImageView"
+            android:onClick="openSearch"
+            android:src="@drawable/ic_search_24dp"
+            android:tint="?ic_inactive_color" />
 
-            <ImageView
-                android:id="@+id/imageSearch"
-                style="@style/ImageView"
-                android:onClick="openSearch"
-                android:src="@drawable/ic_search_24dp"
-                android:tint="?ic_inactive_color" />
+        <ImageView
+            android:id="@+id/imageFavorites"
+            style="@style/ImageView"
+            android:onClick="openFavorites"
+            android:src="@drawable/ic_star_border_24dp"
+            android:tint="?ic_inactive_color" />
 
-            <ImageView
-                android:id="@+id/imageFavorites"
-                style="@style/ImageView"
-                android:onClick="openFavorites"
-                android:src="@drawable/ic_star_border_24dp"
-                android:tint="?ic_inactive_color" />
+        <ImageView
+            android:id="@+id/imageTop"
+            style="@style/ImageView"
+            android:onClick="openTop"
+            android:src="@drawable/ic_supervisor_account_24dp"
+            android:tint="?ic_inactive_color" />
+    </LinearLayout>
 
-            <ImageView
-                android:id="@+id/imageSettings"
-                style="@style/ImageView"
-                android:onClick="openTop"
-                android:src="@drawable/ic_supervisor_account_24dp"
-                android:tint="?ic_inactive_color" />
-        </LinearLayout>
-    </RelativeLayout>
-
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>
