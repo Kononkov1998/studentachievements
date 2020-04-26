@@ -21,4 +21,5 @@
     <string name="delete_account">Удалить аккаунт</string>
     <string name="no_favorites">Нет избранных пользователей</string>
     <string name="no_search_results">По вашему запросу ничего не найдено</string>
+    <string name="favorites">Избранные</string>
 </resources>

@@ -36,6 +36,8 @@ public class FavoritesActivity extends AbstractActivityWithUsers implements Swip
         swipeRefreshLayout.setColorSchemeResources(R.color.colorOrange, R.color.colorGold, R.color.colorExam, R.color.colorPass);
         adapter = new UsersAdapter(this, UserInfo.getCurrentUser().getFavouriteStudents());
         listView = findViewById(R.id.list);
+        View header = getLayoutInflater().inflate(R.layout.header_favorites, listView, false);
+        listView.addHeaderView(header);
         listView.setAdapter(adapter);
         listView.setEmptyView(findViewById(R.id.empty));
     }
