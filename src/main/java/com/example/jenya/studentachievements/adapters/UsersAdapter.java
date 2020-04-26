@@ -107,6 +107,14 @@ public class UsersAdapter extends BaseAdapter {
 
         UsersAdapter adapter = this;
         View finalView = view;
+        RelativeLayout layout = view.findViewById(R.id.layout);
+
+        if (ctx.getClass().getSimpleName().equals("FavoritesActivity") && !s.getIsAvailable()) {
+            view.setAlpha(0.5f);
+        } else {
+            view.setAlpha(1f);
+        }
+
         checkBoxFavorite.setOnClickListener((buttonView) -> {
             if (checkBoxFavorite.isChecked()) {
                 Requests.getInstance().addFavourite(s, ctx);
@@ -115,12 +123,15 @@ public class UsersAdapter extends BaseAdapter {
                     Animator.AnimatorListener listener = new Animator.AnimatorListener() {
                         @Override
                         public void onAnimationStart(Animator animator) {
-
+                            layout.setEnabled(false);
+                            checkBoxFavorite.setEnabled(false);
                         }
 
                         @Override
                         public void onAnimationEnd(Animator animator) {
                             Requests.getInstance().removeFavouriteFromFavoritesActivity(s, ctx, adapter);
+                            layout.setEnabled(true);
+                            checkBoxFavorite.setEnabled(true);
                         }
 
                         @Override
@@ -142,13 +153,6 @@ public class UsersAdapter extends BaseAdapter {
             }
         });
 
-        if (ctx.getClass().getSimpleName().equals("FavoritesActivity") && !s.getIsAvailable()) {
-            view.setAlpha(0.5f);
-        } else {
-            view.setAlpha(1f);
-        }
-
-        RelativeLayout layout = view.findViewById(R.id.layout);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             layout.setTransitionName(s.get_id());
         }
