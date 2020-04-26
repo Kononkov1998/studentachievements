@@ -18,8 +18,11 @@ import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.activities.AuthActivity;
 import com.example.jenya.studentachievements.activities.ProfileActivity;
 import com.example.jenya.studentachievements.activities.SearchActivity;
+import com.example.jenya.studentachievements.activities.SemestersActivity;
 import com.example.jenya.studentachievements.activities.SettingsActivity;
+import com.example.jenya.studentachievements.adapters.DisciplinesAdapter;
 import com.example.jenya.studentachievements.adapters.UsersAdapter;
+import com.example.jenya.studentachievements.comparators.DisciplinesComparator;
 import com.example.jenya.studentachievements.comparators.StudentsComparator;
 import com.example.jenya.studentachievements.models.Semester;
 import com.example.jenya.studentachievements.models.StudentMarks;
@@ -97,14 +100,14 @@ public class Requests {
                     SharedPreferencesActions.save("token", token, ctx);
                     getUserInfo(ctx, btn);
                 } else {
-                    Toast.makeText(ctx, "Неверный логин и/или пароль!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ctx, "Неверный логин и/или пароль!", Toast.LENGTH_SHORT).show();
                     ButtonActions.enableButton(btn);
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<UserToken> call, @NonNull Throwable t) {
-                Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
+                Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_SHORT).show();
                 ButtonActions.enableButton(btn);
             }
         });
@@ -147,18 +150,19 @@ public class Requests {
                     }
                     UserInfo.setCurrentUser(response.body());
                     UserInfo.getCurrentUser().setFavouriteStudents(new ArrayList<>());
-                    semesters(ctx, true);
+                    Intent intent = new Intent(ctx, ProfileActivity.class);
+                    ctx.startActivity(intent);
                 } else if (response.code() == 403) {
                     initializeStudent(ctx, btn);
                 } else {
-                    Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_SHORT).show();
                     ButtonActions.enableButton(btn);
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t) {
-                Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
+                Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_SHORT).show();
                 ButtonActions.enableButton(btn);
             }
         });
@@ -201,7 +205,8 @@ public class Requests {
                     }
                     UserInfo.setCurrentUser(response.body());
                     UserInfo.getCurrentUser().setFavouriteStudents(new ArrayList<>());
-                    semesters(ctx, false);
+                    Intent intent = new Intent(ctx, ProfileActivity.class);
+                    ctx.startActivity(intent);
                 } else {
                     Intent intent = new Intent(ctx, AuthActivity.class);
                     ctx.startActivity(intent);
@@ -212,6 +217,47 @@ public class Requests {
             public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t) {
                 Intent intent = new Intent(ctx, AuthActivity.class);
                 ctx.startActivity(intent);
+            }
+        });
+    }
+
+    // /student/semester/list
+    public void getSemesters(Context ctx, SwipeRefreshLayout swipeRefreshLayout) {
+        userApi.semesters(SharedPreferencesActions.read("token", ctx)).enqueue(new Callback<StudentSemesters>() {
+            @Override
+            public void onResponse(@NonNull Call<StudentSemesters> call, @NonNull Response<StudentSemesters> response) {
+                if (response.isSuccessful()) {
+                    Semester.setSemesters(response.body().getStudentSemesters());
+                    ((SemestersActivity) ctx).initButtons(Semester.getSemesters().size());
+                    swipeRefreshLayout.setRefreshing(false);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<StudentSemesters> call, @NonNull Throwable t) {
+                Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_SHORT).show();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+    }
+
+    // /student/semester/marks/{idLGS}
+    public void getMarks(Context ctx, Semester semester, DisciplinesAdapter adapter, SwipeRefreshLayout swipeRefreshLayout) {
+        userApi.marks(SharedPreferencesActions.read("token", ctx), semester.getIdLGS()).enqueue(new Callback<StudentMarks>() {
+            @Override
+            public void onResponse(@NonNull Call<StudentMarks> call, @NonNull Response<StudentMarks> response) {
+                if (response.isSuccessful()) {
+                    semester.getMarks().addAll(response.body().getRatings());
+                    Collections.sort(semester.getMarks(), new DisciplinesComparator());
+                    adapter.notifyDataSetChanged();
+                    swipeRefreshLayout.setRefreshing(false);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<StudentMarks> call, @NonNull Throwable t) {
+                Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_SHORT).show();
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
     }
@@ -231,7 +277,8 @@ public class Requests {
 
                     UserInfo.setCurrentUser(response.body());
                     UserInfo.getCurrentUser().setFavouriteStudents(new ArrayList<>());
-                    semesters(ctx, true);
+                    Intent intent = new Intent(ctx, ProfileActivity.class);
+                    ctx.startActivity(intent);
                 } else {
                     ButtonActions.enableButton(btn);
                 }
@@ -239,7 +286,7 @@ public class Requests {
 
             @Override
             public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t) {
-                Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
+                Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_SHORT).show();
                 ButtonActions.enableButton(btn);
             }
         });
@@ -261,7 +308,7 @@ public class Requests {
 
             @Override
             public void onFailure(@NonNull Call<ArrayList<UserInfo>> call, @NonNull Throwable t) {
-                Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
+                Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_SHORT).show();
                 progress.dismiss();
             }
         });
@@ -279,55 +326,8 @@ public class Requests {
 
             @Override
             public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t) {
-                Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
+                Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_SHORT).show();
                 UserInfo.getCurrentUser().setVisibility(visibilityStr);
-            }
-        });
-    }
-
-    // /student/semester/list
-    private void semesters(Context ctx, boolean needToFinishActivity) {
-        userApi.semesters(SharedPreferencesActions.read("token", ctx)).enqueue(new Callback<StudentSemesters>() {
-            @Override
-            public void onResponse(@NonNull Call<StudentSemesters> call, @NonNull Response<StudentSemesters> response) {
-                if (response.isSuccessful()) {
-                    Semester.setSemesters(response.body().getStudentSemesters());
-                    for (Semester semester : Semester.getSemesters()) {
-                        marks(ctx, semester.getIdLGS(), semester);
-                    }
-
-                    Intent intent = new Intent(ctx, ProfileActivity.class);
-                    ctx.startActivity(intent);
-                    if (needToFinishActivity) {
-                        ((Activity) ctx).finish();
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<StudentSemesters> call, @NonNull Throwable t) {
-                Toast.makeText(ctx, t.getMessage(), Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(ctx, AuthActivity.class);
-                ctx.startActivity(intent);
-            }
-        });
-    }
-
-    // /student/semester/marks/{idLGS}
-    private void marks(Context ctx, int idLGS, Semester semester) {
-        userApi.marks(SharedPreferencesActions.read("token", ctx), idLGS).enqueue(new Callback<StudentMarks>() {
-            @Override
-            public void onResponse(@NonNull Call<StudentMarks> call, @NonNull Response<StudentMarks> response) {
-                if (response.isSuccessful()) {
-                    semester.setMarks(response.body().getRatings());
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<StudentMarks> call, @NonNull Throwable t) {
-                Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(ctx, AuthActivity.class);
-                ctx.startActivity(intent);
             }
         });
     }
@@ -346,14 +346,14 @@ public class Requests {
                         swipeRefreshLayout.setRefreshing(false);
                     }
                 } else {
-                    Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_SHORT).show();
                     swipeRefreshLayout.setRefreshing(false);
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<ArrayList<UserInfo>> call, @NonNull Throwable t) {
-                Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
+                Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_SHORT).show();
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
@@ -409,7 +409,7 @@ public class Requests {
 
             @Override
             public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t) {
-                Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
+                Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_SHORT).show();
                 if (userForRemove != null) {
                     UserInfo.getCurrentUser().getFavouriteStudents().add(userForRemove);
                     adapter.notifyDataSetChanged();
@@ -447,7 +447,7 @@ public class Requests {
             @Override
             public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t) {
                 hud.dismiss();
-                Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
+                Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -467,13 +467,14 @@ public class Requests {
 
                     UserInfo.setCurrentUser(response.body());
                     UserInfo.getCurrentUser().setFavouriteStudents(new ArrayList<>());
-                    semesters(ctx, true);
+                    Intent intent = new Intent(ctx, ProfileActivity.class);
+                    ctx.startActivity(intent);
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t) {
-                Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
+                Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_SHORT).show();
                 ButtonActions.enableButton(btn);
             }
         });
@@ -493,13 +494,14 @@ public class Requests {
 
                     UserInfo.setCurrentUser(response.body());
                     UserInfo.getCurrentUser().setFavouriteStudents(new ArrayList<>());
-                    semesters(ctx, false);
+                    Intent intent = new Intent(ctx, ProfileActivity.class);
+                    ctx.startActivity(intent);
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t) {
-                Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
+                Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(ctx, AuthActivity.class);
                 ctx.startActivity(intent);
             }
@@ -520,7 +522,7 @@ public class Requests {
 
             @Override
             public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
-                Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
+                Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_SHORT).show();
             }
         });
     }

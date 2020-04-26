@@ -41,7 +41,7 @@ public class AuthActivity extends AppCompatActivity {
     public void enter(View view) {
         if (login.getText().toString().trim().equals("") || pass.getText().toString().trim().equals("")) {
             Requests.getInstance().getUserToken(new User("ekononkov-ki16", "Rjyjyrjd1998"), this, btn);
-            Toast.makeText(this, "Введите логин и пароль!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Введите логин и пароль!", Toast.LENGTH_SHORT).show();
             return;
         }
         ButtonActions.disableButton(btn);

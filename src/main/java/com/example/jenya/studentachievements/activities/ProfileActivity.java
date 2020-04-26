@@ -22,15 +22,15 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.model.LazyHeaders;
 import com.bumptech.glide.request.RequestOptions;
-import com.example.jenya.studentachievements.utils.ImageActions;
 import com.example.jenya.studentachievements.R;
-import com.example.jenya.studentachievements.utils.SharedPreferencesActions;
-import com.example.jenya.studentachievements.utils.ThemeController;
 import com.example.jenya.studentachievements.adapters.AchievementsAdapter;
 import com.example.jenya.studentachievements.comparators.AchievementsComparator;
 import com.example.jenya.studentachievements.models.Achievement;
 import com.example.jenya.studentachievements.models.UserInfo;
 import com.example.jenya.studentachievements.requests.Requests;
+import com.example.jenya.studentachievements.utils.ImageActions;
+import com.example.jenya.studentachievements.utils.SharedPreferencesActions;
+import com.example.jenya.studentachievements.utils.ThemeController;
 import com.kaopiz.kprogresshud.KProgressHUD;
 import com.soundcloud.android.crop.Crop;
 
@@ -141,7 +141,7 @@ public class ProfileActivity extends AbstractActivity {
                 Crop.pickImage(this);
             }
         } catch (Exception e) {
-            Toast.makeText(this, "Произошла ошибка. Попробуйте еще раз", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Произошла ошибка. Попробуйте еще раз", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -151,7 +151,7 @@ public class ProfileActivity extends AbstractActivity {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Crop.pickImage(this);
             } else {
-                Toast.makeText(this, "Для загрузки аватара необходимо предоставить доступ к фотографиям", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Для загрузки аватара необходимо предоставить доступ к фотографиям", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -183,7 +183,7 @@ public class ProfileActivity extends AbstractActivity {
                 Requests.getInstance().uploadAvatar(body, this, avatar, hud);
             } catch (Exception e) {
                 hud.dismiss();
-                Toast.makeText(this, "Произошла ошибка. Попробуйте еще раз", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Произошла ошибка. Попробуйте еще раз", Toast.LENGTH_SHORT).show();
             }
         } else if (resultCode == Crop.RESULT_ERROR) {
             Toast.makeText(this, Crop.getError(result).getMessage(), Toast.LENGTH_SHORT).show();

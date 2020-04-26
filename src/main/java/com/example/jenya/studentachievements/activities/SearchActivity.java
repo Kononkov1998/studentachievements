@@ -11,11 +11,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.jenya.studentachievements.utils.ButtonActions;
 import com.example.jenya.studentachievements.R;
-import com.example.jenya.studentachievements.utils.ThemeController;
 import com.example.jenya.studentachievements.models.UserInfo;
-import com.example.jenya.studentachievements.requests.Requests;
+import com.example.jenya.studentachievements.utils.ButtonActions;
+import com.example.jenya.studentachievements.utils.ThemeController;
 
 public class SearchActivity extends AbstractActivity {
 
@@ -67,7 +66,7 @@ public class SearchActivity extends AbstractActivity {
         String group = ((AutoCompleteTextView) findViewById(R.id.textViewGroup)).getText().toString().trim();
 
         if (name.isEmpty() && surname.isEmpty() && patronymic.isEmpty() && group.isEmpty()) {
-            Toast.makeText(this, "Заполните хотя бы одно поле!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Заполните хотя бы одно поле!", Toast.LENGTH_SHORT).show();
             return;
         }
 

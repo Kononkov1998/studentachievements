@@ -4,23 +4,20 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.widget.ListView;
 
 import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.adapters.DisciplinesAdapter;
-import com.example.jenya.studentachievements.comparators.DisciplinesComparator;
 import com.example.jenya.studentachievements.models.Mark;
 import com.example.jenya.studentachievements.models.Semester;
+import com.example.jenya.studentachievements.requests.Requests;
 import com.example.jenya.studentachievements.utils.ThemeController;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class DisciplinesActivity extends AbstractActivity {
-    private ArrayList<Mark> marks;
-    private ListView listView;
-    private DisciplinesAdapter adapter;
 
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
@@ -32,16 +29,19 @@ public class DisciplinesActivity extends AbstractActivity {
 
         // узнаем в каком мы семестре
         int semesterNumber = getIntent().getIntExtra("semesterNumber", 0);
-        marks = Semester.getSemesters().get(semesterNumber - 1).getMarks();
-
-        Collections.sort(marks, new DisciplinesComparator());
-
-        listView = findViewById(R.id.list);
-        adapter = new DisciplinesAdapter(this, marks);
+        Semester currentSemester = Semester.getSemesters().get(semesterNumber - 1);
+        ArrayList<Mark> marks = currentSemester.getMarks();
+        ListView listView = findViewById(R.id.list);
+        DisciplinesAdapter adapter = new DisciplinesAdapter(this, marks);
         listView.setAdapter(adapter);
 
+        SwipeRefreshLayout swipeRefreshLayout = findViewById(R.id.refresh);
+        swipeRefreshLayout.setEnabled(false);
+        if (marks.isEmpty()) {
+            swipeRefreshLayout.setRefreshing(true);
+            Requests.getInstance().getMarks(this, currentSemester, adapter, swipeRefreshLayout);
+        }
     }
-
 
     @Override
     protected void onStart() {

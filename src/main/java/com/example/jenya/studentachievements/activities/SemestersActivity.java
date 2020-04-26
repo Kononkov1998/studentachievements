@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
@@ -12,12 +13,14 @@ import android.widget.LinearLayout;
 
 import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.models.Semester;
+import com.example.jenya.studentachievements.requests.Requests;
 import com.example.jenya.studentachievements.utils.ImageActions;
 import com.example.jenya.studentachievements.utils.ThemeController;
 
 import java.util.Locale;
 
 public class SemestersActivity extends AbstractActivity {
+
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +28,15 @@ public class SemestersActivity extends AbstractActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         ThemeController.onActivityCreateSetTheme(this);
         setContentView(R.layout.activity_grade);
-        initButtons(Semester.getSemesters().size());
+
+        SwipeRefreshLayout swipeRefreshLayout = findViewById(R.id.refresh);
+        swipeRefreshLayout.setEnabled(false);
+        if (Semester.getSemesters().isEmpty()) {
+            swipeRefreshLayout.setRefreshing(true);
+            Requests.getInstance().getSemesters(this, swipeRefreshLayout);
+        } else {
+            initButtons(Semester.getSemesters().size());
+        }
     }
 
     public void initButtons(int semesters) {
