@@ -146,6 +146,7 @@ public class Requests {
                         return;
                     }
                     UserInfo.setCurrentUser(response.body());
+                    UserInfo.getCurrentUser().setFavouriteStudents(new ArrayList<>());
                     semesters(ctx, true);
                 } else if (response.code() == 403) {
                     initializeStudent(ctx, btn);
@@ -199,6 +200,7 @@ public class Requests {
                         return;
                     }
                     UserInfo.setCurrentUser(response.body());
+                    UserInfo.getCurrentUser().setFavouriteStudents(new ArrayList<>());
                     semesters(ctx, false);
                 } else {
                     Intent intent = new Intent(ctx, AuthActivity.class);
@@ -228,6 +230,7 @@ public class Requests {
                     SharedPreferencesActions.save(id, todayAsString, ctx);
 
                     UserInfo.setCurrentUser(response.body());
+                    UserInfo.getCurrentUser().setFavouriteStudents(new ArrayList<>());
                     semesters(ctx, true);
                 } else {
                     ButtonActions.enableButton(btn);
@@ -243,8 +246,7 @@ public class Requests {
     }
 
     // /student/anotherStudent
-    public void studentSearch(String group, String search, Context ctx, ListView listView, Activity activity, KProgressHUD progress)
-    {
+    public void studentSearch(String group, String search, Context ctx, ListView listView, Activity activity, KProgressHUD progress) {
         userApi.search(SharedPreferencesActions.read("token", ctx), group, search).enqueue(new Callback<ArrayList<UserInfo>>() {
             @Override
             public void onResponse(@NonNull Call<ArrayList<UserInfo>> call, @NonNull Response<ArrayList<UserInfo>> response) {
@@ -283,32 +285,6 @@ public class Requests {
         });
     }
 
-    // /student/favourite/list
-    private void getFavourites(Context ctx, boolean needToFinishActivity) {
-        userApi.favourites(SharedPreferencesActions.read("token", ctx)).enqueue(new Callback<ArrayList<UserInfo>>() {
-            @Override
-            public void onResponse(@NonNull Call<ArrayList<UserInfo>> call, @NonNull Response<ArrayList<UserInfo>> response) {
-                if (response.isSuccessful()) {
-                    UserInfo.getCurrentUser().setFavouriteStudents(response.body());
-                    Collections.sort(UserInfo.getCurrentUser().getFavouriteStudents(), new StudentsComparator());
-
-                    Intent intent = new Intent(ctx, ProfileActivity.class);
-                    ctx.startActivity(intent);
-                    if (needToFinishActivity) {
-                        ((Activity) ctx).finish();
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<ArrayList<UserInfo>> call, @NonNull Throwable t) {
-                Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(ctx, AuthActivity.class);
-                ctx.startActivity(intent);
-            }
-        });
-    }
-
     // /student/semester/list
     private void semesters(Context ctx, boolean needToFinishActivity) {
         userApi.semesters(SharedPreferencesActions.read("token", ctx)).enqueue(new Callback<StudentSemesters>() {
@@ -319,7 +295,12 @@ public class Requests {
                     for (Semester semester : Semester.getSemesters()) {
                         marks(ctx, semester.getIdLGS(), semester);
                     }
-                    getFavourites(ctx, needToFinishActivity);
+
+                    Intent intent = new Intent(ctx, ProfileActivity.class);
+                    ctx.startActivity(intent);
+                    if (needToFinishActivity) {
+                        ((Activity) ctx).finish();
+                    }
                 }
             }
 
@@ -389,7 +370,7 @@ public class Requests {
 
             @Override
             public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t) {
-                Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
+                Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_SHORT).show();
                 UserInfo.getCurrentUser().getFavouriteStudents().remove(otherStudent);
             }
         });
@@ -407,7 +388,7 @@ public class Requests {
 
             @Override
             public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t) {
-                Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
+                Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_SHORT).show();
                 if (userForRemove != null) {
                     UserInfo.getCurrentUser().getFavouriteStudents().add(userForRemove);
                 }
@@ -485,6 +466,7 @@ public class Requests {
                     SharedPreferencesActions.save(id, todayAsString, ctx);
 
                     UserInfo.setCurrentUser(response.body());
+                    UserInfo.getCurrentUser().setFavouriteStudents(new ArrayList<>());
                     semesters(ctx, true);
                 }
             }
@@ -510,6 +492,7 @@ public class Requests {
                     SharedPreferencesActions.save(id, todayAsString, ctx);
 
                     UserInfo.setCurrentUser(response.body());
+                    UserInfo.getCurrentUser().setFavouriteStudents(new ArrayList<>());
                     semesters(ctx, false);
                 }
             }
