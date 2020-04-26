@@ -1,12 +1,10 @@
 package com.example.jenya.studentachievements.requests;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -18,6 +16,7 @@ import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.activities.AuthActivity;
 import com.example.jenya.studentachievements.activities.ProfileActivity;
 import com.example.jenya.studentachievements.activities.SearchActivity;
+import com.example.jenya.studentachievements.activities.SearchResultsActivity;
 import com.example.jenya.studentachievements.activities.SemestersActivity;
 import com.example.jenya.studentachievements.activities.SettingsActivity;
 import com.example.jenya.studentachievements.adapters.DisciplinesAdapter;
@@ -229,8 +228,8 @@ public class Requests {
                 if (response.isSuccessful()) {
                     Semester.setSemesters(response.body().getStudentSemesters());
                     ((SemestersActivity) ctx).initButtons(Semester.getSemesters().size());
-                    swipeRefreshLayout.setRefreshing(false);
                 }
+                swipeRefreshLayout.setRefreshing(false);
             }
 
             @Override
@@ -250,8 +249,8 @@ public class Requests {
                     semester.getMarks().addAll(response.body().getRatings());
                     Collections.sort(semester.getMarks(), new DisciplinesComparator());
                     adapter.notifyDataSetChanged();
-                    swipeRefreshLayout.setRefreshing(false);
                 }
+                swipeRefreshLayout.setRefreshing(false);
             }
 
             @Override
@@ -293,23 +292,19 @@ public class Requests {
     }
 
     // /student/anotherStudent
-    public void studentSearch(String group, String search, Context ctx, ListView listView, Activity activity, KProgressHUD progress) {
+    public void studentSearch(Context ctx, String group, String search) {
         userApi.search(SharedPreferencesActions.read("token", ctx), group, search).enqueue(new Callback<ArrayList<UserInfo>>() {
             @Override
             public void onResponse(@NonNull Call<ArrayList<UserInfo>> call, @NonNull Response<ArrayList<UserInfo>> response) {
                 if (response.isSuccessful()) {
                     SearchActivity.searchSuccessful();
-                    UsersAdapter adapter = new UsersAdapter(ctx, response.body());
-                    listView.setAdapter(adapter);
-                    listView.setEmptyView(activity.findViewById(R.id.empty));
+                    ((SearchResultsActivity) ctx).populateListView(response.body());
                 }
-                progress.dismiss();
             }
 
             @Override
             public void onFailure(@NonNull Call<ArrayList<UserInfo>> call, @NonNull Throwable t) {
                 Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_SHORT).show();
-                progress.dismiss();
             }
         });
     }
