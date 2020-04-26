@@ -1,5 +1,6 @@
 package com.example.jenya.studentachievements.requests;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -148,9 +149,7 @@ public class Requests {
                         return;
                     }
                     UserInfo.setCurrentUser(response.body());
-                    UserInfo.getCurrentUser().setFavouriteStudents(new ArrayList<>());
-                    Intent intent = new Intent(ctx, ProfileActivity.class);
-                    ctx.startActivity(intent);
+                    getFavourites(ctx, true);
                 } else if (response.code() == 403) {
                     initializeStudent(ctx, btn);
                 } else {
@@ -203,9 +202,7 @@ public class Requests {
                         return;
                     }
                     UserInfo.setCurrentUser(response.body());
-                    UserInfo.getCurrentUser().setFavouriteStudents(new ArrayList<>());
-                    Intent intent = new Intent(ctx, ProfileActivity.class);
-                    ctx.startActivity(intent);
+                    getFavourites(ctx, false);
                 } else {
                     Intent intent = new Intent(ctx, AuthActivity.class);
                     ctx.startActivity(intent);
@@ -275,9 +272,7 @@ public class Requests {
                     SharedPreferencesActions.save(id, todayAsString, ctx);
 
                     UserInfo.setCurrentUser(response.body());
-                    UserInfo.getCurrentUser().setFavouriteStudents(new ArrayList<>());
-                    Intent intent = new Intent(ctx, ProfileActivity.class);
-                    ctx.startActivity(intent);
+                    getFavourites(ctx, true);
                 } else {
                     ButtonActions.enableButton(btn);
                 }
@@ -323,6 +318,32 @@ public class Requests {
             public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t) {
                 Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_SHORT).show();
                 UserInfo.getCurrentUser().setVisibility(visibilityStr);
+            }
+        });
+    }
+
+    // /student/favourite/list
+    private void getFavourites(Context ctx, boolean needToFinishActivity) {
+        userApi.favourites(SharedPreferencesActions.read("token", ctx)).enqueue(new Callback<ArrayList<UserInfo>>() {
+            @Override
+            public void onResponse(@NonNull Call<ArrayList<UserInfo>> call, @NonNull Response<ArrayList<UserInfo>> response) {
+                if (response.isSuccessful()) {
+                    UserInfo.getCurrentUser().setFavouriteStudents(response.body());
+                    Collections.sort(UserInfo.getCurrentUser().getFavouriteStudents(), new StudentsComparator());
+
+                    Intent intent = new Intent(ctx, ProfileActivity.class);
+                    ctx.startActivity(intent);
+                    if (needToFinishActivity) {
+                        ((Activity) ctx).finish();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ArrayList<UserInfo>> call, @NonNull Throwable t) {
+                Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(ctx, AuthActivity.class);
+                ctx.startActivity(intent);
             }
         });
     }
@@ -461,9 +482,7 @@ public class Requests {
                     SharedPreferencesActions.save(id, todayAsString, ctx);
 
                     UserInfo.setCurrentUser(response.body());
-                    UserInfo.getCurrentUser().setFavouriteStudents(new ArrayList<>());
-                    Intent intent = new Intent(ctx, ProfileActivity.class);
-                    ctx.startActivity(intent);
+                    getFavourites(ctx, true);
                 }
             }
 
@@ -488,9 +507,7 @@ public class Requests {
                     SharedPreferencesActions.save(id, todayAsString, ctx);
 
                     UserInfo.setCurrentUser(response.body());
-                    UserInfo.getCurrentUser().setFavouriteStudents(new ArrayList<>());
-                    Intent intent = new Intent(ctx, ProfileActivity.class);
-                    ctx.startActivity(intent);
+                    getFavourites(ctx, false);
                 }
             }
 
