@@ -23,5 +23,5 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:text="TEST"
-        android:textAppearance="?android:attr/textAppearanceLarge"></TextView>
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 </RelativeLayout>

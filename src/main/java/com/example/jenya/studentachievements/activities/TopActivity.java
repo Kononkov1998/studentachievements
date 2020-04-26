@@ -21,6 +21,7 @@ import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.model.LazyHeaders;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.jenya.studentachievements.R;
+import com.example.jenya.studentachievements.fragments.TopFragment;
 import com.example.jenya.studentachievements.models.Achievement;
 import com.example.jenya.studentachievements.models.UserInfo;
 import com.example.jenya.studentachievements.requests.Requests;
@@ -31,7 +32,6 @@ import com.example.jenya.studentachievements.utils.ThemeController;
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import fragments.TopFragment;
 
 public class TopActivity extends AbstractActivity {
 

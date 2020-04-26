@@ -1,4 +1,4 @@
-package fragments;
+package com.example.jenya.studentachievements.fragments;
 
 import android.graphics.Color;
 import android.os.Bundle;
