@@ -4,6 +4,7 @@ import com.example.jenya.studentachievements.models.Mark;
 import com.example.jenya.studentachievements.models.Semester;
 import com.example.jenya.studentachievements.models.StudentMarks;
 import com.example.jenya.studentachievements.models.StudentSemesters;
+import com.example.jenya.studentachievements.models.Top;
 import com.example.jenya.studentachievements.models.User;
 import com.example.jenya.studentachievements.models.UserInfo;
 import com.example.jenya.studentachievements.models.UserToken;
@@ -68,4 +69,7 @@ interface UserApi
 
     @DELETE("/student/account")
     Call<Void> deleteAccount(@Header("Authorization") String token);
+
+    @GET("/statistics/top")
+    Call<Top> topStudents(@Header("Authorization") String token, @Query("pageNumber") int pageNumber, @Query("pageSize") int pageSize, @Query("region") String region);
 }
