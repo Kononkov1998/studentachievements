@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -25,6 +24,7 @@ import com.example.jenya.studentachievements.adapters.DisciplinesAdapter;
 import com.example.jenya.studentachievements.adapters.UsersAdapter;
 import com.example.jenya.studentachievements.comparators.DisciplinesComparator;
 import com.example.jenya.studentachievements.comparators.StudentsComparator;
+import com.example.jenya.studentachievements.fragments.TopFragment;
 import com.example.jenya.studentachievements.models.Semester;
 import com.example.jenya.studentachievements.models.StudentMarks;
 import com.example.jenya.studentachievements.models.StudentSemesters;
@@ -551,30 +551,19 @@ public class Requests {
     }
 
     // /statistics/top
-    public void topStudents(Context ctx, int pageNumber, int pageSize, String region)
-    {
-        userApi.topStudents(SharedPreferencesActions.read("token", ctx), pageNumber, pageSize, region).enqueue(new Callback<Top>()
-        {
+    public void topStudents(Context ctx, TopFragment fragment, int pageNumber, int pageSize, String region) {
+        userApi.topStudents(SharedPreferencesActions.read("token", ctx), pageNumber, pageSize, region).enqueue(new Callback<Top>() {
             @Override
-            public void onResponse(@NonNull Call<Top> call, @NonNull Response<Top> response)
-            {
-                if (response.isSuccessful())
-                {
-                    assert response.body() != null;
-                    String res = String.format(Locale.getDefault(),
-                            "The first student is: %s, Current user is: %s, Total is: %d",
-                            response.body().getList().get(0).getFullName().getFirstName(),
-                            response.body().getCurrentUser().get(0).getFullName().getFirstName(),
-                            response.body().getPageInfo().get(0).getTotal()
-                    );
-
-                    Log.i("res", res);
+            public void onResponse(@NonNull Call<Top> call, @NonNull Response<Top> response) {
+                if (response.isSuccessful()) {
+                    if (response.body() != null) {
+                        fragment.populateListView(response.body().getList(), response.body().getPageInfo().get(0).getTotal());
+                    }
                 }
             }
 
             @Override
-            public void onFailure(@NonNull Call<Top> call, @NonNull Throwable t)
-            {
+            public void onFailure(@NonNull Call<Top> call, @NonNull Throwable t) {
                 Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_SHORT).show();
             }
         });

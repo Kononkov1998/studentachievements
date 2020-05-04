@@ -1,49 +1,122 @@
 package com.example.jenya.studentachievements.fragments;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.AbsListView;
+import android.widget.ListView;
 
 import com.example.jenya.studentachievements.R;
+import com.example.jenya.studentachievements.adapters.TopUsersAdapter;
+import com.example.jenya.studentachievements.models.UserInfo;
+import com.example.jenya.studentachievements.requests.Requests;
 
-import java.util.Random;
+import java.util.ArrayList;
 
 public class TopFragment extends Fragment {
-    static final String ARGUMENT_PAGE_NUMBER = "arg_page_number";
+    private static final String ARGUMENT_PAGE_NUMBER = "arg_page_number";
+    private static final String ALL = "all";
+    private static final String GROUP = "group";
+    private static final String DIRECTION = "direction";
+    private static final String YEAR = "year";
+    private static final int ALL_PAGE_NUMBER = 0;
+    private static final int YEAR_PAGE_NUMBER = 1;
+    private static final int DIRECTION_PAGE_NUMBER = 2;
+    private static final int GROUP_PAGE_NUMBER = 3;
+    private static final int PAGE_SIZE = 1;
 
-    int pageNumber;
-    int backColor;
+
+    private TopUsersAdapter adapter;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private ListView listView;
+    private ArrayList<UserInfo> students = new ArrayList<>();
+    private int pageNumber = 0;
+    private boolean listIsLoading = false;
+    private View footer;
+    private String region;
+    private int maxPageNumber = -1;
 
     public static TopFragment newInstance(int page) {
-        TopFragment pageFragment = new TopFragment();
+        TopFragment fragment = new TopFragment();
         Bundle arguments = new Bundle();
         arguments.putInt(ARGUMENT_PAGE_NUMBER, page);
-        pageFragment.setArguments(arguments);
-        return pageFragment;
+        fragment.setArguments(arguments);
+        return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        pageNumber = getArguments().getInt(ARGUMENT_PAGE_NUMBER);
-
-        Random rnd = new Random();
-        backColor = Color.argb(40, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+        if (getArguments() != null) {
+            region = getRegion(getArguments().getInt(ARGUMENT_PAGE_NUMBER));
+        }
+        adapter = new TopUsersAdapter(getActivity(), students);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_top, null);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_top, container, false);
+        footer = inflater.inflate(R.layout.footer_top, container, false);
 
-        TextView tvPage = (TextView) view.findViewById(R.id.tvPage);
-        tvPage.setText("Page " + pageNumber);
-        tvPage.setBackgroundColor(backColor);
+        swipeRefreshLayout = view.findViewById(R.id.refresh);
 
+        listView = view.findViewById(R.id.list);
+        listView.setAdapter(adapter);
+        listView.addFooterView(footer);
+        footer.setVisibility(View.GONE);
+        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+
+            }
+
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                if (firstVisibleItem + visibleItemCount == totalItemCount && totalItemCount != 0) {
+                    if (!listIsLoading) {
+                        listIsLoading = true;
+                        addItems();
+                    }
+                }
+            }
+        });
         return view;
+    }
+
+    private String getRegion(int page) {
+        switch (page) {
+            case ALL_PAGE_NUMBER:
+                return ALL;
+            case GROUP_PAGE_NUMBER:
+                return GROUP;
+            case DIRECTION_PAGE_NUMBER:
+                return DIRECTION;
+            case YEAR_PAGE_NUMBER:
+                return YEAR;
+        }
+        return null;
+    }
+
+    private void addItems() {
+        footer.setVisibility(View.VISIBLE);
+        pageNumber++;
+        Requests.getInstance().topStudents(getActivity(), this, pageNumber, PAGE_SIZE, region);
+    }
+
+    public void populateListView(ArrayList<UserInfo> students, int numberOfRecords) {
+        if (maxPageNumber == -1) {
+            maxPageNumber = (int) Math.ceil((double) numberOfRecords / PAGE_SIZE);
+        }
+        adapter.addAll(students);
+        footer.setVisibility(View.GONE);
+
+        if (pageNumber == maxPageNumber) {
+            listView.setOnScrollListener(null);
+            listView.removeFooterView(footer);
+        }
+
+        listIsLoading = false;
     }
 }

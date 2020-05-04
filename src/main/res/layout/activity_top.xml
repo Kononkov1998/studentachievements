@@ -3,11 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v4.widget.NestedScrollView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:layout_marginBottom="40dp">
+        android:layout_marginBottom="40dp"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -112,21 +112,21 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:onClick="openOverallTop"
+                        android:onClick="openAllTop"
                         android:text="Общий" />
 
                     <Button
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:onClick="openCourseTop"
+                        android:onClick="openYearTop"
                         android:text="Курс" />
 
                     <Button
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:onClick="openStreamTop"
+                        android:onClick="openDirectionTop"
                         android:text="Поток" />
 
                     <Button
@@ -148,7 +148,7 @@
                     android:layout_height="wrap_content" />
             </android.support.v7.widget.CardView>
         </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+    </ScrollView>
 
     <LinearLayout style="?bottomMenu">
 

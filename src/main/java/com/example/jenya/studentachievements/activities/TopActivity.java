@@ -1,19 +1,13 @@
 package com.example.jenya.studentachievements.activities;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -21,7 +15,7 @@ import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.model.LazyHeaders;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.jenya.studentachievements.R;
-import com.example.jenya.studentachievements.fragments.TopFragment;
+import com.example.jenya.studentachievements.adapters.TopFragmentPagerAdapter;
 import com.example.jenya.studentachievements.models.Achievement;
 import com.example.jenya.studentachievements.models.UserInfo;
 import com.example.jenya.studentachievements.requests.Requests;
@@ -35,12 +29,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class TopActivity extends AbstractActivity {
 
+    private final static int OFFSCREEN_PAGE_LIMIT = 3;
     @SuppressWarnings("FieldCanBeLocal")
     private UserInfo userInfo;
     @SuppressWarnings("FieldCanBeLocal")
     private CircleImageView avatar;
-
-    static final int PAGE_COUNT = 4;
 
     ViewPager pager;
     PagerAdapter pagerAdapter;
@@ -97,54 +90,23 @@ public class TopActivity extends AbstractActivity {
         }
 
 
-        pager = (ViewPager) findViewById(R.id.pager);
-        pagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
+        pager = findViewById(R.id.pager);
+        pagerAdapter = new TopFragmentPagerAdapter(getSupportFragmentManager());
         pager.setAdapter(pagerAdapter);
-        Context ctx = this;
-        pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        pager.setOffscreenPageLimit(OFFSCREEN_PAGE_LIMIT);
 
-            @Override
-            public void onPageSelected(int position) {
-                Toast.makeText(ctx, "onPageSelected, position = " + position, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onPageScrolled(int position, float positionOffset,
-                                       int positionOffsetPixels) {
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-            }
-        });
     }
 
-    private class MyFragmentPagerAdapter extends FragmentPagerAdapter {
 
-        public MyFragmentPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return TopFragment.newInstance(position);
-        }
-
-        @Override
-        public int getCount() {
-            return PAGE_COUNT;
-        }
-    }
-
-    public void openOverallTop(View view) {
+    public void openAllTop(View view) {
         pager.setCurrentItem(0, true);
     }
 
-    public void openCourseTop(View view) {
+    public void openYearTop(View view) {
         pager.setCurrentItem(1, true);
     }
 
-    public void openStreamTop(View view) {
+    public void openDirectionTop(View view) {
         pager.setCurrentItem(2, true);
     }
 
@@ -179,6 +141,6 @@ public class TopActivity extends AbstractActivity {
     }
 
     public void openTop(View view) {
-        ((ListView) pager.findViewById(R.id.list)).smoothScrollToPosition(0);
+        //findViewById(R.id.list).smoothScrollToPosition(0);
     }
 }

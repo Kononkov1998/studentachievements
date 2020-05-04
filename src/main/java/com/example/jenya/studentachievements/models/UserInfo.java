@@ -51,6 +51,10 @@ public class UserInfo implements Parcelable {
     @Expose
     private ArrayList<UserInfo> favouriteStudents;
 
+    @SerializedName("starCount")
+    @Expose
+    private int starCount;
+
     public  ArrayList<Achievement> getAchievements() {
         return achievements;
     }
@@ -124,6 +128,7 @@ public class UserInfo implements Parcelable {
         achievements = in.createTypedArrayList(Achievement.CREATOR);
         favouriteStudents = in.createTypedArrayList(UserInfo.CREATOR);
         avatar = in.readString();
+        starCount = in.readInt();
     }
 
     @Override
@@ -140,6 +145,7 @@ public class UserInfo implements Parcelable {
         dest.writeTypedList(achievements);
         dest.writeTypedList(favouriteStudents);
         dest.writeString(avatar);
+        dest.writeInt(starCount);
     }
 
     public static final Parcelable.Creator<UserInfo> CREATOR = new Parcelable.Creator<UserInfo>() {
@@ -153,4 +159,12 @@ public class UserInfo implements Parcelable {
             return new UserInfo[size];
         }
     };
+
+    public int getStarCount() {
+        return starCount;
+    }
+
+    public void setStarCount(int starCount) {
+        this.starCount = starCount;
+    }
 }

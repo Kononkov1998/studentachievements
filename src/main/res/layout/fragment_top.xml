@@ -1,27 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/refresh"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!--    <android.support.v4.widget.SwipeRefreshLayout-->
-    <!--        android:id="@+id/refresh"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="match_parent">-->
-
-    <!--        <ListView-->
-    <!--            android:id="@+id/list"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="match_parent"-->
-    <!--            android:cacheColorHint="@android:color/transparent"-->
-    <!--            android:divider="@null"-->
-    <!--            android:listSelector="@android:color/transparent" />-->
-    <!--    </android.support.v4.widget.SwipeRefreshLayout>-->
-
-    <TextView
-        android:id="@+id/tvPage"
+    <ListView
+        android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="TEST"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-</RelativeLayout>
+        android:cacheColorHint="@android:color/transparent"
+        android:listSelector="@android:color/transparent" />
+</android.support.v4.widget.SwipeRefreshLayout>
