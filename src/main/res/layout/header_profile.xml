@@ -27,6 +27,7 @@
                         android:onClick="uploadAvatar" />
 
                     <ImageView
+                        android:id="@+id/plusAvatar"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_marginStart="100dp"

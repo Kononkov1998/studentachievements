@@ -12,6 +12,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -195,6 +196,7 @@ public class ProfileActivity extends AbstractActivity {
         super.onStart();
         overridePendingTransition(0, 0);
         if (userInfo.getAvatar() != null) {
+            header.findViewById(R.id.plusAvatar).setVisibility(View.GONE);
             int px = ImageActions.getAvatarSizeInPx(this);
 
             GlideUrl glideUrl = new GlideUrl(String.format("%s/student/pic/%s", Requests.getInstance().getURL(), userInfo.getAvatar()), new LazyHeaders.Builder()
