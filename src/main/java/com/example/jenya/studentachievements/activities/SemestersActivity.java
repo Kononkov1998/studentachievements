@@ -17,9 +17,12 @@ import com.example.jenya.studentachievements.requests.Requests;
 import com.example.jenya.studentachievements.utils.ImageActions;
 import com.example.jenya.studentachievements.utils.ThemeController;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class SemestersActivity extends AbstractActivity {
+
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
@@ -29,17 +32,25 @@ public class SemestersActivity extends AbstractActivity {
         ThemeController.onActivityCreateSetTheme(this);
         setContentView(R.layout.activity_grade);
 
-        SwipeRefreshLayout swipeRefreshLayout = findViewById(R.id.refresh);
+        swipeRefreshLayout = findViewById(R.id.refresh);
         swipeRefreshLayout.setEnabled(false);
         if (Semester.getSemesters().isEmpty()) {
             swipeRefreshLayout.setRefreshing(true);
-            Requests.getInstance().getSemesters(this, swipeRefreshLayout);
+            Requests.getInstance().getSemesters(this);
         } else {
             initButtons(Semester.getSemesters().size());
         }
     }
 
-    public void initButtons(int semesters) {
+    public void setSemesters(ArrayList<Semester> semesters) {
+        if (semesters != null) {
+            Semester.setSemesters(semesters);
+            initButtons(semesters.size());
+        }
+        swipeRefreshLayout.setRefreshing(false);
+    }
+
+    private void initButtons(int semesters) {
         if (semesters < 1) {
             return;
         }

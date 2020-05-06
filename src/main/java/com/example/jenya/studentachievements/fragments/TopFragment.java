@@ -32,8 +32,7 @@ public class TopFragment extends Fragment {
     private TopUsersAdapter adapter;
     private SwipeRefreshLayout swipeRefreshLayout;
     private ListView listView;
-    private ArrayList<UserInfo> students = new ArrayList<>();
-    private int pageNumber = 0;
+    private int pageNumber = 1;
     private boolean listIsLoading = false;
     private View footer;
     private String region;
@@ -53,7 +52,7 @@ public class TopFragment extends Fragment {
         if (getArguments() != null) {
             region = getRegion(getArguments().getInt(ARGUMENT_PAGE_NUMBER));
         }
-        adapter = new TopUsersAdapter(getActivity(), students);
+        adapter = new TopUsersAdapter(getContext(), new ArrayList<>());
     }
 
     @Override
@@ -101,22 +100,24 @@ public class TopFragment extends Fragment {
 
     private void addItems() {
         footer.setVisibility(View.VISIBLE);
-        pageNumber++;
-        Requests.getInstance().topStudents(getActivity(), this, pageNumber, PAGE_SIZE, region);
+        Requests.getInstance().topStudents(this, pageNumber, PAGE_SIZE, region);
     }
 
     public void populateListView(ArrayList<UserInfo> students, int numberOfRecords) {
-        if (maxPageNumber == -1) {
-            maxPageNumber = (int) Math.ceil((double) numberOfRecords / PAGE_SIZE);
+        if (students != null) {
+            if (maxPageNumber == -1) {
+                maxPageNumber = (int) Math.ceil((double) numberOfRecords / PAGE_SIZE);
+            }
+            adapter.addAll(students);
+            if (pageNumber == maxPageNumber) {
+                listView.setOnScrollListener(null);
+                listView.removeFooterView(footer);
+                return;
+            }
+            pageNumber++;
         }
-        adapter.addAll(students);
+
         footer.setVisibility(View.GONE);
-
-        if (pageNumber == maxPageNumber) {
-            listView.setOnScrollListener(null);
-            listView.removeFooterView(footer);
-        }
-
         listIsLoading = false;
     }
 }

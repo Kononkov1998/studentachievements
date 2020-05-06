@@ -46,6 +46,11 @@ public class UsersAdapter extends BaseAdapter {
         lInflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
+    public void addAll(ArrayList<UserInfo> students) {
+        objects.addAll(students);
+        notifyDataSetChanged();
+    }
+
     // кол-во элементов
     @Override
     public int getCount() {
@@ -129,7 +134,7 @@ public class UsersAdapter extends BaseAdapter {
 
                         @Override
                         public void onAnimationEnd(Animator animator) {
-                            Requests.getInstance().removeFavouriteFromFavoritesActivity(s, ctx, adapter);
+                            Requests.getInstance().removeFavourite(s, ctx, adapter);
                             layout.setEnabled(true);
                             checkBoxFavorite.setEnabled(true);
                         }

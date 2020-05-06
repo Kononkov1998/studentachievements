@@ -11,8 +11,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.jenya.studentachievements.R;
-import com.example.jenya.studentachievements.requests.Requests;
 import com.example.jenya.studentachievements.models.Achievement;
+import com.example.jenya.studentachievements.requests.Requests;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
@@ -65,7 +65,7 @@ public class AchievementsAdapter extends BaseAdapter {
         Format formatter = new SimpleDateFormat("d.MM.yy", Locale.getDefault());
         ((TextView) view.findViewById(R.id.date)).setText(formatter.format(a.getDate()));
 
-        switch (a.getStars()){ // меняем иконки звёзд в зависимости от их количества
+        switch (a.getStars()) { // меняем иконки звёзд в зависимости от их количества
             default:
                 ((ImageView) view.findViewById(R.id.star1)).setImageResource(R.drawable.ic_star_border_grey_24dp);
                 ((ImageView) view.findViewById(R.id.star2)).setImageResource(R.drawable.ic_star_border_grey_24dp);

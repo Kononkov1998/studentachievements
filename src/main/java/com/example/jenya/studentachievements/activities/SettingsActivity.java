@@ -2,7 +2,6 @@ package com.example.jenya.studentachievements.activities;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -12,11 +11,11 @@ import android.widget.RadioGroup;
 import android.widget.Switch;
 
 import com.example.jenya.studentachievements.R;
-import com.example.jenya.studentachievements.utils.SharedPreferencesActions;
-import com.example.jenya.studentachievements.utils.ThemeController;
 import com.example.jenya.studentachievements.models.UserInfo;
 import com.example.jenya.studentachievements.models.Visibility;
 import com.example.jenya.studentachievements.requests.Requests;
+import com.example.jenya.studentachievements.utils.SharedPreferencesActions;
+import com.example.jenya.studentachievements.utils.ThemeController;
 
 public class SettingsActivity extends AbstractActivity {
 
@@ -117,12 +116,11 @@ public class SettingsActivity extends AbstractActivity {
         overridePendingTransition(0, 0);
     }
 
-    public void deleteAccount(View view)
-    {
+    public void deleteAccount(View view) {
         new AlertDialog.Builder(this, R.style.AlertDialogDanger)
                 .setMessage("Вы уверены, что хотите удалить свой аккаунт?")
                 .setCancelable(false)
-                .setPositiveButton("Да", (dialog, id) -> Requests.getInstance().deleteAccount(SettingsActivity.this))
+                .setPositiveButton("Да", (dialog, id) -> Requests.getInstance().deleteAccount(this))
                 .setNegativeButton("Нет", null)
                 .show();
     }

@@ -13,9 +13,13 @@ import android.widget.ListView;
 
 import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.adapters.UsersAdapter;
+import com.example.jenya.studentachievements.comparators.StudentsComparator;
 import com.example.jenya.studentachievements.models.UserInfo;
 import com.example.jenya.studentachievements.requests.Requests;
 import com.example.jenya.studentachievements.utils.ThemeController;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class FavoritesActivity extends AbstractActivityWithUsers implements SwipeRefreshLayout.OnRefreshListener {
     @SuppressWarnings("FieldCanBeLocal")
@@ -33,10 +37,9 @@ public class FavoritesActivity extends AbstractActivityWithUsers implements Swip
 
         swipeRefreshLayout = findViewById(R.id.refresh);
         swipeRefreshLayout.setOnRefreshListener(this);
-        swipeRefreshLayout.setColorSchemeResources(R.color.colorOrange, R.color.colorGold, R.color.colorExam, R.color.colorPass);
         adapter = new UsersAdapter(this, UserInfo.getCurrentUser().getFavouriteStudents());
-        listView = findViewById(R.id.list);
         View header = getLayoutInflater().inflate(R.layout.header_favorites, listView, false);
+        listView = findViewById(R.id.list);
         listView.addHeaderView(header);
         listView.setAdapter(adapter);
         listView.setEmptyView(findViewById(R.id.empty));
@@ -57,10 +60,20 @@ public class FavoritesActivity extends AbstractActivityWithUsers implements Swip
         });
     }
 
+    public void updateFavourites(ArrayList<UserInfo> favourites) {
+        if (favourites != null) {
+            UserInfo.getCurrentUser().getFavouriteStudents().clear();
+            UserInfo.getCurrentUser().getFavouriteStudents().addAll(favourites);
+            Collections.sort(UserInfo.getCurrentUser().getFavouriteStudents(), new StudentsComparator());
+            adapter.notifyDataSetChanged();
+        }
+        swipeRefreshLayout.setRefreshing(false);
+    }
+
     @Override
     public void onRefresh() {
         swipeRefreshLayout.setRefreshing(true);
-        Requests.getInstance().updateFavourites(this, adapter, swipeRefreshLayout);
+        Requests.getInstance().updateFavourites(this);
     }
 
     @Override

@@ -35,8 +35,11 @@ public class SearchResultsActivity extends AbstractActivityWithUsers {
         swipeRefreshLayout = findViewById(R.id.refresh);
         swipeRefreshLayout.setEnabled(false);
 
-        listView = findViewById(R.id.list);
         View header = getLayoutInflater().inflate(R.layout.header_searchresults, listView, false);
+        adapter = new UsersAdapter(this, new ArrayList<>());
+
+        listView = findViewById(R.id.list);
+        listView.setAdapter(adapter);
         listView.addHeaderView(header);
 
         String group = getIntent().getStringExtra("group");
@@ -46,9 +49,10 @@ public class SearchResultsActivity extends AbstractActivityWithUsers {
     }
 
     public void populateListView(ArrayList<UserInfo> students) {
-        adapter = new UsersAdapter(this, students);
-        listView.setAdapter(adapter);
-        listView.setEmptyView(findViewById(R.id.empty));
+        if (students != null) {
+            adapter.addAll(students);
+            listView.setEmptyView(findViewById(R.id.empty));
+        }
         swipeRefreshLayout.setRefreshing(false);
     }
 

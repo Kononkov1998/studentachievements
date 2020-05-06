@@ -10,14 +10,20 @@ import android.widget.ListView;
 
 import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.adapters.DisciplinesAdapter;
+import com.example.jenya.studentachievements.comparators.DisciplinesComparator;
 import com.example.jenya.studentachievements.models.Mark;
 import com.example.jenya.studentachievements.models.Semester;
 import com.example.jenya.studentachievements.requests.Requests;
 import com.example.jenya.studentachievements.utils.ThemeController;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class DisciplinesActivity extends AbstractActivity {
+
+    Semester currentSemester;
+    DisciplinesAdapter adapter;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
@@ -29,18 +35,28 @@ public class DisciplinesActivity extends AbstractActivity {
 
         // узнаем в каком мы семестре
         int semesterNumber = getIntent().getIntExtra("semesterNumber", 0);
-        Semester currentSemester = Semester.getSemesters().get(semesterNumber - 1);
+        currentSemester = Semester.getSemesters().get(semesterNumber - 1);
         ArrayList<Mark> marks = currentSemester.getMarks();
         ListView listView = findViewById(R.id.list);
-        DisciplinesAdapter adapter = new DisciplinesAdapter(this, marks);
+        adapter = new DisciplinesAdapter(this, marks);
         listView.setAdapter(adapter);
 
-        SwipeRefreshLayout swipeRefreshLayout = findViewById(R.id.refresh);
+        swipeRefreshLayout = findViewById(R.id.refresh);
         swipeRefreshLayout.setEnabled(false);
+
         if (marks.isEmpty()) {
             swipeRefreshLayout.setRefreshing(true);
-            Requests.getInstance().getMarks(this, currentSemester, adapter, swipeRefreshLayout);
+            Requests.getInstance().getMarks(this, currentSemester.getIdLGS());
         }
+    }
+
+    public void setMarks(ArrayList<Mark> marks) {
+        if (marks != null) {
+            currentSemester.getMarks().addAll(marks);
+            Collections.sort(currentSemester.getMarks(), new DisciplinesComparator());
+            adapter.notifyDataSetChanged();
+        }
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override

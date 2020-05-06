@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -15,17 +14,16 @@ import com.bumptech.glide.load.model.LazyHeaders;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.activities.AuthActivity;
+import com.example.jenya.studentachievements.activities.DisciplinesActivity;
+import com.example.jenya.studentachievements.activities.FavoritesActivity;
 import com.example.jenya.studentachievements.activities.ProfileActivity;
 import com.example.jenya.studentachievements.activities.SearchActivity;
 import com.example.jenya.studentachievements.activities.SearchResultsActivity;
 import com.example.jenya.studentachievements.activities.SemestersActivity;
 import com.example.jenya.studentachievements.activities.SettingsActivity;
-import com.example.jenya.studentachievements.adapters.DisciplinesAdapter;
 import com.example.jenya.studentachievements.adapters.UsersAdapter;
-import com.example.jenya.studentachievements.comparators.DisciplinesComparator;
 import com.example.jenya.studentachievements.comparators.StudentsComparator;
 import com.example.jenya.studentachievements.fragments.TopFragment;
-import com.example.jenya.studentachievements.models.Semester;
 import com.example.jenya.studentachievements.models.StudentMarks;
 import com.example.jenya.studentachievements.models.StudentSemesters;
 import com.example.jenya.studentachievements.models.Top;
@@ -220,42 +218,45 @@ public class Requests {
     }
 
     // /student/semester/list
-    public void getSemesters(Context ctx, SwipeRefreshLayout swipeRefreshLayout) {
-        userApi.semesters(SharedPreferencesActions.read("token", ctx)).enqueue(new Callback<StudentSemesters>() {
+    public void getSemesters(SemestersActivity activity) {
+        userApi.semesters(SharedPreferencesActions.read("token", activity)).enqueue(new Callback<StudentSemesters>() {
             @Override
             public void onResponse(@NonNull Call<StudentSemesters> call, @NonNull Response<StudentSemesters> response) {
                 if (response.isSuccessful()) {
-                    Semester.setSemesters(response.body().getStudentSemesters());
-                    ((SemestersActivity) ctx).initButtons(Semester.getSemesters().size());
+                    if (response.body() != null) {
+                        activity.setSemesters(response.body().getStudentSemesters());
+                    }
+                } else {
+                    activity.setSemesters(null);
                 }
-                swipeRefreshLayout.setRefreshing(false);
             }
 
             @Override
             public void onFailure(@NonNull Call<StudentSemesters> call, @NonNull Throwable t) {
-                Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_SHORT).show();
-                swipeRefreshLayout.setRefreshing(false);
+                Toast.makeText(activity, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_SHORT).show();
+                activity.setSemesters(null);
             }
         });
     }
 
     // /student/semester/marks/{idLGS}
-    public void getMarks(Context ctx, Semester semester, DisciplinesAdapter adapter, SwipeRefreshLayout swipeRefreshLayout) {
-        userApi.marks(SharedPreferencesActions.read("token", ctx), semester.getIdLGS()).enqueue(new Callback<StudentMarks>() {
+    public void getMarks(DisciplinesActivity activity, int idLGS) {
+        userApi.marks(SharedPreferencesActions.read("token", activity), idLGS).enqueue(new Callback<StudentMarks>() {
             @Override
             public void onResponse(@NonNull Call<StudentMarks> call, @NonNull Response<StudentMarks> response) {
                 if (response.isSuccessful()) {
-                    semester.getMarks().addAll(response.body().getRatings());
-                    Collections.sort(semester.getMarks(), new DisciplinesComparator());
-                    adapter.notifyDataSetChanged();
+                    if (response.body() != null) {
+                        activity.setMarks(response.body().getRatings());
+                    }
+                } else {
+                    activity.setMarks(null);
                 }
-                swipeRefreshLayout.setRefreshing(false);
             }
 
             @Override
             public void onFailure(@NonNull Call<StudentMarks> call, @NonNull Throwable t) {
-                Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_SHORT).show();
-                swipeRefreshLayout.setRefreshing(false);
+                Toast.makeText(activity, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_SHORT).show();
+                activity.setMarks(null);
             }
         });
     }
@@ -289,19 +290,22 @@ public class Requests {
     }
 
     // /student/anotherStudent
-    public void studentSearch(Context ctx, String group, String search) {
-        userApi.search(SharedPreferencesActions.read("token", ctx), group, search).enqueue(new Callback<ArrayList<UserInfo>>() {
+    public void studentSearch(SearchResultsActivity activity, String group, String search) {
+        userApi.search(SharedPreferencesActions.read("token", activity), group, search).enqueue(new Callback<ArrayList<UserInfo>>() {
             @Override
             public void onResponse(@NonNull Call<ArrayList<UserInfo>> call, @NonNull Response<ArrayList<UserInfo>> response) {
                 if (response.isSuccessful()) {
                     SearchActivity.searchSuccessful();
-                    ((SearchResultsActivity) ctx).populateListView(response.body());
+                    activity.populateListView(response.body());
+                } else {
+                    activity.populateListView(null);
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<ArrayList<UserInfo>> call, @NonNull Throwable t) {
-                Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_SHORT).show();
+                activity.populateListView(null);
             }
         });
     }
@@ -351,28 +355,23 @@ public class Requests {
     }
 
     // /student/favourite/list
-    public void updateFavourites(Context ctx, UsersAdapter adapter, SwipeRefreshLayout swipeRefreshLayout) {
-        userApi.favourites(SharedPreferencesActions.read("token", ctx)).enqueue(new Callback<ArrayList<UserInfo>>() {
+    public void updateFavourites(FavoritesActivity activity) {
+        userApi.favourites(SharedPreferencesActions.read("token", activity)).enqueue(new Callback<ArrayList<UserInfo>>() {
             @Override
             public void onResponse(@NonNull Call<ArrayList<UserInfo>> call, @NonNull Response<ArrayList<UserInfo>> response) {
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
-                        UserInfo.getCurrentUser().getFavouriteStudents().clear();
-                        UserInfo.getCurrentUser().getFavouriteStudents().addAll(response.body());
-                        Collections.sort(UserInfo.getCurrentUser().getFavouriteStudents(), new StudentsComparator());
-                        adapter.notifyDataSetChanged();
-                        swipeRefreshLayout.setRefreshing(false);
+                        activity.updateFavourites(response.body());
                     }
                 } else {
-                    Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_SHORT).show();
-                    swipeRefreshLayout.setRefreshing(false);
+                    activity.updateFavourites(null);
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<ArrayList<UserInfo>> call, @NonNull Throwable t) {
-                Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_SHORT).show();
-                swipeRefreshLayout.setRefreshing(false);
+                Toast.makeText(activity, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_SHORT).show();
+                activity.updateFavourites(null);
             }
         });
     }
@@ -415,7 +414,7 @@ public class Requests {
     }
 
     // /student/favourite?student=<idStudent>
-    public void removeFavouriteFromFavoritesActivity(UserInfo otherStudent, Context ctx, UsersAdapter adapter) {
+    public void removeFavourite(UserInfo otherStudent, Context ctx, UsersAdapter adapter) {
         UserInfo userForRemove = findStudentInFavourites(otherStudent);
         UserInfo.getCurrentUser().getFavouriteStudents().remove(userForRemove);
         adapter.notifyDataSetChanged();
@@ -541,6 +540,30 @@ public class Requests {
         });
     }
 
+    // /statistics/top
+    public void topStudents(TopFragment fragment, int pageNumber, int pageSize, String region) {
+        if (fragment.getContext() != null) {
+            userApi.topStudents(SharedPreferencesActions.read("token", fragment.getContext()), pageNumber, pageSize, region).enqueue(new Callback<Top>() {
+                @Override
+                public void onResponse(@NonNull Call<Top> call, @NonNull Response<Top> response) {
+                    if (response.isSuccessful()) {
+                        if (response.body() != null) {
+                            fragment.populateListView(response.body().getList(), response.body().getPageInfo().get(0).getTotal());
+                        }
+                    } else {
+                        fragment.populateListView(null, -1);
+                    }
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<Top> call, @NonNull Throwable t) {
+                    Toast.makeText(fragment.getContext(), "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_SHORT).show();
+                    fragment.populateListView(null, -1);
+                }
+            });
+        }
+    }
+
     private UserInfo findStudentInFavourites(UserInfo student) {
         for (UserInfo user : UserInfo.getCurrentUser().getFavouriteStudents()) {
             if (user.get_id().equals(student.get_id())) {
@@ -548,24 +571,5 @@ public class Requests {
             }
         }
         return null;
-    }
-
-    // /statistics/top
-    public void topStudents(Context ctx, TopFragment fragment, int pageNumber, int pageSize, String region) {
-        userApi.topStudents(SharedPreferencesActions.read("token", ctx), pageNumber, pageSize, region).enqueue(new Callback<Top>() {
-            @Override
-            public void onResponse(@NonNull Call<Top> call, @NonNull Response<Top> response) {
-                if (response.isSuccessful()) {
-                    if (response.body() != null) {
-                        fragment.populateListView(response.body().getList(), response.body().getPageInfo().get(0).getTotal());
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<Top> call, @NonNull Throwable t) {
-                Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 }
