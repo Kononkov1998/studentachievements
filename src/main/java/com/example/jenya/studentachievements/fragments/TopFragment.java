@@ -33,10 +33,12 @@ public class TopFragment extends Fragment {
     private SwipeRefreshLayout swipeRefreshLayout;
     private ListView listView;
     private int pageNumber = 1;
+    private int maxPageNumber = -1;
     private boolean listIsLoading = false;
     private View footer;
     private String region;
-    private int maxPageNumber = -1;
+    private int currentPlace = 1;
+    private int currentStarCount = 0;
 
     public static TopFragment newInstance(int page) {
         TopFragment fragment = new TopFragment();
@@ -105,6 +107,10 @@ public class TopFragment extends Fragment {
 
     public void populateListView(ArrayList<UserInfo> students, int numberOfRecords) {
         if (students != null) {
+            for (UserInfo student : students) {
+                student.setPlace(calculatePlace(student.getStarCount()));
+            }
+
             if (maxPageNumber == -1) {
                 maxPageNumber = (int) Math.ceil((double) numberOfRecords / PAGE_SIZE);
             }
@@ -119,5 +125,13 @@ public class TopFragment extends Fragment {
 
         footer.setVisibility(View.GONE);
         listIsLoading = false;
+    }
+
+    private int calculatePlace(int starCount) {
+        if (starCount < currentStarCount) {
+            currentPlace++;
+        }
+        currentStarCount = starCount;
+        return currentPlace;
     }
 }

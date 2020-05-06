@@ -85,10 +85,9 @@ public class TopUsersAdapter extends BaseAdapter {
                 .fallback(R.drawable.profile)
                 .into(avatar);
 
-
         ((TextView) view.findViewById(R.id.textProfile)).setText(String.format("%s\n%s\n%s", s.getFullName().getLastName(), s.getFullName().getFirstName(), s.getFullName().getPatronymic()));
         ((TextView) view.findViewById(R.id.groupProfile)).setText(s.getGroup().getName());
-        ((TextView) view.findViewById(R.id.place)).setText("ХХХ");
+        ((TextView) view.findViewById(R.id.place)).setText(String.format(Locale.getDefault(), "%d место", s.getPlace()));
         ((TextView) view.findViewById(R.id.starsSum)).setText(String.format(Locale.getDefault(), "%d", s.getStarCount()));
 
         return view;

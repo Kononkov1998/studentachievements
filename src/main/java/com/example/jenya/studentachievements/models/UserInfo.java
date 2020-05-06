@@ -55,6 +55,8 @@ public class UserInfo implements Parcelable {
     @Expose
     private int starCount;
 
+    private int place;
+
     public  ArrayList<Achievement> getAchievements() {
         return achievements;
     }
@@ -166,5 +168,13 @@ public class UserInfo implements Parcelable {
 
     public void setStarCount(int starCount) {
         this.starCount = starCount;
+    }
+
+    public int getPlace() {
+        return place;
+    }
+
+    public void setPlace(int place) {
+        this.place = place;
     }
 }
