@@ -378,8 +378,8 @@ public class Requests {
 
     // /student/favourite?student=<idStudent>
     public void addFavourite(UserInfo otherStudent, Context ctx) {
+        otherStudent.setIsAvailable(true);
         UserInfo.getCurrentUser().getFavouriteStudents().add(otherStudent);
-
         userApi.addFavourite(SharedPreferencesActions.read("token", ctx), otherStudent.get_id()).enqueue(new Callback<UserInfo>() {
             @Override
             public void onResponse(@NonNull Call<UserInfo> call, @NonNull Response<UserInfo> response) {
