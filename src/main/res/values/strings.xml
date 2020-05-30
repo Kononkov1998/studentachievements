@@ -22,4 +22,8 @@
     <string name="no_favorites">Нет избранных пользователей</string>
     <string name="no_search_results">По вашему запросу ничего не найдено</string>
     <string name="favorites">Избранные</string>
+    <string name="topAll">Общий</string>
+    <string name="topGroup">Группа</string>
+    <string name="topDirection">Поток</string>
+    <string name="topYear">Курс</string>
 </resources>

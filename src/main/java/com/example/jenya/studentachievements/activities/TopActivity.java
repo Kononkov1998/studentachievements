@@ -1,12 +1,18 @@
 package com.example.jenya.studentachievements.activities;
 
+import android.animation.Animator;
+import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.CardView;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -16,6 +22,7 @@ import com.bumptech.glide.load.model.LazyHeaders;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.adapters.TopFragmentPagerAdapter;
+import com.example.jenya.studentachievements.fragments.TopFragment;
 import com.example.jenya.studentachievements.models.Achievement;
 import com.example.jenya.studentachievements.models.UserInfo;
 import com.example.jenya.studentachievements.requests.Requests;
@@ -28,15 +35,19 @@ import java.util.ArrayList;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class TopActivity extends AbstractActivity {
-
     private final static int OFFSCREEN_PAGE_LIMIT = 3;
-    @SuppressWarnings("FieldCanBeLocal")
-    private UserInfo userInfo;
-    @SuppressWarnings("FieldCanBeLocal")
-    private CircleImageView avatar;
+    private final static int CARD_VIEW_SHADOW_HEIGHT = 2;
 
-    ViewPager pager;
-    PagerAdapter pagerAdapter;
+    private ArrayList<TopFragment> registeredFragments = new ArrayList<>();
+    private TopFragment currentFragment;
+    private CardView cardProfile;
+    private LinearLayout container;
+    private RelativeLayout.LayoutParams containerParams;
+    private ViewGroup.MarginLayoutParams cardProfileParams;
+
+    private int targetTopMargin = -1;
+    private int startTopMargin = -1;
+    public boolean isAnimating = false;
 
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
@@ -46,22 +57,21 @@ public class TopActivity extends AbstractActivity {
         ThemeController.onActivityCreateSetTheme(this);
         setContentView(R.layout.activity_top);
 
-        userInfo = UserInfo.getCurrentUser();
-        @SuppressWarnings("MismatchedQueryAndUpdateOfCollection") ArrayList<Achievement> completedAchievements = new ArrayList<>();
-        @SuppressWarnings("unchecked") final ArrayList<Achievement> userAchievements = (ArrayList<Achievement>) userInfo.getAchievements().clone();
+        UserInfo userInfo = UserInfo.getCurrentUser();
+        //noinspection unchecked
+        final ArrayList<Achievement> userAchievements = (ArrayList<Achievement>) userInfo.getAchievements().clone();
         int starsSum = 0;
 
         for (Achievement achievement : userAchievements) {
             int stars = achievement.getStars();
             if (stars != 0) {
                 starsSum += stars;
-                completedAchievements.add(achievement);
             }
         }
 
         ((TextView) findViewById(R.id.starsSum)).setText(String.valueOf(starsSum));
 
-        avatar = findViewById(R.id.imageUser);
+        CircleImageView avatar = findViewById(R.id.imageUser);
         ((TextView) findViewById(R.id.textProfile))
                 .setText(String.format(
                         "%s\n%s\n%s",
@@ -70,8 +80,7 @@ public class TopActivity extends AbstractActivity {
                         userInfo.getFullName().getPatronymic()
                 ));
 
-        ((TextView) findViewById(R.id.groupProfile))
-                .setText(userInfo.getGroup().getName());
+        ((TextView) findViewById(R.id.groupProfile)).setText(userInfo.getGroup().getName());
 
         if (userInfo.getAvatar() != null) {
             int px = ImageActions.getAvatarSizeInPx(this);
@@ -89,29 +98,78 @@ public class TopActivity extends AbstractActivity {
                     .into(avatar);
         }
 
+        cardProfile = findViewById(R.id.cardProfile);
+        container = findViewById(R.id.container);
 
-        pager = findViewById(R.id.pager);
-        pagerAdapter = new TopFragmentPagerAdapter(getSupportFragmentManager());
+        containerParams = (RelativeLayout.LayoutParams) container.getLayoutParams();
+        cardProfileParams = (ViewGroup.MarginLayoutParams) cardProfile.getLayoutParams();
+        startTopMargin = containerParams.topMargin;
+
+        ViewPager pager = findViewById(R.id.pager);
+        PagerAdapter pagerAdapter = new TopFragmentPagerAdapter(getSupportFragmentManager(), this);
         pager.setAdapter(pagerAdapter);
         pager.setOffscreenPageLimit(OFFSCREEN_PAGE_LIMIT);
-
+        pager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            public void onPageSelected(int position) {
+                currentFragment = registeredFragments.get(position);
+            }
+        });
     }
 
+    public void animateHeader(boolean headerVisible) {
+        if (targetTopMargin == -1) {
+            targetTopMargin = -cardProfile.getHeight() - cardProfileParams.bottomMargin - CARD_VIEW_SHADOW_HEIGHT;
+        }
 
-    public void openAllTop(View view) {
-        pager.setCurrentItem(0, true);
+        ValueAnimator animExit = createTopMarginAnimation(startTopMargin, targetTopMargin);
+        ValueAnimator animEnter = createTopMarginAnimation(targetTopMargin, startTopMargin);
+
+        if (headerVisible) {
+            animExit.start();
+        } else {
+            animEnter.start();
+
+        }
     }
 
-    public void openYearTop(View view) {
-        pager.setCurrentItem(1, true);
+    private ValueAnimator createTopMarginAnimation(int from, int to) {
+        ValueAnimator anim = ValueAnimator.ofInt(from, to);
+
+        anim.addUpdateListener(valueAnimator -> {
+            containerParams.topMargin = (int) valueAnimator.getAnimatedValue();
+            container.setLayoutParams(containerParams);
+        });
+
+        anim.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animator) {
+                isAnimating = true;
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animator) {
+                isAnimating = false;
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animator) {
+
+            }
+        });
+
+        return anim;
     }
 
-    public void openDirectionTop(View view) {
-        pager.setCurrentItem(2, true);
-    }
-
-    public void openGroupTop(View view) {
-        pager.setCurrentItem(3, true);
+    public void registerFragment(int position, TopFragment fragment) {
+        registeredFragments.add(position, fragment);
+        if (currentFragment == null) {
+            currentFragment = fragment;
+        }
     }
 
     @Override
@@ -141,6 +199,6 @@ public class TopActivity extends AbstractActivity {
     }
 
     public void openTop(View view) {
-        //findViewById(R.id.list).smoothScrollToPosition(0);
+        currentFragment.getListView().smoothScrollToPosition(0);
     }
 }
