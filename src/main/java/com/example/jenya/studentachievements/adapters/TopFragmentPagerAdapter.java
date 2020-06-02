@@ -1,11 +1,13 @@
 package com.example.jenya.studentachievements.adapters;
 
 import android.content.Context;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.jenya.studentachievements.R;
+import com.example.jenya.studentachievements.activities.TopActivity;
 import com.example.jenya.studentachievements.fragments.TopFragment;
 
 public class TopFragmentPagerAdapter extends FragmentPagerAdapter {
@@ -14,8 +16,8 @@ public class TopFragmentPagerAdapter extends FragmentPagerAdapter {
     private final static int ALL_TOP_ITEM = 0, YEAR_TOP_ITEM = 1, DIRECTION_TOP_ITEM = 2, GROUP_TOP_ITEM = 3;
     private Context context;
 
-    public TopFragmentPagerAdapter(FragmentManager fm, Context context) {
-        super(fm);
+    public TopFragmentPagerAdapter(FragmentManager supportFragmentManager, TopActivity context) {
+        super(supportFragmentManager);
         this.context = context;
     }
 

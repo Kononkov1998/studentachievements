@@ -1,9 +1,11 @@
 package com.example.jenya.studentachievements.models;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
+
+import androidx.core.content.ContextCompat;
 
 import com.example.jenya.studentachievements.R;
+import com.example.jenya.studentachievements.utils.ThemeController;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -301,16 +303,30 @@ public class Mark {
     }
 
     public int getColor(Context ctx) {
-        if (isExam) {
-            return ContextCompat.getColor(ctx, R.color.colorExam);
-        } else if (isPass) {
-            return ContextCompat.getColor(ctx, R.color.colorPass);
-        } else if (isPractice) {
-            return ContextCompat.getColor(ctx, R.color.colorPractice);
-        } else if (isCW) {
-            return ContextCompat.getColor(ctx, R.color.colorCW);
-        } else if (isCP) {
-            return ContextCompat.getColor(ctx, R.color.colorCP);
+        if (ThemeController.getCurrentTheme() == ThemeController.APP_THEME_LIGHT) {
+            if (isExam) {
+                return ContextCompat.getColor(ctx, R.color.colorLightExam);
+            } else if (isPass) {
+                return ContextCompat.getColor(ctx, R.color.colorLightPass);
+            } else if (isPractice) {
+                return ContextCompat.getColor(ctx, R.color.colorLightPractice);
+            } else if (isCW) {
+                return ContextCompat.getColor(ctx, R.color.colorLightCW);
+            } else if (isCP) {
+                return ContextCompat.getColor(ctx, R.color.colorLightCP);
+            }
+        } else if (ThemeController.getCurrentTheme() == ThemeController.APP_THEME_DARK) {
+            if (isExam) {
+                return ContextCompat.getColor(ctx, R.color.colorDarkExam);
+            } else if (isPass) {
+                return ContextCompat.getColor(ctx, R.color.colorDarkPass);
+            } else if (isPractice) {
+                return ContextCompat.getColor(ctx, R.color.colorDarkPractice);
+            } else if (isCW) {
+                return ContextCompat.getColor(ctx, R.color.colorDarkCW);
+            } else if (isCP) {
+                return ContextCompat.getColor(ctx, R.color.colorDarkCP);
+            }
         }
         return -1;
     }

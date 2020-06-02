@@ -6,12 +6,13 @@
     <color name="colorDarkGrey">#2a2c30</color>
     <color name="colorDarkestGrey">#1e1f23</color>
     <color name="colorBlack">#000</color>
+    <color name="colorTransparentBlack">#80000000</color>
     <color name="colorOrange">#FFC50E</color>
     <color name="colorBurgundy">#C81B4D</color>
     <color name="colorLightBlue">#E1E5EC</color>
     <color name="colorLightGrey">#FAFAFA</color>
     <color name="colorPurvisGrey">#333333</color>
-    <color name="colorPearlBlue">#EFFAFE</color>
+    <color name="colorTransparentGrey">#80D5DAE4</color>
     <color name="colorSkyBlue">#83D9F0</color>
     <color name="colorPumpkin">#F98529</color>
     <color name="colorPalePumpkin">#99F98529</color>
@@ -20,10 +21,16 @@
     <color name="colorGold">#FED805</color>
     <color name="colorGreyBlue">#A9B4C8</color>
     <color name="colorPearlGrey">#b8bbc0</color>
-    <color name="colorExam">#FF7373</color>
-    <color name="colorPass">#4DE2F7</color>
-    <color name="colorCP">#95FF82</color>
-    <color name="colorCW">#FFFE7E</color>
-    <color name="colorPractice">#EDEDED</color>
+    <color name="colorLightExam">#FF7373</color>
+    <color name="colorLightPass">#4DE2F7</color>
+    <color name="colorLightCP">#95FF82</color>
+    <color name="colorLightCW">#FFFE7E</color>
+    <color name="colorLightPractice">#F3FAF8</color>
     <color name="colorStarOrange">#FEBB14</color>
+    <color name="colorDarkExam">#a34d4c</color>
+    <color name="colorDarkPass">#306a73</color>
+    <color name="colorDarkCP">#4a7741</color>
+    <color name="colorDarkCW">#78763f</color>
+    <color name="colorDarkPractice">#4b4d4c</color>
+    <color name="colorSibFU">#FF6000</color>
 </resources>

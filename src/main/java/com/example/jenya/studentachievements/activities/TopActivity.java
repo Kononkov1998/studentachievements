@@ -6,14 +6,15 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.CardView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.cardview.widget.CardView;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -29,6 +30,7 @@ import com.example.jenya.studentachievements.requests.Requests;
 import com.example.jenya.studentachievements.utils.ImageActions;
 import com.example.jenya.studentachievements.utils.SharedPreferencesActions;
 import com.example.jenya.studentachievements.utils.ThemeController;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 
@@ -44,6 +46,7 @@ public class TopActivity extends AbstractActivity {
     private LinearLayout container;
     private RelativeLayout.LayoutParams containerParams;
     private ViewGroup.MarginLayoutParams cardProfileParams;
+    private TabLayout tabLayout;
 
     private int targetTopMargin = -1;
     private int startTopMargin = -1;
@@ -74,10 +77,10 @@ public class TopActivity extends AbstractActivity {
         CircleImageView avatar = findViewById(R.id.imageUser);
         ((TextView) findViewById(R.id.textProfile))
                 .setText(String.format(
-                        "%s\n%s\n%s",
+                        "%s %s. %s.",
                         userInfo.getFullName().getLastName(),
-                        userInfo.getFullName().getFirstName(),
-                        userInfo.getFullName().getPatronymic()
+                        userInfo.getFullName().getFirstName().charAt(0),
+                        userInfo.getFullName().getPatronymic().charAt(0)
                 ));
 
         ((TextView) findViewById(R.id.groupProfile)).setText(userInfo.getGroup().getName());
@@ -100,12 +103,13 @@ public class TopActivity extends AbstractActivity {
 
         cardProfile = findViewById(R.id.cardProfile);
         container = findViewById(R.id.container);
+        tabLayout = findViewById(R.id.tabLayout);
 
         containerParams = (RelativeLayout.LayoutParams) container.getLayoutParams();
         cardProfileParams = (ViewGroup.MarginLayoutParams) cardProfile.getLayoutParams();
         startTopMargin = containerParams.topMargin;
 
-        ViewPager pager = findViewById(R.id.pager);
+        androidx.viewpager.widget.ViewPager pager = findViewById(R.id.pager);
         PagerAdapter pagerAdapter = new TopFragmentPagerAdapter(getSupportFragmentManager(), this);
         pager.setAdapter(pagerAdapter);
         pager.setOffscreenPageLimit(OFFSCREEN_PAGE_LIMIT);
@@ -114,6 +118,8 @@ public class TopActivity extends AbstractActivity {
                 currentFragment = registeredFragments.get(position);
             }
         });
+
+        tabLayout.setupWithViewPager(pager);
     }
 
     public void animateHeader(boolean headerVisible) {

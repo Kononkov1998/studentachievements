@@ -10,4 +10,5 @@
     <attr name="checkBox" format="reference" />
     <attr name="ic_inactive_color" format="reference" />
     <attr name="ic_active_color" format="reference" />
+    <attr name="tabLayout" format="reference" />
 </resources>

@@ -7,12 +7,13 @@
         <item name="bottomMenu">@style/BottomMenu.Dark</item>
         <item name="cardView">@style/CardView.Dark</item>
         <item name="editText">@style/EditText.Dark</item>
-        <item name="button">@style/Button.Dark</item>
+        <item name="button">@style/Button</item>
         <item name="textView">@style/TextView.Dark</item>
         <item name="switchButton">@style/Switch.Dark</item>
         <item name="checkBox">@style/CheckBox.Dark</item>
         <item name="ic_inactive_color">@color/colorGrey</item>
         <item name="ic_active_color">@color/colorPrimary</item>
+        <item name="tabLayout">@style/TabLayout.Dark</item>
     </style>
 
     <style name="AppTheme.Light" parent="Theme.AppCompat.Light.NoActionBar">
@@ -21,11 +22,12 @@
         <item name="bottomMenu">@style/BottomMenu.Light</item>
         <item name="cardView">@style/CardView.Light</item>
         <item name="editText">@style/EditText.Light</item>
-        <item name="button">@style/Button.Light</item>
+        <item name="button">@style/Button</item>
         <item name="textView">@style/TextView.Light</item>
         <item name="switchButton">@style/Switch.Light</item>
         <item name="checkBox">@style/CheckBox.Light</item>
         <item name="ic_inactive_color">@color/colorPalePumpkin</item>
         <item name="ic_active_color">@color/colorPumpkin</item>
+        <item name="tabLayout">@style/TabLayout.Light</item>
     </style>
 </resources>

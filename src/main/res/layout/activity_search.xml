@@ -1,102 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:layout_marginTop="55dp"
+        android:orientation="vertical">
 
-        <LinearLayout style="?bottomMenu">
+        <EditText
+            android:id="@+id/textViewName"
+            style="?editText"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:hint="@string/name"
+            android:singleLine="true" />
 
-            <ImageView
-                android:id="@+id/imageProfile"
-                style="@style/ImageView"
-                android:onClick="openProfile"
-                android:src="@drawable/ic_home_24dp"
-                android:tint="?ic_inactive_color" />
+        <EditText
+            android:id="@+id/textViewSurname"
+            style="?editText"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:hint="@string/surname"
+            android:singleLine="true" />
 
-            <ImageView
-                android:id="@+id/imageGrade"
-                style="@style/ImageView"
-                android:onClick="openGrade"
-                android:src="@drawable/ic_school_24dp"
-                android:tint="?ic_inactive_color" />
+        <EditText
+            android:id="@+id/textViewPatronymic"
+            style="?editText"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:hint="@string/patronymic"
+            android:singleLine="true" />
 
-            <ImageView
-                android:id="@+id/imageSearch"
-                style="@style/ImageView"
-                android:src="@drawable/ic_search_24dp"
-                android:tint="?ic_active_color" />
-
-            <ImageView
-                android:id="@+id/imageFavorites"
-                style="@style/ImageView"
-                android:onClick="openFavorites"
-                android:src="@drawable/ic_star_border_24dp"
-                android:tint="?ic_inactive_color" />
-
-            <ImageView
-                android:id="@+id/imageTop"
-                style="@style/ImageView"
-                android:onClick="openTop"
-                android:src="@drawable/ic_supervisor_account_24dp"
-                android:tint="?ic_inactive_color" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
-            android:layout_marginBottom="40dp"
-            android:orientation="vertical">
-
-            <EditText
-                android:id="@+id/textViewName"
-                style="?editText"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="15dp"
-                android:gravity="center"
-                android:hint="@string/name"
-                android:singleLine="true" />
-
-            <EditText
-                android:id="@+id/textViewSurname"
-                style="?editText"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="15dp"
-                android:gravity="center"
-                android:hint="@string/surname"
-                android:singleLine="true" />
-
-            <EditText
-                android:id="@+id/textViewPatronymic"
-                style="?editText"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="15dp"
-                android:gravity="center"
-                android:hint="@string/patronymic"
-                android:singleLine="true" />
-
-            <AutoCompleteTextView
-                android:id="@+id/textViewGroup"
-                style="?editText"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="15dp"
-                android:completionThreshold="1"
-                android:gravity="center"
-                android:hint="@string/group_number"
-                android:singleLine="true" />
-        </LinearLayout>
+        <AutoCompleteTextView
+            android:id="@+id/textViewGroup"
+            style="?editText"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:completionThreshold="1"
+            android:gravity="center"
+            android:hint="@string/group_number"
+            android:singleLine="true" />
 
         <Button
             android:id="@+id/searchBtn"
             style="?button"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="100dp"
+            android:layout_marginTop="55dp"
+            android:layout_marginBottom="5dp"
             android:onClick="search"
             android:text="@string/search" />
-    </RelativeLayout>
-</android.support.constraint.ConstraintLayout>
+    </LinearLayout>
+
+    <LinearLayout style="?bottomMenu">
+
+        <ImageView
+            android:id="@+id/imageProfile"
+            style="@style/ImageView"
+            android:onClick="openProfile"
+            android:src="@drawable/ic_home_24dp"
+            android:tint="?ic_inactive_color" />
+
+        <ImageView
+            android:id="@+id/imageGrade"
+            style="@style/ImageView"
+            android:onClick="openGrade"
+            android:src="@drawable/ic_school_24dp"
+            android:tint="?ic_inactive_color" />
+
+        <ImageView
+            android:id="@+id/imageSearch"
+            style="@style/ImageView"
+            android:src="@drawable/ic_search_24dp"
+            android:tint="?ic_active_color" />
+
+        <ImageView
+            android:id="@+id/imageFavorites"
+            style="@style/ImageView"
+            android:onClick="openFavorites"
+            android:src="@drawable/ic_star_border_24dp"
+            android:tint="?ic_inactive_color" />
+
+        <ImageView
+            android:id="@+id/imageTop"
+            style="@style/ImageView"
+            android:onClick="openTop"
+            android:src="@drawable/ic_supervisor_account_24dp"
+            android:tint="?ic_inactive_color" />
+    </LinearLayout>
+</RelativeLayout>

@@ -1,13 +1,14 @@
 package com.example.jenya.studentachievements.fragments;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ListView;
+
+import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.activities.TopActivity;
@@ -122,7 +123,7 @@ public class TopFragment extends Fragment {
                     if ((scrolledDistance > HIDE_THRESHOLD && headerVisible) || (scrolledDistance < -HIDE_THRESHOLD && !headerVisible)) {
                         activity.isAnimating = true;
                         scrolledDistance = 0;
-                        activity.animateHeader(headerVisible);
+                        //activity.animateHeader(headerVisible);
                         headerVisible = !headerVisible;
                     }
                 }

@@ -26,4 +26,8 @@
     <string name="topGroup">Группа</string>
     <string name="topDirection">Поток</string>
     <string name="topYear">Курс</string>
+    <string name="date">Дата</string>
+    <string name="hours">Часы</string>
+    <string name="mark">Оценка</string>
+    <string name="exam">Экзамен</string>
 </resources>

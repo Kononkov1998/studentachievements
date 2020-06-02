@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <android.support.v7.widget.CardView style="?cardView">
+    <androidx.cardview.widget.CardView style="?cardView">
 
         <RelativeLayout
             android:id="@+id/layout"
@@ -14,33 +14,41 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="15dp"
                 android:orientation="horizontal">
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/imageUser"
-                    style="@style/Avatar" />
-
-                <LinearLayout
+                <FrameLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/imageUser"
+                        style="@style/Avatar" />
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="40dp"
                     android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/textProfile"
                         style="?textView"
-                        android:layout_width="180dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="none"
-                        android:textSize="25sp"
-                        android:textStyle="bold"/>
+                        android:textSize="22sp" />
+
                     <TextView
                         android:id="@+id/groupProfile"
-                        android:layout_width="180dp"
                         style="?textView"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
                         android:inputType="none"
                         android:textSize="15sp" />
                 </LinearLayout>
@@ -55,8 +63,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="5dp"
-                android:button="@drawable/checkbox_selector"
-                android:visibility="visible" />
+                android:button="@drawable/checkbox_selector" />
         </RelativeLayout>
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 </LinearLayout>
