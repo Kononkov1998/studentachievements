@@ -3,7 +3,6 @@ package com.example.jenya.studentachievements.utils;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.widget.Toast;
 
 import com.example.jenya.studentachievements.R;
 
@@ -17,13 +16,11 @@ public class ImageActions
     public static File convertBitmapToFile(Bitmap bitmap, Context ctx) throws IOException
     {
         File f = new File(ctx.getCacheDir(), "avatar");
-        f.createNewFile();
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100 /*ignored for PNG*/, bos);
-        byte[] bitmapdata = bos.toByteArray();
-        FileOutputStream fos = null;
-        fos = new FileOutputStream(f);
-        fos.write(bitmapdata);
+        byte[] bitmapData = bos.toByteArray();
+        FileOutputStream fos = new FileOutputStream(f);
+        fos.write(bitmapData);
         fos.flush();
         fos.close();
         return f;

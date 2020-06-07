@@ -8,12 +8,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.model.GlideUrl;
-import com.bumptech.glide.load.model.LazyHeaders;
-import com.bumptech.glide.request.RequestOptions;
-import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.activities.AuthActivity;
 import com.example.jenya.studentachievements.activities.DisciplinesActivity;
 import com.example.jenya.studentachievements.activities.FavoritesActivity;
@@ -33,11 +27,9 @@ import com.example.jenya.studentachievements.models.UserInfo;
 import com.example.jenya.studentachievements.models.UserToken;
 import com.example.jenya.studentachievements.models.Visibility;
 import com.example.jenya.studentachievements.utils.ButtonActions;
-import com.example.jenya.studentachievements.utils.ImageActions;
 import com.example.jenya.studentachievements.utils.SharedPreferencesActions;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.kaopiz.kprogresshud.KProgressHUD;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -48,7 +40,6 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
@@ -437,34 +428,21 @@ public class Requests {
     }
 
     // /student/pic
-    public void uploadAvatar(MultipartBody.Part body, Context ctx, CircleImageView avatar, KProgressHUD hud) {
+    public void uploadAvatar(MultipartBody.Part body, Context ctx) {
         userApi.uploadAvatar(SharedPreferencesActions.read("token", ctx), body).enqueue(new Callback<UserInfo>() {
             @Override
             public void onResponse(@NonNull Call<UserInfo> call, @NonNull Response<UserInfo> response) {
                 if (response.isSuccessful()) {
-                    if (response.body() != null) {
-                        UserInfo.getCurrentUser().setAvatar(response.body().getAvatar());
-                        int px = ImageActions.getAvatarSizeInPx(ctx);
-
-                        GlideUrl glideUrl = new GlideUrl(String.format("%s/student/pic/%s", Requests.getInstance().getURL(), response.body().getAvatar()), new LazyHeaders.Builder()
-                                .addHeader("Authorization", SharedPreferencesActions.read("token", ctx))
-                                .build());
-
-                        Glide.with(ctx)
-                                .setDefaultRequestOptions(new RequestOptions().timeout(30000))
-                                .load(glideUrl)
-                                .placeholder(R.drawable.profile)
-                                .override(px, px)
-                                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                                .into(avatar);
-                    }
+                    ((ProfileActivity) ctx).setNewAvatar(response.body());
+                } else if (response.code() == 400) {
+                    ((ProfileActivity) ctx).setNewAvatar(null);
+                    Toast.makeText(ctx, "Аватар не загружен. Проверьте соединение с интернетом", Toast.LENGTH_SHORT).show();
                 }
-                hud.dismiss();
             }
 
             @Override
             public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t) {
-                hud.dismiss();
+                ((ProfileActivity) ctx).setNewAvatar(null);
                 Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_SHORT).show();
             }
         });

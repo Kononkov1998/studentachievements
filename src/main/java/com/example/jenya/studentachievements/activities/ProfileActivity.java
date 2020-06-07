@@ -55,6 +55,7 @@ public class ProfileActivity extends AbstractActivity {
     @SuppressWarnings("FieldCanBeLocal")
     private CheckBox hideBox;
     private KProgressHUD hud;
+    private int px;
 
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
@@ -64,6 +65,7 @@ public class ProfileActivity extends AbstractActivity {
         ThemeController.onActivityCreateSetTheme(this);
         setContentView(R.layout.activity_profile);
 
+        px = ImageActions.getAvatarSizeInPx(this);
         final ArrayList<Achievement> completedAchievements = new ArrayList<>();
         userInfo = UserInfo.getCurrentUser();
         @SuppressWarnings("unchecked") final ArrayList<Achievement> userAchievements = (ArrayList<Achievement>) userInfo.getAchievements().clone();
@@ -115,12 +117,11 @@ public class ProfileActivity extends AbstractActivity {
                 for (Achievement achievement : completedAchievements) {
                     userAchievements.remove(achievement);
                 }
-                adapter.notifyDataSetChanged();
             } else {
                 userAchievements.addAll(completedAchievements);
                 Collections.sort(userAchievements, new AchievementsComparator());
-                adapter.notifyDataSetChanged();
             }
+            adapter.notifyDataSetChanged();
         });
 
         if (SharedPreferencesActions.check("showCompleted", this)) {
@@ -132,6 +133,10 @@ public class ProfileActivity extends AbstractActivity {
                 .setCancellable(false)
                 .setAnimationSpeed(2)
                 .setDimAmount(0.5f);
+
+        if (userInfo.getAvatar() != null) {
+            header.findViewById(R.id.plusAvatar).setVisibility(View.GONE);
+        }
     }
 
     public void uploadAvatar(View view) {
@@ -147,7 +152,7 @@ public class ProfileActivity extends AbstractActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == PICK_FROM_GALLERY) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Crop.pickImage(this);
@@ -159,6 +164,7 @@ public class ProfileActivity extends AbstractActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent result) {
+        super.onActivityResult(requestCode, resultCode, result);
         if (requestCode == Crop.REQUEST_PICK && resultCode == RESULT_OK) {
             beginCrop(result.getData());
         } else if (requestCode == Crop.REQUEST_CROP) {
@@ -175,13 +181,12 @@ public class ProfileActivity extends AbstractActivity {
         if (resultCode == RESULT_OK) {
             try {
                 hud.show();
-                int px = ImageActions.getAvatarSizeInPx(this);
                 File file = new File(Crop.getOutput(result).getPath());
                 Bitmap bitmap = ImageActions.decodeSampledBitmapFromResource(file.getAbsolutePath(), px, px);
                 file = ImageActions.convertBitmapToFile(bitmap, this);
                 RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), file);
                 MultipartBody.Part body = MultipartBody.Part.createFormData("avatar", file.getName(), reqFile);
-                Requests.getInstance().uploadAvatar(body, this, avatar, hud);
+                Requests.getInstance().uploadAvatar(body, this);
             } catch (Exception e) {
                 hud.dismiss();
                 Toast.makeText(this, "Произошла ошибка. Попробуйте еще раз", Toast.LENGTH_SHORT).show();
@@ -196,25 +201,35 @@ public class ProfileActivity extends AbstractActivity {
         super.onStart();
         overridePendingTransition(0, 0);
         if (userInfo.getAvatar() != null) {
-            header.findViewById(R.id.plusAvatar).setVisibility(View.GONE);
-            int px = ImageActions.getAvatarSizeInPx(this);
-
-            GlideUrl glideUrl = new GlideUrl(String.format("%s/student/pic/%s", Requests.getInstance().getURL(), userInfo.getAvatar()), new LazyHeaders.Builder()
-                    .addHeader("Authorization", SharedPreferencesActions.read("token", this))
-                    .build());
-
-            Glide.with(this)
-                    .setDefaultRequestOptions(new RequestOptions().timeout(30000))
-                    .load(glideUrl)
-                    .placeholder(R.drawable.profile)
-                    .override(px, px)
-                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .into(avatar);
+            setAvatarWithGlide();
         }
     }
 
+    public void setNewAvatar(UserInfo userInfo) {
+        if (userInfo != null) {
+            header.findViewById(R.id.plusAvatar).setVisibility(View.GONE);
+            UserInfo.getCurrentUser().setAvatar(userInfo.getAvatar());
+            setAvatarWithGlide();
+        }
+        hud.dismiss();
+    }
+
+    private void setAvatarWithGlide() {
+        GlideUrl glideUrl = new GlideUrl(String.format("%s/student/pic/%s", Requests.getInstance().getURL(), userInfo.getAvatar()), new LazyHeaders.Builder()
+                .addHeader("Authorization", SharedPreferencesActions.read("token", this))
+                .build());
+
+        Glide.with(this)
+                .setDefaultRequestOptions(new RequestOptions().timeout(30000))
+                .load(glideUrl)
+                .placeholder(R.drawable.profile)
+                .override(px, px)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .into(avatar);
+    }
+
     @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
+    public void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
         if (((CheckBox) findViewById(R.id.checkboxHide)).isChecked()) {
             SharedPreferencesActions.save("showCompleted", "false", this);
         } else {

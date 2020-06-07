@@ -118,7 +118,7 @@ public class SettingsActivity extends AbstractActivity {
 
     public void deleteAccount(View view) {
         new AlertDialog.Builder(this, R.style.AlertDialogDanger)
-                .setMessage("Вы уверены, что хотите удалить свой аккаунт?")
+                .setMessage("Вы уверены, что хотите удалить свой аккаунт из базы данных приложения?")
                 .setCancelable(false)
                 .setPositiveButton("Да", (dialog, id) -> Requests.getInstance().deleteAccount(this))
                 .setNegativeButton("Нет", null)
