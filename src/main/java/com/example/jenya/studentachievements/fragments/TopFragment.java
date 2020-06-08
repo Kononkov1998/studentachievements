@@ -18,7 +18,7 @@ import com.example.jenya.studentachievements.requests.Requests;
 
 import java.util.ArrayList;
 
-public class TopFragment extends Fragment {
+public class TopFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     private static final String ARGUMENT_PAGE_NUMBER = "arg_page_number";
     private static final String ALL = "all";
     private static final String GROUP = "group";
@@ -77,9 +77,11 @@ public class TopFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_top, container, false);
-        footer = inflater.inflate(R.layout.footer_top, container, false);
-        swipeRefreshLayout = view.findViewById(R.id.refresh);
         listView = view.findViewById(R.id.list);
+        footer = inflater.inflate(R.layout.footer_top, listView, false);
+        swipeRefreshLayout = view.findViewById(R.id.refresh);
+        swipeRefreshLayout.setOnRefreshListener(this);
+
         listView.setAdapter(adapter);
         listView.addFooterView(footer);
         footer.setVisibility(View.GONE);
@@ -96,7 +98,6 @@ public class TopFragment extends Fragment {
                 if (!isLoadingFinished) {
                     if (firstVisibleItem + visibleItemCount == totalItemCount) {
                         if (!listIsLoading) {
-                            listIsLoading = true;
                             addItems();
                         }
                     }
@@ -149,7 +150,13 @@ public class TopFragment extends Fragment {
         return null;
     }
 
-    public void addItems() {
+    private void addFirstItems() {
+        listIsLoading = true;
+        Requests.getInstance().topStudents(this, pageNumber, PAGE_SIZE, region);
+    }
+
+    private void addItems() {
+        listIsLoading = true;
         footer.setVisibility(View.VISIBLE);
         Requests.getInstance().topStudents(this, pageNumber, PAGE_SIZE, region);
     }
@@ -182,10 +189,22 @@ public class TopFragment extends Fragment {
             }
 
             pageNumber++;
+            footer.setVisibility(View.GONE);
         }
 
-        footer.setVisibility(View.GONE);
+
         listIsLoading = false;
+        swipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void onRefresh() {
+        pageNumber = 1;
+        adapter.clear();
+        listView.addFooterView(footer);
+        currentPlace = 1;
+        currentStarCount = 0;
+        isLoadingFinished = false;
     }
 
     private int calculatePlace(int starCount) {
