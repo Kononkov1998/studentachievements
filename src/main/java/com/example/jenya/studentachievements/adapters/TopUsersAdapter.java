@@ -39,6 +39,11 @@ public class TopUsersAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
+    public void clear() {
+        objects.clear();
+        notifyDataSetChanged();
+    }
+
     // кол-во элементов
     @Override
     public int getCount() {

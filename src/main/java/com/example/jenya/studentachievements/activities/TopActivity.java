@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -37,10 +38,10 @@ import java.util.ArrayList;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class TopActivity extends AbstractActivity {
-    private final static int OFFSCREEN_PAGE_LIMIT = 3;
+    private final static int OFFSCREEN_PAGE_LIMIT = 1;
     private final static int CARD_VIEW_SHADOW_HEIGHT = 2;
 
-    private ArrayList<TopFragment> registeredFragments = new ArrayList<>();
+    private SparseArray<TopFragment> registeredFragments = new SparseArray<>();
     private TopFragment currentFragment;
     private CardView cardProfile;
     private LinearLayout container;
@@ -105,11 +106,11 @@ public class TopActivity extends AbstractActivity {
         container = findViewById(R.id.container);
         tabLayout = findViewById(R.id.tabLayout);
 
-        containerParams = (RelativeLayout.LayoutParams) container.getLayoutParams();
-        cardProfileParams = (ViewGroup.MarginLayoutParams) cardProfile.getLayoutParams();
-        startTopMargin = containerParams.topMargin;
+        //containerParams = (RelativeLayout.LayoutParams) container.getLayoutParams();
+        //cardProfileParams = (ViewGroup.MarginLayoutParams) cardProfile.getLayoutParams();
+        //startTopMargin = containerParams.topMargin;
 
-        androidx.viewpager.widget.ViewPager pager = findViewById(R.id.pager);
+        ViewPager pager = findViewById(R.id.pager);
         PagerAdapter pagerAdapter = new TopFragmentPagerAdapter(getSupportFragmentManager(), this);
         pager.setAdapter(pagerAdapter);
         pager.setOffscreenPageLimit(OFFSCREEN_PAGE_LIMIT);
@@ -172,7 +173,7 @@ public class TopActivity extends AbstractActivity {
     }
 
     public void registerFragment(int position, TopFragment fragment) {
-        registeredFragments.add(position, fragment);
+        registeredFragments.put(position, fragment);
         if (currentFragment == null) {
             currentFragment = fragment;
         }
