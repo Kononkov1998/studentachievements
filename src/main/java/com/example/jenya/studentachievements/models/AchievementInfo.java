@@ -6,8 +6,7 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class AchievementInfo implements Parcelable
-{
+public class AchievementInfo implements Parcelable {
     @SerializedName("description")
     @Expose
     private String description;
@@ -42,6 +41,9 @@ public class AchievementInfo implements Parcelable
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public AchievementInfo() {
     }
 
     private AchievementInfo(Parcel in) {

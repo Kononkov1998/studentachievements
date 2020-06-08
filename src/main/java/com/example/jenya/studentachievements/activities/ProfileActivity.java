@@ -69,12 +69,11 @@ public class ProfileActivity extends AbstractActivity {
         final ArrayList<Achievement> completedAchievements = new ArrayList<>();
         userInfo = UserInfo.getCurrentUser();
         @SuppressWarnings("unchecked") final ArrayList<Achievement> userAchievements = (ArrayList<Achievement>) userInfo.getAchievements().clone();
-        int starsSum = 0;
 
+        int starsSum = 0;
         for (Achievement achievement : userAchievements) {
-            int stars = achievement.getStars();
-            if (stars != 0) {
-                starsSum += stars;
+            if (achievement.isReceived()) {
+                starsSum += achievement.getStars();
                 completedAchievements.add(achievement);
             }
         }

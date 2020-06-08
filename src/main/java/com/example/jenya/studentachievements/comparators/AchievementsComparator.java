@@ -9,8 +9,8 @@ public class AchievementsComparator implements Comparator<Achievement> {
     @Override
     public int compare(Achievement a1, Achievement a2) {
         return ComparisonChain.start()
-                .compare(a2.isReceived(), a1.isReceived())
-                .compare(a2.getDate(), a2.getDate())
+                .compareTrueFirst(a1.isReceived(), a2.isReceived())
+                .compare(a2.getDate(), a1.getDate())
                 .compare(a1.getAchievementInfo().getName(), a2.getAchievementInfo().getName())
                 .result();
     }

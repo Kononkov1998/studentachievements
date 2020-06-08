@@ -8,8 +8,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 
-public class Achievement implements Parcelable
-{
+public class Achievement implements Parcelable {
     @SerializedName("code")
     @Expose
     private String code;
@@ -26,14 +25,11 @@ public class Achievement implements Parcelable
     @Expose
     private AchievementInfo achievementInfo;
 
-    public int isReceived()
-    {
-        if(this.stars >= 1)
-        {
-            return 1;
-        }
+    public Achievement() {
+    }
 
-        return 0;
+    public boolean isReceived() {
+        return this.stars != 0;
     }
 
     public AchievementInfo getAchievementInfo() {
@@ -56,8 +52,7 @@ public class Achievement implements Parcelable
         return date;
     }
 
-    public void setDate(Date date)
-    {
+    public void setDate(Date date) {
         this.date = date;
     }
 
