@@ -57,7 +57,10 @@ public class UserInfo implements Parcelable {
 
     private int place;
 
-    public  ArrayList<Achievement> getAchievements() {
+    public UserInfo() {
+    }
+
+    public ArrayList<Achievement> getAchievements() {
         return achievements;
     }
 
@@ -93,8 +96,7 @@ public class UserInfo implements Parcelable {
         this.isAvailable = isAvailable;
     }
 
-    public boolean getIsAvailable()
-    {
+    public boolean getIsAvailable() {
         return this.isAvailable;
     }
 

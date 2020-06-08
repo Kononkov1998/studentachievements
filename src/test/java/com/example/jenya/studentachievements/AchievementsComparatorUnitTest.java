@@ -17,7 +17,7 @@ public class AchievementsComparatorUnitTest {
     private Achievement a2;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         comparator = new AchievementsComparator();
         a1 = createDefaultAchievement();
         a2 = createDefaultAchievement();
