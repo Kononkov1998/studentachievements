@@ -2,11 +2,11 @@ package com.example.jenya.studentachievements.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class FullName implements Parcelable
-{
+public class FullName implements Parcelable {
 
     @SerializedName("firstName")
     @Expose
@@ -19,6 +19,9 @@ public class FullName implements Parcelable
     @SerializedName("patronymic")
     @Expose
     private String patronymic;
+
+    public FullName() {
+    }
 
     public String getFirstName() {
         return firstName;

@@ -155,8 +155,6 @@ public class ProfileActivity extends AbstractActivity {
         if (requestCode == PICK_FROM_GALLERY) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Crop.pickImage(this);
-            } else {
-                Toast.makeText(this, "Для загрузки аватара необходимо предоставить доступ к фотографиям", Toast.LENGTH_SHORT).show();
             }
         }
     }

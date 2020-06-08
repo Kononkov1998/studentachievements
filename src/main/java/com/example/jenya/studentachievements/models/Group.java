@@ -6,8 +6,7 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Group implements Parcelable
-{
+public class Group implements Parcelable {
     @SerializedName("name")
     @Expose
     private String name;
@@ -30,6 +29,9 @@ public class Group implements Parcelable
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Group() {
     }
 
     private Group(Parcel in) {
