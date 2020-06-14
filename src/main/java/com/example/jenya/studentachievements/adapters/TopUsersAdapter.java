@@ -1,9 +1,15 @@
 package com.example.jenya.studentachievements.adapters;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
@@ -13,12 +19,14 @@ import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.model.LazyHeaders;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.jenya.studentachievements.R;
+import com.example.jenya.studentachievements.activities.OtherProfileFromTopActivity;
 import com.example.jenya.studentachievements.models.UserInfo;
 import com.example.jenya.studentachievements.requests.Requests;
 import com.example.jenya.studentachievements.utils.ImageActions;
 import com.example.jenya.studentachievements.utils.SharedPreferencesActions;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -94,6 +102,42 @@ public class TopUsersAdapter extends BaseAdapter {
         ((TextView) view.findViewById(R.id.groupProfile)).setText(s.getGroup().getName());
         ((TextView) view.findViewById(R.id.place)).setText(String.format(Locale.getDefault(), "%d", s.getPlace()));
         ((TextView) view.findViewById(R.id.starsSum)).setText(String.format(Locale.getDefault(), "%d", s.getStarCount()));
+
+        View layout = view.findViewById(R.id.layout);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            avatar.setTransitionName(s.get_id());
+        }
+
+        layout.setOnClickListener(v -> {
+            ActivityOptions options = null;
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                ((Activity) ctx).setExitSharedElementCallback(null);
+
+                View statusBar = ((Activity) ctx).findViewById(android.R.id.statusBarBackground);
+                View navigationBar = ((Activity) ctx).findViewById(android.R.id.navigationBarBackground);
+                View bottomMenu = ((Activity) ctx).findViewById(R.id.bottomMenu);
+
+                List<Pair<View, String>> pairs = new ArrayList<>();
+                pairs.add(Pair.create(statusBar, Window.STATUS_BAR_BACKGROUND_TRANSITION_NAME));
+                if (navigationBar != null) {
+                    pairs.add(Pair.create(navigationBar, Window.NAVIGATION_BAR_BACKGROUND_TRANSITION_NAME));
+                }
+                pairs.add(Pair.create(bottomMenu, bottomMenu.getTransitionName()));
+                pairs.add(Pair.create(avatar, avatar.getTransitionName()));
+                options = ActivityOptions.makeSceneTransitionAnimation((Activity) ctx, pairs.toArray(new Pair[0]));
+            }
+
+            Intent intent = new Intent(ctx, OtherProfileFromTopActivity.class);
+            intent.putExtra("otherStudent", s);
+
+            if (options == null) {
+                ((Activity) ctx).startActivity(intent);
+            } else {
+                ((Activity) ctx).startActivity(intent, options.toBundle());
+            }
+        });
 
         return view;
     }

@@ -30,6 +30,7 @@ import com.example.jenya.studentachievements.models.Achievement;
 import com.example.jenya.studentachievements.models.UserInfo;
 import com.example.jenya.studentachievements.requests.Requests;
 import com.example.jenya.studentachievements.utils.ImageActions;
+import com.example.jenya.studentachievements.utils.ImageViewActions;
 import com.example.jenya.studentachievements.utils.SharedPreferencesActions;
 import com.example.jenya.studentachievements.utils.ThemeController;
 import com.kaopiz.kprogresshud.KProgressHUD;
@@ -47,13 +48,11 @@ import okhttp3.RequestBody;
 
 public class ProfileActivity extends AbstractActivity {
     private static final int PICK_FROM_GALLERY = 1;
+
     private CircleImageView avatar;
     private ListView listView;
-    private UserInfo userInfo;
-    @SuppressWarnings("FieldCanBeLocal")
+    private UserInfo currentUser;
     private View header;
-    @SuppressWarnings("FieldCanBeLocal")
-    private CheckBox hideBox;
     private KProgressHUD hud;
     private int px;
 
@@ -67,9 +66,10 @@ public class ProfileActivity extends AbstractActivity {
 
         px = ImageActions.getAvatarSizeInPx(this);
         final ArrayList<Achievement> completedAchievements = new ArrayList<>();
-        userInfo = UserInfo.getCurrentUser();
-        @SuppressWarnings("unchecked") final ArrayList<Achievement> userAchievements = (ArrayList<Achievement>) userInfo.getAchievements().clone();
+        currentUser = UserInfo.getCurrentUser();
+        @SuppressWarnings("unchecked") final ArrayList<Achievement> userAchievements = (ArrayList<Achievement>) currentUser.getAchievements().clone();
 
+        ImageViewActions.setActiveColor(this, findViewById(R.id.imageProfile));
         int starsSum = 0;
         for (Achievement achievement : userAchievements) {
             if (achievement.isReceived()) {
@@ -77,6 +77,7 @@ public class ProfileActivity extends AbstractActivity {
                 completedAchievements.add(achievement);
             }
         }
+
 
         Collections.sort(userAchievements, new AchievementsComparator());
 
@@ -88,13 +89,13 @@ public class ProfileActivity extends AbstractActivity {
         ((TextView) header.findViewById(R.id.textProfile))
                 .setText(String.format(
                         "%s\n%s\n%s",
-                        userInfo.getFullName().getLastName(),
-                        userInfo.getFullName().getFirstName(),
-                        userInfo.getFullName().getPatronymic())
+                        currentUser.getFullName().getLastName(),
+                        currentUser.getFullName().getFirstName(),
+                        currentUser.getFullName().getPatronymic())
                 );
 
         ((TextView) header.findViewById(R.id.groupProfile))
-                .setText(userInfo.getGroup().getName());
+                .setText(currentUser.getGroup().getName());
 
         int completed = completedAchievements.size();
         int all = userAchievements.size();
@@ -110,7 +111,7 @@ public class ProfileActivity extends AbstractActivity {
         listView.addHeaderView(header);
         listView.setAdapter(adapter);
 
-        hideBox = findViewById(R.id.checkboxHide);
+        CheckBox hideBox = findViewById(R.id.checkboxHide);
         hideBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 for (Achievement achievement : completedAchievements) {
@@ -133,7 +134,7 @@ public class ProfileActivity extends AbstractActivity {
                 .setAnimationSpeed(2)
                 .setDimAmount(0.5f);
 
-        if (userInfo.getAvatar() != null) {
+        if (currentUser.getAvatar() != null) {
             header.findViewById(R.id.plusAvatar).setVisibility(View.GONE);
         }
     }
@@ -197,7 +198,7 @@ public class ProfileActivity extends AbstractActivity {
     protected void onStart() {
         super.onStart();
         overridePendingTransition(0, 0);
-        if (userInfo.getAvatar() != null) {
+        if (currentUser.getAvatar() != null) {
             setAvatarWithGlide();
         }
     }
@@ -212,7 +213,7 @@ public class ProfileActivity extends AbstractActivity {
     }
 
     private void setAvatarWithGlide() {
-        GlideUrl glideUrl = new GlideUrl(String.format("%s/student/pic/%s", Requests.getInstance().getURL(), userInfo.getAvatar()), new LazyHeaders.Builder()
+        GlideUrl glideUrl = new GlideUrl(String.format("%s/student/pic/%s", Requests.getInstance().getURL(), currentUser.getAvatar()), new LazyHeaders.Builder()
                 .addHeader("Authorization", SharedPreferencesActions.read("token", this))
                 .build());
 

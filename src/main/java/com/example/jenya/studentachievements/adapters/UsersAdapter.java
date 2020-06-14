@@ -188,6 +188,7 @@ public class UsersAdapter extends BaseAdapter {
             Intent intent = new Intent(ctx, OtherProfileActivity.class);
             intent.putExtra("otherStudent", s);
             intent.putExtra("activity", ctx.getClass().getSimpleName());
+            intent.putExtra("position", position);
 
             if (options == null) {
                 ((Activity) ctx).startActivityForResult(intent, 1);

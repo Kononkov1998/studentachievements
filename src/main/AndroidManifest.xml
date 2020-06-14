@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme.Light"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activities.TopActivity" />
+
         <activity
             android:name=".activities.SplashScreenActivity"
             android:noHistory="true">
@@ -34,6 +34,8 @@
         <activity android:name=".activities.SettingsActivity" />
         <activity android:name=".activities.SearchResultsActivity" />
         <activity android:name=".activities.OtherProfileActivity" />
+        <activity android:name=".activities.OtherProfileFromTopActivity" />
+        <activity android:name=".activities.TopActivity" />
         <activity android:name="com.soundcloud.android.crop.CropImageActivity" />
     </application>
 

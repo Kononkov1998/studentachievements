@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import com.example.jenya.studentachievements.activities.AuthActivity;
 import com.example.jenya.studentachievements.activities.DisciplinesActivity;
 import com.example.jenya.studentachievements.activities.FavoritesActivity;
+import com.example.jenya.studentachievements.activities.OtherProfileFromTopActivity;
 import com.example.jenya.studentachievements.activities.ProfileActivity;
 import com.example.jenya.studentachievements.activities.SearchActivity;
 import com.example.jenya.studentachievements.activities.SearchResultsActivity;
@@ -541,6 +542,27 @@ public class Requests {
                 }
             });
         }
+    }
+
+    // /student/students/{student_id}
+    public void student(OtherProfileFromTopActivity activity, String id) {
+        userApi.student(SharedPreferencesActions.read("token", activity), id).enqueue(new Callback<UserInfo>() {
+            @Override
+            public void onResponse(@NonNull Call<UserInfo> call, @NonNull Response<UserInfo> response) {
+                if (response.isSuccessful()) {
+                    if (response.body() != null) {
+                        activity.loadInfo(response.body());
+                    }
+                } else {
+                    Toast.makeText(activity, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t) {
+                Toast.makeText(activity, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private UserInfo findStudentInFavourites(UserInfo student) {

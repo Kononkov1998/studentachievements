@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -35,12 +34,16 @@ import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class OtherProfileActivity extends AbstractActivity {
+public class OtherProfileFromTopActivity extends AbstractActivity {
 
     private CheckBox checkBoxFavorite;
     private UserInfo otherStudent;
-    private ImageView selectedElement = null;
     private View header;
+    private int starsSum;
+    private ListView listView;
+    private View stats;
+    private ProgressBar progressBar;
+    private boolean isLoadingFinished = false;
 
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
@@ -50,48 +53,23 @@ public class OtherProfileActivity extends AbstractActivity {
         ThemeController.onActivityCreateSetTheme(this);
         setContentView(R.layout.activity_otherprofile);
 
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             postponeEnterTransition();
         }
 
-        switch (getIntent().getStringExtra("activity")) {
-            case "SearchResultsActivity":
-                selectedElement = findViewById(R.id.imageSearch);
-                break;
-            case "FavoritesActivity":
-                selectedElement = findViewById(R.id.imageFavorites);
-                break;
-        }
-
-        if (selectedElement != null) {
-            ImageViewActions.setActiveColor(this, selectedElement);
-        }
+        ImageViewActions.setActiveColor(this, findViewById(R.id.imageTop));
 
         otherStudent = getIntent().getParcelableExtra("otherStudent");
-        final ListView listView = findViewById(R.id.list);
+        listView = findViewById(R.id.list);
         header = getLayoutInflater().inflate(R.layout.header_otherprofile, listView, false);
+        stats = header.findViewById(R.id.stats);
+        progressBar = findViewById(R.id.progressBar);
+        CircleImageView avatar = header.findViewById(R.id.imageUser);
+        starsSum = otherStudent.getStarCount();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            header.findViewById(R.id.layout).setTransitionName(otherStudent.get_id());
+            avatar.setTransitionName(otherStudent.get_id());
         }
-
-        final ArrayList<Achievement> completedAchievements = new ArrayList<>();
-        final ArrayList<Achievement> userAchievements = otherStudent.getAchievements();
-        int starsSum = 0;
-
-        for (Achievement achievement : userAchievements) {
-            if (achievement.isReceived()) {
-                starsSum += achievement.getStars();
-                completedAchievements.add(achievement);
-            }
-        }
-
-        Collections.sort(userAchievements, new AchievementsComparator());
-
-        final AchievementsAdapter adapter = new AchievementsAdapter(this, userAchievements);
-
-        CircleImageView avatar = header.findViewById(R.id.imageUser);
 
         if (otherStudent.getAvatar() != null) {
             int px = ImageActions.getAvatarSizeInPx(this);
@@ -120,6 +98,55 @@ public class OtherProfileActivity extends AbstractActivity {
         ((TextView) header.findViewById(R.id.groupProfile))
                 .setText(otherStudent.getGroup().getName());
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            final View decor = getWindow().getDecorView();
+            decor.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+                @Override
+                public boolean onPreDraw() {
+                    decor.getViewTreeObserver().removeOnPreDrawListener(this);
+                    startPostponedEnterTransition();
+                    return true;
+                }
+            });
+        }
+
+        checkBoxFavorite = header.findViewById(R.id.checkboxFavorite);
+        stats.setVisibility(View.GONE);
+        updateCheckBoxFavorite();
+        listView.addHeaderView(header);
+        listView.setAdapter(new AchievementsAdapter(this, new ArrayList<>()));
+
+        progressBar.setVisibility(View.VISIBLE);
+        Requests.getInstance().student(this, otherStudent.get_id());
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        overridePendingTransition(0, 0);
+        updateCheckBoxFavorite();
+
+        if (isLoadingFinished) {
+            progressBar.setVisibility(View.GONE);
+        }
+    }
+
+    public void loadInfo(UserInfo student) {
+        otherStudent = student;
+
+        final ArrayList<Achievement> completedAchievements = new ArrayList<>();
+        final ArrayList<Achievement> userAchievements = otherStudent.getAchievements();
+
+        for (Achievement achievement : userAchievements) {
+            if (achievement.isReceived()) {
+                completedAchievements.add(achievement);
+            }
+        }
+
+        Collections.sort(userAchievements, new AchievementsComparator());
+
+        final AchievementsAdapter adapter = new AchievementsAdapter(this, userAchievements);
+
         int completed = completedAchievements.size();
         int all = userAchievements.size();
         ((TextView) header.findViewById(R.id.achievementsTextView)).setText(String.format(Locale.getDefault(), "Получено достижений: %d из %d (%d%%)", completed, all, Math.round((double) completed / (double) all * 100.0)));
@@ -131,7 +158,6 @@ public class OtherProfileActivity extends AbstractActivity {
         ((ProgressBar) header.findViewById(R.id.starsProgressBar)).setProgress(starsSum);
         ((ProgressBar) header.findViewById(R.id.starsProgressBar)).setMax(allStars);
 
-        listView.addHeaderView(header);
         listView.setAdapter(adapter);
 
         CheckBox hideBox = findViewById(R.id.checkboxHide);
@@ -147,10 +173,6 @@ public class OtherProfileActivity extends AbstractActivity {
             adapter.notifyDataSetChanged();
         });
 
-        checkBoxFavorite = header.findViewById(R.id.checkboxFavorite);
-
-        updateCheckBoxFavorite();
-
         checkBoxFavorite.setOnClickListener((buttonView) -> {
             if (checkBoxFavorite.isChecked()) {
                 Requests.getInstance().addFavourite(otherStudent, this);
@@ -159,40 +181,9 @@ public class OtherProfileActivity extends AbstractActivity {
             }
         });
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            final View decor = getWindow().getDecorView();
-            decor.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-                @Override
-                public boolean onPreDraw() {
-                    decor.getViewTreeObserver().removeOnPreDrawListener(this);
-                    startPostponedEnterTransition();
-                    return true;
-                }
-            });
-        }
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        overridePendingTransition(0, 0);
-        updateCheckBoxFavorite();
-    }
-
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent();
-        intent.putExtra("position", getIntent().getIntExtra("position", -1));
-        setResult(RESULT_OK, intent);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            if (getIntent().getStringExtra("activity").equals("FavoritesActivity")) {
-                if (!checkBoxFavorite.isChecked()) {
-                    header.findViewById(R.id.layout).setTransitionName(null);
-                }
-            }
-        }
-
-        super.onBackPressed();
+        isLoadingFinished = true;
+        stats.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.GONE);
     }
 
     private void updateCheckBoxFavorite() {

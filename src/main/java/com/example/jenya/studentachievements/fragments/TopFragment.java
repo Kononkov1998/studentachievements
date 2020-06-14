@@ -24,12 +24,7 @@ public class TopFragment extends Fragment implements SwipeRefreshLayout.OnRefres
     private static final String GROUP = "group";
     private static final String DIRECTION = "direction";
     private static final String YEAR = "year";
-    private static final int ALL_PAGE_NUMBER = 0;
-    private static final int YEAR_PAGE_NUMBER = 1;
-    private static final int DIRECTION_PAGE_NUMBER = 2;
-    private static final int GROUP_PAGE_NUMBER = 3;
-    private static final int PAGE_SIZE = 10;
-    private static final int HIDE_THRESHOLD = 100;
+    private static final int PAGE_SIZE = 15;
 
     private TopUsersAdapter adapter;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -43,15 +38,7 @@ public class TopFragment extends Fragment implements SwipeRefreshLayout.OnRefres
     private int currentStarCount = 0;
     private TopActivity activity;
     private boolean isLoadingFinished = false;
-
-
-    private static boolean headerVisible = true;
-    private int scrolledDistance = 0;
     private int itemHeight = -1;
-    private int previousFirstVisibleItem = 0;
-    private int scrolledItemsCount = 0;
-    private int scrollY = 0;
-    private int previousScrollY = 0;
 
     public static TopFragment newInstance(int page) {
         TopFragment fragment = new TopFragment();
@@ -102,33 +89,6 @@ public class TopFragment extends Fragment implements SwipeRefreshLayout.OnRefres
                         }
                     }
                 }
-
-                if (previousFirstVisibleItem < firstVisibleItem) {
-                    previousFirstVisibleItem = firstVisibleItem;
-                    scrolledItemsCount++;
-                } else if (previousFirstVisibleItem > firstVisibleItem) {
-                    previousFirstVisibleItem = firstVisibleItem;
-                    scrolledItemsCount--;
-                }
-
-                scrollY = -listView.getChildAt(0).getTop() + itemHeight * scrolledItemsCount;
-
-                if (!activity.isAnimating) {
-                    if ((previousScrollY < scrollY && headerVisible) || (previousScrollY > scrollY && !headerVisible)) {
-                        scrolledDistance += scrollY - previousScrollY;
-                    }
-                    if ((previousScrollY < scrollY && !headerVisible) || (previousScrollY > scrollY && headerVisible)) {
-                        scrolledDistance = 0;
-                    }
-
-                    if ((scrolledDistance > HIDE_THRESHOLD && headerVisible) || (scrolledDistance < -HIDE_THRESHOLD && !headerVisible)) {
-                        activity.isAnimating = true;
-                        scrolledDistance = 0;
-                        //activity.animateHeader(headerVisible);
-                        headerVisible = !headerVisible;
-                    }
-                }
-                previousScrollY = scrollY;
             }
 
         });
@@ -138,21 +98,16 @@ public class TopFragment extends Fragment implements SwipeRefreshLayout.OnRefres
 
     private String getRegion(int page) {
         switch (page) {
-            case ALL_PAGE_NUMBER:
+            case TopActivity.ALL_PAGE_NUMBER:
                 return ALL;
-            case GROUP_PAGE_NUMBER:
+            case TopActivity.GROUP_PAGE_NUMBER:
                 return GROUP;
-            case DIRECTION_PAGE_NUMBER:
+            case TopActivity.DIRECTION_PAGE_NUMBER:
                 return DIRECTION;
-            case YEAR_PAGE_NUMBER:
+            case TopActivity.YEAR_PAGE_NUMBER:
                 return YEAR;
         }
         return null;
-    }
-
-    private void addFirstItems() {
-        listIsLoading = true;
-        Requests.getInstance().topStudents(this, pageNumber, PAGE_SIZE, region);
     }
 
     private void addItems() {

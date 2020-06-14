@@ -34,14 +34,14 @@ public class TopFragmentPagerAdapter extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         switch (position) {
-            case ALL_TOP_ITEM:
-                return context.getString(R.string.topAll);
-            case YEAR_TOP_ITEM:
-                return context.getString(R.string.topYear);
-            case DIRECTION_TOP_ITEM:
-                return context.getString(R.string.topDirection);
-            case GROUP_TOP_ITEM:
-                return context.getString(R.string.topGroup);
+            case TopActivity.ALL_PAGE_NUMBER:
+                return context.getString(R.string.top_all);
+            case TopActivity.YEAR_PAGE_NUMBER:
+                return context.getString(R.string.top_year);
+            case TopActivity.DIRECTION_PAGE_NUMBER:
+                return context.getString(R.string.top_direction);
+            case TopActivity.GROUP_PAGE_NUMBER:
+                return context.getString(R.string.top_group);
         }
         return null;
     }

@@ -1,7 +1,7 @@
 package com.example.jenya.studentachievements.models;
 
 public class Visibility {
-    private final static String VISIBILITY_ALL = "all", VISIBILITY_ME = "me", VISIBILITY_GROUP = "groupmates";
+    public final static String VISIBILITY_ALL = "all", VISIBILITY_ME = "me", VISIBILITY_GROUP = "groupmates";
 
     private String visibility; // all, me, groupmates
 

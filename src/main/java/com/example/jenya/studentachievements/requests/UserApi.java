@@ -1,7 +1,5 @@
 package com.example.jenya.studentachievements.requests;
 
-import com.example.jenya.studentachievements.models.Mark;
-import com.example.jenya.studentachievements.models.Semester;
 import com.example.jenya.studentachievements.models.StudentMarks;
 import com.example.jenya.studentachievements.models.StudentSemesters;
 import com.example.jenya.studentachievements.models.Top;
@@ -13,7 +11,6 @@ import com.example.jenya.studentachievements.models.Visibility;
 import java.util.ArrayList;
 
 import okhttp3.MultipartBody;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -72,4 +69,7 @@ interface UserApi
 
     @GET("/statistics/top")
     Call<Top> topStudents(@Header("Authorization") String token, @Query("pageNumber") int pageNumber, @Query("pageSize") int pageSize, @Query("region") String region);
+
+    @GET("/student/students/{student_id}")
+    Call<UserInfo> student(@Header("Authorization") String token, @Path("student_id") String studentId);
 }

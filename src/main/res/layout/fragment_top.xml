@@ -12,5 +12,6 @@
         android:cacheColorHint="@android:color/transparent"
         android:clipToPadding="false"
         android:divider="@null"
-        android:listSelector="@android:color/transparent" />
+        android:listSelector="@android:color/transparent"
+        android:nestedScrollingEnabled="true" />
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

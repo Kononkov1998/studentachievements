@@ -22,12 +22,18 @@
     <string name="no_favorites">Нет избранных пользователей</string>
     <string name="no_search_results">По вашему запросу ничего не найдено</string>
     <string name="favorites">Избранные</string>
-    <string name="topAll">Общий</string>
-    <string name="topGroup">Группа</string>
-    <string name="topDirection">Поток</string>
-    <string name="topYear">Курс</string>
+    <string name="top_all">Общий</string>
+    <string name="top_group">Группа</string>
+    <string name="top_direction">Поток</string>
+    <string name="top_year">Курс</string>
     <string name="date">Дата</string>
     <string name="hours">Часы</string>
     <string name="mark">Оценка</string>
     <string name="exam">Экзамен</string>
+    <string name="rating_info">В рейтинге отображаются только пользователи с настройками приватности \"Все пользователи\"</string>
+    <string name="place">место</string>
+    <string name="ok">Ок</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+    <string name="ask_delete_account">Вы уверены, что хотите удалить свой аккаунт из базы данных приложения?</string>
 </resources>

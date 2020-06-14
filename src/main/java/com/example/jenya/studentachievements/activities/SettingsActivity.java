@@ -14,6 +14,7 @@ import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.models.UserInfo;
 import com.example.jenya.studentachievements.models.Visibility;
 import com.example.jenya.studentachievements.requests.Requests;
+import com.example.jenya.studentachievements.utils.ImageViewActions;
 import com.example.jenya.studentachievements.utils.SharedPreferencesActions;
 import com.example.jenya.studentachievements.utils.ThemeController;
 
@@ -33,6 +34,7 @@ public class SettingsActivity extends AbstractActivity {
         ThemeController.onActivityCreateSetTheme(this);
         setContentView(R.layout.activity_settings);
 
+        ImageViewActions.setActiveColor(this, findViewById(R.id.imageProfile));
         rgListener = (radioGroup, i) -> {
             RadioButton selectedRadioButton = findViewById(i);
             String selectedRadioButtonText = selectedRadioButton.getText().toString();
@@ -118,10 +120,10 @@ public class SettingsActivity extends AbstractActivity {
 
     public void deleteAccount(View view) {
         new AlertDialog.Builder(this, R.style.AlertDialogDanger)
-                .setMessage("Вы уверены, что хотите удалить свой аккаунт из базы данных приложения?")
+                .setMessage(R.string.ask_delete_account)
                 .setCancelable(false)
-                .setPositiveButton("Да", (dialog, id) -> Requests.getInstance().deleteAccount(this))
-                .setNegativeButton("Нет", null)
+                .setPositiveButton(R.string.yes, (dialog, id) -> Requests.getInstance().deleteAccount(this))
+                .setNegativeButton(R.string.no, null)
                 .show();
     }
 

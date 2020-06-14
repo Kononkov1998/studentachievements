@@ -33,4 +33,5 @@
     <color name="colorDarkCW">#78763f</color>
     <color name="colorDarkPractice">#4b4d4c</color>
     <color name="colorSibFU">#FF6000</color>
+    <color name="colorRed">#FF0000</color>
 </resources>

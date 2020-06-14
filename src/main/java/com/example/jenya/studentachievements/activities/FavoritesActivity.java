@@ -1,6 +1,7 @@
 package com.example.jenya.studentachievements.activities;
 
 import android.annotation.SuppressLint;
+import android.app.SharedElementCallback;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
@@ -17,10 +18,13 @@ import com.example.jenya.studentachievements.adapters.UsersAdapter;
 import com.example.jenya.studentachievements.comparators.StudentsComparator;
 import com.example.jenya.studentachievements.models.UserInfo;
 import com.example.jenya.studentachievements.requests.Requests;
+import com.example.jenya.studentachievements.utils.ImageViewActions;
 import com.example.jenya.studentachievements.utils.ThemeController;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 public class FavoritesActivity extends AbstractActivityWithUsers implements SwipeRefreshLayout.OnRefreshListener {
     @SuppressWarnings("FieldCanBeLocal")
@@ -36,6 +40,7 @@ public class FavoritesActivity extends AbstractActivityWithUsers implements Swip
         ThemeController.onActivityCreateSetTheme(this);
         setContentView(R.layout.activity_favorites);
 
+        ImageViewActions.setActiveColor(this, findViewById(R.id.imageFavorites));
         swipeRefreshLayout = findViewById(R.id.refresh);
         swipeRefreshLayout.setOnRefreshListener(this);
         adapter = new UsersAdapter(this, UserInfo.getCurrentUser().getFavouriteStudents());
@@ -50,6 +55,24 @@ public class FavoritesActivity extends AbstractActivityWithUsers implements Swip
     @Override
     public void onActivityReenter(int resultCode, Intent data) {
         postponeEnterTransition();
+
+        int sharedElementPosition = data.getIntExtra("position", -1);
+        if (sharedElementPosition != -1) {
+            View listElement = listView.getChildAt(sharedElementPosition + 1);
+            if (listElement != null) {
+                View sharedView = listElement.findViewById(R.id.layout);
+                setExitSharedElementCallback(new SharedElementCallback() {
+                    @Override
+                    public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
+                        names.clear();
+                        sharedElements.clear();
+                        names.add(sharedView.getTransitionName());
+                        sharedElements.put(sharedView.getTransitionName(), sharedView);
+                    }
+                });
+            }
+        }
+
         final View decor = getWindow().getDecorView();
         decor.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override

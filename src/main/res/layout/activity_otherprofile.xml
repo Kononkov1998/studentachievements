@@ -14,42 +14,14 @@
         android:divider="@null"
         android:listSelector="@android:color/transparent" />
 
-    <LinearLayout style="?bottomMenu">
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="gone" />
 
-        <ImageView
-            android:id="@+id/imageProfile"
-            style="@style/ImageView"
-            android:onClick="openProfile"
-            android:src="@drawable/ic_home_24dp"
-            android:tint="?ic_active_color" />
-
-        <ImageView
-            android:id="@+id/imageGrade"
-            style="@style/ImageView"
-            android:onClick="openGrade"
-            android:src="@drawable/ic_school_24dp"
-            android:tint="?ic_inactive_color" />
-
-        <ImageView
-            android:id="@+id/imageSearch"
-            style="@style/ImageView"
-            android:onClick="openSearch"
-            android:src="@drawable/ic_search_24dp"
-            android:tint="?ic_inactive_color" />
-
-        <ImageView
-            android:id="@+id/imageFavorites"
-            style="@style/ImageView"
-            android:onClick="openFavorites"
-            android:src="@drawable/ic_star_border_24dp"
-            android:tint="?ic_inactive_color" />
-
-        <ImageView
-            android:id="@+id/imageTop"
-            style="@style/ImageView"
-            android:onClick="openTop"
-            android:src="@drawable/ic_supervisor_account_24dp"
-            android:tint="?ic_inactive_color" />
-    </LinearLayout>
+    <include layout="@layout/bottom_menu" />
 
 </RelativeLayout>

@@ -11,10 +11,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public class ImageActions
-{
-    public static File convertBitmapToFile(Bitmap bitmap, Context ctx) throws IOException
-    {
+public class ImageActions {
+    public static File convertBitmapToFile(Bitmap bitmap, Context ctx) throws IOException {
         File f = new File(ctx.getCacheDir(), "avatar");
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100 /*ignored for PNG*/, bos);
@@ -27,7 +25,6 @@ public class ImageActions
     }
 
     public static Bitmap decodeSampledBitmapFromResource(String path, int reqWidth, int reqHeight) {
-
         // Читаем с inJustDecodeBounds=true для определения размеров
         final BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
@@ -44,7 +41,7 @@ public class ImageActions
     }
 
     private static int calculateInSampleSize(BitmapFactory.Options options,
-                                     int reqWidth, int reqHeight) {
+                                             int reqWidth, int reqHeight) {
         // Реальные размеры изображения
         final int height = options.outHeight;
         final int width = options.outWidth;
@@ -66,18 +63,15 @@ public class ImageActions
         return inSampleSize;
     }
 
-    public static int getAvatarSizeInPx(Context ctx)
-    {
+    public static int getAvatarSizeInPx(Context ctx) {
         return ctx.getResources().getDimensionPixelSize(R.dimen.image_size);
     }
 
-    public static float dpFromPx(float px, Context ctx)
-    {
+    public static float dpFromPx(float px, Context ctx) {
         return px / ctx.getApplicationContext().getResources().getDisplayMetrics().density;
     }
 
-    public static float pxFromDp(float dp, Context ctx)
-    {
+    public static float pxFromDp(float dp, Context ctx) {
         return dp * ctx.getApplicationContext().getResources().getDisplayMetrics().density;
     }
 }

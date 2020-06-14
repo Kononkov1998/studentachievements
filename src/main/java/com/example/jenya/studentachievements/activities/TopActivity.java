@@ -1,19 +1,15 @@
 package com.example.jenya.studentachievements.activities;
 
-import android.animation.Animator;
-import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.SparseArray;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.cardview.widget.CardView;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
@@ -25,33 +21,30 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.jenya.studentachievements.R;
 import com.example.jenya.studentachievements.adapters.TopFragmentPagerAdapter;
 import com.example.jenya.studentachievements.fragments.TopFragment;
-import com.example.jenya.studentachievements.models.Achievement;
 import com.example.jenya.studentachievements.models.UserInfo;
+import com.example.jenya.studentachievements.models.Visibility;
 import com.example.jenya.studentachievements.requests.Requests;
 import com.example.jenya.studentachievements.utils.ImageActions;
+import com.example.jenya.studentachievements.utils.ImageViewActions;
 import com.example.jenya.studentachievements.utils.SharedPreferencesActions;
 import com.example.jenya.studentachievements.utils.ThemeController;
 import com.google.android.material.tabs.TabLayout;
 
-import java.util.ArrayList;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class TopActivity extends AbstractActivity {
+    public static final int ALL_PAGE_NUMBER = 0;
+    public static final int YEAR_PAGE_NUMBER = 1;
+    public static final int DIRECTION_PAGE_NUMBER = 2;
+    public static final int GROUP_PAGE_NUMBER = 3;
     private final static int OFFSCREEN_PAGE_LIMIT = 1;
-    private final static int CARD_VIEW_SHADOW_HEIGHT = 2;
 
     private SparseArray<TopFragment> registeredFragments = new SparseArray<>();
     private TopFragment currentFragment;
-    private CardView cardProfile;
-    private LinearLayout container;
-    private RelativeLayout.LayoutParams containerParams;
-    private ViewGroup.MarginLayoutParams cardProfileParams;
-    private TabLayout tabLayout;
-
-    private int targetTopMargin = -1;
-    private int startTopMargin = -1;
-    public boolean isAnimating = false;
+    private UserInfo currentUser;
+    private CircleImageView avatar;
+    private int px;
+    private ImageView helpIcon;
 
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
@@ -61,55 +54,24 @@ public class TopActivity extends AbstractActivity {
         ThemeController.onActivityCreateSetTheme(this);
         setContentView(R.layout.activity_top);
 
-        UserInfo userInfo = UserInfo.getCurrentUser();
-        //noinspection unchecked
-        final ArrayList<Achievement> userAchievements = (ArrayList<Achievement>) userInfo.getAchievements().clone();
-        int starsSum = 0;
+        ImageViewActions.setActiveColor(this, findViewById(R.id.imageTop));
+        currentUser = UserInfo.getCurrentUser();
+        avatar = findViewById(R.id.imageUser);
+        px = ImageActions.getAvatarSizeInPx(this);
+        helpIcon = findViewById(R.id.helpIcon);
 
-        for (Achievement achievement : userAchievements) {
-            int stars = achievement.getStars();
-            if (stars != 0) {
-                starsSum += stars;
-            }
-        }
-
-        ((TextView) findViewById(R.id.starsSum)).setText(String.valueOf(starsSum));
-
-        CircleImageView avatar = findViewById(R.id.imageUser);
+        ((TextView) findViewById(R.id.starsSum)).setText(String.valueOf(currentUser.getStarCount()));
         ((TextView) findViewById(R.id.textProfile))
                 .setText(String.format(
                         "%s %s. %s.",
-                        userInfo.getFullName().getLastName(),
-                        userInfo.getFullName().getFirstName().charAt(0),
-                        userInfo.getFullName().getPatronymic().charAt(0)
+                        currentUser.getFullName().getLastName(),
+                        currentUser.getFullName().getFirstName().charAt(0),
+                        currentUser.getFullName().getPatronymic().charAt(0)
                 ));
 
-        ((TextView) findViewById(R.id.groupProfile)).setText(userInfo.getGroup().getName());
+        ((TextView) findViewById(R.id.groupProfile)).setText(currentUser.getGroup().getName());
 
-        if (userInfo.getAvatar() != null) {
-            int px = ImageActions.getAvatarSizeInPx(this);
-
-            GlideUrl glideUrl = new GlideUrl(String.format("%s/student/pic/%s", Requests.getInstance().getURL(), userInfo.getAvatar()), new LazyHeaders.Builder()
-                    .addHeader("Authorization", SharedPreferencesActions.read("token", this))
-                    .build());
-
-            Glide.with(this)
-                    .setDefaultRequestOptions(new RequestOptions().timeout(30000))
-                    .load(glideUrl)
-                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .placeholder(R.drawable.profile)
-                    .override(px, px)
-                    .into(avatar);
-        }
-
-        cardProfile = findViewById(R.id.cardProfile);
-        container = findViewById(R.id.container);
-        tabLayout = findViewById(R.id.tabLayout);
-
-        //containerParams = (RelativeLayout.LayoutParams) container.getLayoutParams();
-        //cardProfileParams = (ViewGroup.MarginLayoutParams) cardProfile.getLayoutParams();
-        //startTopMargin = containerParams.topMargin;
-
+        TabLayout tabLayout = findViewById(R.id.tabLayout);
         ViewPager pager = findViewById(R.id.pager);
         PagerAdapter pagerAdapter = new TopFragmentPagerAdapter(getSupportFragmentManager(), this);
         pager.setAdapter(pagerAdapter);
@@ -123,55 +85,6 @@ public class TopActivity extends AbstractActivity {
         tabLayout.setupWithViewPager(pager);
     }
 
-    public void animateHeader(boolean headerVisible) {
-        if (targetTopMargin == -1) {
-            targetTopMargin = -cardProfile.getHeight() - cardProfileParams.bottomMargin - CARD_VIEW_SHADOW_HEIGHT;
-        }
-
-        ValueAnimator animExit = createTopMarginAnimation(startTopMargin, targetTopMargin);
-        ValueAnimator animEnter = createTopMarginAnimation(targetTopMargin, startTopMargin);
-
-        if (headerVisible) {
-            animExit.start();
-        } else {
-            animEnter.start();
-
-        }
-    }
-
-    private ValueAnimator createTopMarginAnimation(int from, int to) {
-        ValueAnimator anim = ValueAnimator.ofInt(from, to);
-
-        anim.addUpdateListener(valueAnimator -> {
-            containerParams.topMargin = (int) valueAnimator.getAnimatedValue();
-            container.setLayoutParams(containerParams);
-        });
-
-        anim.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animator) {
-                isAnimating = true;
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animator) {
-                isAnimating = false;
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animator) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animator) {
-
-            }
-        });
-
-        return anim;
-    }
-
     public void registerFragment(int position, TopFragment fragment) {
         registeredFragments.put(position, fragment);
         if (currentFragment == null) {
@@ -179,10 +92,34 @@ public class TopActivity extends AbstractActivity {
         }
     }
 
+    private void setAvatarWithGlide() {
+        GlideUrl glideUrl = new GlideUrl(String.format("%s/student/pic/%s", Requests.getInstance().getURL(), currentUser.getAvatar()), new LazyHeaders.Builder()
+                .addHeader("Authorization", SharedPreferencesActions.read("token", this))
+                .build());
+
+        Glide.with(this)
+                .setDefaultRequestOptions(new RequestOptions().timeout(30000))
+                .load(glideUrl)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .placeholder(R.drawable.profile)
+                .override(px, px)
+                .into(avatar);
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
         overridePendingTransition(0, 0);
+
+        if (currentUser.getAvatar() != null) {
+            setAvatarWithGlide();
+        }
+
+        if (!currentUser.getVisibility().equals(Visibility.VISIBILITY_ALL)) {
+            helpIcon.setVisibility(View.VISIBLE);
+        } else {
+            helpIcon.setVisibility(View.GONE);
+        }
     }
 
     public void openProfile(View view) {
@@ -207,5 +144,13 @@ public class TopActivity extends AbstractActivity {
 
     public void openTop(View view) {
         currentFragment.getListView().smoothScrollToPosition(0);
+    }
+
+    public void openHelp(View view) {
+        new AlertDialog.Builder(this, R.style.AlertDialogDanger)
+                .setMessage(R.string.rating_info)
+                .setCancelable(true)
+                .setNeutralButton(R.string.ok, null)
+                .show();
     }
 }
