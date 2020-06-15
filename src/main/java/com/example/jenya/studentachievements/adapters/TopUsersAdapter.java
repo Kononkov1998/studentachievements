@@ -144,7 +144,7 @@ public class TopUsersAdapter extends BaseAdapter {
                 }
             });
         }
-        
+
         return view;
     }
 }

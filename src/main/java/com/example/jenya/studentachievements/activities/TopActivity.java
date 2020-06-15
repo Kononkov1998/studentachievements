@@ -114,12 +114,6 @@ public class TopActivity extends AbstractActivity {
         if (currentUser.getAvatar() != null) {
             setAvatarWithGlide();
         }
-
-        if (!currentUser.getVisibility().equals(Visibility.VISIBILITY_ALL)) {
-            helpIcon.setVisibility(View.VISIBLE);
-        } else {
-            helpIcon.setVisibility(View.GONE);
-        }
     }
 
     public void openProfile(View view) {
