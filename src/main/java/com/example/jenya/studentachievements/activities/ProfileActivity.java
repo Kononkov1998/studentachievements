@@ -77,7 +77,7 @@ public class ProfileActivity extends AbstractActivity {
                 completedAchievements.add(achievement);
             }
         }
-
+        currentUser.setStarCount(starsSum);
 
         Collections.sort(userAchievements, new AchievementsComparator());
 
