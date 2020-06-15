@@ -11,10 +11,8 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/cardProfile"
             style="?cardView"
-            android:layout_height="wrap_content"
             android:layout_marginBottom="0dp"
             app:layout_scrollFlags="scroll|enterAlways">
-
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -25,7 +23,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:baselineAligned="false" android:orientation="horizontal">
+                    android:baselineAligned="false"
+                    android:orientation="horizontal">
 
                     <FrameLayout
                         android:layout_width="wrap_content"

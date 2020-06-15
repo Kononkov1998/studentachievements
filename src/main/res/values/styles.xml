@@ -57,6 +57,7 @@
         <item name="android:layout_marginBottom">8dp</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="cardCornerRadius">0dp</item>
         <item name="cardBackgroundColor">@color/colorDarkGrey</item>
     </style>
 
@@ -64,6 +65,7 @@
         <item name="android:layout_marginBottom">8dp</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="cardCornerRadius">0dp</item>
         <item name="cardBackgroundColor">@color/colorLightGrey</item>
     </style>
 
@@ -120,12 +122,14 @@
     </style>
 
     <style name="TabLayout.Dark" parent="Widget.Design.TabLayout">
+        <item name="android:background">@color/colorDarkestGrey</item>
         <item name="tabIndicatorColor">@color/colorSibFU</item>
         <item name="tabSelectedTextColor">@color/colorWhite</item>
         <item name="tabTextColor">@color/colorTransparentGrey</item>
     </style>
 
     <style name="TabLayout.Light" parent="Widget.Design.TabLayout">
+        <item name="android:background">@color/colorLightBlue</item>
         <item name="tabIndicatorColor">@color/colorSibFU</item>
         <item name="tabSelectedTextColor">@color/colorBlack</item>
         <item name="tabTextColor">@color/colorTransparentBlack</item>
