@@ -1,9 +1,11 @@
 package com.example.jenya.studentachievements.adapters;
 
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.util.Pair;
 import android.view.LayoutInflater;
@@ -30,6 +32,8 @@ import java.util.List;
 import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static com.google.common.collect.ComparisonChain.start;
 
 public class TopUsersAdapter extends BaseAdapter {
     private final Context ctx;
@@ -109,36 +113,38 @@ public class TopUsersAdapter extends BaseAdapter {
             avatar.setTransitionName(s.get_id());
         }
 
-        layout.setOnClickListener(v -> {
-            ActivityOptions options = null;
+        if (!s.get_id().equals(UserInfo.getCurrentUser().get_id())) {
+            layout.setOnClickListener(v -> {
+                ActivityOptions options = null;
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                ((Activity) ctx).setExitSharedElementCallback(null);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    ((Activity) ctx).setExitSharedElementCallback(null);
 
-                View statusBar = ((Activity) ctx).findViewById(android.R.id.statusBarBackground);
-                View navigationBar = ((Activity) ctx).findViewById(android.R.id.navigationBarBackground);
-                View bottomMenu = ((Activity) ctx).findViewById(R.id.bottomMenu);
+                    View statusBar = ((Activity) ctx).findViewById(android.R.id.statusBarBackground);
+                    View navigationBar = ((Activity) ctx).findViewById(android.R.id.navigationBarBackground);
+                    View bottomMenu = ((Activity) ctx).findViewById(R.id.bottomMenu);
 
-                List<Pair<View, String>> pairs = new ArrayList<>();
-                pairs.add(Pair.create(statusBar, Window.STATUS_BAR_BACKGROUND_TRANSITION_NAME));
-                if (navigationBar != null) {
-                    pairs.add(Pair.create(navigationBar, Window.NAVIGATION_BAR_BACKGROUND_TRANSITION_NAME));
+                    List<Pair<View, String>> pairs = new ArrayList<>();
+                    pairs.add(Pair.create(statusBar, Window.STATUS_BAR_BACKGROUND_TRANSITION_NAME));
+                    if (navigationBar != null) {
+                        pairs.add(Pair.create(navigationBar, Window.NAVIGATION_BAR_BACKGROUND_TRANSITION_NAME));
+                    }
+                    pairs.add(Pair.create(bottomMenu, bottomMenu.getTransitionName()));
+                    pairs.add(Pair.create(avatar, avatar.getTransitionName()));
+                    options = ActivityOptions.makeSceneTransitionAnimation((Activity) ctx, pairs.toArray(new Pair[0]));
                 }
-                pairs.add(Pair.create(bottomMenu, bottomMenu.getTransitionName()));
-                pairs.add(Pair.create(avatar, avatar.getTransitionName()));
-                options = ActivityOptions.makeSceneTransitionAnimation((Activity) ctx, pairs.toArray(new Pair[0]));
-            }
 
-            Intent intent = new Intent(ctx, OtherProfileFromTopActivity.class);
-            intent.putExtra("otherStudent", s);
+                Intent intent = new Intent(ctx, OtherProfileFromTopActivity.class);
+                intent.putExtra("otherStudent", s);
 
-            if (options == null) {
-                ((Activity) ctx).startActivity(intent);
-            } else {
-                ((Activity) ctx).startActivity(intent, options.toBundle());
-            }
-        });
-
+                if (options == null) {
+                    ((Activity) ctx).startActivity(intent);
+                } else {
+                    ((Activity) ctx).startActivity(intent, options.toBundle());
+                }
+            });
+        }
+        
         return view;
     }
 }
