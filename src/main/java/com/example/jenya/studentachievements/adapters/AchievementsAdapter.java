@@ -51,7 +51,7 @@ public class AchievementsAdapter extends BaseAdapter {
     // пункт списка
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Achievement a = getAchievement(position);
+        Achievement a = (Achievement) getItem(position);
         // используем созданные, но не используемые view
         View view = convertView;
         if (view == null) {
@@ -90,14 +90,9 @@ public class AchievementsAdapter extends BaseAdapter {
 
         Glide.with(ctx)
                 .setDefaultRequestOptions(new RequestOptions().timeout(30000))
-                .load(Requests.getInstance().getURL() + "/icons/" + a.getCode() + ".png")
+                .load(Requests.getInstance().getURL() + "/icons/" + a.getAchievementInfo().getCode() + ".png")
                 .placeholder(R.drawable.no_photo)
                 .into((ImageView) view.findViewById(R.id.image));
         return view;
-    }
-
-    // ачивка по позиции
-    private Achievement getAchievement(int position) {
-        return ((Achievement) getItem(position));
     }
 }

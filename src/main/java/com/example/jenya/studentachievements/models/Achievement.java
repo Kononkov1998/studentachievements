@@ -9,10 +9,6 @@ import com.google.gson.annotations.SerializedName;
 import java.util.Date;
 
 public class Achievement implements Parcelable {
-    @SerializedName("code")
-    @Expose
-    private String code;
-
     @SerializedName("stars")
     @Expose
     private int stars;
@@ -40,10 +36,6 @@ public class Achievement implements Parcelable {
         return stars;
     }
 
-    public String getCode() {
-        return code;
-    }
-
     public void setAchievementInfo(AchievementInfo achievementInfo) {
         this.achievementInfo = achievementInfo;
     }
@@ -56,16 +48,11 @@ public class Achievement implements Parcelable {
         this.date = date;
     }
 
-    public void setCode(String code) {
-        this.code = code;
-    }
-
     public void setStars(int stars) {
         this.stars = stars;
     }
 
     private Achievement(Parcel in) {
-        code = in.readString();
         stars = in.readInt();
         achievementInfo = (AchievementInfo) in.readValue(AchievementInfo.class.getClassLoader());
         date = (Date) in.readSerializable();
@@ -78,7 +65,6 @@ public class Achievement implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(code);
         dest.writeInt(stars);
         dest.writeValue(achievementInfo);
         dest.writeSerializable(date);

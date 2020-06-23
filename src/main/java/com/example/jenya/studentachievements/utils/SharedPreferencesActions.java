@@ -14,14 +14,12 @@ final public class SharedPreferencesActions {
             return ctx.getSharedPreferences("User", MODE_PRIVATE).getString(name, "");
     }
 
-    // сохраняем токен
     public static void save(String name, String value, Context ctx) {
         SharedPreferences.Editor prefEditor = ctx.getSharedPreferences("User", MODE_PRIVATE).edit();
         prefEditor.putString(name, value);
         prefEditor.apply();
     }
 
-    // удаляем токен
     public static void delete(String name, Context ctx) {
         if (check(name, ctx)) {
             SharedPreferences.Editor prefEditor = ctx.getSharedPreferences("User", MODE_PRIVATE).edit();
@@ -30,7 +28,6 @@ final public class SharedPreferencesActions {
         }
     }
 
-    // проверяем, есть ли сохраненный токен
     public static boolean check(String name, Context ctx) {
         return ctx.getSharedPreferences("User", MODE_PRIVATE).contains(name);
     }

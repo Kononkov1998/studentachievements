@@ -27,49 +27,46 @@ import retrofit2.http.Query;
 interface UserApi
 {
     @Headers({"Content-Type: application/json; charset=utf-8"})
-    @POST("/student/signin")
+    @POST("/students/signin")
     Call<UserToken> signin(@Body User user);
 
-    @POST("/student/initialize")
+    @POST("/students/initialize")
     Call<UserInfo> initialize(@Header("Authorization") String token);
 
-    @GET("/student/info")
+    @GET("/students/info")
     Call<UserInfo> info(@Header("Authorization") String token);
 
-    @GET("/student/anotherStudent")
+    @GET("/students/anotherStudents")
     Call<ArrayList<UserInfo>> search(@Header("Authorization") String token, @Query("group") String group, @Query("search") String search);
 
-    @PUT("/student/visibility")
+    @PUT("/students/visibility")
     Call<UserInfo> visibility(@Header("Authorization") String token, @Body Visibility visibility);
 
-    @GET("/student/favourite/list")
+    @GET("/students/favourite/list")
     Call<ArrayList<UserInfo>> favourites(@Header("Authorization") String token);
 
-    @POST("/student/favourite")
+    @POST("/students/favourite")
     Call<UserInfo> addFavourite(@Header("Authorization") String token, @Query("student") String studentID);
 
-    @DELETE("/student/favourite")
+    @DELETE("/students/favourite")
     Call<UserInfo> removeFavourite(@Header("Authorization") String token, @Query("student") String studentID);
 
     @Multipart
     @POST("/student/pic")
     Call<UserInfo> uploadAvatar(@Header("Authorization") String token, @Part MultipartBody.Part avatar);
 
-    @POST("/student/achievements/update")
-    Call<UserInfo> update(@Header("Authorization") String token);
-
-    @GET("/student/semester/list")
+    @GET("/deans/semesters")
     Call<StudentSemesters> semesters(@Header("Authorization") String token);
 
-    @GET("/student/semester/marks/{idLGS}")
-    Call<StudentMarks> marks(@Header("Authorization") String token, @Path("idLGS") int idLGS);
+    @GET("/deans/semester/{id}")
+    Call<StudentMarks> marks(@Header("Authorization") String token, @Path("id") int id);
 
-    @DELETE("/student/account")
+    @DELETE("/students/account")
     Call<Void> deleteAccount(@Header("Authorization") String token);
 
     @GET("/statistics/top")
     Call<Top> topStudents(@Header("Authorization") String token, @Query("pageNumber") int pageNumber, @Query("pageSize") int pageSize, @Query("region") String region);
 
-    @GET("/student/students/{student_id}")
-    Call<UserInfo> student(@Header("Authorization") String token, @Path("student_id") String studentId);
+    @GET("/students/student/{id}")
+    Call<UserInfo> student(@Header("Authorization") String token, @Path("id") String id);
 }

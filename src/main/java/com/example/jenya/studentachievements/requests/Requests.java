@@ -112,35 +112,6 @@ public class Requests {
             @Override
             public void onResponse(@NonNull Call<UserInfo> call, @NonNull Response<UserInfo> response) {
                 if (response.isSuccessful()) {
-                    String id = response.body().get_id();
-
-                    // если такой токен есть
-                    if (SharedPreferencesActions.check(id, ctx)) {
-                        String pattern = "dd.MM.yyyy";
-                        DateFormat format = new SimpleDateFormat(pattern, Locale.ENGLISH);
-
-                        String dateAsString = SharedPreferencesActions.read(id, ctx);
-                        Date today = Calendar.getInstance().getTime();
-
-                        try {
-                            // вычисляем разницу в днях
-                            Date date = format.parse(dateAsString);
-                            long milliseconds = Math.abs(today.getTime() - date.getTime());
-                            int days = (int) (milliseconds / (24 * 60 * 60 * 1000));
-                            // если пользователь не обновлялся 30 дней
-                            if (days > 30) {
-                                update(ctx, btn);
-                                return;
-                            }
-                        } catch (Exception ignored) {
-                        }
-
-                    }
-                    // если такого токена нет
-                    else {
-                        update(ctx, btn);
-                        return;
-                    }
                     UserInfo.setCurrentUser(response.body());
                     getFavourites(ctx, true);
                 } else if (response.code() == 403) {
@@ -165,35 +136,6 @@ public class Requests {
             @Override
             public void onResponse(@NonNull Call<UserInfo> call, @NonNull Response<UserInfo> response) {
                 if (response.isSuccessful()) {
-                    String id = response.body().get_id();
-
-                    // если такой токен есть
-                    if (SharedPreferencesActions.check(id, ctx)) {
-                        String pattern = "dd.MM.yyyy";
-                        DateFormat format = new SimpleDateFormat(pattern, Locale.ENGLISH);
-
-                        String dateAsString = SharedPreferencesActions.read(id, ctx);
-                        Date today = Calendar.getInstance().getTime();
-
-                        try {
-                            // вычисляем разницу в днях
-                            Date date = format.parse(dateAsString);
-                            long milliseconds = Math.abs(today.getTime() - date.getTime());
-                            int days = (int) (milliseconds / (24 * 60 * 60 * 1000));
-                            // если пользователь не обновлялся 30 дней
-                            if (days > 30) {
-                                updateFromSplashScreen(ctx);
-                                return;
-                            }
-                        } catch (Exception ignored) {
-                        }
-
-                    }
-                    // если такого токена нет
-                    else {
-                        updateFromSplashScreen(ctx);
-                        return;
-                    }
                     UserInfo.setCurrentUser(response.body());
                     getFavourites(ctx, false);
                 } else {
@@ -445,58 +387,6 @@ public class Requests {
             public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t) {
                 ((ProfileActivity) ctx).setNewAvatar(null);
                 Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    // /achievements/update
-    private void update(Context ctx, Button btn) {
-        userApi.update(SharedPreferencesActions.read("token", ctx)).enqueue(new Callback<UserInfo>() {
-            @Override
-            public void onResponse(@NonNull Call<UserInfo> call, @NonNull Response<UserInfo> response) {
-                if (response.isSuccessful()) {
-                    String id = response.body().get_id();
-                    String pattern = "dd.MM.yyyy";
-                    DateFormat dateFormat = new SimpleDateFormat(pattern, Locale.getDefault());
-                    Date today = Calendar.getInstance().getTime();
-                    String todayAsString = dateFormat.format(today);
-                    SharedPreferencesActions.save(id, todayAsString, ctx);
-
-                    UserInfo.setCurrentUser(response.body());
-                    getFavourites(ctx, true);
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t) {
-                Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_SHORT).show();
-                ButtonActions.enableButton(btn);
-            }
-        });
-    }
-
-    private void updateFromSplashScreen(Context ctx) {
-        userApi.update(SharedPreferencesActions.read("token", ctx)).enqueue(new Callback<UserInfo>() {
-            @Override
-            public void onResponse(@NonNull Call<UserInfo> call, @NonNull Response<UserInfo> response) {
-                if (response.isSuccessful()) {
-                    String id = response.body().get_id();
-                    String pattern = "dd.MM.yyyy";
-                    DateFormat dateFormat = new SimpleDateFormat(pattern, Locale.getDefault());
-                    Date today = Calendar.getInstance().getTime();
-                    String todayAsString = dateFormat.format(today);
-                    SharedPreferencesActions.save(id, todayAsString, ctx);
-
-                    UserInfo.setCurrentUser(response.body());
-                    getFavourites(ctx, false);
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t) {
-                Toast.makeText(ctx, "Сервер не отвечает. Попробуйте позже", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(ctx, AuthActivity.class);
-                ctx.startActivity(intent);
             }
         });
     }
